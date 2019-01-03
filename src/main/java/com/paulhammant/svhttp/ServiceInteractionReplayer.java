@@ -34,8 +34,6 @@ import org.jooby.Mutant;
 import org.jooby.Request;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Map;
@@ -46,7 +44,7 @@ import static org.junit.Assert.fail;
 
 public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
 
-    private String markdown;
+    private String markdownConversation;
     private int ix;
     private String bodyToReal;
     private String contentTypeToReal;
@@ -60,9 +58,8 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
 
     public void setPlaybackFilename(String filename) {
         try {
+            setPlaybackConversation(new String(readAllBytes(Paths.get(filename))));
             this.filename = filename;
-            markdown = new String(readAllBytes(Paths.get(filename)));
-            ix = 0;
         } catch (IOException e) {
             throw new UnsupportedOperationException();
         }
@@ -71,12 +68,12 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
     public void setPlaybackConversation(String conversation) {
         this.filename = "n/a";
         ix = 0;
-        markdown = conversation;
+        markdownConversation = conversation;
     }
 
     @Override
     public void finished() {
-        ix = markdown.indexOf("## ", ix);
+        ix = markdownConversation.indexOf("## ", ix);
         if (ix > -1) {
             fail("There are more recorded interactions after #" + num + " in " + filename + ", yet calling finished() implies there should be no more. Fail!!");
         }
@@ -85,13 +82,13 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
     @Override
     protected ServiceResponse getRealResponse(String method, String url, Map<String, String> headersToReal) throws IOException {
 
-        ix = markdown.indexOf("## ", ix);
+        ix = markdownConversation.indexOf("## ", ix);
         if (ix == -1) {
             fail("There are no more recorded interactions after #" + num + " in " + filename + ", yet calling getRealResponse() implies there should be more. Fail!!");
 
         }
-        int lineEnd = markdown.indexOf("\n", ix);
-        String line = markdown.substring(ix +2, lineEnd);
+        int lineEnd = markdownConversation.indexOf("\n", ix);
+        String line = markdownConversation.substring(ix +2, lineEnd);
         String[] parts = line.split(" ");
         num = parts[1].replace(":","");
         String mdMethod = parts[2];
@@ -102,20 +99,20 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
         }
         String headersReceived = getCodeBlock();
 
-        ix = markdown.indexOf("### ", ix);
-        lineEnd = markdown.indexOf("\n", ix);
-        line = markdown.substring(ix +4, lineEnd);
+        ix = markdownConversation.indexOf("### ", ix);
+        lineEnd = markdownConversation.indexOf("\n", ix);
+        line = markdownConversation.substring(ix +4, lineEnd);
         String contentType = line.substring(line.indexOf("(")+1, line.indexOf(")"));
 
         // TODO remove trim()
-        assertEquals("Headers that would be sent to real server are not the same as those previously recorded", headers.trim(), headersReceived);
+        assertEquals("Method:" + num + " (" + mdMethod + "), headers that would be sent to real server are not the same as those previously recorded", headers.trim(), headersReceived);
         String bodyReceived = getCodeBlock();
-        assertEquals("Body that would be sent to real server are not the same those previously recorded", this.bodyToReal, bodyReceived);
-        assertEquals("Content-Type of Body that would be sent to real server are not the same those previously recorded", this.contentTypeToReal, contentType);
+        assertEquals("Method:" + num + " (" + mdMethod + "), body that would be sent to real server are not the same those previously recorded", this.bodyToReal, bodyReceived);
+        assertEquals("Method:" + num + " (" + mdMethod + "), content-Type of Body that would be sent to real server are not the same those previously recorded", this.contentTypeToReal, contentType);
         String[] headersToReturn = getCodeBlock().split("\n");
-        ix = markdown.indexOf("### ", ix);
-        lineEnd = markdown.indexOf("\n", ix);
-        line = markdown.substring(ix +4, lineEnd);
+        ix = markdownConversation.indexOf("### ", ix);
+        lineEnd = markdownConversation.indexOf("\n", ix);
+        line = markdownConversation.substring(ix +4, lineEnd);
         String statusContent = line.substring(line.indexOf("(")+1, line.indexOf(")"));
         parts = statusContent.split(": ");
         int statusCode = Integer.parseInt(parts[0]);
@@ -131,9 +128,9 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
     }
 
     private String getCodeBlock() {
-        ix = markdown.indexOf("\n```\n", ix);
-        int endCodeBlock = markdown.indexOf("\n```\n", ix + 5);
-        String rv = markdown.substring(ix + 5, endCodeBlock);
+        ix = markdownConversation.indexOf("\n```\n", ix);
+        int endCodeBlock = markdownConversation.indexOf("\n```\n", ix + 5);
+        String rv = markdownConversation.substring(ix + 5, endCodeBlock);
         ix = endCodeBlock + 5;
         return rv;
     }

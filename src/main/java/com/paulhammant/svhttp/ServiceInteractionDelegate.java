@@ -101,7 +101,7 @@ public abstract class ServiceInteractionDelegate extends Jooby {
                 bodyReceived(bodyToReal, contentType);
 
                 ServiceResponse realResponse = getRealResponse(method,
-                        headerManipulator.changeToRealURL("http://" + req.hostname() + ":" + req.port() + req.rawPath()),
+                        headerManipulator.changeToRealURL((req.rawPath().startsWith("http://") || req.rawPath().startsWith("https://")) ? req.rawPath() : "http://" + req.hostname() + ":" + req.port() + req.rawPath()),
                         headersToReal);
 
                 for (int i = 0; i < realResponse.headers.length; i++) {

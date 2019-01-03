@@ -56,6 +56,7 @@ public class OkHttpRealServiceInteractor implements RealServiceInteractor {
 
         Response response = null;
         try {
+            System.out.println(">> " + method + " " + url);
             response = okHttpClient.newCall(new okhttp3.Request.Builder()
                     .url(url)
                     .method(method, nonGetBody)
@@ -63,6 +64,9 @@ public class OkHttpRealServiceInteractor implements RealServiceInteractor {
                     .build()).execute();
             ResponseBody body = response.body();
             Object responseBody = null;
+            if (url.contains(".jks") && method.equals("GET")) {
+                System.out.println();
+            }
             if ("application/octet-stream".equals(body.contentType().toString())) {
                 responseBody = body.bytes();
             } else {

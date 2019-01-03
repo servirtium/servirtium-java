@@ -33,7 +33,7 @@ package com.paulhammant.svhttp;
 
 public class ServiceResponse {
 
-    public final String headers[];
+    public final String[] headers;
     public final Object body;
     public final String contentType;
     public final int statusCode;

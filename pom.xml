@@ -67,7 +67,7 @@
         <dependency>
             <groupId>com.mashape.unirest</groupId>
             <artifactId>unirest-java</artifactId>
-            <version>RELEASE</version>
+            <version>1.4.9</version>
             <scope>compile</scope>
         </dependency>
 
