@@ -33,97 +33,74 @@ package com.paulhammant.svhttp;
 
 import com.paulhammant.svhttp.svn.SvnHeaderManipulator;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 
+import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 
-public class SimpleGetCentricTest {
+public class SimplePostCentricTest {
 
-    private static final String EXPECTED_1 =
-            "## 0: GET /repos/asf/synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE\n" +
+
+    public static final String EXPECTED = "## 0: POST /post\n" +
             "\n" +
             "### Assert that request headers are:\n" +
             "\n" +
             "```\n" +
             "Accept: */*\n" +
+            "Content-Type: text/plain; charset=ISO-8859-1\n" +
+            "Content-Length: 19\n" +
             "Host: localhost:8080\n" +
             "Connection: Keep-Alive\n" +
             "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_181)\n" +
             "Accept-Encoding: gzip,deflate\n" +
-            "content-length: 0\n" +
             "```\n" +
             "\n" +
-            "### Assert that request body is (*/*):\n" +
+            "### Assert that request body is (text/plain):\n" +
             "\n" +
             "```\n" +
-            "\n" +
+            "I'm a little teapot\n" +
             "```\n" +
             "\n" +
             "### Resulting Headers\n" +
             "\n" +
-            "```\n";
-
-
-    private static final String EXPECTED_2a =
-            "Date: Thu, 08 Nov 2018 09:52:36 GMT\n" +
-            "Server: Apache/2.4.7 (Ubuntu)\n" +
-            "Last-Modified: Tue, 13 Nov 2007 11:58:38 GMT\n" +
-            "ETag: \"594498//synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE-gzip\"\n" +
-            "Cache-Control: max-age=604800\n" +
-            "Accept-Ranges: bytes\n" +
+            "```\n" +
+            "Content-Type: application/json; charset=utf-8\n" +
+            "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+            "ETag: W/\"15d-sDwKRjhMIqvztCRDPgAsX0pM44w\"\n" +
+            "Server: nginx\n" +
+            "set-cookie: sails.sid=s%3AQpYXn4PNOGmzId3jttU03ZketH2aY6Zz.dj6l8lpXUtFJTCoRxWRPPx4fISmmCKzgOAlIxT2DSxM; Path=/; HttpOnly\n" +
             "Vary: Accept-Encoding\n" +
-            "Keep-Alive: timeout=15, max=1000\n" +
-            "Connection: Keep-Alive\n" +
-            "Content-Type: text/plain\n";
-
-    private static final String EXPECTED_2b =
-            "Accept-Ranges: bytes\n" +
-            "Keep-Alive: timeout=15, max=1000\n" +
-            "Server: Apache/2.4.7 (Ubuntu)\n" +
-            "Cache-Control: max-age=604800\n" +
-            "ETag: \"594498//synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE-gzip\"\n" +
-            "Connection: Keep-Alive\n" +
-            "Vary: Accept-Encoding\n" +
-            "Last-Modified: Tue, 13 Nov 2007 11:58:38 GMT\n" +
-            "Date: Thu, 08 Nov 2018 09:52:36 GMT\n" +
-            "Content-Type: text/plain\n";
-
-    private static final String EXPECTED_3 =
+            "Connection: keep-alive\n" +
             "```\n" +
             "\n" +
-            "### Resulting Body (200: text/plain):\n" +
+            "### Resulting Body (200: application/json; charset=utf-8):\n" +
             "\n" +
             "```\n" +
-            "\tApache Synapse\n" +
-            "\tCopyright 2005-2006 The Apache Software Foundation\n" +
-            "\t\n" +
-            "\tThis product includes software developed at\n" +
-            "\tThe Apache Software Foundation (http://www.apache.org/).\n" +
+            "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=utf-8\",\"user-agent\":\"Apache-HttpClient/4.5.3 (Java/1.8.0_181)\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}\n" +
             "```\n" +
             "\n";
-
-
     private ServiceInteractionDelegate delegate;
 
 
-    @Test
-    public void canRecordASimpleGetFromApachesSubversionViaUniRest() {
+    @Test @Ignore
+    public void canRecordASimplePostToPostmanEchoViaUniRest() {
 
         delegate = new ServiceInteractionRecorder(
                 new UniRestRealServiceInteractor(),
-               8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
+               8080, false, new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ((ServiceInteractionRecorder) delegate).setOutputStream("foo", out);
         delegate.startApp();
 
-        checkGetOfApacheNoticeFileOverHttpViaRestAssured();
+        checkPostToPostmanEchoViaRestAssured();
 
         // Order of headers is NOT as originally sent as UniRest uses a Map to store them
-        assertEquals(sanitizeDate(EXPECTED_1 + EXPECTED_2b + EXPECTED_3), sanitizeDate(out.toString()));
+        assertEquals(sanitizeDate(EXPECTED), sanitizeDate(out.toString()));
 
     }
 
@@ -132,54 +109,52 @@ public class SimpleGetCentricTest {
         delegate.stop();
     }
 
-
     @Test
-    public void canRecordASimpleGetFromApachesSubversionViaOkHttp() {
+    public void canRecordASimplePostToPostmanEchoViaOkHttp() {
 
         delegate = new ServiceInteractionRecorder(
                 new OkHttpRealServiceInteractor(),
-               8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
+               8080, false, new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ((ServiceInteractionRecorder) delegate).setOutputStream("foo", out);
         delegate.startApp();
 
-        checkGetOfApacheNoticeFileOverHttpViaRestAssured();
+        checkPostToPostmanEchoViaRestAssured();
 
         // Order of headers is as originally sent
-        assertEquals(sanitizeDate(EXPECTED_1 + EXPECTED_2a + EXPECTED_3), sanitizeDate(out.toString()));
+        assertEquals(sanitizeDate(EXPECTED), sanitizeDate(out.toString()));
 
     }
 
     @Test
-    public void canReplayASimpleGetFromApachesSubversion() {
-
-
+    public void canReplayASimplePostToPostmanEcho() {
 
         delegate = new ServiceInteractionReplayer(
-               8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
-        ((ServiceInteractionReplayer) delegate).setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
+               8080, false, new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"));
+        ((ServiceInteractionReplayer) delegate).setPlaybackConversation(EXPECTED);
         delegate.startApp();
 
-        checkGetOfApacheNoticeFileOverHttpViaRestAssured();
+        checkPostToPostmanEchoViaRestAssured();
 
     }
 
-    private void checkGetOfApacheNoticeFileOverHttpViaRestAssured() {
+    private void checkPostToPostmanEchoViaRestAssured() {
+        given()
+                .body("I'm a little teapot").
         when()
-                .get("/repos/asf/synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE")
+                .post("/post")
         .then()
                 .assertThat()
                 .statusCode(200)
-                .body(equalTo("\tApache Synapse\n" +
-                        "\tCopyright 2005-2006 The Apache Software Foundation\n" +
-                        "\t\n" +
-                        "\tThis product includes software developed at\n" +
-                        "\tThe Apache Software Foundation (http://www.apache.org/)."))
-                .contentType("text/plain");
+                .body(equalTo("{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=utf-8\",\"user-agent\":\"Apache-HttpClient/4.5.3 (Java/1.8.0_181)\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}"))
+                .contentType("application/json;charset=ISO-8859-1");
     }
 
     private String sanitizeDate(String expected) {
-        return expected.replaceAll("Date: .* GMT", "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT");
+        return expected
+                .replaceAll("Date: .* GMT", "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT")
+                .replaceAll("set-cookie: sails.sid=.*; Path=/; HttpOnly\n",
+                        "set-cookie: sails.sid=XxXxXxXxXxXx; Path=/; HttpOnly\n");
     }
 
 }

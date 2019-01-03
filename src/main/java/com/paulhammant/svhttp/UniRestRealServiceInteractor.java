@@ -35,6 +35,7 @@ import com.mashape.unirest.http.Headers;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.GetRequest;
+import com.mashape.unirest.request.body.RawBody;
 import com.mashape.unirest.request.body.RequestBodyEntity;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -56,10 +57,6 @@ public class UniRestRealServiceInteractor implements RealServiceInteractor {
     }
 
     public ServiceResponse invokeOnRealAndRecordResult(String method, String bodyToReal, String contentTypeToReal, String url, Map<String, String> headersToReal, HeaderManipulator headerManipulator) throws InteractionException {
-        RequestBody nonGetBody = null;
-        if (!method.equals("GET")) {
-            nonGetBody = RequestBody.create(MediaType.parse(contentTypeToReal), bodyToReal);
-        }
 
         com.mashape.unirest.http.Headers realResponseHeaders;
         com.mashape.unirest.http.HttpResponse<InputStream> httpResponse;
@@ -93,7 +90,9 @@ public class UniRestRealServiceInteractor implements RealServiceInteractor {
                             hdrs.toArray(new String[0]));
                 }
                 default: {
-                    RequestBodyEntity body1 = Unirest.put(url).headers(headersToReal).body(nonGetBody);
+
+                    Unirest.clearDefaultHeaders();
+                    RawBody body1 = Unirest.post(url).headers(headersToReal).body(bodyToReal.getBytes());
                     httpResponse = body1.asObject(InputStream.class);
 
                     realResponseHeaders = httpResponse.getHeaders();
@@ -107,6 +106,7 @@ public class UniRestRealServiceInteractor implements RealServiceInteractor {
                 }
             }
         } catch (UnirestException e) {
+            e.printStackTrace();
             throw new InteractionException(e);
         }
 
