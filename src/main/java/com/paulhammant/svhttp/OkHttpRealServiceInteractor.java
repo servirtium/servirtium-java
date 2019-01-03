@@ -42,19 +42,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class HttpInteractor {
+public class OkHttpRealServiceInteractor implements RealServiceInteractor {
 
-    OkHttpClient okHttpClient = new OkHttpClient();
-    private String contentTypeIfNotGet;
+    private OkHttpClient okHttpClient = new OkHttpClient();
 
-    public HttpInteractor(String contentTypeIfNotGet) {
-        this.contentTypeIfNotGet = contentTypeIfNotGet;
-    }
-
-    public HttpResponse invokeOnRealAndRecordResult(String method, String bodyToReal, String url, Map<String, String> headersToReal, HeaderManipulator headerManipulator) throws IOException {
+    @Override
+    public ServiceResponse invokeOnRealAndRecordResult(String method, String bodyToReal, String contentTypeToReal, String url, Map<String, String> headersToReal, HeaderManipulator headerManipulator) throws InteractionException {
         RequestBody nonGetBody = null;
         if (!method.equals("GET")) {
-            nonGetBody = RequestBody.create(MediaType.parse(contentTypeIfNotGet), bodyToReal);
+            MediaType parse = MediaType.parse(contentTypeToReal);
+            nonGetBody = RequestBody.create(parse, bodyToReal);
         }
 
         Response response = null;
@@ -64,24 +61,23 @@ public class HttpInteractor {
                     .method(method, nonGetBody)
                     .headers(Headers.of(headersToReal))
                     .build()).execute();
+            ResponseBody body = response.body();
+            String responseBody = body.string();
+            String responseContentType = response.header("Content-Type");
+            int statusCode = response.code();
+            String[] responseHeaders = response.headers().toString().split("\n");
+            ArrayList<String> responseHeaders2 = new ArrayList<>();
+            for (String hdrLine : responseHeaders) {
+                int ix = hdrLine.indexOf(": ");
+                String hdrKey = hdrLine.substring(0, ix);
+                String hdrVal = hdrLine.substring(ix + 2);
+                responseHeaders2.add(hdrKey + ": " + headerManipulator.headerReplacement(hdrKey, hdrVal));
+            }
+            return new ServiceResponse(responseBody, responseContentType, statusCode, responseHeaders2.toArray(new String[responseHeaders.length]));
+
         } catch (IOException e) {
-            System.err.println("HttpInteractor.invokeOnRealAndRecordResult() Failed delegate to " + url);
-            throw e;
+            throw new InteractionException(e);
         }
 
-        ResponseBody body = response.body();
-        String responseBody = body.string();
-        String contentType = response.header("Content-Type");
-        int statusCode = response.code();
-        String[] responseHeaders = response.headers().toString().split("\n");
-        ArrayList<String> responseHeaders2 = new ArrayList<>();
-        for (String hdrLine : responseHeaders) {
-            int ix = hdrLine.indexOf(": ");
-            String hdrKey = hdrLine.substring(0, ix);
-            String hdrVal = hdrLine.substring(ix + 2);
-            responseHeaders2.add(hdrKey + ": " + headerManipulator.headerReplacement(hdrKey, hdrVal));
-        }
-
-        return new HttpResponse(responseBody, contentType, statusCode, responseHeaders2.toArray(new String[responseHeaders.length]));
     }
 }

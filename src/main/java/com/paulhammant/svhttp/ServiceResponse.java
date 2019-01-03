@@ -31,14 +31,14 @@
 
 package com.paulhammant.svhttp;
 
-public class HttpResponse {
+public class ServiceResponse {
 
     public final String headers[];
-    public final String body;
+    public final Object body;
     public final String contentType;
     public final int statusCode;
 
-    public HttpResponse(String body, String contentType, int statusCode, String... headers) {
+    public ServiceResponse(Object body, String contentType, int statusCode, String... headers) {
         this.headers = headers;
         this.body = body;
         this.contentType = contentType;

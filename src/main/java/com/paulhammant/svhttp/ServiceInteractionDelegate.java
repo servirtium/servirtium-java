@@ -37,15 +37,18 @@ import org.jooby.Request;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class HttpInteractionDelegate extends Jooby {
+public abstract class ServiceInteractionDelegate extends Jooby {
 
     protected final HeaderManipulator headerManipulator;
-    public boolean appStarted;
-    public boolean appStopped;
-    public HttpInteractionDelegate(int port, HeaderManipulator headerManipulator) {
+
+    private boolean appStarted;
+    private boolean appStopped;
+
+    public ServiceInteractionDelegate(int port, boolean ssl, HeaderManipulator headerManipulator) {
         this.headerManipulator = headerManipulator;
 
         onStarted(() -> {
@@ -56,7 +59,12 @@ public abstract class HttpInteractionDelegate extends Jooby {
             appStopped = true;
         });
 
-        port(port);
+        if (ssl) {
+            port(23456);
+            securePort(port);
+        } else {
+            port(port);
+        }
 
         use("*", "*", (req, rsp, chain) -> {
 
@@ -67,10 +75,16 @@ public abstract class HttpInteractionDelegate extends Jooby {
             try {
 
                 newMethod(req, method);
+                String contentType = req.type().toString();
 
                 Map<String, Mutant> headers = req.headers();
                 try {
-                    bodyToReal = req.body().value();
+                    if (contentType.equals("application/octet-stream")) {
+                        bodyToReal = "//svHttp+Base64: " + Base64.getEncoder().encodeToString(req.body(byte[].class))
+                                .replaceAll("(.{60})", "$1\n");;
+                    } else {
+                        bodyToReal = req.body().value();
+                    }
                 } catch (org.jooby.Err e) {
                     // ignore - works fine
                 }
@@ -84,9 +98,9 @@ public abstract class HttpInteractionDelegate extends Jooby {
 
                 headersReceived(headers);
 
-                bodyReceived(bodyToReal);
+                bodyReceived(bodyToReal, contentType);
 
-                HttpResponse realResponse = getRealResponse(method, bodyToReal,
+                ServiceResponse realResponse = getRealResponse(method,
                         headerManipulator.changeToRealURL("http://" + req.hostname() + ":" + req.port() + req.rawPath()),
                         headersToReal);
 
@@ -120,7 +134,7 @@ public abstract class HttpInteractionDelegate extends Jooby {
 
     }
 
-    protected HttpInteractionDelegate startApp() {
+    public ServiceInteractionDelegate startApp() {
         this.start("server.join=false");
         int ctr = 0;
         while (!this.appStarted && ctr < 300) {
@@ -135,16 +149,14 @@ public abstract class HttpInteractionDelegate extends Jooby {
 
     public abstract void finished();
 
-    public abstract void setOutputStream(String filename, OutputStream out) throws IOException;
+    protected abstract ServiceResponse getRealResponse(String method,
+                                                       String url, Map<String, String> headersToReal) throws IOException;
 
-    protected abstract HttpResponse getRealResponse(String method, String bodyToReal,
-                                                    String url, Map<String, String> headersToReal) throws IOException;
+    protected abstract void bodyToReturn(ServiceResponse rv) ;
 
-    protected abstract void bodyToReturn(HttpResponse rv) ;
+    protected abstract void headersToReturn(ServiceResponse rv);
 
-    protected abstract void headersToReturn(HttpResponse rv);
-
-    protected abstract void bodyReceived(String bodyToReal);
+    protected abstract void bodyReceived(String bodyToReal, String contentType);
 
     protected abstract void headersReceived(Map<String, Mutant> headers);
 

@@ -34,6 +34,7 @@ import org.jooby.Mutant;
 import org.jooby.Request;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -42,26 +43,34 @@ import static java.nio.file.Files.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-public class HttpInteractionReplayer extends HttpInteractionDelegate {
+public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
 
     private String markdown;
     private int ix;
     private String bodyToReal;
+    private String contentTypeToReal;
     private String headers;
     private String num;
     private String filename;
 
-    public HttpInteractionReplayer(int port, HeaderManipulator headerManipultor) {
-        super(port, headerManipultor);
+    public ServiceInteractionReplayer(int port, boolean ssl, HeaderManipulator headerManipultor) {
+        super(port, ssl, headerManipultor);
     }
 
-    @Override
-    public void setOutputStream(String filename, OutputStream out) throws IOException {
-        this.filename = filename;
-        if (filename != null) {
+    public void setPlaybackFilename(String filename) {
+        try {
+            this.filename = filename;
             markdown = new String(readAllBytes(Paths.get(filename)));
+            ix = 0;
+        } catch (IOException e) {
+            throw new UnsupportedOperationException();
         }
+    }
+
+    public void setPlaybackConversation(String conversation) {
+        this.filename = "n/a";
         ix = 0;
+        markdown = conversation;
     }
 
     @Override
@@ -73,7 +82,7 @@ public class HttpInteractionReplayer extends HttpInteractionDelegate {
     }
 
     @Override
-    protected HttpResponse getRealResponse(String method, String bodyToReal, String url, Map<String, String> headersToReal) throws IOException {
+    protected ServiceResponse getRealResponse(String method, String url, Map<String, String> headersToReal) throws IOException {
 
         ix = markdown.indexOf("## ", ix);
         if (ix == -1) {
@@ -91,10 +100,17 @@ public class HttpInteractionReplayer extends HttpInteractionDelegate {
             fail("Method " + num + " (" + mdMethod + "): " + url + " does not end in previously recorded " + mdUrl);
         }
         String headersReceived = getCodeBlock();
+
+        ix = markdown.indexOf("### ", ix);
+        lineEnd = markdown.indexOf("\n", ix);
+        line = markdown.substring(ix +4, lineEnd);
+        String contentType = line.substring(line.indexOf("(")+1, line.indexOf(")"));
+
         // TODO remove trim()
-        assertEquals("Headers that would be sent to real Svn are not the same as those previously recorded", headers.trim(), headersReceived);
+        assertEquals("Headers that would be sent to real server are not the same as those previously recorded", headers.trim(), headersReceived);
         String bodyReceived = getCodeBlock();
-        assertEquals("Body that would be sent to real Svn are not the same those previously recorded", this.bodyToReal, bodyReceived);
+        assertEquals("Body that would be sent to real server are not the same those previously recorded", this.bodyToReal, bodyReceived);
+        assertEquals("Content-Type of Body that would be sent to real server are not the same those previously recorded", this.contentTypeToReal, contentType);
         String[] headersToReturn = getCodeBlock().split("\n");
         ix = markdown.indexOf("### ", ix);
         lineEnd = markdown.indexOf("\n", ix);
@@ -102,9 +118,9 @@ public class HttpInteractionReplayer extends HttpInteractionDelegate {
         String statusContent = line.substring(line.indexOf("(")+1, line.indexOf(")"));
         parts = statusContent.split(": ");
         int statusCode = Integer.parseInt(parts[0]);
-        String contentType = parts[1];
+        contentType = parts[1];
         String bodyToReturn = getCodeBlock();
-        return new HttpResponse(bodyToReturn, contentType, statusCode, headersToReturn);
+        return new ServiceResponse(bodyToReturn, contentType, statusCode, headersToReturn);
     }
 
     private String getCodeBlock() {
@@ -116,18 +132,19 @@ public class HttpInteractionReplayer extends HttpInteractionDelegate {
     }
 
     @Override
-    protected void bodyToReturn(HttpResponse rv) {
+    protected void bodyToReturn(ServiceResponse rv) {
         // only useful for recording which is not this class
     }
 
     @Override
-    protected void headersToReturn(HttpResponse rv) {
+    protected void headersToReturn(ServiceResponse rv) {
         // only useful for recording which is not this class
     }
 
     @Override
-    protected void bodyReceived(String bodyToReal) {
+    protected void bodyReceived(String bodyToReal, String contentTypeToReal) {
         this.bodyToReal = bodyToReal;
+        this.contentTypeToReal = contentTypeToReal;
     }
 
     @Override

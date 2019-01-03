@@ -45,21 +45,31 @@ import java.util.Map;
 
 import static junit.framework.TestCase.fail;
 
-public class HttpInteractionRecorder extends HttpInteractionDelegate {
+public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
 
-    private final HttpInteractor httpInteractor;
+    private final RealServiceInteractor httpInteractor;
     private int CTR = 0;
     private PrintStream out;
+    private String bodyToReal;
+    private String contentTypeToReal;
+    private String filename;
 
-    public HttpInteractionRecorder(HttpInteractor realHttpInteractor,
-                                   int port, HeaderManipulator headerManipultor) {
-        super(port, headerManipultor);
+    public ServiceInteractionRecorder(RealServiceInteractor realHttpInteractor,
+                                      int port, boolean ssl, HeaderManipulator headerManipultor) {
+        super(port, ssl, headerManipultor);
         this.httpInteractor = realHttpInteractor;
     }
 
-    protected HttpResponse getRealResponse(String method, String bodyToReal, String url, Map<String, String> headersToReal) throws IOException {
+    public static String localResourceFileEquivFor(Class<?> aClass, String testMethod) {
+        String file = aClass.getProtectionDomain().getCodeSource().getLocation().getFile();
+        String root = file.substring(0, file.indexOf("/target"));
+        String root2 = root + "/src/test/resources/" + aClass.getCanonicalName() + "." + testMethod + ".md";
+        return root2;
+    }
+
+    protected ServiceResponse getRealResponse(String method, String url, Map<String, String> headersToReal) throws IOException {
         headersToReal.remove("Accept-Encoding");
-        return httpInteractor.invokeOnRealAndRecordResult(method, bodyToReal, url, headersToReal, headerManipulator);
+        return httpInteractor.invokeOnRealAndRecordResult(method, this.bodyToReal, this.contentTypeToReal, url, headersToReal, headerManipulator);
     }
 
     @Override
@@ -89,9 +99,11 @@ public class HttpInteractionRecorder extends HttpInteractionDelegate {
     }
 
     @Override
-    protected void bodyReceived(String bodyToReal) {
+    protected void bodyReceived(String bodyToReal, String contentTypeToReal) {
+        this.bodyToReal = bodyToReal;
+        this.contentTypeToReal = contentTypeToReal;
         guardOut();
-        out.println("### Assert that request body is:");
+        out.println("### Assert that request body is (" + contentTypeToReal + "):");
         out.println("");
         out.println("```");
         out.println(bodyToReal);
@@ -100,7 +112,7 @@ public class HttpInteractionRecorder extends HttpInteractionDelegate {
     }
 
     @Override
-    protected void headersToReturn(HttpResponse rv) {
+    protected void headersToReturn(ServiceResponse rv) {
         guardOut();
         out.println("### Resulting Headers");
         out.println("");
@@ -116,7 +128,7 @@ public class HttpInteractionRecorder extends HttpInteractionDelegate {
     }
 
     @Override
-    protected void bodyToReturn(HttpResponse rv) {
+    protected void bodyToReturn(ServiceResponse rv) {
         guardOut();
         out.println("### Resulting Body (" + rv.statusCode + ": " + rv.contentType + "):");
         out.println("");
@@ -134,8 +146,8 @@ public class HttpInteractionRecorder extends HttpInteractionDelegate {
         }
     }
 
-    @Override
     public void setOutputStream(String filename, OutputStream out) {
+        this.filename = filename;
         if (out != null) {
             this.out = new PrintStream(out);
         }
@@ -144,7 +156,7 @@ public class HttpInteractionRecorder extends HttpInteractionDelegate {
 
     public static void main(String[] args)  {
         run((Supplier<? extends Jooby>) () -> {
-            HttpInteractionRecorder recorderApp = new HttpInteractionRecorder(new HttpInteractor("text/xml"), 8100, new HeaderManipulator.Noop());
+            ServiceInteractionRecorder recorderApp = new ServiceInteractionRecorder(new UniRestRealServiceInteractor(), 8100, false, new HeaderManipulator.Noop());
             try {
                 recorderApp.setOutputStream("test_output.md", new FileOutputStream("test_output.md"));
             } catch (FileNotFoundException e) {

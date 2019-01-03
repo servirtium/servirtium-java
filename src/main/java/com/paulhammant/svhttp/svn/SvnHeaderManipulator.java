@@ -32,17 +32,14 @@
 package com.paulhammant.svhttp.svn;
 
 import com.paulhammant.svhttp.HeaderManipulator;
+import com.paulhammant.svhttp.SimpleHeaderManipulator;
 
 import java.util.Map;
 
-public class SvnHeaderManipulator implements HeaderManipulator {
-
-    private final String fromUrl;
-    private final String toUrl;
+public class SvnHeaderManipulator extends SimpleHeaderManipulator {
 
     public SvnHeaderManipulator(String fromUrl, String toUrl) {
-        this.fromUrl = fromUrl;
-        this.toUrl = toUrl;
+        super(fromUrl, toUrl);
     }
 
     @Override
@@ -53,9 +50,7 @@ public class SvnHeaderManipulator implements HeaderManipulator {
             allHeadersToReal.put("DAV ", "http://subversion.tigris.org/xmlns/dav/svn/mergeinfo");
             allHeadersToReal.put("DAV  ", "http://subversion.tigris.org/xmlns/dav/svn/log-revprops");
         }
-        if (currentHeader.equals("Host")) {
-            allHeadersToReal.put("Host", allHeadersToReal.get("Host").replace(fromUrl, toUrl));
-        }
+        super.potentiallyManipulateHeaders(method, currentHeader, allHeadersToReal);
     }
 
     @Override
@@ -81,8 +76,5 @@ public class SvnHeaderManipulator implements HeaderManipulator {
         }
         return rv;
     }
-    @Override
-    public String changeToRealURL(String url) {
-        return url.replace(fromUrl, toUrl);
-    }
+
 }

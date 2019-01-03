@@ -14,7 +14,7 @@
     <properties>
         <jooby.version>1.5.1</jooby.version>
         <!-- Startup class -->
-        <application.class>com.paulhammant.svhttp.HttpInteractionRecorder
+        <application.class>com.paulhammant.svhttp.ServiceInteractionRecorder
         </application.class>
     </properties>
 
@@ -31,16 +31,14 @@
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>3.10.0</version>
+            <version>3.11.0</version>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
-
         </dependency>
-
 
         <!-- logging -->
 
@@ -64,7 +62,13 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.6</version>
+            <version>2.9.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mashape.unirest</groupId>
+            <artifactId>unirest-java</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>
@@ -83,46 +87,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.18.1</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/*</exclude>
-                    </excludes>
-                </configuration>
-                <executions>
-                    <!-- First execution is Unit tests, stop there if any failures -->
-                    <execution>
-                        <id>unit-tests</id>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <excludes>
-                                <exclude>**/*Integration*.java</exclude>
-                                <exclude>**/*WebDriver*.java</exclude>
-                            </excludes>
-                            <includes>
-                                <include>**/*Unit*.java</include>
-                            </includes>
-                        </configuration>
-                    </execution>
-                    <!-- Second execution is Service tests, stop there if any failures -->
-                    <execution>
-                        <id>service-tests</id>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <configuration>
-                            <excludes>
-                                <exclude>**/*Unit*.java</exclude>
-                                <exclude>**/*WebDriver*.java</exclude>
-                            </excludes>
-                            <includes>
-                                <include>**/*Integration*.java</include>
-                            </includes>
-                        </configuration>
-                    </execution>
-                </executions>
+                <version>2.22.1</version>
             </plugin>
         </plugins>
     </build>
