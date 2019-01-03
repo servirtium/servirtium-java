@@ -41,6 +41,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.Base64;
 import java.util.Map;
 
 import static junit.framework.TestCase.fail;
@@ -130,10 +131,20 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
     @Override
     protected void bodyToReturn(ServiceResponse rv) {
         guardOut();
-        out.println("### Resulting Body (" + rv.statusCode + ": " + rv.contentType + "):");
+        String xtra = "";
+        if (rv.body instanceof byte[]) {
+            xtra = " - Base64 below";
+        }
+        out.println("### Resulting Body (" + rv.statusCode + ": " + rv.contentType + xtra + "):");
         out.println("");
         out.println("```");
-        out.println(rv.body);
+        if (rv.body instanceof String) {
+            out.println(rv.body);
+        } else if (rv.body instanceof byte[]) {
+            out.println(Base64.getEncoder().encodeToString((byte[]) rv.body));
+        } else {
+            throw new UnsupportedOperationException();
+        }
         out.println("```");
         out.println("");
         CTR++;

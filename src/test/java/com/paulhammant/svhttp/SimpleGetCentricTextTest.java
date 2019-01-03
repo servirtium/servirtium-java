@@ -41,7 +41,7 @@ import static io.restassured.RestAssured.when;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 
-public class SimpleGetCentricTest {
+public class SimpleGetCentricTextTest {
 
     private static final String EXPECTED_1 =
             "## 0: GET /repos/asf/synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE\n" +
@@ -153,8 +153,6 @@ public class SimpleGetCentricTest {
     @Test
     public void canReplayASimpleGetFromApachesSubversion() {
 
-
-
         delegate = new ServiceInteractionReplayer(
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
         ((ServiceInteractionReplayer) delegate).setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
@@ -179,7 +177,9 @@ public class SimpleGetCentricTest {
     }
 
     private String sanitizeDate(String expected) {
-        return expected.replaceAll("Date: .* GMT", "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT");
+        return expected
+                .replaceAll("Date: .* GMT", "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT")
+                .replaceAll("Keep-Alive: timeout=15, max=.*", "Keep-Alive: timeout=15, max=NNNN");
     }
 
 }

@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.Map;
 
 import static java.nio.file.Files.*;
@@ -119,7 +120,13 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
         parts = statusContent.split(": ");
         int statusCode = Integer.parseInt(parts[0]);
         contentType = parts[1];
-        String bodyToReturn = getCodeBlock();
+        Object bodyToReturn;
+        if (contentType.endsWith("- Base64 below")) {
+            contentType = contentType.substring(0, contentType.indexOf(" "));
+            bodyToReturn = Base64.getDecoder().decode(getCodeBlock());
+        } else {
+            bodyToReturn = getCodeBlock();
+        }
         return new ServiceResponse(bodyToReturn, contentType, statusCode, headersToReturn);
     }
 

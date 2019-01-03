@@ -40,6 +40,8 @@ import com.mashape.unirest.request.body.RequestBodyEntity;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -81,7 +83,13 @@ public class UniRestRealServiceInteractor implements RealServiceInteractor {
                         Scanner scanner = new Scanner(responseBody, StandardCharsets.UTF_8.name());
                         body = scanner.useDelimiter("\\A").next();
                     } else {
-                        throw new UnsupportedOperationException("xx");
+                        try {
+                            byte[] targetArray = new byte[responseBody.available()];
+                            responseBody.read(targetArray);
+                            body = targetArray;
+                        } catch (IOException e) {
+                            throw new UnsupportedOperationException(e);
+                        }
                     }
 
                     return new ServiceResponse(body,

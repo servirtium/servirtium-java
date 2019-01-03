@@ -62,7 +62,12 @@ public class OkHttpRealServiceInteractor implements RealServiceInteractor {
                     .headers(Headers.of(headersToReal))
                     .build()).execute();
             ResponseBody body = response.body();
-            String responseBody = body.string();
+            Object responseBody = null;
+            if ("application/octet-stream".equals(body.contentType().toString())) {
+                responseBody = body.bytes();
+            } else {
+                responseBody = body.string();
+            }
             String responseContentType = response.header("Content-Type");
             int statusCode = response.code();
             String[] responseHeaders = response.headers().toString().split("\n");
