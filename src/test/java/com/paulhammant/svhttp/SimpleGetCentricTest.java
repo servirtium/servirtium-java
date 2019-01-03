@@ -41,7 +41,7 @@ import static io.restassured.RestAssured.when;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 
-public class ServiceInteractionRecorderTest {
+public class SimpleGetCentricTest {
 
     private static final String EXPECTED_1 =
             "## 0: GET /repos/asf/synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE\n" +
@@ -111,7 +111,7 @@ public class ServiceInteractionRecorderTest {
 
 
     @Test
-    public void testASimpleGetFromApachesSubversionViaUniRest() {
+    public void canRecordASimpleGetFromApachesSubversionViaUniRest() {
 
         //waitFor8080toBeFreedUp();
 
@@ -130,7 +130,7 @@ public class ServiceInteractionRecorderTest {
     }
 
     @Test
-    public void testASimpleGetFromApachesSubversionViaUniRestCanBeReplayed() {
+    public void canReplayASimpleGetFromApachesSubversionViaUniRest() {
 
         delegate = new ServiceInteractionReplayer(
                 8080, false,
@@ -151,7 +151,7 @@ public class ServiceInteractionRecorderTest {
 
 
     @Test
-    public void testASimpleGetFromApachesSubversionViaOkHttp() {
+    public void canRecordASimpleGetFromApachesSubversionViaOkHttp() {
 
         //waitFor8080toBeFreedUp();
 
@@ -170,7 +170,7 @@ public class ServiceInteractionRecorderTest {
     }
 
     @Test
-    public void testASimpleGetFromApachesSubversionViaOkHttpCanBeReplayed() {
+    public void canReplayASimpleGetFromApachesSubversionViaOkHttp() {
 
         //waitFor8080toBeFreedUp();
 
