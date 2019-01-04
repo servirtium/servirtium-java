@@ -1,0 +1,3 @@
+Two clause BSD license - see top of each source file.
+
+https://opensource.org/licenses/BSD-2-Clause
