@@ -56,7 +56,6 @@ public class OkHttpRealServiceInteractor implements RealServiceInteractor {
 
         Response response = null;
         try {
-            System.out.println(">> " + method + " " + url);
             response = okHttpClient.newCall(new okhttp3.Request.Builder()
                     .url(url)
                     .method(method, nonGetBody)
