@@ -50,8 +50,8 @@ public class OkHttpRealServiceInteractor implements RealServiceInteractor {
     public ServiceResponse invokeOnRealAndRecordResult(String method, String bodyToReal, String contentTypeToReal, String url, Map<String, String> headersToReal, HeaderManipulator headerManipulator) throws InteractionException {
         RequestBody nonGetBody = null;
         if (!method.equals("GET")) {
-            MediaType parse = MediaType.parse(contentTypeToReal);
-            nonGetBody = RequestBody.create(parse, bodyToReal);
+            MediaType mediaType = MediaType.parse(contentTypeToReal);
+            nonGetBody = RequestBody.create(mediaType, bodyToReal);
         }
 
         Response response = null;
