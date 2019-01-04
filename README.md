@@ -5,6 +5,17 @@ SvHttp == Service Virtualized HTTP (for Java)
 Design goal - store conversations in Markdown, co-located with the tests that would be using SvHttp 
 to isolate themselves from potentially flaky and unquestionably slow remote service.
 
+What does that look like?. See [SubversionCheckoutRecorderTest.md](https://github.com/paul-hammant/svhttp/blob/master/src/test/resources/SubversionCheckoutRecorderTest.md) which was
+recorded from a real Subversion 'svn' command line client doing it's thing, but thru SvHttp as a HTTP-proxy. After 
+the recording of that, the replay side of SvHttp was able to pretend to be Apache+Subversion for a fresh 'svn checkout' 
+command. [This one](https://github.com/paul-hammant/svhttp/blob/master/src/test/java/com/paulhammant/svhttp/SubversionCheckoutRecorderTest.java) 
+was the recorder, and [this one](https://github.com/paul-hammant/svhttp/blob/master/src/test/java/com/paulhammant/svhttp/SubversionCheckoutReplayTest.java) 
+the replay for that recorded conversation.
+
+## Project readiness for general industry use
+
+Not ready yet, but being actively worked on.
+
 ## OkHttp recorder
 
 Dependable
