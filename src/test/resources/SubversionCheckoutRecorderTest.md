@@ -1,6 +1,6 @@
 ## 0: OPTIONS http://svn.apache.org/repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/conf
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -12,13 +12,13 @@ DAV: http://subversion.tigris.org/xmlns/dav/svn/depth
 Content-Length: 131
 ```
 
-### Assert that request body is (text/xml):
+### Body sent to the real server (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><D:options xmlns:D="DAV:"><D:activity-collection-set></D:activity-collection-set></D:options>
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:29 GMT
@@ -59,7 +59,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting Body (200: text/xml; charset="utf-8"):
+### Resulting body back from the real server (200: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -70,7 +70,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## 1: OPTIONS http://svn.apache.org/repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/conf
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -80,13 +80,13 @@ DAV: http://subversion.tigris.org/xmlns/dav/svn/depth
 content-length: 66
 ```
 
-### Assert that request body is (*/*):
+### Body sent to the real server (*/*):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><D:options xmlns:D="DAV:" />
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:30 GMT
@@ -111,7 +111,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting Body (200: text/xml; charset="utf-8"):
+### Resulting body back from the real server (200: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -122,7 +122,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## 2: OPTIONS http://svn.apache.org/repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/conf
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -133,13 +133,13 @@ DAV: http://subversion.tigris.org/xmlns/dav/svn/depth
 content-length: 131
 ```
 
-### Assert that request body is (text/xml):
+### Body sent to the real server (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><D:options xmlns:D="DAV:"><D:activity-collection-set></D:activity-collection-set></D:options>
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:30 GMT
@@ -180,7 +180,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting Body (200: text/xml; charset="utf-8"):
+### Resulting body back from the real server (200: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -191,7 +191,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## 3: PROPFIND http://svn.apache.org/repos/asf/!svn/rvr/1850253/synapse/tags/3.0.0/modules/distribution/src/main/conf
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -202,13 +202,13 @@ Depth: 0
 content-length: 113
 ```
 
-### Assert that request body is (text/xml):
+### Body sent to the real server (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><prop><resourcetype xmlns="DAV:"/></prop></propfind>
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:30 GMT
@@ -219,7 +219,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting Body (207: text/xml; charset="utf-8"):
+### Resulting body back from the real server (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -239,7 +239,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## 4: PROPFIND http://svn.apache.org/repos/asf/!svn/rvr/1850253/synapse/tags/3.0.0/modules/distribution/src/main
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -250,13 +250,13 @@ Depth: 0
 content-length: 95
 ```
 
-### Assert that request body is (text/xml):
+### Body sent to the real server (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:30 GMT
@@ -267,7 +267,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting Body (207: text/xml; charset="utf-8"):
+### Resulting body back from the real server (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -299,7 +299,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## 5: PROPFIND http://svn.apache.org/repos/asf/!svn/rvr/1850253/synapse/tags/3.0.0/modules/distribution/src
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -310,13 +310,13 @@ Depth: 0
 content-length: 95
 ```
 
-### Assert that request body is (text/xml):
+### Body sent to the real server (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:31 GMT
@@ -327,7 +327,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting Body (207: text/xml; charset="utf-8"):
+### Resulting body back from the real server (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -359,7 +359,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## 6: PROPFIND http://svn.apache.org/repos/asf/!svn/rvr/1850253/synapse/tags/3.0.0/modules/distribution
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -370,13 +370,13 @@ Depth: 0
 content-length: 95
 ```
 
-### Assert that request body is (text/xml):
+### Body sent to the real server (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:31 GMT
@@ -387,7 +387,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting Body (207: text/xml; charset="utf-8"):
+### Resulting body back from the real server (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -429,7 +429,7 @@ target
 
 ## 7: PROPFIND http://svn.apache.org/repos/asf/!svn/rvr/1850253/synapse/tags/3.0.0/modules
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -440,13 +440,13 @@ Depth: 0
 content-length: 95
 ```
 
-### Assert that request body is (text/xml):
+### Body sent to the real server (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:31 GMT
@@ -457,7 +457,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting Body (207: text/xml; charset="utf-8"):
+### Resulting body back from the real server (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -489,7 +489,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## 8: PROPFIND http://svn.apache.org/repos/asf/!svn/rvr/1850253/synapse/tags/3.0.0
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -500,13 +500,13 @@ Depth: 0
 content-length: 95
 ```
 
-### Assert that request body is (text/xml):
+### Body sent to the real server (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:31 GMT
@@ -517,7 +517,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting Body (207: text/xml; charset="utf-8"):
+### Resulting body back from the real server (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -565,7 +565,7 @@ projectFilesBackup
 
 ## 9: PROPFIND http://svn.apache.org/repos/asf/!svn/rvr/1850253/synapse/tags
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -576,13 +576,13 @@ Depth: 0
 content-length: 95
 ```
 
-### Assert that request body is (text/xml):
+### Body sent to the real server (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:31 GMT
@@ -593,7 +593,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting Body (207: text/xml; charset="utf-8"):
+### Resulting body back from the real server (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -625,7 +625,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## 10: PROPFIND http://svn.apache.org/repos/asf/!svn/rvr/1850253/synapse
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -636,13 +636,13 @@ Depth: 0
 content-length: 95
 ```
 
-### Assert that request body is (text/xml):
+### Body sent to the real server (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:31 GMT
@@ -653,7 +653,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting Body (207: text/xml; charset="utf-8"):
+### Resulting body back from the real server (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -685,7 +685,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## 11: PROPFIND http://svn.apache.org/repos/asf/!svn/rvr/1850253
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -696,13 +696,13 @@ Depth: 0
 content-length: 95
 ```
 
-### Assert that request body is (text/xml):
+### Body sent to the real server (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:32 GMT
@@ -713,7 +713,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting Body (207: text/xml; charset="utf-8"):
+### Resulting body back from the real server (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -745,7 +745,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## 12: REPORT http://svn.apache.org/repos/asf/!svn/me
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -756,7 +756,7 @@ Accept-Encoding: gzip,svndiff1;q=0.9,svndiff2;q=0.8,svndiff;q=0.7
 content-length: 337
 ```
 
-### Assert that request body is (text/xml):
+### Body sent to the real server (text/xml):
 
 ```
 <S:update-report
@@ -773,7 +773,7 @@ content-length: 337
 
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:32 GMT
@@ -785,7 +785,7 @@ Transfer-Encoding: chunked
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting Body (200: text/xml; charset="utf-8"):
+### Resulting body back from the real server (200: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -835,7 +835,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## 13: GET http://svn.apache.org/repos/asf/!svn/rvr/1776723/synapse/tags/3.0.0/modules/distribution/src/main/conf/identity.jks
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -844,13 +844,13 @@ Accept-Encoding: gzip
 content-length: 0
 ```
 
-### Assert that request body is (*/*):
+### Body sent to the real server (*/*):
 
 ```
 
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:32 GMT
@@ -865,7 +865,7 @@ Connection: Keep-Alive
 Content-Type: application/octet-stream
 ```
 
-### Resulting Body (200: application/octet-stream - Base64 below):
+### Resulting body back from the real server (200: application/octet-stream - Base64 below):
 
 ```
 /u3+7QAAAAIAAAABAAAAAQAHc3luYXBzZQAAARJ290XhAAACujCCArYwDgYKKwYBBAEqAhEBAQUABIICouqelhojratvB8zp/2DloBTeWValCbJGEYAy8fAMe0ZsLRIeN4mikUrwXF2OKqOUEJnbYDdZzmtOVL0Gq/A+klZbn5v24CjiYSXV6G2gqOXO/8Vbf+ckCNFWgeDqt/NPy50bmNFuNR5M2FCsDjJxo0ksZpEzkFDGoV7ACONle2eb85HSIeQtWtqDuZbH3Lh5w2oJyvSaP7AKDFXL+RGBVlD2KSn1RlNoSr4Vrw9ui4VbUz+Cp4QkFUPD5xVqAcDIGKqoD02HPhLPBLd4DeMZ6AMyje3DGG9ptnPLeJyaM/3b1sN+EsAwdWIFfx2JWcvY2b9TkxT8PfFTqpAhAVivPq0Nwi0TWNQwcOoO00uNZzvSx/htsvtjppkYmfut0xe0JS4gz7vK4p6w89IyVE5kHtPkfpEwq2uEPLIoEBXzhKiHdWl8ypK4HfjL41eioOHfH+M0BEbLTTjhgQTFtCMPzc52RjpM22dhMzXo/76qKtOMAqHTl3ZHcyklnUQdpIS13TqiFY4w123g3ziFEyHb33BRxVMsnfYihLUFED+U3g2tCpu2F43j8ydUtbJHMZyXvOARWhdoLngxp/uE1ZQXVDvIXEjHVrmGhiew0BKCdV8HWA22z2QyccQYPHKB8VWuXX+2RQf+G4kJi4FKzGOSCenPRXPeLiahsuABl6aNqw9+s+HI95NPGvWzoz4KZ5JVTQSORBJwHc0SNvq2yFe//U1K5UAg7TNc7rZGCqCiv1rWotyZUyioZ/eDv99pdV3LtD2nXN2ruXnNU9C6WxY+e2f2w59v2FVLTIn0aVol1RvSi1cDnHIsTJOEIP+fJyNwYTsyNmcc09nXGyKPPkPjibt5jYqfhukWpf2MH+6pY/A0vRd8+ju69TtrWNevUONEQkKcAAAAAQAFWC41MDkAAAJqMIICZjCCAc8CBEZDUbswDQYJKoZIhvcNAQEEBQAwejEoMCYGCSqGSIb3DQEJARYZc3luYXBzZS1kZXZAd3MuYXBhY2hlLm9yZzELMAkGA1UEBhMCVVMxFzAVBgNVBAoTDkFwYWNoZSBTeW5hcHNlMRQwEgYDVQQLEwtTeW5hcHNlIERldjESMBAGA1UEAxMJbG9jYWxob3N0MB4XDTA3MDUxMDE3MDkxNVoXDTEyMDUwODE3MDkxNVowejEoMCYGCSqGSIb3DQEJARYZc3luYXBzZS1kZXZAd3MuYXBhY2hlLm9yZzELMAkGA1UEBhMCVVMxFzAVBgNVBAoTDkFwYWNoZSBTeW5hcHNlMRQwEgYDVQQLEwtTeW5hcHNlIERldjESMBAGA1UEAxMJbG9jYWxob3N0MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCWXNkaVs57quYVijcRhVKuSaqKK4qqa+SYz6ovYXe5anOg0ssK5o2kzO5kK7olCrU82rfq4b/lvry+3e+1TZmHeSzP8U9PB4mN98DEGLliN2PRJ7zLB0IkFcT6WSB+uc1sMVSiJgBPtWBx4dL84vgoiOalfNDezEQ75YJFpwQ86wIDAQABMA0GCSqGSIb3DQEBBAUAA4GBAI7U5RTyvXzSlZYaX1r3ds+Tutyt16Z9+qFLFevSQE393yH+rX0y/t8ZSh9QT9rWI+5wU1msRG0PDkfIgEldRBwcwSHsNr0RBs/uvMkKV7tpU2UwQG5ZvjMyepnnQSi9kii4G4XzA5NDwEgNPAx8uiLSztBWJtcMQzRRd2lDSbjj4gnWEYixoHBt957RLL6cHk7EM9E=
@@ -873,7 +873,7 @@ Content-Type: application/octet-stream
 
 ## 14: GET http://svn.apache.org/repos/asf/!svn/rvr/1776723/synapse/tags/3.0.0/modules/distribution/src/main/conf/trust.jks
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -882,13 +882,13 @@ Accept-Encoding: gzip
 content-length: 0
 ```
 
-### Assert that request body is (*/*):
+### Body sent to the real server (*/*):
 
 ```
 
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:32 GMT
@@ -903,7 +903,7 @@ Connection: Keep-Alive
 Content-Type: application/octet-stream
 ```
 
-### Resulting Body (200: application/octet-stream - Base64 below):
+### Resulting body back from the real server (200: application/octet-stream - Base64 below):
 
 ```
 /u3+7QAAAAIAAAABAAAAAgAHc3luYXBzZQAAARJ2+EgBAAVYLjUwOQAAAmowggJmMIIBzwIERkNRuzANBgkqhkiG9w0BAQQFADB6MSgwJgYJKoZIhvcNAQkBFhlzeW5hcHNlLWRldkB3cy5hcGFjaGUub3JnMQswCQYDVQQGEwJVUzEXMBUGA1UEChMOQXBhY2hlIFN5bmFwc2UxFDASBgNVBAsTC1N5bmFwc2UgRGV2MRIwEAYDVQQDEwlsb2NhbGhvc3QwHhcNMDcwNTEwMTcwOTE1WhcNMTIwNTA4MTcwOTE1WjB6MSgwJgYJKoZIhvcNAQkBFhlzeW5hcHNlLWRldkB3cy5hcGFjaGUub3JnMQswCQYDVQQGEwJVUzEXMBUGA1UEChMOQXBhY2hlIFN5bmFwc2UxFDASBgNVBAsTC1N5bmFwc2UgRGV2MRIwEAYDVQQDEwlsb2NhbGhvc3QwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAJZc2RpWznuq5hWKNxGFUq5Jqooriqpr5JjPqi9hd7lqc6DSywrmjaTM7mQruiUKtTzat+rhv+W+vL7d77VNmYd5LM/xT08HiY33wMQYuWI3Y9EnvMsHQiQVxPpZIH65zWwxVKImAE+1YHHh0vzi+CiI5qV80N7MRDvlgkWnBDzrAgMBAAEwDQYJKoZIhvcNAQEEBQADgYEAjtTlFPK9fNKVlhpfWvd2z5O63K3Xpn36oUsV69JATf3fIf6tfTL+3xlKH1BP2tYj7nBTWaxEbQ8OR8iASV1EHBzBIew2vREGz+68yQpXu2lTZTBAblm+MzJ6medBKL2SKLgbhfMDk0PASA08DHy6ItLO0FYm1wxDNFF3aUNJuONSIj1AYtrxCjvLLzI1/xkZGrYIjQ==
@@ -911,7 +911,7 @@ Content-Type: application/octet-stream
 
 ## 15: GET http://svn.apache.org/repos/asf/!svn/rvr/1776723/synapse/tags/3.0.0/modules/distribution/src/main/conf/log4j.properties
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -920,13 +920,13 @@ Accept-Encoding: gzip
 content-length: 0
 ```
 
-### Assert that request body is (*/*):
+### Body sent to the real server (*/*):
 
 ```
 
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:32 GMT
@@ -941,7 +941,7 @@ Connection: Keep-Alive
 Content-Type: text/plain
 ```
 
-### Resulting Body (200: text/plain):
+### Resulting body back from the real server (200: text/plain):
 
 ```
 #
@@ -1063,7 +1063,7 @@ log4j.appender.LOG_APPENDER.layout.ConversionPattern=%d{ISO8601} [%X{ip}-%X{host
 
 ## 16: GET http://svn.apache.org/repos/asf/!svn/rvr/1776723/synapse/tags/3.0.0/modules/distribution/src/main/conf/providers.xml
 
-### Assert that request headers are:
+### Request headers sent to the real server:
 
 ```
 Host: svn.apache.org
@@ -1072,13 +1072,13 @@ Accept-Encoding: gzip
 content-length: 0
 ```
 
-### Assert that request body is (*/*):
+### Body sent to the real server (*/*):
 
 ```
 
 ```
 
-### Resulting Headers
+### Resulting headers back from the real server:
 
 ```
 Date: Thu, 03 Jan 2019 17:38:32 GMT
@@ -1093,7 +1093,7 @@ Connection: Keep-Alive
 Content-Type: text/plain
 ```
 
-### Resulting Body (200: text/plain):
+### Resulting body back from the real server (200: text/plain):
 
 ```
 <!--

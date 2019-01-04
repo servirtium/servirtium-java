@@ -48,7 +48,7 @@ public class SimplePostCentricTest {
 
     public static final String EXPECTED = "## 0: POST /post\n" +
             "\n" +
-            "### Assert that request headers are:\n" +
+            "### Request headers sent to the real server:\n" +
             "\n" +
             "```\n" +
             "Accept: */*\n" +
@@ -60,13 +60,13 @@ public class SimplePostCentricTest {
             "Accept-Encoding: gzip,deflate\n" +
             "```\n" +
             "\n" +
-            "### Assert that request body is (text/plain):\n" +
+            "### Body sent to the real server (text/plain):\n" +
             "\n" +
             "```\n" +
             "I'm a little teapot\n" +
             "```\n" +
             "\n" +
-            "### Resulting Headers\n" +
+            "### Resulting headers back from the real server:\n" +
             "\n" +
             "```\n" +
             "Content-Type: application/json; charset=utf-8\n" +
@@ -78,7 +78,7 @@ public class SimplePostCentricTest {
             "Connection: keep-alive\n" +
             "```\n" +
             "\n" +
-            "### Resulting Body (200: application/json; charset=utf-8):\n" +
+            "### Resulting body back from the real server (200: application/json; charset=utf-8):\n" +
             "\n" +
             "```\n" +
             "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=utf-8\",\"user-agent\":\"Apache-HttpClient/4.5.3 (Java/1.8.0_181)\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}\n" +

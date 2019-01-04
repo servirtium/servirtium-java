@@ -46,7 +46,7 @@ public class SimpleGetCentricTextTest {
     private static final String EXPECTED_1 =
             "## 0: GET /repos/asf/synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE\n" +
             "\n" +
-            "### Assert that request headers are:\n" +
+            "### Request headers sent to the real server:\n" +
             "\n" +
             "```\n" +
             "Accept: */*\n" +
@@ -57,13 +57,13 @@ public class SimpleGetCentricTextTest {
             "content-length: 0\n" +
             "```\n" +
             "\n" +
-            "### Assert that request body is (*/*):\n" +
+            "### Body sent to the real server (*/*):\n" +
             "\n" +
             "```\n" +
             "\n" +
             "```\n" +
             "\n" +
-            "### Resulting Headers\n" +
+            "### Resulting headers back from the real server:\n" +
             "\n" +
             "```\n";
 
@@ -95,7 +95,7 @@ public class SimpleGetCentricTextTest {
     private static final String EXPECTED_3 =
             "```\n" +
             "\n" +
-            "### Resulting Body (200: text/plain):\n" +
+            "### Resulting body back from the real server (200: text/plain):\n" +
             "\n" +
             "```\n" +
             "\tApache Synapse\n" +

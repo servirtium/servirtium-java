@@ -88,7 +88,7 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
     @Override
     protected void headersReceived(Map<String, Mutant> headers) {
         guardOut();
-        out.println("### Assert that request headers are:");
+        out.println("### Request headers sent to the real server:");
         out.println("");
         out.println("```");
         for (String k : headers.keySet()) {
@@ -104,7 +104,7 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
         this.bodyToReal = bodyToReal;
         this.contentTypeToReal = contentTypeToReal;
         guardOut();
-        out.println("### Assert that request body is (" + contentTypeToReal + "):");
+        out.println("### Body sent to the real server (" + contentTypeToReal + "):");
         out.println("");
         out.println("```");
         out.println(bodyToReal);
@@ -115,7 +115,7 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
     @Override
     protected void headersToReturn(ServiceResponse rv) {
         guardOut();
-        out.println("### Resulting Headers");
+        out.println("### Resulting headers back from the real server:");
         out.println("");
         out.println("```");
         for (String hdrLine : rv.headers) {
@@ -135,7 +135,7 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
         if (rv.body instanceof byte[]) {
             xtra = " - Base64 below";
         }
-        out.println("### Resulting Body (" + rv.statusCode + ": " + rv.contentType + xtra + "):");
+        out.println("### Resulting body back from the real server (" + rv.statusCode + ": " + rv.contentType + xtra + "):");
         out.println("");
         out.println("```");
         if (rv.body instanceof String) {
