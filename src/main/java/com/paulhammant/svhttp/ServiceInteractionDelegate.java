@@ -39,9 +39,11 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -120,30 +122,33 @@ public abstract class ServiceInteractionDelegate {
                             headerManipulator.changeToRealURL((request.getRequestURL().toString().startsWith("http://") || request.getRequestURL().toString().startsWith("https://")) ? request.getRequestURL().toString() : "http://" + request.getRemoteHost() + ":" + request.getRemotePort() + request.getRequestURI()),
                             headersToReal);
 
+                    List<String > newHeaders = new ArrayList<>();
                     for (int i = 0; i < realResponse.headers.length; i++) {
                         String headerBackFromReal = realResponse.headers[i];
-                        headerBackFromReal = headerManipulator.changeHeaderBackFromReal(i, headerBackFromReal);
-                        int ix = headerBackFromReal.indexOf(": ");
-                        String hdrKey = headerBackFromReal.substring(0, ix);
-                        String hdrVal = headerBackFromReal.substring(ix + 2);
+                        String potentiallyChangedHeader = headerManipulator.changeHeaderBackFromReal(i, headerBackFromReal);
+                        newHeaders.add(potentiallyChangedHeader);
+                        int ix = potentiallyChangedHeader.indexOf(": ");
+                        String hdrKey = potentiallyChangedHeader.substring(0, ix);
+                        String hdrVal = potentiallyChangedHeader.substring(ix + 2);
                         hdrVal = headerManipulator.headerReplacement(hdrKey, hdrVal);
                         response.setHeader(hdrKey, hdrVal);
                     }
+                    ServiceResponse revisedResponse = realResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
 
-                    response.setStatus(realResponse.statusCode);
+                    response.setStatus(revisedResponse.statusCode);
 
-                    if (realResponse.contentType != null) {
-                        response.setContentType(realResponse.contentType);
-                        if (realResponse.body instanceof String) {
-                            response.getWriter().write((String) realResponse.body);
+                    if (revisedResponse.contentType != null) {
+                        response.setContentType(revisedResponse.contentType);
+                        if (revisedResponse.body instanceof String) {
+                            response.getWriter().write((String) revisedResponse.body);
                         } else {
-                            response.getOutputStream().write((byte[]) realResponse.body);
+                            response.getOutputStream().write((byte[]) revisedResponse.body);
                         }
                     }
 
-                    headersToReturn(realResponse);
+                    headersToReturn(revisedResponse);
 
-                    bodyToReturn(realResponse);
+                    bodyToReturn(revisedResponse);
 
                 } catch (Throwable throwable) {
                     throw throwable; // stick your debugger here

@@ -44,4 +44,8 @@ public class ServiceResponse {
         this.contentType = contentType;
         this.statusCode = statusCode;
     }
+
+    public ServiceResponse withRevisedHeaders(String[] headers) {
+        return new ServiceResponse(this.body, this.contentType, this.statusCode, headers);
+    }
 }
