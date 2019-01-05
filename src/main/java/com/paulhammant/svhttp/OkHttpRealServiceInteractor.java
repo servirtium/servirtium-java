@@ -42,6 +42,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import static com.paulhammant.svhttp.ServiceInteractionDelegate.isText;
+
 public class OkHttpRealServiceInteractor implements RealServiceInteractor {
 
     private OkHttpClient okHttpClient = new OkHttpClient();
@@ -67,12 +69,11 @@ public class OkHttpRealServiceInteractor implements RealServiceInteractor {
             if (contentType == null) {
                 contentType = "";
             }
-            if ("application/octet-stream".equals(contentType) ||
-             contentType.startsWith("image/")) {
-                responseBody = body.bytes();
-            } else {
-                responseBody = body.string();
-            }
+            if (isText(contentType)) {
+                        responseBody = body.string();
+                    } else {
+                       responseBody = body.bytes();
+                   }
             String responseContentType = response.header("Content-Type");
             int statusCode = response.code();
             String[] responseHeaders = response.headers().toString().split("\n");

@@ -85,12 +85,7 @@ public abstract class ServiceInteractionDelegate {
 
                     if (is.available() > 0) {
 
-                        if (contentType.startsWith("text/") ||
-                                contentType.startsWith("image/svg") ||
-                                contentType.startsWith("multipart/form-data") ||
-                                contentType.startsWith("application/json") ||
-                                (contentType.startsWith("application/") && contentType.contains("script")) ||
-                                contentType.startsWith("application/xhtml+xml")) {
+                        if (isText(contentType)) {
                             bodyToReal = null;
                             String characterEncoding = request.getCharacterEncoding();
                             if (characterEncoding == null) {
@@ -159,6 +154,15 @@ public abstract class ServiceInteractionDelegate {
                 baseRequest.setHandled(true);
             }
         });
+    }
+
+    public static boolean isText(String contentType) {
+        return contentType.startsWith("text/") ||
+                contentType.startsWith("image/svg") ||
+                contentType.startsWith("multipart/form-data") ||
+                contentType.startsWith("application/json") ||
+                (contentType.startsWith("application/") && contentType.contains("script")) ||
+                contentType.startsWith("application/xhtml+xml");
     }
 
     public ServiceInteractionDelegate startApp() {
