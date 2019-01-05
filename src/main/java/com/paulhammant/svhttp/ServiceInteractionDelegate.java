@@ -81,7 +81,6 @@ public abstract class ServiceInteractionDelegate {
 
                     Enumeration<String> hdrs = request.getHeaderNames();
 
-
                     ServletInputStream is = request.getInputStream();
 
                     if (is.available() > 0) {
@@ -109,23 +108,20 @@ public abstract class ServiceInteractionDelegate {
                         }
                     }
 
-
                     while (hdrs.hasMoreElements()) {
                         String hdr = hdrs.nextElement();
                         String hdrVal = request.getHeader(hdr);
                         hdrVal = headerManipulator.headerReplacement(hdr, hdrVal);
                         headersToReal.put(hdr, hdrVal);
                         headerManipulator.potentiallyManipulateHeaders(method, hdr, headersToReal);
-
                     }
 
                     headersReceived(headersToReal);
 
                     bodyReceived(bodyToReal, contentType);
 
-                    ServiceResponse realResponse = getRealResponse(method,
-                            headerManipulator.changeToRealURL((request.getRequestURL().toString().startsWith("http://") || request.getRequestURL().toString().startsWith("https://")) ? request.getRequestURL().toString() : "http://" + request.getRemoteHost() + ":" + request.getRemotePort() + request.getRequestURI()),
-                            headersToReal);
+                    final String url = (request.getRequestURL().toString().startsWith("http://") || request.getRequestURL().toString().startsWith("https://")) ? request.getRequestURL().toString() : "http://" + request.getRemoteHost() + ":" + request.getRemotePort() + request.getRequestURI();
+                    ServiceResponse realResponse = getRealResponse(method, headerManipulator.changeToRealURL(url), headersToReal);
 
                     List<String > newHeaders = new ArrayList<>();
                     for (int i = 0; i < realResponse.headers.length; i++) {
