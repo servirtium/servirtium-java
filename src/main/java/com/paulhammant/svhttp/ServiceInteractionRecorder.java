@@ -67,11 +67,6 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
     }
 
     @Override
-    protected void newMethod(Request req, String method) {
-        newMethod(method, req.rawPath());
-    }
-
-    @Override
     protected void newMethod(String method, String path) {
         guardOut();
         out.println("## " + CTR + ": " + method + " " + path + "\n");

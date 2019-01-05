@@ -183,10 +183,6 @@ public abstract class ServiceInteractionDelegate {
 
     protected abstract void headersReceived(Map<String, String> headers);
 
-    protected void newMethod(Request req, String method) {
-        newMethod(method, req.rawPath());
-    }
-
     protected abstract void newMethod(String method, String path);
 
     public void stop() {
@@ -194,20 +190,6 @@ public abstract class ServiceInteractionDelegate {
             server.stop();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    public class Mutant {
-
-        public String value() {
-            return null;
-        }
-    }
-
-    public class Request {
-
-        public String rawPath() {
-            return null;
         }
     }
 
