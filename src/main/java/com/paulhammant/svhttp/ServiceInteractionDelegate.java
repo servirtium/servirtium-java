@@ -86,13 +86,12 @@ public abstract class ServiceInteractionDelegate {
 
                     if (is.available() > 0) {
 
-                        if ("application/octet-stream".equals(contentType)) {
-                            byte[] targetArray = new byte[is.available()];
-                            is.read(targetArray);
-                            bodyToReal = "//svHttp+Base64: " + Base64.getEncoder().encodeToString(targetArray)
-                                    .replaceAll("(.{60})", "$1\n");
-                            ;
-                        } else {
+                        if (contentType.startsWith("text/") ||
+                                contentType.startsWith("image/svg") ||
+                                contentType.startsWith("multipart/form-data") ||
+                                contentType.startsWith("application/json") ||
+                                (contentType.startsWith("application/") && contentType.contains("script")) ||
+                                contentType.startsWith("application/xhtml+xml")) {
                             bodyToReal = null;
                             String characterEncoding = request.getCharacterEncoding();
                             if (characterEncoding == null) {
@@ -101,6 +100,12 @@ public abstract class ServiceInteractionDelegate {
                             try (Scanner scanner = new Scanner(is, characterEncoding)) {
                                 bodyToReal = scanner.useDelimiter("\\A").next();
                             }
+                        } else {
+                            byte[] targetArray = new byte[is.available()];
+                            is.read(targetArray);
+                            bodyToReal = "//svHttp+Base64: " + Base64.getEncoder().encodeToString(targetArray)
+                                    .replaceAll("(.{60})", "$1\n");
+                            ;
                         }
                     }
 
