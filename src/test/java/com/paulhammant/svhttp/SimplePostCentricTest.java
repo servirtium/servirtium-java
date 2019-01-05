@@ -102,6 +102,8 @@ public class SimplePostCentricTest {
         // Order of headers is NOT as originally sent as UniRest uses a Map to store them
         assertEquals(sanitizeDate(EXPECTED), sanitizeDate(out.toString()));
 
+        delegate.finished();
+
     }
 
     @After
@@ -124,6 +126,7 @@ public class SimplePostCentricTest {
         // Order of headers is as originally sent
         assertEquals(sanitizeDate(EXPECTED), sanitizeDate(out.toString()));
 
+        delegate.finished();
     }
 
     @Test
@@ -136,6 +139,7 @@ public class SimplePostCentricTest {
 
         checkPostToPostmanEchoViaRestAssured();
 
+        delegate.finished();
     }
 
     private void checkPostToPostmanEchoViaRestAssured() {
