@@ -55,6 +55,9 @@ public abstract class ServiceInteractionDelegate {
         this.headerManipulator = headerManipulator;
 
         server = new Server(port);
+        // How the fuck do you turn off Embedded Jetty's logging???
+        // Everything I tried (mostly static operations on Log. didn't work.
+
         server.setHandler(new AbstractHandler() {
 
             @Override
