@@ -52,8 +52,8 @@ public class SimplePostCentricTest {
             "\n" +
             "```\n" +
             "Accept: */*\n" +
+            "User-Agent: RestAssured\n" +
             "Connection: keep-alive\n" +
-            "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_181)\n" +
             "Host: localhost:8080\n" +
             "Accept-Encoding: gzip,deflate\n" +
             "Content-Length: 19\n" +
@@ -71,7 +71,7 @@ public class SimplePostCentricTest {
             "```\n" +
             "Content-Type: application/json; charset=utf-8\n" +
             "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-            "ETag: W/\"162-UU8CLJUN2U1SMTS1hlhPokt826E\"\n" +
+            "ETag: W/\"145-Jwv9/WWsc6+3MH1D6qmR3cqfUn8\"\n" +
             "Server: nginx\n" +
             "set-cookie: sails.sid=s%3AQpYXn4PNOGmzId3jttU03ZketH2aY6Zz.dj6l8lpXUtFJTCoRxWRPPx4fISmmCKzgOAlIxT2DSxM; Path=/; HttpOnly\n" +
             "Vary: Accept-Encoding\n" +
@@ -81,7 +81,7 @@ public class SimplePostCentricTest {
             "### Resulting body back from the real server (200: application/json; charset=utf-8):\n" +
             "\n" +
             "```\n" +
-            "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"Apache-HttpClient/4.5.3 (Java/1.8.0_181)\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}\n" +
+            "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}\n" +
             "```\n" +
             "\n";
     private ServiceInteractionDelegate delegate;
@@ -140,13 +140,14 @@ public class SimplePostCentricTest {
 
     private void checkPostToPostmanEchoViaRestAssured() {
         given()
+                .header("User-Agent", "RestAssured")
                 .body("I'm a little teapot").
         when()
                 .post("/post")
         .then()
                 .assertThat()
                 .statusCode(200)
-                .body(equalTo("{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"Apache-HttpClient/4.5.3 (Java/1.8.0_181)\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}"))
+                .body(equalTo("{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}"))
                 .contentType("application/json;charset=utf-8");
     }
 

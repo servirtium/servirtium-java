@@ -37,7 +37,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 
-import static io.restassured.RestAssured.when;
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 
@@ -50,8 +50,8 @@ public class SimpleGetCentricTextTest {
             "\n" +
             "```\n" +
             "Accept: */*\n" +
+            "User-Agent: RestAssured\n" +
             "Connection: keep-alive\n" +
-            "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_181)\n" +
             "Host: svn.apache.org\n" +
             "Accept-Encoding: gzip,deflate\n" +
             "```\n" +
@@ -162,7 +162,9 @@ public class SimpleGetCentricTextTest {
     }
 
     private void checkGetOfApacheNoticeFileOverHttpViaRestAssured() {
-        when()
+        given()
+                .header("User-Agent", "RestAssured")
+        .when()
                 .get("/repos/asf/synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE")
         .then()
                 .assertThat()
