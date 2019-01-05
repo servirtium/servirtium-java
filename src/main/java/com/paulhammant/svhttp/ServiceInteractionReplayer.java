@@ -30,15 +30,12 @@
 */
 package com.paulhammant.svhttp;
 
-import org.jooby.Mutant;
-import org.jooby.Request;
-
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Map;
 
-import static java.nio.file.Files.*;
+import static java.nio.file.Files.readAllBytes;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -82,49 +79,61 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
     @Override
     protected ServiceResponse getRealResponse(String method, String url, Map<String, String> headersToReal) throws IOException {
 
-        ix = markdownConversation.indexOf("## ", ix);
-        if (ix == -1) {
-            fail("There are no more recorded interactions after #" + num + " in " + filename + ", yet calling getRealResponse() implies there should be more. Fail!!");
+        try {
+            ix = markdownConversation.indexOf("## ", ix);
+            if (ix == -1) {
+                fail("There are no more recorded interactions after #" + num + " in " + filename + ", yet calling getRealResponse() implies there should be more. Fail!!");
+
+            }
+            int lineEnd = markdownConversation.indexOf("\n", ix);
+            String line = markdownConversation.substring(ix +2, lineEnd);
+            String[] parts = line.split(" ");
+            num = parts[1].replace(":","");
+            String mdMethod = parts[2];
+            assertEquals(method, mdMethod);
+            String mdUrl = parts[3];
+            if (!url.endsWith(mdUrl)) {
+                fail("Method " + num + " (" + mdMethod + ")" + num + " in " + filename + ": " + url + " does not end in previously recorded " + mdUrl);
+            }
+            String headersReceived = getCodeBlock();
+
+            ix = markdownConversation.indexOf("### ", ix);
+            lineEnd = markdownConversation.indexOf("\n", ix);
+            line = markdownConversation.substring(ix +4, lineEnd);
+            String contentType = line.substring(line.indexOf("(")+1, line.indexOf(")"));
+
+            // TODO remove trim()
+            assertEquals(methodAndFilePrefix(mdMethod) + ", headers from the client that should be sent to real server are not the same as those previously recorded", headers.trim(), headersReceived);
+            String bodyReceived = getCodeBlock();
+            assertEquals(methodAndFilePrefix(mdMethod) + ", body from the client that should be sent to real server are not the same those previously recorded", this.bodyToReal, bodyReceived);
+            assertEquals(methodAndFilePrefix(mdMethod) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded", this.contentTypeToReal, contentType);
+            String[] headersToReturn = getCodeBlock().split("\n");
+            ix = markdownConversation.indexOf("### ", ix);
+            lineEnd = markdownConversation.indexOf("\n", ix);
+            line = markdownConversation.substring(ix +4, lineEnd);
+            String statusContent = line.substring(line.indexOf("(")+1, line.indexOf(")"));
+            parts = statusContent.split(": ");
+            int statusCode = Integer.parseInt(parts[0]);
+            contentType = parts[1];
+            Object bodyToReturn;
+            if (contentType.endsWith("- Base64 below")) {
+                contentType = contentType.substring(0, contentType.indexOf(" "));
+                bodyToReturn = Base64.getDecoder().decode(getCodeBlock());
+            } else {
+                bodyToReturn = getCodeBlock();
+            }
+            return new ServiceResponse(bodyToReturn, contentType, statusCode, headersToReturn);
+        } catch (AssertionError e) {
+            System.out.println("***************************************************");
+            System.out.println(">>>> Assertion Error: " + e.getMessage());
+            e.printStackTrace();
+            return new ServiceResponse("ServiceInteractionReplayer: " + e.getMessage(), "text/plain", 500);
 
         }
-        int lineEnd = markdownConversation.indexOf("\n", ix);
-        String line = markdownConversation.substring(ix +2, lineEnd);
-        String[] parts = line.split(" ");
-        num = parts[1].replace(":","");
-        String mdMethod = parts[2];
-        assertEquals(method, mdMethod);
-        String mdUrl = parts[3];
-        if (!url.endsWith(mdUrl)) {
-            fail("Method " + num + " (" + mdMethod + "): " + url + " does not end in previously recorded " + mdUrl);
-        }
-        String headersReceived = getCodeBlock();
+    }
 
-        ix = markdownConversation.indexOf("### ", ix);
-        lineEnd = markdownConversation.indexOf("\n", ix);
-        line = markdownConversation.substring(ix +4, lineEnd);
-        String contentType = line.substring(line.indexOf("(")+1, line.indexOf(")"));
-
-        // TODO remove trim()
-        assertEquals("Method:" + num + " (" + mdMethod + "), headers that would be sent to real server are not the same as those previously recorded", headers.trim(), headersReceived);
-        String bodyReceived = getCodeBlock();
-        assertEquals("Method:" + num + " (" + mdMethod + "), body that would be sent to real server are not the same those previously recorded", this.bodyToReal, bodyReceived);
-        assertEquals("Method:" + num + " (" + mdMethod + "), content-Type of Body that would be sent to real server are not the same those previously recorded", this.contentTypeToReal, contentType);
-        String[] headersToReturn = getCodeBlock().split("\n");
-        ix = markdownConversation.indexOf("### ", ix);
-        lineEnd = markdownConversation.indexOf("\n", ix);
-        line = markdownConversation.substring(ix +4, lineEnd);
-        String statusContent = line.substring(line.indexOf("(")+1, line.indexOf(")"));
-        parts = statusContent.split(": ");
-        int statusCode = Integer.parseInt(parts[0]);
-        contentType = parts[1];
-        Object bodyToReturn;
-        if (contentType.endsWith("- Base64 below")) {
-            contentType = contentType.substring(0, contentType.indexOf(" "));
-            bodyToReturn = Base64.getDecoder().decode(getCodeBlock());
-        } else {
-            bodyToReturn = getCodeBlock();
-        }
-        return new ServiceResponse(bodyToReturn, contentType, statusCode, headersToReturn);
+    private String methodAndFilePrefix(String mdMethod) {
+        return "Method:" + num + " (" + mdMethod + ")" + num + " in " + filename;
     }
 
     private String getCodeBlock() {
@@ -152,16 +161,16 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
     }
 
     @Override
-    protected void headersReceived(Map<String, Mutant> headers) {
+    protected void headersReceived(Map<String, String> headers) {
         StringBuilder sb = new StringBuilder();
         for (String k : headers.keySet()) {
-            Mutant v = headers.get(k);
-            sb.append(k).append(": ").append(v.value()).append("\n");
+            String v = headers.get(k);
+            sb.append(k).append(": ").append(v).append("\n");
         }
         this.headers = sb.toString();
     }
 
     @Override
-    protected void newMethod(Request req, String method) {
+    protected void newMethod(String method, String path) {
     }
 }

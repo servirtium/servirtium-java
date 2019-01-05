@@ -31,13 +31,6 @@
 
 package com.paulhammant.svhttp;
 
-import com.google.common.base.Supplier;
-import org.jooby.Jooby;
-import org.jooby.Mutant;
-import org.jooby.Request;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -75,8 +68,13 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
 
     @Override
     protected void newMethod(Request req, String method) {
+        newMethod(method, req.rawPath());
+    }
+
+    @Override
+    protected void newMethod(String method, String path) {
         guardOut();
-        out.println("## " + CTR + ": " + method + " " + req.rawPath() + "\n");
+        out.println("## " + CTR + ": " + method + " " + path + "\n");
     }
 
     private void guardOut() {
@@ -86,14 +84,14 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
     }
 
     @Override
-    protected void headersReceived(Map<String, Mutant> headers) {
+    protected void headersReceived(Map<String, String> headers) {
         guardOut();
         out.println("### Request headers sent to the real server:");
         out.println("");
         out.println("```");
         for (String k : headers.keySet()) {
-            Mutant v = headers.get(k);
-            out.println(k + ": " + v.value());
+            String v = headers.get(k);
+            out.println(k + ": " + v);
         }
         out.println("```");
         out.println("");
@@ -166,15 +164,6 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
     }
 
     public static void main(String[] args)  {
-        run((Supplier<? extends Jooby>) () -> {
-            ServiceInteractionRecorder recorderApp = new ServiceInteractionRecorder(new UniRestRealServiceInteractor(), 8100, false, new HeaderManipulator.Noop());
-            try {
-                recorderApp.setOutputStream("test_output.md", new FileOutputStream("test_output.md"));
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-            return recorderApp;
-        }, args);
     }
 
 }

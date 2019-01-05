@@ -45,22 +45,22 @@ import static org.junit.Assert.assertEquals;
 
 public class SimplePostCentricTest {
 
-
-    public static final String EXPECTED = "## 0: POST /post\n" +
+    public static final String EXPECTED =
+            "## 0: POST /post\n" +
             "\n" +
             "### Request headers sent to the real server:\n" +
             "\n" +
             "```\n" +
             "Accept: */*\n" +
-            "Content-Type: text/plain; charset=ISO-8859-1\n" +
-            "Content-Length: 19\n" +
-            "Host: localhost:8080\n" +
-            "Connection: Keep-Alive\n" +
+            "Connection: keep-alive\n" +
             "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_181)\n" +
+            "Host: localhost:8080\n" +
             "Accept-Encoding: gzip,deflate\n" +
+            "Content-Length: 19\n" +
+            "Content-Type: text/plain; charset=ISO-8859-1\n" +
             "```\n" +
             "\n" +
-            "### Body sent to the real server (text/plain):\n" +
+            "### Body sent to the real server (text/plain; charset=ISO-8859-1):\n" +
             "\n" +
             "```\n" +
             "I'm a little teapot\n" +
@@ -71,7 +71,7 @@ public class SimplePostCentricTest {
             "```\n" +
             "Content-Type: application/json; charset=utf-8\n" +
             "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-            "ETag: W/\"15d-sDwKRjhMIqvztCRDPgAsX0pM44w\"\n" +
+            "ETag: W/\"162-UU8CLJUN2U1SMTS1hlhPokt826E\"\n" +
             "Server: nginx\n" +
             "set-cookie: sails.sid=s%3AQpYXn4PNOGmzId3jttU03ZketH2aY6Zz.dj6l8lpXUtFJTCoRxWRPPx4fISmmCKzgOAlIxT2DSxM; Path=/; HttpOnly\n" +
             "Vary: Accept-Encoding\n" +
@@ -81,7 +81,7 @@ public class SimplePostCentricTest {
             "### Resulting body back from the real server (200: application/json; charset=utf-8):\n" +
             "\n" +
             "```\n" +
-            "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=utf-8\",\"user-agent\":\"Apache-HttpClient/4.5.3 (Java/1.8.0_181)\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}\n" +
+            "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"Apache-HttpClient/4.5.3 (Java/1.8.0_181)\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}\n" +
             "```\n" +
             "\n";
     private ServiceInteractionDelegate delegate;
@@ -146,8 +146,8 @@ public class SimplePostCentricTest {
         .then()
                 .assertThat()
                 .statusCode(200)
-                .body(equalTo("{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=utf-8\",\"user-agent\":\"Apache-HttpClient/4.5.3 (Java/1.8.0_181)\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}"))
-                .contentType("application/json;charset=ISO-8859-1");
+                .body(equalTo("{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"Apache-HttpClient/4.5.3 (Java/1.8.0_181)\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}"))
+                .contentType("application/json;charset=utf-8");
     }
 
     private String sanitizeDate(String expected) {

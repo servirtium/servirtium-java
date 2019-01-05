@@ -50,14 +50,13 @@ public class SimpleGetCentricTextTest {
             "\n" +
             "```\n" +
             "Accept: */*\n" +
-            "Host: localhost:8080\n" +
-            "Connection: Keep-Alive\n" +
+            "Connection: keep-alive\n" +
             "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_181)\n" +
+            "Host: svn.apache.org\n" +
             "Accept-Encoding: gzip,deflate\n" +
-            "content-length: 0\n" +
             "```\n" +
             "\n" +
-            "### Body sent to the real server (*/*):\n" +
+            "### Body sent to the real server ():\n" +
             "\n" +
             "```\n" +
             "\n" +

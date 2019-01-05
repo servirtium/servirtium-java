@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -50,10 +51,12 @@ public class SubversionCheckoutRecorderTest {
         // Run this main() method from within Intellij
 
         // Or in the root of this project,
-        // do mvn jooby:run
 
         // then run the following command on the command line (same directory)
-        // svn --config-option servers:global:http-proxy-host=localhost --config-option servers:global:http-proxy-port=8099 co http://svn.apache.org/repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/conf/ .svnhttp_tmp/conf
+        // svn --config-option servers:global:http-proxy-host=localhost --config-option servers:global:http-proxy-port=8099 co http://svn.apache.org/repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/conf/ .svhttp_tmp/conf
+
+        String tempDir = new File(".").getAbsolutePath() + "/.svhttp_tmp/";
+        createWorkDirAndDeleteCheckout(tempDir);
 
         ServiceInteractionRecorder recorder = new ServiceInteractionRecorder(
                 new OkHttpRealServiceInteractor(),
@@ -63,17 +66,18 @@ public class SubversionCheckoutRecorderTest {
         recorder.setOutputStream(CHECKOUT_RECORDER_TEST_MD, fos);
         recorder.startApp();
 
-        String tempDir = new File(".").getAbsolutePath() + "/.svhttp_tmp/";
-        createWorkDirAndDeleteCheckout(tempDir);
 
     }
 
     public static void createWorkDirAndDeleteCheckout(String tempDir) throws IOException {
         new File(tempDir).mkdirs();
-        Files.walk(Paths.get(tempDir + "conf"))
-                .map(Path::toFile)
-                .sorted((o1, o2) -> -o1.compareTo(o2))
-                .forEach(File::delete);
+        try {
+            Files.walk(Paths.get(tempDir + "conf"))
+                    .map(Path::toFile)
+                    .sorted((o1, o2) -> -o1.compareTo(o2))
+                    .forEach(File::delete);
+        } catch (NoSuchFileException e) {
+        }
     }
 
 

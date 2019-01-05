@@ -31,118 +31,132 @@
 
 package com.paulhammant.svhttp;
 
-import org.jooby.Jooby;
-import org.jooby.Mutant;
-import org.jooby.Request;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.AbstractHandler;
 
+import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Base64;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
-public abstract class ServiceInteractionDelegate extends Jooby {
+public abstract class ServiceInteractionDelegate {
 
     protected final HeaderManipulator headerManipulator;
 
-    private boolean appStarted;
-    private boolean appStopped;
+    private Server server;
 
     public ServiceInteractionDelegate(int port, boolean ssl, HeaderManipulator headerManipulator) {
         this.headerManipulator = headerManipulator;
 
-        onStarted(() -> {
-            appStarted = true;
-        });
+        server = new Server(port);
+        server.setHandler(new AbstractHandler() {
 
-        onStop(() -> {
-            appStopped = true;
-        });
+            @Override
+            public void handle(String target, org.eclipse.jetty.server.Request baseRequest,
+                               HttpServletRequest request,
+                               HttpServletResponse response) throws IOException, ServletException {
 
-        if (ssl) {
-            port(23456);
-            securePort(port);
-        } else {
-            port(port);
-        }
+                String method = request.getMethod();
+                String bodyToReal = "";
+                Map<String, String> headersToReal = new HashMap<>();
 
-        use("*", "*", (req, rsp, chain) -> {
-
-            String method = req.method();
-            String bodyToReal = "";
-            Map<String, String> headersToReal = new HashMap<>();
-
-            try {
-
-                newMethod(req, method);
-                String contentType = req.type().toString();
-
-                Map<String, Mutant> headers = req.headers();
                 try {
-                    if (contentType.equals("application/octet-stream")) {
-                        bodyToReal = "//svHttp+Base64: " + Base64.getEncoder().encodeToString(req.body(byte[].class))
-                                .replaceAll("(.{60})", "$1\n");;
-                    } else {
-                        bodyToReal = req.body().value();
+
+                    newMethod(method, request.getRequestURI().toString());
+                    String contentType = request.getContentType();
+                    if (contentType == null) {
+                        contentType = "";
                     }
-                } catch (org.jooby.Err e) {
-                    // ignore - works fine
+
+                    Enumeration<String> hdrs = request.getHeaderNames();
+
+
+                    ServletInputStream is = request.getInputStream();
+
+                    if (is.available() > 0) {
+
+                        if ("application/octet-stream".equals(contentType)) {
+                            byte[] targetArray = new byte[is.available()];
+                            is.read(targetArray);
+                            bodyToReal = "//svHttp+Base64: " + Base64.getEncoder().encodeToString(targetArray)
+                                    .replaceAll("(.{60})", "$1\n");
+                            ;
+                        } else {
+                            bodyToReal = null;
+                            String characterEncoding = request.getCharacterEncoding();
+                            if (characterEncoding == null) {
+                                characterEncoding = "utf-8";
+                            }
+                            try (Scanner scanner = new Scanner(is, characterEncoding)) {
+                                bodyToReal = scanner.useDelimiter("\\A").next();
+                            }
+                        }
+                    }
+
+
+                    while (hdrs.hasMoreElements()) {
+                        String hdr = hdrs.nextElement();
+                        String hdrVal = request.getHeader(hdr);
+                        hdrVal = headerManipulator.headerReplacement(hdr, hdrVal);
+                        headersToReal.put(hdr, hdrVal);
+                        headerManipulator.potentiallyManipulateHeaders(method, hdr, headersToReal);
+
+                    }
+
+                    headersReceived(headersToReal);
+
+                    bodyReceived(bodyToReal, contentType);
+
+                    ServiceResponse realResponse = getRealResponse(method,
+                            headerManipulator.changeToRealURL((request.getRequestURL().toString().startsWith("http://") || request.getRequestURL().toString().startsWith("https://")) ? request.getRequestURL().toString() : "http://" + request.getRemoteHost() + ":" + request.getRemotePort() + request.getRequestURI()),
+                            headersToReal);
+
+                    for (int i = 0; i < realResponse.headers.length; i++) {
+                        String headerBackFromReal = realResponse.headers[i];
+                        headerBackFromReal = headerManipulator.changeHeaderBackFromReal(i, headerBackFromReal);
+                        int ix = headerBackFromReal.indexOf(": ");
+                        String hdrKey = headerBackFromReal.substring(0, ix);
+                        String hdrVal = headerBackFromReal.substring(ix + 2);
+                        hdrVal = headerManipulator.headerReplacement(hdrKey, hdrVal);
+                        response.setHeader(hdrKey, hdrVal);
+                    }
+
+                    response.setStatus(realResponse.statusCode);
+
+                    if (realResponse.contentType != null) {
+                        response.setContentType(realResponse.contentType);
+                        if (realResponse.body instanceof String) {
+                            response.getWriter().write((String) realResponse.body);
+                        } else {
+                            response.getOutputStream().write((byte[]) realResponse.body);
+                        }
+                    }
+
+                    headersToReturn(realResponse);
+
+                    bodyToReturn(realResponse);
+
+                } catch (Throwable throwable) {
+                    throw throwable; // stick your debugger here
                 }
 
-                for (String hdrKey : headers.keySet()) {
-                    String hdrVal = headers.get(hdrKey).value();
-                    hdrVal = headerManipulator.headerReplacement(hdrKey, hdrVal);
-                    headersToReal.put(hdrKey, hdrVal);
-                    headerManipulator.potentiallyManipulateHeaders(method, hdrKey, headersToReal);
-                }
-
-                headersReceived(headers);
-
-                bodyReceived(bodyToReal, contentType);
-
-                ServiceResponse realResponse = getRealResponse(method,
-                        headerManipulator.changeToRealURL((req.rawPath().startsWith("http://") || req.rawPath().startsWith("https://")) ? req.rawPath() : "http://" + req.hostname() + ":" + req.port() + req.rawPath()),
-                        headersToReal);
-
-                for (int i = 0; i < realResponse.headers.length; i++) {
-                    String headerBackFromReal = realResponse.headers[i];
-                    headerBackFromReal = headerManipulator.changeHeaderBackFromReal(i, headerBackFromReal);
-                    int ix = headerBackFromReal.indexOf(": ");
-                    String hdrKey = headerBackFromReal.substring(0, ix);
-                    String hdrVal = headerBackFromReal.substring(ix + 2);
-                    hdrVal = headerManipulator.headerReplacement(hdrKey, hdrVal);
-                    rsp.header(hdrKey, hdrVal);
-                }
-
-                rsp.status(realResponse.statusCode);
-
-                if (realResponse.contentType != null) {
-                    rsp.type(realResponse.contentType);
-                    rsp.send(realResponse.body);
-                }
-
-                headersToReturn(realResponse);
-
-                bodyToReturn(realResponse);
-
-            } catch (Throwable throwable) {
-                throw throwable; // stick your debugger here
+                // Inform jetty that this request has now been handled
+                baseRequest.setHandled(true);
             }
         });
-
-
-
     }
 
     public ServiceInteractionDelegate startApp() {
-        this.start("server.join=false");
-        int ctr = 0;
-        while (!this.appStarted && ctr < 300) {
-            try {
-                Thread.sleep(15);
-                ctr++;
-            } catch (InterruptedException e) {
-            }
+        try {
+            server.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return this;
     }
@@ -158,8 +172,34 @@ public abstract class ServiceInteractionDelegate extends Jooby {
 
     protected abstract void bodyReceived(String bodyToReal, String contentType);
 
-    protected abstract void headersReceived(Map<String, Mutant> headers);
+    protected abstract void headersReceived(Map<String, String> headers);
 
-    protected abstract void newMethod(Request req, String method);
+    protected void newMethod(Request req, String method) {
+        newMethod(method, req.rawPath());
+    }
+
+    protected abstract void newMethod(String method, String path);
+
+    public void stop() {
+        try {
+            server.stop();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public class Mutant {
+
+        public String value() {
+            return null;
+        }
+    }
+
+    public class Request {
+
+        public String rawPath() {
+            return null;
+        }
+    }
 
 }

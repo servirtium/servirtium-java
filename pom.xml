@@ -12,7 +12,6 @@
     <description>Service Virtualized HTTP that includes record, playback and a markdown storage format</description>
 
     <properties>
-        <jooby.version>1.5.1</jooby.version>
         <!-- Startup class -->
         <application.class>com.paulhammant.svhttp.ServiceInteractionRecorder
         </application.class>
@@ -23,9 +22,9 @@
         <!-- Server -->
 
         <dependency>
-            <groupId>org.jooby</groupId>
-            <artifactId>jooby-netty</artifactId>
-            <version>1.5.1</version>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>9.4.14.v20181114</version>
         </dependency>
 
         <dependency>

@@ -64,7 +64,6 @@ public class OkHttpRealServiceInteractor implements RealServiceInteractor {
             ResponseBody body = response.body();
             Object responseBody = null;
             if (url.contains(".jks") && method.equals("GET")) {
-                System.out.println();
             }
             if ("application/octet-stream".equals(body.contentType().toString())) {
                 responseBody = body.bytes();
