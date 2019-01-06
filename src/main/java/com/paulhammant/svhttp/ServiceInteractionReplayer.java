@@ -88,11 +88,7 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
     protected ServiceResponse getRealResponse(String method, String url, Map<String, String> headersToReal) throws IOException {
 
         try {
-            if (ix == 0 && markdownConversation.substring(0,2).equals("##")) {
-                ix = 0;
-            } else {
-                ix = markdownConversation.indexOf("\n## ", ix)+1;
-            }
+            ix = markdownConversation.indexOf("## ", ix);
             if (ix == -1) {
                 fail("There are no more recorded interactions after #" + num + " in " + filename + ", yet calling getRealResponse() implies there should be more. Fail!!");
 
@@ -113,10 +109,10 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
             }
             String headersReceived = getCodeBlock();
 
-            ix = markdownConversation.indexOf("\n### ", ix)+1;
+            ix = markdownConversation.indexOf("### ", ix);
             lineEnd = markdownConversation.indexOf("\n", ix);
             line = markdownConversation.substring(ix +4, lineEnd);
-            String contentType = line.substring(line.indexOf("(")+1, line.indexOf(")"));
+            String contentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
 
             // TODO remove trim()
             assertEquals(methodAndFilePrefix(mdMethod) + ", headers from the client that should be sent to real server are not the same as those previously recorded", reorderMaybe(headers.trim()), reorderMaybe(headersReceived));
@@ -124,10 +120,10 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
             assertEquals(methodAndFilePrefix(mdMethod) + ", body from the client that should be sent to real server are not the same those previously recorded", this.bodyToReal, bodyReceived);
             assertEquals(methodAndFilePrefix(mdMethod) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded", this.contentTypeToReal, contentType);
             String[] headersToReturn = getCodeBlock().split("\n");
-            ix = markdownConversation.indexOf("\n### ", ix)+1;
+            ix = markdownConversation.indexOf("### ", ix);
             lineEnd = markdownConversation.indexOf("\n", ix);
             line = markdownConversation.substring(ix +4, lineEnd);
-            String statusContent = line.substring(line.indexOf("(")+1, line.indexOf(")"));
+            String statusContent = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
             parts = statusContent.split(": ");
             int statusCode = Integer.parseInt(parts[0]);
             contentType = parts[1];
