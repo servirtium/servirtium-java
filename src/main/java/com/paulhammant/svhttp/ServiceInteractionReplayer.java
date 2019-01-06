@@ -106,6 +106,13 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
             if (!url.endsWith(mdUrl)) {
                 fail("Method " + num + " (" + mdMethod + ") in " + filename + ": " + url + " does not end in previously recorded " + mdUrl);
             }
+
+            final String HEADERS_SENT_TO_REAL_SERVER = "### Request headers sent to the real server";
+            ix = markdownConversation.indexOf(HEADERS_SENT_TO_REAL_SERVER, ix);
+            if (ix == -1) {
+                fail("Expected '" + HEADERS_SENT_TO_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
+            }
+
             String headersReceived = getCodeBlock();
 
             final String BODY_SENT_TO_REAL_SERVER = "### Body sent to the real server";
