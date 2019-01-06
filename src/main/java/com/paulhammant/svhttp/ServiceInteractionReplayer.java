@@ -123,13 +123,17 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
             assertEquals(methodAndFilePrefix(mdMethod) + ", body from the client that should be sent to real server are not the same those previously recorded", this.bodyToReal, bodyReceived);
             assertEquals(methodAndFilePrefix(mdMethod) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded", this.contentTypeToReal, contentType);
 
-            final String RESULTING_HEADERS_BACK_FROM_SERVER = "### Resulting headers back from the real server";
-            ix = markdownConversation.indexOf(RESULTING_HEADERS_BACK_FROM_SERVER, ix);
+            final String RESULTING_HEADERS_BACK_FROM_REAL_SERVER = "### Resulting headers back from the real server";
+            ix = markdownConversation.indexOf(RESULTING_HEADERS_BACK_FROM_REAL_SERVER, ix);
             if (ix == -1) {
-                fail("Expected '" + RESULTING_HEADERS_BACK_FROM_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
+                fail("Expected '" + RESULTING_HEADERS_BACK_FROM_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
             }
             String[] headersToReturn = getCodeBlock().split("\n");
-            ix = markdownConversation.indexOf("### ", ix);
+            final String RESULTING_BODY_BACK_FROM_REAL_SERVER = "### Resulting body back from the real server";
+            ix = markdownConversation.indexOf(RESULTING_BODY_BACK_FROM_REAL_SERVER, ix);
+            if (ix == -1) {
+                fail("Expected '" + RESULTING_BODY_BACK_FROM_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
+            }
             lineEnd = markdownConversation.indexOf("\n", ix);
             line = markdownConversation.substring(ix +4, lineEnd);
             String statusContent = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
