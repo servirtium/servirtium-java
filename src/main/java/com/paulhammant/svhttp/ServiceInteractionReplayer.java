@@ -91,7 +91,6 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
             ix = markdownConversation.indexOf("## ", ix);
             if (ix == -1) {
                 fail("There are no more recorded interactions after #" + num + " in " + filename + ", yet calling getRealResponse() implies there should be more. Fail!!");
-
             }
             int lineEnd = markdownConversation.indexOf("\n", ix);
             String line = markdownConversation.substring(ix +2, lineEnd);
@@ -109,7 +108,11 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
             }
             String headersReceived = getCodeBlock();
 
-            ix = markdownConversation.indexOf("### Body sent to the real server", ix);
+            final String BODY_SENT_TO_REAL_SERVER = "### Body sent to the real server";
+            ix = markdownConversation.indexOf(BODY_SENT_TO_REAL_SERVER, ix);
+            if (ix == -1) {
+                fail("Expected '" + BODY_SENT_TO_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
+            }
             lineEnd = markdownConversation.indexOf("\n", ix);
             line = markdownConversation.substring(ix +4, lineEnd);
             String contentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
