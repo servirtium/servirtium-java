@@ -163,7 +163,6 @@ public class SimpleGetCentricBinaryTest {
                 if (headerBackFromReal.startsWith("Age:")) {
                     return "Age: 99999";
                 }
-
                 if (headerBackFromReal.startsWith("X-Cache:")) {
                     return "X-Cache: cp1234 hit/8, cp3210 hit/3, cp3456 hit/11";
                 }
