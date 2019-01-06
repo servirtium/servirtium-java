@@ -31,11 +31,13 @@
 
 package com.paulhammant.svhttp;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public interface HeaderManipulator {
 
-    default void potentiallyManipulateHeaders(String method, String currentHeader, Map<String, String> allHeadersToReal) {
+    default void potentiallyManipulateHeader(String method, String currentHeader, Map<String, String> allHeadersToReal) {
     }
 
     default String headerReplacement(String hdrKey, String hdrVal) {
@@ -48,6 +50,14 @@ public interface HeaderManipulator {
 
     default String changeHeaderBackFromReal(int ix, String headerBackFromReal) {
         return headerBackFromReal;
+    }
+
+    default void messWithHeadersBackFromReal(ArrayList<String> headers) {
+
+    }
+
+    default void messWithHeadersToSendToReal(Map<String, String> headersToReal) {
+
     }
 
     class Noop implements HeaderManipulator {

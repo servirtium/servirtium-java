@@ -32,7 +32,10 @@ package com.paulhammant.svhttp;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.Map;
 
 import static java.nio.file.Files.readAllBytes;
@@ -48,12 +51,18 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
     private String headers;
     private String num;
     private String filename;
+    private boolean forgivingOrderOfClientRquestHeaders = false;
 
     public ServiceInteractionReplayer(int port, boolean ssl, HeaderManipulator headerManipultor) {
         super(port, ssl, headerManipultor);
     }
 
-    public void setPlaybackFilename(String filename) {
+    public ServiceInteractionReplayer withForgivingOrderOfClientRquestHeaders() {
+        forgivingOrderOfClientRquestHeaders = true;
+        return this;
+    }
+
+    public void setMarkdownScriptFilename(String filename) {
         try {
             setPlaybackConversation(new String(readAllBytes(Paths.get(filename))));
             this.filename = filename;
@@ -69,10 +78,9 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
     }
 
     @Override
-    public void finished() {
-        ix = markdownConversation.indexOf("## ", ix);
-        if (ix > -1) {
-            fail("There are more recorded interactions after #" + num + " in " + filename + ", yet calling finished() implies there should be no more. Fail!!");
+    public void finishedMarkdownScript() {
+        if (markdownConversation.length() - ix > 1) {
+            fail("There are more recorded interactions after #" + num + " in " + filename + ", yet calling finishedMarkdownScript() implies there should be no more. Fail!!");
         }
     }
 
@@ -80,7 +88,11 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
     protected ServiceResponse getRealResponse(String method, String url, Map<String, String> headersToReal) throws IOException {
 
         try {
-            ix = markdownConversation.indexOf("## ", ix);
+            if (ix == 0 && markdownConversation.substring(0,2).equals("##")) {
+                ix = 0;
+            } else {
+                ix = markdownConversation.indexOf("\n## ", ix)+1;
+            }
             if (ix == -1) {
                 fail("There are no more recorded interactions after #" + num + " in " + filename + ", yet calling getRealResponse() implies there should be more. Fail!!");
 
@@ -90,25 +102,29 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
             String[] parts = line.split(" ");
             num = parts[1].replace(":","");
             String mdMethod = parts[2];
-            assertEquals(method, mdMethod);
+            if (!method.equals(mdMethod)) {
+                fail("Method " + num + " (" + mdMethod + ") in " + filename + ": " + url + " expected to be " + method);
+            }
+
+            assertEquals(methodAndFilePrefix(mdMethod) + ", method from the client that should be sent to real server are not the same as that previously recorded", method, mdMethod);
             String mdUrl = parts[3];
             if (!url.endsWith(mdUrl)) {
-                fail("Method " + num + " (" + mdMethod + ")" + num + " in " + filename + ": " + url + " does not end in previously recorded " + mdUrl);
+                fail("Method " + num + " (" + mdMethod + ") in " + filename + ": " + url + " does not end in previously recorded " + mdUrl);
             }
             String headersReceived = getCodeBlock();
 
-            ix = markdownConversation.indexOf("### ", ix);
+            ix = markdownConversation.indexOf("\n### ", ix)+1;
             lineEnd = markdownConversation.indexOf("\n", ix);
             line = markdownConversation.substring(ix +4, lineEnd);
             String contentType = line.substring(line.indexOf("(")+1, line.indexOf(")"));
 
             // TODO remove trim()
-            assertEquals(methodAndFilePrefix(mdMethod) + ", headers from the client that should be sent to real server are not the same as those previously recorded", headers.trim(), headersReceived);
+            assertEquals(methodAndFilePrefix(mdMethod) + ", headers from the client that should be sent to real server are not the same as those previously recorded", reorderMaybe(headers.trim()), reorderMaybe(headersReceived));
             String bodyReceived = getCodeBlock();
             assertEquals(methodAndFilePrefix(mdMethod) + ", body from the client that should be sent to real server are not the same those previously recorded", this.bodyToReal, bodyReceived);
             assertEquals(methodAndFilePrefix(mdMethod) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded", this.contentTypeToReal, contentType);
             String[] headersToReturn = getCodeBlock().split("\n");
-            ix = markdownConversation.indexOf("### ", ix);
+            ix = markdownConversation.indexOf("\n### ", ix)+1;
             lineEnd = markdownConversation.indexOf("\n", ix);
             line = markdownConversation.substring(ix +4, lineEnd);
             String statusContent = line.substring(line.indexOf("(")+1, line.indexOf(")"));
@@ -125,11 +141,22 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
             return new ServiceResponse(bodyToReturn, contentType, statusCode, headersToReturn);
         } catch (AssertionError e) {
             System.out.println("***************************************************");
-            System.out.println(">>>> Assertion Error: " + e.getMessage());
+            System.out.println("***************************************************");
+
+            System.out.println(">>>> Svhttp Replay Assertion Error: " + e.getMessage());
             e.printStackTrace();
             return new ServiceResponse("ServiceInteractionReplayer: " + e.getMessage(), "text/plain", 500);
 
         }
+    }
+
+    private String reorderMaybe(String headersReceived) {
+        if (forgivingOrderOfClientRquestHeaders) {
+            String[] foo = headersReceived.split("\n");
+            Arrays.sort(foo);
+            return String.join("\n", foo);
+        }
+        return headersReceived;
     }
 
     private String methodAndFilePrefix(String mdMethod) {

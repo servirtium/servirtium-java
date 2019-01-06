@@ -31,7 +31,6 @@
 
 package com.paulhammant.svhttp.svn;
 
-import com.paulhammant.svhttp.HeaderManipulator;
 import com.paulhammant.svhttp.SimpleHeaderManipulator;
 
 import java.util.Map;
@@ -43,14 +42,14 @@ public class SvnHeaderManipulator extends SimpleHeaderManipulator {
     }
 
     @Override
-    public void potentiallyManipulateHeaders(String method, String currentHeader, Map<String, String> allHeadersToReal) {
+    public void potentiallyManipulateHeader(String method, String currentHeader, Map<String, String> allHeadersToReal) {
         if (method.equals("OPTIONS") && currentHeader.equals("DAV")) {
             // hack: Subversion has THREE 'DAV' headers. OkHttp uses a map - oops
             // So let's pad the key with spaces to make unique keys ... annd that seems to work :)
             allHeadersToReal.put("DAV ", "http://subversion.tigris.org/xmlns/dav/svn/mergeinfo");
             allHeadersToReal.put("DAV  ", "http://subversion.tigris.org/xmlns/dav/svn/log-revprops");
         }
-        super.potentiallyManipulateHeaders(method, currentHeader, allHeadersToReal);
+        super.potentiallyManipulateHeader(method, currentHeader, allHeadersToReal);
     }
 
     @Override

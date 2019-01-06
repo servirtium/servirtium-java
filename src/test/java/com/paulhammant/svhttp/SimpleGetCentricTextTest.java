@@ -124,7 +124,7 @@ public class SimpleGetCentricTextTest {
         // Order of headers is NOT as originally sent as UniRest uses a Map to store them
         assertEquals(sanitizeDate(EXPECTED_1 + EXPECTED_2b + EXPECTED_3), sanitizeDate(out.toString()));
 
-        delegate.finished();
+        delegate.finishedMarkdownScript();
     }
 
     @After
@@ -148,7 +148,7 @@ public class SimpleGetCentricTextTest {
         // Order of headers is as originally sent
         assertEquals(sanitizeDate(EXPECTED_1 + EXPECTED_2a + EXPECTED_3), sanitizeDate(out.toString()));
 
-        delegate.finished();
+        delegate.finishedMarkdownScript();
     }
 
     @Test
@@ -161,7 +161,7 @@ public class SimpleGetCentricTextTest {
 
         checkGetOfApacheNoticeFileOverHttpViaRestAssured();
 
-        delegate.finished();
+        delegate.finishedMarkdownScript();
 
     }
 

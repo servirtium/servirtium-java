@@ -43,7 +43,6 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -108,8 +107,10 @@ public abstract class ServiceInteractionDelegate {
                         String hdrVal = request.getHeader(hdr);
                         hdrVal = headerManipulator.headerReplacement(hdr, hdrVal);
                         headersToReal.put(hdr, hdrVal);
-                        headerManipulator.potentiallyManipulateHeaders(method, hdr, headersToReal);
+                        headerManipulator.potentiallyManipulateHeader(method, hdr, headersToReal);
                     }
+
+                    headerManipulator.messWithHeadersToSendToReal(headersToReal);
 
                     headersReceived(headersToReal);
 
@@ -118,17 +119,20 @@ public abstract class ServiceInteractionDelegate {
                     final String url = (request.getRequestURL().toString().startsWith("http://") || request.getRequestURL().toString().startsWith("https://")) ? request.getRequestURL().toString() : "http://" + request.getRemoteHost() + ":" + request.getRemotePort() + request.getRequestURI();
                     ServiceResponse realResponse = getRealResponse(method, headerManipulator.changeToRealURL(url), headersToReal);
 
-                    List<String > newHeaders = new ArrayList<>();
+                    ArrayList<String > newHeaders = new ArrayList<>();
                     for (int i = 0; i < realResponse.headers.length; i++) {
                         String headerBackFromReal = realResponse.headers[i];
                         String potentiallyChangedHeader = headerManipulator.changeHeaderBackFromReal(i, headerBackFromReal);
                         newHeaders.add(potentiallyChangedHeader);
-                        int ix = potentiallyChangedHeader.indexOf(": ");
-                        String hdrKey = potentiallyChangedHeader.substring(0, ix);
-                        String hdrVal = potentiallyChangedHeader.substring(ix + 2);
-                        hdrVal = headerManipulator.headerReplacement(hdrKey, hdrVal);
+                    }
+                    headerManipulator.messWithHeadersBackFromReal(newHeaders);
+                    for (String header : newHeaders) {
+                        int ix = header.indexOf(": ");
+                        String hdrKey = header.substring(0, ix);
+                        String hdrVal = header.substring(ix + 2);
                         response.setHeader(hdrKey, hdrVal);
                     }
+
                     ServiceResponse revisedResponse = realResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
 
                     response.setStatus(revisedResponse.statusCode);
@@ -174,7 +178,7 @@ public abstract class ServiceInteractionDelegate {
         return this;
     }
 
-    public abstract void finished();
+    public abstract void finishedMarkdownScript();
 
     protected abstract ServiceResponse getRealResponse(String method,
                                                        String url, Map<String, String> headersToReal) throws IOException;
@@ -190,6 +194,7 @@ public abstract class ServiceInteractionDelegate {
     protected abstract void newMethod(String method, String path);
 
     public void stop() {
+        finishedMarkdownScript(); // just in case
         try {
             server.stop();
         } catch (Exception e) {

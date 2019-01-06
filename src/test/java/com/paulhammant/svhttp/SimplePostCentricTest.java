@@ -31,7 +31,6 @@
 
 package com.paulhammant.svhttp;
 
-import com.paulhammant.svhttp.svn.SvnHeaderManipulator;
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -39,7 +38,6 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 
@@ -102,7 +100,7 @@ public class SimplePostCentricTest {
         // Order of headers is NOT as originally sent as UniRest uses a Map to store them
         assertEquals(sanitizeDate(EXPECTED), sanitizeDate(out.toString()));
 
-        delegate.finished();
+        delegate.finishedMarkdownScript();
 
     }
 
@@ -126,7 +124,7 @@ public class SimplePostCentricTest {
         // Order of headers is as originally sent
         assertEquals(sanitizeDate(EXPECTED), sanitizeDate(out.toString()));
 
-        delegate.finished();
+        delegate.finishedMarkdownScript();
     }
 
     @Test
@@ -139,7 +137,7 @@ public class SimplePostCentricTest {
 
         checkPostToPostmanEchoViaRestAssured();
 
-        delegate.finished();
+        delegate.finishedMarkdownScript();
     }
 
     private void checkPostToPostmanEchoViaRestAssured() {

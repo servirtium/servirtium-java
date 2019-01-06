@@ -33,9 +33,7 @@ package com.paulhammant.svhttp;
 
 import com.paulhammant.svhttp.svn.SvnHeaderManipulator;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import static com.paulhammant.svhttp.SubversionCheckoutRecorderTest.CHECKOUT_RECORDER_TEST_MD;
@@ -58,7 +56,7 @@ public class SubversionCheckoutReplayTest {
 
         ServiceInteractionReplayer replayer = new ServiceInteractionReplayer(
                 8099, false, new SvnHeaderManipulator("", ""));
-        replayer.setPlaybackFilename(CHECKOUT_RECORDER_TEST_MD);
+        replayer.setMarkdownScriptFilename(CHECKOUT_RECORDER_TEST_MD);
         replayer.startApp();
 
 

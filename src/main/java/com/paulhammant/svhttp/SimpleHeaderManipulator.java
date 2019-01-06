@@ -21,7 +21,7 @@ public class SimpleHeaderManipulator implements HeaderManipulator {
     }
 
     @Override
-    public void potentiallyManipulateHeaders(String method, String currentHeader, Map<String, String> allHeadersToReal) {
+    public void potentiallyManipulateHeader(String method, String currentHeader, Map<String, String> allHeadersToReal) {
         if (currentHeader.equals("Host")) {
             allHeadersToReal.put("Host", allHeadersToReal.get("Host").replace(fromUrl, toUrl));
         }

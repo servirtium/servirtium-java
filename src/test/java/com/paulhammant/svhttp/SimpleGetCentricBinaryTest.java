@@ -124,7 +124,7 @@ public class SimpleGetCentricBinaryTest {
         // Order of headers is NOT as originally sent as UniRest uses a Map to store them
         assertEquals(simplidyForEqualsTesting(EXPECTED_1 + EXPECTED_2b + EXPECTED_3), simplidyForEqualsTesting(out.toString()));
 
-        delegate.finished();
+        delegate.finishedMarkdownScript();
     }
 
     @After
@@ -148,7 +148,7 @@ public class SimpleGetCentricBinaryTest {
         // Order of headers is as originally sent
         assertEquals(simplidyForEqualsTesting(EXPECTED_1 + EXPECTED_2a + EXPECTED_3), simplidyForEqualsTesting(out.toString()));
 
-        delegate.finished();
+        delegate.finishedMarkdownScript();
     }
 
     @Test
@@ -169,6 +169,9 @@ public class SimpleGetCentricBinaryTest {
                 }
                 if (headerBackFromReal.startsWith("X-Varnish:")) {
                     return "X-Varnish: 123456789 123456788, 123456787 123456786, 123456785 1234546784";
+                }
+                if (headerBackFromReal.startsWith("X-Trans-Id:")) {
+                    return "X-Trans-Id: tx91ba2b7e0fb34d2895206-005c2ff4de";
                 }
                 return headerBackFromReal;
             }
@@ -243,7 +246,7 @@ public class SimpleGetCentricBinaryTest {
                 "```\n" +
                 "\n"), simplidyForEqualsTesting(out.toString()));
 
-        delegate.finished();
+        delegate.finishedMarkdownScript();
     }
 
     @Test
@@ -264,6 +267,9 @@ public class SimpleGetCentricBinaryTest {
                 }
                 if (headerBackFromReal.startsWith("X-Varnish:")) {
                     return "X-Varnish: 123456789 123456788, 123456787 123456786, 123456785 1234546784";
+                }
+                if (headerBackFromReal.startsWith("X-Trans-Id:")) {
+                    return "X-Trans-Id: tx09ce3c78b8a9446082f80-005c30fd26";
                 }
                 return headerBackFromReal;
             }
@@ -349,7 +355,7 @@ public class SimpleGetCentricBinaryTest {
                         "```\n" +
                         "\n"), simplidyForEqualsTesting(out.toString()));
 
-        delegate.finished();
+        delegate.finishedMarkdownScript();
     }
 
     @Test
@@ -362,7 +368,7 @@ public class SimpleGetCentricBinaryTest {
 
         checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured();
 
-        delegate.finished();
+        delegate.finishedMarkdownScript();
     }
 
     private void checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured() {

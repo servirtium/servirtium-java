@@ -65,9 +65,15 @@ public class OkHttpRealServiceInteractor implements RealServiceInteractor {
                     .build()).execute();
             ResponseBody body = response.body();
             Object responseBody = null;
-            String contentType = body.contentType().toString();
-            if (contentType == null) {
+            String contentType;
+            final MediaType mediaType = body.contentType();
+            if (mediaType == null) {
                 contentType = "";
+            } else {
+                contentType = mediaType.toString();
+                if (contentType == null) {
+                    contentType = "";
+                }
             }
             if (isText(contentType)) {
                         responseBody = body.string();

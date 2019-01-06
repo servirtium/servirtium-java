@@ -31,6 +31,8 @@
 
 package com.paulhammant.svhttp;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -74,7 +76,7 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
 
     private void guardOut() {
         if (out == null) {
-            fail("Recording in progress, but previous recording was finished() and/or no new setFilename(..) started");
+            fail("Recording in progress, but previous recording was finishedMarkdownScript() and/or no new setMarkdownScriptFilename(..) started");
         }
     }
 
@@ -143,11 +145,15 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
         CTR++;
     }
 
-    public void finished() {
+    public void finishedMarkdownScript() {
         if (this.out != null) {
             this.out.close();
             this.out = null;
         }
+    }
+
+    public void setMarkdownScriptFilename(String filename) throws FileNotFoundException {
+        setOutputStream(filename, new FileOutputStream(filename));
     }
 
     public void setOutputStream(String filename, OutputStream out) {
