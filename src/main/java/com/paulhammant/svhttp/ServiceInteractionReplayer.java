@@ -109,7 +109,7 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
             }
             String headersReceived = getCodeBlock();
 
-            ix = markdownConversation.indexOf("### ", ix);
+            ix = markdownConversation.indexOf("### Body sent to the real server", ix);
             lineEnd = markdownConversation.indexOf("\n", ix);
             line = markdownConversation.substring(ix +4, lineEnd);
             String contentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
