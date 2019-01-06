@@ -88,21 +88,22 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
     protected ServiceResponse getRealResponse(String method, String url, Map<String, String> headersToReal) throws IOException {
 
         try {
-            ix = markdownConversation.indexOf("## ", ix);
+            final String SVHTTP_INTERACTION = "## SvHttp Interaction ";
+            ix = markdownConversation.indexOf(SVHTTP_INTERACTION, ix);
             if (ix == -1) {
                 fail("There are no more recorded interactions after #" + num + " in " + filename + ", yet calling getRealResponse() implies there should be more. Fail!!");
             }
             int lineEnd = markdownConversation.indexOf("\n", ix);
-            String line = markdownConversation.substring(ix +2, lineEnd);
+            String line = markdownConversation.substring(ix + SVHTTP_INTERACTION.length(), lineEnd);
             String[] parts = line.split(" ");
-            num = parts[1].replace(":","");
-            String mdMethod = parts[2];
+            num = parts[0].replace(":","");
+            String mdMethod = parts[1];
             if (!method.equals(mdMethod)) {
                 fail("Method " + num + " (" + mdMethod + ") in " + filename + ": " + url + " expected to be " + method);
             }
 
             assertEquals(methodAndFilePrefix(mdMethod) + ", method from the client that should be sent to real server are not the same as that previously recorded", method, mdMethod);
-            String mdUrl = parts[3];
+            String mdUrl = parts[2];
             if (!url.endsWith(mdUrl)) {
                 fail("Method " + num + " (" + mdMethod + ") in " + filename + ": " + url + " does not end in previously recorded " + mdUrl);
             }

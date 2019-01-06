@@ -1,4 +1,4 @@
-## 0: OPTIONS /todos
+## SvHttp Interaction 0: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
@@ -46,7 +46,7 @@ Via: 1.1 vegur
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## 1: GET /todos
+## SvHttp Interaction 1: GET /todos
 
 ### Request headers sent to the real server:
 
@@ -91,7 +91,7 @@ Via: 1.1 vegur
 [{"uid":"008ae667-4880-4226-9c08-65b0d7f36b1e","title":"blah","order":523,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/008ae667-4880-4226-9c08-65b0d7f36b1e","url":"http://todo-backend-sinatra.herokuapp.com/todos/008ae667-4880-4226-9c08-65b0d7f36b1e"},{"uid":"e320fd81-2443-4d94-9ca2-91ef12d1c59f","title":"blah","order":95,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/e320fd81-2443-4d94-9ca2-91ef12d1c59f","url":"http://todo-backend-sinatra.herokuapp.com/todos/e320fd81-2443-4d94-9ca2-91ef12d1c59f"},{"uid":"0128796a-47ef-477d-b536-087b7a604b0b","title":"blah","order":95,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/0128796a-47ef-477d-b536-087b7a604b0b","url":"http://todo-backend-sinatra.herokuapp.com/todos/0128796a-47ef-477d-b536-087b7a604b0b"}]
 ```
 
-## 2: POST /todos
+## SvHttp Interaction 2: POST /todos
 
 ### Request headers sent to the real server:
 
@@ -138,7 +138,7 @@ Via: 1.1 vegur
 {"title":"a todo","uid":"56653d81-3c84-4055-bae8-06b2065f491b","completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/56653d81-3c84-4055-bae8-06b2065f491b","url":"http://todo-backend-sinatra.herokuapp.com/todos/56653d81-3c84-4055-bae8-06b2065f491b"}
 ```
 
-## 3: DELETE /todos
+## SvHttp Interaction 3: DELETE /todos
 
 ### Request headers sent to the real server:
 
@@ -181,7 +181,7 @@ Via: 1.1 vegur
 
 ```
 
-## 4: DELETE /todos
+## SvHttp Interaction 4: DELETE /todos
 
 ### Request headers sent to the real server:
 
@@ -224,7 +224,7 @@ Via: 1.1 vegur
 
 ```
 
-## 5: GET /todos
+## SvHttp Interaction 5: GET /todos
 
 ### Request headers sent to the real server:
 
@@ -269,7 +269,7 @@ Via: 1.1 vegur
 []
 ```
 
-## 6: DELETE /todos
+## SvHttp Interaction 6: DELETE /todos
 
 ### Request headers sent to the real server:
 
@@ -312,7 +312,7 @@ Via: 1.1 vegur
 
 ```
 
-## 7: POST /todos
+## SvHttp Interaction 7: POST /todos
 
 ### Request headers sent to the real server:
 
@@ -359,7 +359,7 @@ Via: 1.1 vegur
 {"title":"walk the dog","uid":"2b382aa3-caaf-4eaa-91df-a9bc49a59d10","completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/2b382aa3-caaf-4eaa-91df-a9bc49a59d10","url":"http://todo-backend-sinatra.herokuapp.com/todos/2b382aa3-caaf-4eaa-91df-a9bc49a59d10"}
 ```
 
-## 8: GET /todos
+## SvHttp Interaction 8: GET /todos
 
 ### Request headers sent to the real server:
 
@@ -404,7 +404,7 @@ Via: 1.1 vegur
 [{"uid":"2b382aa3-caaf-4eaa-91df-a9bc49a59d10","title":"walk the dog","order":0,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/2b382aa3-caaf-4eaa-91df-a9bc49a59d10","url":"http://todo-backend-sinatra.herokuapp.com/todos/2b382aa3-caaf-4eaa-91df-a9bc49a59d10"}]
 ```
 
-## 9: DELETE /todos
+## SvHttp Interaction 9: DELETE /todos
 
 ### Request headers sent to the real server:
 
@@ -447,7 +447,7 @@ Via: 1.1 vegur
 
 ```
 
-## 10: POST /todos
+## SvHttp Interaction 10: POST /todos
 
 ### Request headers sent to the real server:
 
@@ -494,7 +494,7 @@ Via: 1.1 vegur
 {"title":"blah","uid":"d26bc5dd-51ce-4a2d-926d-53cb12680e81","completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/d26bc5dd-51ce-4a2d-926d-53cb12680e81","url":"http://todo-backend-sinatra.herokuapp.com/todos/d26bc5dd-51ce-4a2d-926d-53cb12680e81"}
 ```
 
-## 11: GET /todos
+## SvHttp Interaction 11: GET /todos
 
 ### Request headers sent to the real server:
 
@@ -539,7 +539,7 @@ Via: 1.1 vegur
 [{"uid":"d26bc5dd-51ce-4a2d-926d-53cb12680e81","title":"blah","order":0,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/d26bc5dd-51ce-4a2d-926d-53cb12680e81","url":"http://todo-backend-sinatra.herokuapp.com/todos/d26bc5dd-51ce-4a2d-926d-53cb12680e81"}]
 ```
 
-## 12: DELETE /todos
+## SvHttp Interaction 12: DELETE /todos
 
 ### Request headers sent to the real server:
 
@@ -582,7 +582,7 @@ Via: 1.1 vegur
 
 ```
 
-## 13: POST /todos
+## SvHttp Interaction 13: POST /todos
 
 ### Request headers sent to the real server:
 
@@ -629,7 +629,7 @@ Via: 1.1 vegur
 {"title":"blah","uid":"dafb52a5-2752-4e5b-a8c9-157571271072","completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/dafb52a5-2752-4e5b-a8c9-157571271072","url":"http://todo-backend-sinatra.herokuapp.com/todos/dafb52a5-2752-4e5b-a8c9-157571271072"}
 ```
 
-## 14: GET /todos
+## SvHttp Interaction 14: GET /todos
 
 ### Request headers sent to the real server:
 
@@ -674,7 +674,7 @@ Via: 1.1 vegur
 [{"uid":"dafb52a5-2752-4e5b-a8c9-157571271072","title":"blah","order":0,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/dafb52a5-2752-4e5b-a8c9-157571271072","url":"http://todo-backend-sinatra.herokuapp.com/todos/dafb52a5-2752-4e5b-a8c9-157571271072"}]
 ```
 
-## 15: DELETE /todos
+## SvHttp Interaction 15: DELETE /todos
 
 ### Request headers sent to the real server:
 
@@ -717,7 +717,7 @@ Via: 1.1 vegur
 
 ```
 
-## 16: POST /todos
+## SvHttp Interaction 16: POST /todos
 
 ### Request headers sent to the real server:
 
@@ -764,7 +764,7 @@ Via: 1.1 vegur
 {"title":"my todo","uid":"02c6ae01-1675-41f5-8ef6-6b99312fbd03","completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/02c6ae01-1675-41f5-8ef6-6b99312fbd03","url":"http://todo-backend-sinatra.herokuapp.com/todos/02c6ae01-1675-41f5-8ef6-6b99312fbd03"}
 ```
 
-## 17: DELETE /todos
+## SvHttp Interaction 17: DELETE /todos
 
 ### Request headers sent to the real server:
 
@@ -807,7 +807,7 @@ Via: 1.1 vegur
 
 ```
 
-## 18: POST /todos
+## SvHttp Interaction 18: POST /todos
 
 ### Request headers sent to the real server:
 
@@ -832,7 +832,7 @@ Content-Type: application/json
 {"title":"todo the first"}
 ```
 
-## 18: POST /todos
+## SvHttp Interaction 18: POST /todos
 
 ### Request headers sent to the real server:
 
@@ -901,7 +901,7 @@ Via: 1.1 vegur
 {"title":"todo the second","uid":"40bed58b-a69e-46a3-8daa-396cb6077043","completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/40bed58b-a69e-46a3-8daa-396cb6077043","url":"http://todo-backend-sinatra.herokuapp.com/todos/40bed58b-a69e-46a3-8daa-396cb6077043"}
 ```
 
-## 20: GET /todos
+## SvHttp Interaction 20: GET /todos
 
 ### Request headers sent to the real server:
 
@@ -946,7 +946,7 @@ Via: 1.1 vegur
 [{"uid":"4b18bac2-8ce3-4171-8261-d1e6e9d81a8d","title":"todo the first","order":0,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/4b18bac2-8ce3-4171-8261-d1e6e9d81a8d","url":"http://todo-backend-sinatra.herokuapp.com/todos/4b18bac2-8ce3-4171-8261-d1e6e9d81a8d"},{"uid":"40bed58b-a69e-46a3-8daa-396cb6077043","title":"todo the second","order":0,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/40bed58b-a69e-46a3-8daa-396cb6077043","url":"http://todo-backend-sinatra.herokuapp.com/todos/40bed58b-a69e-46a3-8daa-396cb6077043"}]
 ```
 
-## 21: DELETE /todos
+## SvHttp Interaction 21: DELETE /todos
 
 ### Request headers sent to the real server:
 
@@ -989,7 +989,7 @@ Via: 1.1 vegur
 
 ```
 
-## 22: POST /todos
+## SvHttp Interaction 22: POST /todos
 
 ### Request headers sent to the real server:
 
@@ -1036,7 +1036,7 @@ Via: 1.1 vegur
 {"title":"initial title","uid":"33086d5d-08ef-4eb3-ba32-e2ce8f8bf05f","completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/33086d5d-08ef-4eb3-ba32-e2ce8f8bf05f","url":"http://todo-backend-sinatra.herokuapp.com/todos/33086d5d-08ef-4eb3-ba32-e2ce8f8bf05f"}
 ```
 
-## 23: DELETE /todos
+## SvHttp Interaction 23: DELETE /todos
 
 ### Request headers sent to the real server:
 
@@ -1079,7 +1079,7 @@ Via: 1.1 vegur
 
 ```
 
-## 24: POST /todos
+## SvHttp Interaction 24: POST /todos
 
 ### Request headers sent to the real server:
 
@@ -1126,7 +1126,7 @@ Via: 1.1 vegur
 {"title":"blah","uid":"d57e4b76-80e0-4d9d-9f93-9009de769426","completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/d57e4b76-80e0-4d9d-9f93-9009de769426","url":"http://todo-backend-sinatra.herokuapp.com/todos/d57e4b76-80e0-4d9d-9f93-9009de769426"}
 ```
 
-## 25: OPTIONS /todos
+## SvHttp Interaction 25: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
@@ -1174,7 +1174,7 @@ Via: 1.1 vegur
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## 26: DELETE /todos
+## SvHttp Interaction 26: DELETE /todos
 
 ### Request headers sent to the real server:
 
@@ -1217,7 +1217,7 @@ Via: 1.1 vegur
 
 ```
 
-## 27: POST /todos
+## SvHttp Interaction 27: POST /todos
 
 ### Request headers sent to the real server:
 
@@ -1264,7 +1264,7 @@ Via: 1.1 vegur
 {"title":"blah","uid":"d4aba8f1-d08e-4457-b8fd-834def4896d4","completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/d4aba8f1-d08e-4457-b8fd-834def4896d4","url":"http://todo-backend-sinatra.herokuapp.com/todos/d4aba8f1-d08e-4457-b8fd-834def4896d4"}
 ```
 
-## 28: GET /todos
+## SvHttp Interaction 28: GET /todos
 
 ### Request headers sent to the real server:
 
@@ -1309,7 +1309,7 @@ Via: 1.1 vegur
 [{"uid":"d4aba8f1-d08e-4457-b8fd-834def4896d4","title":"changed title","order":0,"completed":true,"href":"http://todo-backend-sinatra.herokuapp.com/todos/d4aba8f1-d08e-4457-b8fd-834def4896d4","url":"http://todo-backend-sinatra.herokuapp.com/todos/d4aba8f1-d08e-4457-b8fd-834def4896d4"}]
 ```
 
-## 29: DELETE /todos
+## SvHttp Interaction 29: DELETE /todos
 
 ### Request headers sent to the real server:
 
@@ -1352,7 +1352,7 @@ Via: 1.1 vegur
 
 ```
 
-## 30: POST /todos
+## SvHttp Interaction 30: POST /todos
 
 ### Request headers sent to the real server:
 
@@ -1399,7 +1399,7 @@ Via: 1.1 vegur
 {"title":"blah","uid":"934482ab-d618-4205-801a-ae460a24eb15","completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/934482ab-d618-4205-801a-ae460a24eb15","url":"http://todo-backend-sinatra.herokuapp.com/todos/934482ab-d618-4205-801a-ae460a24eb15"}
 ```
 
-## 31: GET /todos
+## SvHttp Interaction 31: GET /todos
 
 ### Request headers sent to the real server:
 
@@ -1444,7 +1444,7 @@ Via: 1.1 vegur
 []
 ```
 
-## 32: POST /todos
+## SvHttp Interaction 32: POST /todos
 
 ### Request headers sent to the real server:
 
@@ -1491,7 +1491,7 @@ Via: 1.1 vegur
 {"title":"blah","order":523,"uid":"d8182e46-fecc-45e9-b295-865c8465b7c1","completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/d8182e46-fecc-45e9-b295-865c8465b7c1","url":"http://todo-backend-sinatra.herokuapp.com/todos/d8182e46-fecc-45e9-b295-865c8465b7c1"}
 ```
 
-## 33: POST /todos
+## SvHttp Interaction 33: POST /todos
 
 ### Request headers sent to the real server:
 
@@ -1538,7 +1538,7 @@ Via: 1.1 vegur
 {"order":10,"title":"blah","uid":"ba3d4699-2639-4ac7-883c-84f18445ad8f","completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/ba3d4699-2639-4ac7-883c-84f18445ad8f","url":"http://todo-backend-sinatra.herokuapp.com/todos/ba3d4699-2639-4ac7-883c-84f18445ad8f"}
 ```
 
-## 34: POST /todos
+## SvHttp Interaction 34: POST /todos
 
 ### Request headers sent to the real server:
 

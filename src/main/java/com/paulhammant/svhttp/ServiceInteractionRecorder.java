@@ -71,7 +71,7 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
     @Override
     protected void newMethod(String method, String path) {
         guardOut();
-        out.println("## " + CTR + ": " + method + " " + path + "\n");
+        out.println("## SvHttp Interaction " + CTR + ": " + method + " " + path + "\n");
     }
 
     private void guardOut() {

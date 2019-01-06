@@ -51,7 +51,6 @@ import java.util.Scanner;
 
 public class UniRestRealServiceInteractor implements RealServiceInteractor {
 
-
     public static class InteractionException extends RuntimeException {
         public InteractionException(Throwable cause) {
             super(cause);

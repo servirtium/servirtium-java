@@ -44,7 +44,7 @@ import static org.junit.Assert.assertEquals;
 public class SimpleGetCentricTextTest {
 
     private static final String EXPECTED_1 =
-            "## 0: GET /repos/asf/synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE\n" +
+            "## SvHttp Interaction 0: GET /repos/asf/synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE\n" +
             "\n" +
             "### Request headers sent to the real server:\n" +
             "\n" +
