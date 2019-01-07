@@ -12,6 +12,10 @@ command. [This one](https://github.com/paul-hammant/svhttp/blob/master/src/test/
 was the recorder, and [this one](https://github.com/paul-hammant/svhttp/blob/master/src/test/java/com/paulhammant/svhttp/SubversionCheckoutReplayTest.java) 
 the replay for that recorded conversation.
 
+The recorder isn't very good at handling parallel requests. Most of the things you want to test will be serial (and 
+short) but if your client is a browser, then you should half expect for parallelized operation to mess up a 
+recorded conversation. See that here [TodobackendDocTowardsPassingTheirJasmineTestSuite.md](https://github.com/paul-hammant/svhttp/blob/master/src/test/resources/TodobackendDocTowardsPassingTheirJasmineTestSuite.md)
+
 ## Project readiness for general industry use
 
 Not ready yet, but being actively worked on.

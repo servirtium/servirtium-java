@@ -15,7 +15,7 @@ public class TodobackendRecorder {
 
            http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
 
-         ... src/test/resources/TodobackendRecorder.md should be overwritten
+         ... src/test/resources/TodobackendDocTowardsPassingTheirJasmineTestSuite.md should be overwritten
 
         Effectively, this is the same as pointing the browser to ...
 
@@ -35,7 +35,7 @@ public class TodobackendRecorder {
                     }
                 });
 
-        recorder.setMarkdownScriptFilename("src/test/resources/TodobackendRecorder.md");
+        recorder.setMarkdownScriptFilename("src/test/resources/TodobackendDocTowardsPassingTheirJasmineTestSuite.md");
         recorder.startApp();
 
     }
