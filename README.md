@@ -11,6 +11,10 @@ JUnit/TestNG etc.**
 Is to store conversations in Markdown, co-located with the tests that would be using SvHttp 
 to isolate themselves from potentially flaky and unquestionably slow remote service.
 
+And this is just for Java teams. Use [Mountebank](http://mbtest.org) for a more versatile SV 
+solution and there's an established [WireMock](http://wiremock.org/) that's available for Java 
+solutions.
+
 ## What does that look like?
 
 See [ExampleSubversionCheckoutRecording.md](https://github.com/paul-hammant/svhttp/blob/master/src/test/resources/ExampleSubversionCheckoutRecording.md) 
