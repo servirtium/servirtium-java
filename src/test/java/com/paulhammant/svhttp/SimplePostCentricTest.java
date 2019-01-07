@@ -1,5 +1,5 @@
 /*
-        SvHTTP: Service Virtualized HTTP
+        SvHttp: Service Virtualized HTTP
 
         Copyright (c) 2018, Paul Hammant
         All rights reserved.
@@ -26,7 +26,7 @@
 
         The views and conclusions contained in the software and documentation are those
         of the authors and should not be interpreted as representing official policies,
-        either expressed or implied, of the SvHTTP project.
+        either expressed or implied, of the SvHttp project.
 */
 
 package com.paulhammant.svhttp;
