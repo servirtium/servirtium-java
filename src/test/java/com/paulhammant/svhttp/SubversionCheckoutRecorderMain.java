@@ -44,7 +44,7 @@ import java.nio.file.Paths;
 
 public class SubversionCheckoutRecorderMain {
 
-    public static final String CHECKOUT_RECORDER_TEST_MD = "./src/test/resources/SubversionCheckoutRecorderTest.md";
+    public static final String CHECKOUT_RECORDER_TEST_MD = "./src/test/resources/ExampleSubversionCheckoutRecording.md";
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
