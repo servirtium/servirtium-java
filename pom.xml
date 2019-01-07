@@ -13,7 +13,7 @@
 
     <properties>
         <!-- Startup class -->
-        <application.class>com.paulhammant.svhttp.ServiceInteractionRecorder
+        <application.class>com.paulhammant.svhttp.InteractionRecordingSvHttpServer
         </application.class>
     </properties>
 

@@ -41,17 +41,17 @@ import java.util.Map;
 
 import static junit.framework.TestCase.fail;
 
-public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
+public class InteractionRecordingSvHttpServer extends SvHttpServer {
 
-    private final RealServiceInteractor httpInteractor;
+    private final ServiceInteroperation httpInteractor;
     private int CTR = 0;
     private PrintStream out;
     private String bodyToReal;
     private String contentTypeToReal;
     private String filename;
 
-    public ServiceInteractionRecorder(RealServiceInteractor realHttpInteractor,
-                                      int port, boolean ssl, HeaderManipulator headerManipultor) {
+    public InteractionRecordingSvHttpServer(ServiceInteroperation realHttpInteractor,
+                                            int port, boolean ssl, HeaderManipulator headerManipultor) {
         super(port, ssl, headerManipultor);
         this.httpInteractor = realHttpInteractor;
     }
@@ -65,7 +65,7 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
 
     protected ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal) throws IOException {
         headersToReal.remove("Accept-Encoding");
-        return httpInteractor.invokeOnRealAndRecordResult(method, this.bodyToReal, this.contentTypeToReal, url, headersToReal, headerManipulator);
+        return httpInteractor.invokeServiceEndpoint(method, this.bodyToReal, this.contentTypeToReal, url, headersToReal, headerManipulator);
     }
 
     @Override

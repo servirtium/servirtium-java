@@ -46,18 +46,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public abstract class ServiceInteractionDelegate {
+public abstract class SvHttpServer {
 
     protected final HeaderManipulator headerManipulator;
 
     private Server server;
     private int counter = -1;
 
-    public ServiceInteractionDelegate(int port, boolean ssl, HeaderManipulator headerManipulator) {
+    public SvHttpServer(int port, boolean ssl, HeaderManipulator headerManipulator) {
         this.headerManipulator = headerManipulator;
 
         server = new Server(port);
-        // How the fuck do you turn off Embedded Jetty's logging???
+        // How the f*** do you turn off Embedded Jetty's logging???
         // Everything I tried (mostly static operations on Log) didn't work.
 
         server.setHandler(new AbstractHandler() {
@@ -181,7 +181,7 @@ public abstract class ServiceInteractionDelegate {
                 contentType.startsWith("application/xhtml+xml");
     }
 
-    public ServiceInteractionDelegate startApp() {
+    public SvHttpServer startApp() {
         try {
             server.start();
         } catch (Exception e) {

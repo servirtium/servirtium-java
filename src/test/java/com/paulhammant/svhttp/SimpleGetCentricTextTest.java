@@ -106,17 +106,17 @@ public class SimpleGetCentricTextTest {
             "\n";
 
 
-    private ServiceInteractionDelegate delegate;
+    private SvHttpServer delegate;
 
 
     @Test
     public void canRecordASimpleGetFromApachesSubversionViaUniRest() {
 
-        delegate = new ServiceInteractionRecorder(
-                new UniRestRealServiceInteractor(),
+        delegate = new InteractionRecordingSvHttpServer(
+                new ServiceInteroperationViaUniRest(),
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((ServiceInteractionRecorder) delegate).setOutputStream("foo", out);
+        ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
         delegate.startApp();
 
         checkGetOfApacheNoticeFileOverHttpViaRestAssured();
@@ -136,11 +136,11 @@ public class SimpleGetCentricTextTest {
     @Test
     public void canRecordASimpleGetFromApachesSubversionViaOkHttp() {
 
-        delegate = new ServiceInteractionRecorder(
-                new OkHttpRealServiceInteractor(),
+        delegate = new InteractionRecordingSvHttpServer(
+                new ServiceInteropViaOkHttp(),
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((ServiceInteractionRecorder) delegate).setOutputStream("foo", out);
+        ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
         delegate.startApp();
 
         checkGetOfApacheNoticeFileOverHttpViaRestAssured();
@@ -154,9 +154,9 @@ public class SimpleGetCentricTextTest {
     @Test
     public void canReplayASimpleGetFromApachesSubversion() {
 
-        delegate = new ServiceInteractionReplayer(
+        delegate = new InteractionReplayingSvHttpServer(
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
-        ((ServiceInteractionReplayer) delegate).setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
+        ((InteractionReplayingSvHttpServer) delegate).setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
         delegate.startApp();
 
         checkGetOfApacheNoticeFileOverHttpViaRestAssured();

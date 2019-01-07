@@ -36,10 +36,10 @@ import com.paulhammant.svhttp.svn.SvnHeaderManipulator;
 import java.io.File;
 import java.io.IOException;
 
-import static com.paulhammant.svhttp.SubversionCheckoutRecorderTest.CHECKOUT_RECORDER_TEST_MD;
-import static com.paulhammant.svhttp.SubversionCheckoutRecorderTest.createWorkDirAndDeleteCheckout;
+import static com.paulhammant.svhttp.SubversionCheckoutRecorderMain.CHECKOUT_RECORDER_TEST_MD;
+import static com.paulhammant.svhttp.SubversionCheckoutRecorderMain.createWorkDirAndDeleteCheckout;
 
-public class SubversionCheckoutReplayTest {
+public class SubversionCheckoutReplayerMain {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
@@ -54,7 +54,7 @@ public class SubversionCheckoutReplayTest {
         createWorkDirAndDeleteCheckout(tempDir);
 
 
-        ServiceInteractionReplayer replayer = new ServiceInteractionReplayer(
+        InteractionReplayingSvHttpServer replayer = new InteractionReplayingSvHttpServer(
                 8099, false, new SvnHeaderManipulator("", ""));
         replayer.setMarkdownScriptFilename(CHECKOUT_RECORDER_TEST_MD);
         replayer.startApp();

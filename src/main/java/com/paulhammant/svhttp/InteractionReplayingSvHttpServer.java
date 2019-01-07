@@ -38,7 +38,7 @@ import java.util.Map;
 
 import static java.nio.file.Files.readAllBytes;
 
-public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
+public class InteractionReplayingSvHttpServer extends SvHttpServer {
 
     private String markdownConversation;
     private int ix;
@@ -49,11 +49,11 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
     private String filename;
     private boolean forgivingOrderOfClientRquestHeaders = false;
 
-    public ServiceInteractionReplayer(int port, boolean ssl, HeaderManipulator headerManipultor) {
+    public InteractionReplayingSvHttpServer(int port, boolean ssl, HeaderManipulator headerManipultor) {
         super(port, ssl, headerManipultor);
     }
 
-    public ServiceInteractionReplayer withForgivingOrderOfClientRquestHeaders() {
+    public InteractionReplayingSvHttpServer withForgivingOrderOfClientRquestHeaders() {
         forgivingOrderOfClientRquestHeaders = true;
         return this;
     }

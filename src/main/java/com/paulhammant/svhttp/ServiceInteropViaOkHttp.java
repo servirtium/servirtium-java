@@ -42,14 +42,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static com.paulhammant.svhttp.ServiceInteractionDelegate.isText;
+import static com.paulhammant.svhttp.SvHttpServer.isText;
 
-public class OkHttpRealServiceInteractor implements RealServiceInteractor {
+public class ServiceInteropViaOkHttp implements ServiceInteroperation {
 
     private OkHttpClient okHttpClient = new OkHttpClient();
 
     @Override
-    public ServiceResponse invokeOnRealAndRecordResult(String method, String bodyToReal, String contentTypeToReal, String url, Map<String, String> headersToReal, HeaderManipulator headerManipulator) throws InteractionException {
+    public ServiceResponse invokeServiceEndpoint(String method, String bodyToReal, String contentTypeToReal, String url, Map<String, String> headersToReal, HeaderManipulator headerManipulator) throws InteractionException {
 
         RequestBody nonGetBody = null;
         if (!method.equals("GET")) {

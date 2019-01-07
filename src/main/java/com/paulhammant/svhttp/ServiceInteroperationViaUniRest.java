@@ -36,11 +36,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.GetRequest;
 import com.mashape.unirest.request.body.RawBody;
-import com.mashape.unirest.request.body.RequestBodyEntity;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -49,7 +45,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class UniRestRealServiceInteractor implements RealServiceInteractor {
+public class ServiceInteroperationViaUniRest implements ServiceInteroperation {
 
     public static class InteractionException extends RuntimeException {
         public InteractionException(Throwable cause) {
@@ -57,7 +53,7 @@ public class UniRestRealServiceInteractor implements RealServiceInteractor {
         }
     }
 
-    public ServiceResponse invokeOnRealAndRecordResult(String method, String bodyToReal, String contentTypeToReal, String url, Map<String, String> headersToReal, HeaderManipulator headerManipulator) throws InteractionException {
+    public ServiceResponse invokeServiceEndpoint(String method, String bodyToReal, String contentTypeToReal, String url, Map<String, String> headersToReal, HeaderManipulator headerManipulator) throws InteractionException {
 
         com.mashape.unirest.http.Headers realResponseHeaders;
         com.mashape.unirest.http.HttpResponse<InputStream> httpResponse;

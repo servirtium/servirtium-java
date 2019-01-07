@@ -82,17 +82,17 @@ public class SimplePostCentricTest {
             "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}\n" +
             "```\n" +
             "\n";
-    private ServiceInteractionDelegate delegate;
+    private SvHttpServer delegate;
 
 
     @Test @Ignore
     public void canRecordASimplePostToPostmanEchoViaUniRest() {
 
-        delegate = new ServiceInteractionRecorder(
-                new UniRestRealServiceInteractor(),
+        delegate = new InteractionRecordingSvHttpServer(
+                new ServiceInteroperationViaUniRest(),
                8080, false, new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((ServiceInteractionRecorder) delegate).setOutputStream("foo", out);
+        ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
         delegate.startApp();
 
         checkPostToPostmanEchoViaRestAssured();
@@ -112,11 +112,11 @@ public class SimplePostCentricTest {
     @Test
     public void canRecordASimplePostToPostmanEchoViaOkHttp() {
 
-        delegate = new ServiceInteractionRecorder(
-                new OkHttpRealServiceInteractor(),
+        delegate = new InteractionRecordingSvHttpServer(
+                new ServiceInteropViaOkHttp(),
                8080, false, new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((ServiceInteractionRecorder) delegate).setOutputStream("foo", out);
+        ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
         delegate.startApp();
 
         checkPostToPostmanEchoViaRestAssured();
@@ -130,9 +130,9 @@ public class SimplePostCentricTest {
     @Test
     public void canReplayASimplePostToPostmanEcho() {
 
-        delegate = new ServiceInteractionReplayer(
+        delegate = new InteractionReplayingSvHttpServer(
                8080, false, new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"));
-        ((ServiceInteractionReplayer) delegate).setPlaybackConversation(EXPECTED);
+        ((InteractionReplayingSvHttpServer) delegate).setPlaybackConversation(EXPECTED);
         delegate.startApp();
 
         checkPostToPostmanEchoViaRestAssured();

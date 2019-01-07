@@ -1,10 +1,9 @@
 package com.paulhammant.svhttp;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Map;
 
-public class TodobackendReplayer {
+public class TodobackendDotComReplayerMain {
 
     public static void main(String[] args) throws FileNotFoundException {
 
@@ -16,7 +15,7 @@ public class TodobackendReplayer {
         // ... src/test/resources/TodobackendDotComStubsTowardsPassingTheirJasmineTestSuite.md will be read and
         // hopefully the Jasmine tests in the browser still pass.
 
-        ServiceInteractionReplayer replayer = new ServiceInteractionReplayer(
+        InteractionReplayingSvHttpServer replayer = new InteractionReplayingSvHttpServer(
                 8099, false,
                 new SimpleHeaderManipulator("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
                     @Override

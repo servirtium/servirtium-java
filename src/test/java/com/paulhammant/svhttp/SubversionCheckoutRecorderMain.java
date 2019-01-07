@@ -42,7 +42,7 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class SubversionCheckoutRecorderTest {
+public class SubversionCheckoutRecorderMain {
 
     public static final String CHECKOUT_RECORDER_TEST_MD = "./src/test/resources/SubversionCheckoutRecorderTest.md";
 
@@ -58,8 +58,8 @@ public class SubversionCheckoutRecorderTest {
         String tempDir = new File(".").getAbsolutePath() + "/.svhttp_tmp/";
         createWorkDirAndDeleteCheckout(tempDir);
 
-        ServiceInteractionRecorder recorder = new ServiceInteractionRecorder(
-                new OkHttpRealServiceInteractor(),
+        InteractionRecordingSvHttpServer recorder = new InteractionRecordingSvHttpServer(
+                new ServiceInteropViaOkHttp(),
                 8099, false, new SvnHeaderManipulator("", ""));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         FileOutputStream fos = new FileOutputStream(CHECKOUT_RECORDER_TEST_MD);

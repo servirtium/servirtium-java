@@ -106,17 +106,17 @@ public class SimpleGetCentricBinaryTest {
             "\n";
 
 
-    private ServiceInteractionDelegate delegate;
+    private SvHttpServer delegate;
 
 
     @Test
     public void canRecordABinaryGetFromApachesSubversionViaUniRest() {
 
-        delegate = new ServiceInteractionRecorder(
-                new UniRestRealServiceInteractor(),
+        delegate = new InteractionRecordingSvHttpServer(
+                new ServiceInteroperationViaUniRest(),
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((ServiceInteractionRecorder) delegate).setOutputStream("foo", out);
+        ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
         delegate.startApp();
 
         checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured();
@@ -136,11 +136,11 @@ public class SimpleGetCentricBinaryTest {
     @Test
     public void canRecordABinaryGetFromApachesSubversionViaOkHttp() {
 
-        delegate = new ServiceInteractionRecorder(
-                new OkHttpRealServiceInteractor(),
+        delegate = new InteractionRecordingSvHttpServer(
+                new ServiceInteropViaOkHttp(),
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((ServiceInteractionRecorder) delegate).setOutputStream("foo", out);
+        ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
         delegate.startApp();
 
         checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured();
@@ -154,8 +154,8 @@ public class SimpleGetCentricBinaryTest {
     @Test
     public void canRecordAPngGetFromWikimedia() {
 
-        delegate = new ServiceInteractionRecorder(
-                new OkHttpRealServiceInteractor(),
+        delegate = new InteractionRecordingSvHttpServer(
+                new ServiceInteropViaOkHttp(),
                8080, false, new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org") {
 
             @Override
@@ -176,7 +176,7 @@ public class SimpleGetCentricBinaryTest {
             }
         });
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((ServiceInteractionRecorder) delegate).setOutputStream("foo", out);
+        ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
         delegate.startApp();
 
         // https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png
@@ -251,8 +251,8 @@ public class SimpleGetCentricBinaryTest {
     @Test
     public void canRecordASvgGetFromWikimedia() {
 
-        delegate = new ServiceInteractionRecorder(
-                new OkHttpRealServiceInteractor(),
+        delegate = new InteractionRecordingSvHttpServer(
+                new ServiceInteropViaOkHttp(),
                8080, false, new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org") {
 
             @Override
@@ -274,7 +274,7 @@ public class SimpleGetCentricBinaryTest {
             }
         });
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((ServiceInteractionRecorder) delegate).setOutputStream("foo", out);
+        ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
         delegate.startApp();
 
         // https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png
@@ -360,9 +360,9 @@ public class SimpleGetCentricBinaryTest {
     @Test
     public void canReplayABinaryGetFromApachesSubversion() {
 
-        delegate = new ServiceInteractionReplayer(
+        delegate = new InteractionReplayingSvHttpServer(
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
-        ((ServiceInteractionReplayer) delegate).setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
+        ((InteractionReplayingSvHttpServer) delegate).setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
         delegate.startApp();
 
         checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured();

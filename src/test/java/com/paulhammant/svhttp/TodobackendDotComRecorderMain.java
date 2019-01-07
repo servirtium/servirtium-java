@@ -3,7 +3,7 @@ package com.paulhammant.svhttp;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
-public class TodobackendRecorder {
+public class TodobackendDotComRecorderMain {
 
     public static void main(String[] args) throws FileNotFoundException {
 
@@ -24,8 +24,8 @@ public class TodobackendRecorder {
 
          */
 
-        ServiceInteractionRecorder recorder = new ServiceInteractionRecorder(
-                new OkHttpRealServiceInteractor(),
+        InteractionRecordingSvHttpServer recorder = new InteractionRecordingSvHttpServer(
+                new ServiceInteropViaOkHttp(),
                 8099, false,
                 new SimpleHeaderManipulator("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
                     @Override
