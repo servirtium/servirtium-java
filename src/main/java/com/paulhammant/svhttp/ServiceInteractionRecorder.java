@@ -63,7 +63,7 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
         return root2;
     }
 
-    protected ServiceResponse getRealResponse(String method, String url, Map<String, String> headersToReal) throws IOException {
+    protected ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal) throws IOException {
         headersToReal.remove("Accept-Encoding");
         return httpInteractor.invokeOnRealAndRecordResult(method, this.bodyToReal, this.contentTypeToReal, url, headersToReal, headerManipulator);
     }
@@ -71,7 +71,7 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
     @Override
     protected void newMethod(String method, String path) {
         guardOut();
-        out.println("## SvHttp Interaction " + CTR + ": " + method + " " + path + "\n");
+        out.println("## Interaction " + CTR + ": " + method + " " + path + "\n");
     }
 
     private void guardOut() {
@@ -81,7 +81,7 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
     }
 
     @Override
-    protected void headersReceived(Map<String, String> headers) {
+    protected void requestHeaders(Map<String, String> headers) {
         guardOut();
         out.println("### Request headers sent to the real server:");
         out.println("");
@@ -95,7 +95,7 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
     }
 
     @Override
-    protected void bodyReceived(String bodyToReal, String contentTypeToReal) {
+    protected void requestBody(String bodyToReal, String contentTypeToReal) {
         this.bodyToReal = bodyToReal;
         this.contentTypeToReal = contentTypeToReal;
         guardOut();
@@ -108,7 +108,7 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
     }
 
     @Override
-    protected void headersToReturn(ServiceResponse rv) {
+    protected void responseHeaders(ServiceResponse rv) {
         guardOut();
         out.println("### Resulting headers back from the real server:");
         out.println("");
@@ -124,7 +124,7 @@ public class ServiceInteractionRecorder extends ServiceInteractionDelegate {
     }
 
     @Override
-    protected void bodyToReturn(ServiceResponse rv) {
+    protected void responseBody(ServiceResponse rv) {
         guardOut();
         String xtra = "";
         if (rv.body instanceof byte[]) {

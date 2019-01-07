@@ -44,7 +44,7 @@ import static org.junit.Assert.assertEquals;
 public class SimplePostCentricTest {
 
     public static final String EXPECTED =
-            "## SvHttp Interaction 0: POST /post\n" +
+            "## Interaction 0: POST /post\n" +
             "\n" +
             "### Request headers sent to the real server:\n" +
             "\n" +

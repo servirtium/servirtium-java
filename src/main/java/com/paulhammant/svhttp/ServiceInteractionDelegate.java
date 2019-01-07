@@ -51,24 +51,33 @@ public abstract class ServiceInteractionDelegate {
     protected final HeaderManipulator headerManipulator;
 
     private Server server;
+    private int counter = -1;
 
     public ServiceInteractionDelegate(int port, boolean ssl, HeaderManipulator headerManipulator) {
         this.headerManipulator = headerManipulator;
 
         server = new Server(port);
         // How the fuck do you turn off Embedded Jetty's logging???
-        // Everything I tried (mostly static operations on Log. didn't work.
+        // Everything I tried (mostly static operations on Log) didn't work.
 
         server.setHandler(new AbstractHandler() {
 
             @Override
             public void handle(String target, org.eclipse.jetty.server.Request baseRequest,
                                HttpServletRequest request,
-                               HttpServletResponse response) throws IOException, ServletException {
+                               HttpServletResponse response)
+                    throws IOException, ServletException {
 
                 String method = request.getMethod();
+                final String url = (request.getRequestURL().toString().startsWith("http://") || request.getRequestURL().toString().startsWith("https://"))
+                        ? request.getRequestURL().toString()
+                        : "http://" + request.getRemoteHost() + ":" + request.getRemotePort() + request.getRequestURI();
+
                 String bodyToReal = "";
                 Map<String, String> headersToReal = new HashMap<>();
+
+                System.out.println(">> SvHttp >> interaction " + counter + " " + method + " " + url + " STARTED");
+
 
                 try {
 
@@ -102,6 +111,7 @@ public abstract class ServiceInteractionDelegate {
                         }
                     }
 
+
                     while (hdrs.hasMoreElements()) {
                         String hdr = hdrs.nextElement();
                         String hdrVal = request.getHeader(hdr);
@@ -112,12 +122,13 @@ public abstract class ServiceInteractionDelegate {
 
                     headerManipulator.messWithHeadersToSendToReal(headersToReal);
 
-                    headersReceived(headersToReal);
+                    requestHeaders(headersToReal);
 
-                    bodyReceived(bodyToReal, contentType);
+                    requestBody(bodyToReal, contentType);
 
-                    final String url = (request.getRequestURL().toString().startsWith("http://") || request.getRequestURL().toString().startsWith("https://")) ? request.getRequestURL().toString() : "http://" + request.getRemoteHost() + ":" + request.getRemotePort() + request.getRequestURI();
-                    ServiceResponse realResponse = getRealResponse(method, headerManipulator.changeToRealURL(url), headersToReal);
+
+                    ServiceResponse realResponse = getServiceResponse(method, headerManipulator.changeToRealURL(url), headersToReal);
+
 
                     ArrayList<String > newHeaders = new ArrayList<>();
                     for (int i = 0; i < realResponse.headers.length; i++) {
@@ -137,6 +148,10 @@ public abstract class ServiceInteractionDelegate {
 
                     response.setStatus(revisedResponse.statusCode);
 
+                    responseHeaders(revisedResponse);
+
+                    responseBody(revisedResponse);
+
                     if (revisedResponse.contentType != null) {
                         response.setContentType(revisedResponse.contentType);
                         if (revisedResponse.body instanceof String) {
@@ -146,10 +161,7 @@ public abstract class ServiceInteractionDelegate {
                         }
                     }
 
-                    headersToReturn(revisedResponse);
-
-                    bodyToReturn(revisedResponse);
-
+                    System.out.println(">> SvHttp >> interaction " + counter + " " + method + " " + url + " DONE");
                 } catch (Throwable throwable) {
                     throw throwable; // stick your debugger here
                 }
@@ -180,16 +192,16 @@ public abstract class ServiceInteractionDelegate {
 
     public abstract void finishedMarkdownScript();
 
-    protected abstract ServiceResponse getRealResponse(String method,
-                                                       String url, Map<String, String> headersToReal) throws IOException;
+    protected abstract ServiceResponse getServiceResponse(String method, String url,
+                                                          Map<String, String> headersToReal) throws IOException;
 
-    protected abstract void bodyToReturn(ServiceResponse rv) ;
+    protected abstract void responseBody(ServiceResponse rv) ;
 
-    protected abstract void headersToReturn(ServiceResponse rv);
+    protected abstract void responseHeaders(ServiceResponse rv);
 
-    protected abstract void bodyReceived(String bodyToReal, String contentType);
+    protected abstract void requestBody(String bodyToReal, String contentType);
 
-    protected abstract void headersReceived(Map<String, String> headers);
+    protected abstract void requestHeaders(Map<String, String> headers);
 
     protected abstract void newMethod(String method, String path);
 

@@ -48,7 +48,7 @@ import static org.junit.Assert.assertEquals;
 public class SimpleGetCentricBinaryTest {
 
     private static final String EXPECTED_1 =
-            "## SvHttp Interaction 0: GET /repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/bin/libwrapper-linux-x86-32.so\n" +
+            "## Interaction 0: GET /repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/bin/libwrapper-linux-x86-32.so\n" +
             "\n" +
             "### Request headers sent to the real server:\n" +
             "\n" +
@@ -194,7 +194,7 @@ public class SimpleGetCentricBinaryTest {
 
         // Order of headers is as originally sent
         assertEquals(simplidyForEqualsTesting(
-                "## SvHttp Interaction 0: GET /wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png\n" +
+                "## Interaction 0: GET /wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png\n" +
                 "\n" +
                 "### Request headers sent to the real server:\n" +
                 "\n" +
@@ -291,7 +291,7 @@ public class SimpleGetCentricBinaryTest {
 
         // Order of headers is as originally sent
         assertEquals(simplidyForEqualsTesting(
-                "## SvHttp Interaction 0: GET /wikipedia/commons/7/72/Smallest_nonmodular_lattice_1.svg\n" +
+                "## Interaction 0: GET /wikipedia/commons/7/72/Smallest_nonmodular_lattice_1.svg\n" +
                         "\n" +
                         "### Request headers sent to the real server:\n" +
                         "\n" +

@@ -32,15 +32,11 @@ package com.paulhammant.svhttp;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.Collections;
 import java.util.Map;
 
 import static java.nio.file.Files.readAllBytes;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
 
@@ -49,7 +45,7 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
     private String bodyToReal;
     private String contentTypeToReal;
     private String headers;
-    private String num;
+    private int num = -1;
     private String filename;
     private boolean forgivingOrderOfClientRquestHeaders = false;
 
@@ -80,38 +76,41 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
     @Override
     public void finishedMarkdownScript() {
         if (markdownConversation.length() - ix > 1) {
-            fail("There are more recorded interactions after #" + num + " in " + filename + ", yet calling finishedMarkdownScript() implies there should be no more. Fail!!");
+            throw makeAssertionError("There are more recorded interactions after #" + num + " in " + filename + ", yet calling finishedMarkdownScript() implies there should be no more. Fail!!");
         }
     }
 
     @Override
-    protected ServiceResponse getRealResponse(String method, String url, Map<String, String> headersToReal) throws IOException {
+    protected ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal) throws IOException {
 
+        int expectedNum = num + 1;
         try {
-            final String SVHTTP_INTERACTION = "## SvHttp Interaction ";
-            ix = markdownConversation.indexOf(SVHTTP_INTERACTION, ix);
+            final String SVHTTP_INTERACTION = "## Interaction ";
+            ix = markdownConversation.indexOf(SVHTTP_INTERACTION + expectedNum + ":", 0);
             if (ix == -1) {
-                fail("There are no more recorded interactions after #" + num + " in " + filename + ", yet calling getRealResponse() implies there should be more. Fail!!");
+                throw makeAssertionError("Could not find interactions #" + expectedNum + " in file '" + filename + "'");
             }
             int lineEnd = markdownConversation.indexOf("\n", ix);
             String line = markdownConversation.substring(ix + SVHTTP_INTERACTION.length(), lineEnd);
             String[] parts = line.split(" ");
-            num = parts[0].replace(":","");
+            num = Integer.parseInt(parts[0].replace(":",""));
             String mdMethod = parts[1];
-            if (!method.equals(mdMethod)) {
-                fail("Method " + num + " (" + mdMethod + ") in " + filename + ": " + url + " expected to be " + method);
-            }
+//            if (!method.equals(mdMethod)) {
+//                throw makeAssertionError("Method " + num + " (" + mdMethod + ") in " + filename + ": " + url + " expected to be " + method);
+//            }
 
-            assertEquals(methodAndFilePrefix(mdMethod) + ", method from the client that should be sent to real server are not the same as that previously recorded", method, mdMethod);
+            if (!method.equals(mdMethod)) {
+                throw makeAssertionError(methodAndFilePrefix(mdMethod) + ", method from the client that should be sent to real server are not the same as expected: " + method);
+            }
             String mdUrl = parts[2];
             if (!url.endsWith(mdUrl)) {
-                fail("Method " + num + " (" + mdMethod + ") in " + filename + ": " + url + " does not end in previously recorded " + mdUrl);
+                throw makeAssertionError("Method " + num + " (" + mdMethod + ") in " + filename + ": " + url + " does not end in previously recorded " + mdUrl);
             }
 
             final String HEADERS_SENT_TO_REAL_SERVER = "### Request headers sent to the real server";
             ix = markdownConversation.indexOf(HEADERS_SENT_TO_REAL_SERVER, ix);
             if (ix == -1) {
-                fail("Expected '" + HEADERS_SENT_TO_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
+                throw makeAssertionError("Expected '" + HEADERS_SENT_TO_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
             }
 
             String headersReceived = getCodeBlock();
@@ -119,28 +118,33 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
             final String BODY_SENT_TO_REAL_SERVER = "### Body sent to the real server";
             ix = markdownConversation.indexOf(BODY_SENT_TO_REAL_SERVER, ix);
             if (ix == -1) {
-                fail("Expected '" + BODY_SENT_TO_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
+                throw makeAssertionError("Expected '" + BODY_SENT_TO_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
             }
             lineEnd = markdownConversation.indexOf("\n", ix);
             line = markdownConversation.substring(ix +4, lineEnd);
             String contentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
 
             // TODO remove trim()
-            assertEquals(methodAndFilePrefix(mdMethod) + ", headers from the client that should be sent to real server are not the same as those previously recorded", reorderMaybe(headers.trim()), reorderMaybe(headersReceived));
+            if (!this.reorderMaybe(headersReceived).equals(reorderMaybe(headers.trim()))) {
+                throw makeAssertionError(methodAndFilePrefix(mdMethod) + ", headers from the client that should be sent to real server are not the same as those previously recorded");
+            }
             String bodyReceived = getCodeBlock();
-            assertEquals(methodAndFilePrefix(mdMethod) + ", body from the client that should be sent to real server are not the same those previously recorded", this.bodyToReal, bodyReceived);
-            assertEquals(methodAndFilePrefix(mdMethod) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded", this.contentTypeToReal, contentType);
-
+            if (!this.bodyToReal.equals(bodyReceived)) {
+                throw makeAssertionError(methodAndFilePrefix(mdMethod) + ", body from the client that should be sent to real server are not the same those previously recorded");
+            }
+            if (!this.contentTypeToReal.equals(contentType)) {
+                throw makeAssertionError(methodAndFilePrefix(mdMethod) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded");
+            }
             final String RESULTING_HEADERS_BACK_FROM_REAL_SERVER = "### Resulting headers back from the real server";
             ix = markdownConversation.indexOf(RESULTING_HEADERS_BACK_FROM_REAL_SERVER, ix);
             if (ix == -1) {
-                fail("Expected '" + RESULTING_HEADERS_BACK_FROM_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
+                throw makeAssertionError("Expected '" + RESULTING_HEADERS_BACK_FROM_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
             }
             String[] headersToReturn = getCodeBlock().split("\n");
             final String RESULTING_BODY_BACK_FROM_REAL_SERVER = "### Resulting body back from the real server";
             ix = markdownConversation.indexOf(RESULTING_BODY_BACK_FROM_REAL_SERVER, ix);
             if (ix == -1) {
-                fail("Expected '" + RESULTING_BODY_BACK_FROM_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
+                throw makeAssertionError("Expected '" + RESULTING_BODY_BACK_FROM_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
             }
             lineEnd = markdownConversation.indexOf("\n", ix);
             line = markdownConversation.substring(ix +4, lineEnd);
@@ -155,16 +159,19 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
             } else {
                 bodyToReturn = getCodeBlock();
             }
+            System.out.println(">> Svhttp >> Replay of interaction " + num + ": " + method + " " + url);
             return new ServiceResponse(bodyToReturn, contentType, statusCode, headersToReturn);
         } catch (AssertionError e) {
-            System.out.println("***************************************************");
-            System.out.println("***************************************************");
 
-            System.out.println(">>>> Svhttp Replay Assertion Error: " + e.getMessage());
+            System.out.println(">> Svhttp >> Replay Assertion Error: " + e.getMessage());
             e.printStackTrace();
             return new ServiceResponse("ServiceInteractionReplayer: " + e.getMessage(), "text/plain", 500);
 
         }
+    }
+
+    private AssertionError makeAssertionError(String message) {
+        return new AssertionError(message);
     }
 
     private String reorderMaybe(String headersReceived) {
@@ -177,7 +184,7 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
     }
 
     private String methodAndFilePrefix(String mdMethod) {
-        return "Method:" + num + " (" + mdMethod + ")" + num + " in " + filename;
+        return "Interaction " + num + " (method: " + mdMethod + ") in " + filename;
     }
 
     private String getCodeBlock() {
@@ -189,23 +196,23 @@ public class ServiceInteractionReplayer extends ServiceInteractionDelegate {
     }
 
     @Override
-    protected void bodyToReturn(ServiceResponse rv) {
+    protected void responseBody(ServiceResponse rv) {
         // only useful for recording which is not this class
     }
 
     @Override
-    protected void headersToReturn(ServiceResponse rv) {
+    protected void responseHeaders(ServiceResponse rv) {
         // only useful for recording which is not this class
     }
 
     @Override
-    protected void bodyReceived(String bodyToReal, String contentTypeToReal) {
+    protected void requestBody(String bodyToReal, String contentTypeToReal) {
         this.bodyToReal = bodyToReal;
         this.contentTypeToReal = contentTypeToReal;
     }
 
     @Override
-    protected void headersReceived(Map<String, String> headers) {
+    protected void requestHeaders(Map<String, String> headers) {
         StringBuilder sb = new StringBuilder();
         for (String k : headers.keySet()) {
             String v = headers.get(k);
