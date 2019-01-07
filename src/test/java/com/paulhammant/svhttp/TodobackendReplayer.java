@@ -13,7 +13,7 @@ public class TodobackendReplayer {
         // Then, in a browser go to:
         //    http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
 
-        // ... src/test/resources/TodobackendDocTowardsPassingTheirJasmineTestSuite.md will be read and
+        // ... src/test/resources/TodobackendDotComStubsTowardsPassingTheirJasmineTestSuite.md will be read and
         // hopefully the Jasmine tests in the browser still pass.
 
         ServiceInteractionReplayer replayer = new ServiceInteractionReplayer(
@@ -27,7 +27,7 @@ public class TodobackendReplayer {
                 })
                 .withForgivingOrderOfClientRquestHeaders();
 
-        replayer.setMarkdownScriptFilename("src/test/resources/TodobackendDocTowardsPassingTheirJasmineTestSuite.md");
+        replayer.setMarkdownScriptFilename("src/test/resources/TodobackendDotComStubsTowardsPassingTheirJasmineTestSuite.md");
         replayer.startApp();
 
     }

@@ -14,7 +14,9 @@ the replay for that recorded conversation.
 
 The recorder isn't very good at handling parallel requests. Most of the things you want to test will be serial (and 
 short) but if your client is a browser, then you should half expect for parallelized operation to mess up a 
-recorded conversation. See that here [TodobackendDocTowardsPassingTheirJasmineTestSuite.md](https://github.com/paul-hammant/svhttp/blob/master/src/test/resources/TodobackendDocTowardsPassingTheirJasmineTestSuite.md)
+recorded conversation. See that here [TodobackendDocTowardsPassingTheirJasmineTestSuite.md](https://github.com/paul-hammant/svhttp/blob/master/src/test/resources/TodobackendDocTowardsPassingTheirJasmineTestSuite.md). 
+Interaction 19 has request details but no response details. That's followed by a second interaction 19 that has request details
+and TWO sets of response details - ooops.
 
 ## Project readiness for general industry use
 
