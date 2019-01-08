@@ -196,23 +196,23 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
     }
 
     @Override
-    protected void responseBody(ServiceResponse rv) {
+    protected void responseBody(ServiceResponse rv, Context ctx) {
         // only useful for recording which is not this class
     }
 
     @Override
-    protected void responseHeaders(ServiceResponse rv) {
+    protected void responseHeaders(ServiceResponse rv, Context ctx) {
         // only useful for recording which is not this class
     }
 
     @Override
-    protected void requestBody(String bodyToReal, String contentTypeToReal) {
+    protected void requestBody(String bodyToReal, String contentTypeToReal, Context ctx) {
         this.bodyToReal = bodyToReal;
         this.contentTypeToReal = contentTypeToReal;
     }
 
     @Override
-    protected void requestHeaders(Map<String, String> headers) {
+    protected void requestHeaders(Map<String, String> headers, Context ctx) {
         StringBuilder sb = new StringBuilder();
         for (String k : headers.keySet()) {
             String v = headers.get(k);
@@ -222,6 +222,7 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
     }
 
     @Override
-    protected void newMethod(String method, String path) {
+    protected Context newInteraction(String method, String path) {
+        return new Context();
     }
 }

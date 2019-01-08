@@ -85,7 +85,7 @@ public abstract class SvHttpServer {
 
                 try {
 
-                    newMethod(method, request.getRequestURI().toString());
+                    Context ctx = newInteraction(method, request.getRequestURI().toString());
                     String contentType = request.getContentType();
                     if (contentType == null) {
                         contentType = "";
@@ -126,9 +126,9 @@ public abstract class SvHttpServer {
 
                     headerManipulator.messWithHeadersToSendToReal(headersToReal);
 
-                    requestHeaders(headersToReal);
+                    requestHeaders(headersToReal, ctx);
 
-                    requestBody(bodyToReal, contentType);
+                    requestBody(bodyToReal, contentType, ctx);
 
 
                     ServiceResponse realResponse = getServiceResponse(method, headerManipulator.changeToRealURL(url), headersToReal);
@@ -152,9 +152,9 @@ public abstract class SvHttpServer {
 
                     response.setStatus(revisedResponse.statusCode);
 
-                    responseHeaders(revisedResponse);
+                    responseHeaders(revisedResponse, ctx);
 
-                    responseBody(revisedResponse);
+                    responseBody(revisedResponse, ctx);
 
                     if (revisedResponse.contentType != null) {
                         response.setContentType(revisedResponse.contentType);
@@ -199,15 +199,20 @@ public abstract class SvHttpServer {
     protected abstract ServiceResponse getServiceResponse(String method, String url,
                                                           Map<String, String> headersToReal) throws IOException;
 
-    protected abstract void responseBody(ServiceResponse rv) ;
+    protected abstract void responseBody(ServiceResponse rv, Context ctx) ;
 
-    protected abstract void responseHeaders(ServiceResponse rv);
+    protected abstract void responseHeaders(ServiceResponse rv, Context ctx);
 
-    protected abstract void requestBody(String bodyToReal, String contentType);
+    protected abstract void requestBody(String bodyToReal, String contentType, Context ctx);
 
-    protected abstract void requestHeaders(Map<String, String> headers);
+    protected abstract void requestHeaders(Map<String, String> headers, Context ctx);
 
-    protected abstract void newMethod(String method, String path);
+    protected abstract Context newInteraction(String method, String path);
+
+    public static class Context {
+
+    }
+
 
     public void stop() {
         finishedMarkdownScript(); // just in case

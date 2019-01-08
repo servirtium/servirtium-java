@@ -68,10 +68,21 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
         return httpInteractor.invokeServiceEndpoint(method, this.bodyToReal, this.contentTypeToReal, url, headersToReal, headerManipulator);
     }
 
+    public static class RecordingContext extends Context {
+
+        private StringBuilder out = new StringBuilder();
+        private int interactionNumber;
+
+    }
+
     @Override
-    protected void newMethod(String method, String path) {
+    protected Context newInteraction(String method, String path) {
         guardOut();
-        out.println("## Interaction " + CTR + ": " + method + " " + path + "\n");
+        RecordingContext rc = new RecordingContext();
+
+        rc.out.append("## Interaction ").append(CTR).append(": ").append(method).append(" ").append(path).append("\n\n");
+        rc.interactionNumber = CTR++;
+        return rc;
     }
 
     private void guardOut() {
@@ -81,68 +92,71 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
     }
 
     @Override
-    protected void requestHeaders(Map<String, String> headers) {
+    protected void requestHeaders(Map<String, String> headers, Context ctx) {
+        RecordingContext rc = (RecordingContext) ctx; 
         guardOut();
-        out.println("### Request headers sent to the real server:");
-        out.println("");
-        out.println("```");
+        rc.out.append("### Request headers sent to the real server:\n\n");
+        rc.out.append("```\n");
         for (String k : headers.keySet()) {
             String v = headers.get(k);
-            out.println(k + ": " + v);
+            rc.out.append(k).append(": ").append(v).append("\n");
         }
-        out.println("```");
-        out.println("");
+        rc.out.append("```\n\n");
     }
 
     @Override
-    protected void requestBody(String bodyToReal, String contentTypeToReal) {
+    protected void requestBody(String bodyToReal, String contentTypeToReal, Context ctx) {
+        RecordingContext rc = (RecordingContext) ctx;
         this.bodyToReal = bodyToReal;
         this.contentTypeToReal = contentTypeToReal;
         guardOut();
-        out.println("### Body sent to the real server (" + contentTypeToReal + "):");
-        out.println("");
-        out.println("```");
-        out.println(bodyToReal);
-        out.println("```");
-        out.println("");
+        rc.out.append("### Body sent to the real server (").append(contentTypeToReal).append("):\n");
+        rc.out.append("\n");
+        rc.out.append("```\n");
+        rc.out.append(bodyToReal).append("\n");
+        rc.out.append("```\n");
+        rc.out.append("\n");
     }
 
     @Override
-    protected void responseHeaders(ServiceResponse rv) {
+    protected void responseHeaders(ServiceResponse rv, Context ctx) {
+        RecordingContext rc = (RecordingContext) ctx;
         guardOut();
-        out.println("### Resulting headers back from the real server:");
-        out.println("");
-        out.println("```");
+        rc.out.append("### Resulting headers back from the real server:\n");
+        rc.out.append("\n");
+        rc.out.append("```\n");
         for (String hdrLine : rv.headers) {
             int ix = hdrLine.indexOf(": ");
             String hdrKey = hdrLine.substring(0, ix);
             String hdrVal = hdrLine.substring(ix + 2);
-            out.println(hdrKey + ": " + headerManipulator.headerReplacement(hdrKey, hdrVal));
+            rc.out.append(hdrKey).append(": ").append(headerManipulator.headerReplacement(hdrKey, hdrVal)).append("\n");
         }
-        out.println("```");
-        out.println("");
+        rc.out.append("```\n");
+        rc.out.append("\n");
     }
 
     @Override
-    protected void responseBody(ServiceResponse rv) {
+    protected void responseBody(ServiceResponse rv, Context ctx) {
+        RecordingContext rc = (RecordingContext) ctx;
         guardOut();
         String xtra = "";
         if (rv.body instanceof byte[]) {
             xtra = " - Base64 below";
         }
-        out.println("### Resulting body back from the real server (" + rv.statusCode + ": " + rv.contentType + xtra + "):");
-        out.println("");
-        out.println("```");
+        rc.out.append("### Resulting body back from the real server (").append(rv.statusCode).append(": ").append(rv.contentType).append(xtra).append("):\n");
+        rc.out.append("\n");
+        rc.out.append("```\n");
         if (rv.body instanceof String) {
-            out.println(rv.body);
+            rc.out.append(rv.body).append("\n");
         } else if (rv.body instanceof byte[]) {
-            out.println(Base64.getEncoder().encodeToString((byte[]) rv.body));
+            rc.out.append(Base64.getEncoder().encodeToString((byte[]) rv.body)).append("\n");
         } else {
             throw new UnsupportedOperationException();
         }
-        out.println("```");
-        out.println("");
-        CTR++;
+        rc.out.append("```\n");
+        rc.out.append("\n");
+
+        this.out.print(((RecordingContext) ctx).out.toString());
     }
 
     public void finishedMarkdownScript() {
