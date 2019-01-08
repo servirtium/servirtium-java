@@ -39,6 +39,8 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Enumeration;
@@ -48,12 +50,14 @@ import java.util.Scanner;
 
 public abstract class SvHttpServer {
 
+    private final int port;
     protected final HeaderManipulator headerManipulator;
 
     private Server server;
     private int counter = -1;
 
     public SvHttpServer(int port, boolean ssl, HeaderManipulator headerManipulator) {
+        this.port = port;
         this.headerManipulator = headerManipulator;
 
         server = new Server(port);
@@ -208,10 +212,34 @@ public abstract class SvHttpServer {
     public void stop() {
         finishedMarkdownScript(); // just in case
         try {
+            final Socket s = new Socket("localhost", port);
+            OutputStream opStream = s.getOutputStream();
+            s.close();
+            // expected
+        } catch (IOException e) {
+            throw new AssertionError("There should have a socket server on the port");
+
+        }
+        try {
             server.stop();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        while (true) {
+            try {
+                final Socket s = new Socket("localhost", port);
+                OutputStream opStream = s.getOutputStream();
+                s.close();
+                try {
+                    Thread.sleep(5);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                return;
+            }
+        }
+
     }
 
 }
