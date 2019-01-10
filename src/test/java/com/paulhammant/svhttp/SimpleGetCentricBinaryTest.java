@@ -269,11 +269,17 @@ public class SimpleGetCentricBinaryTest {
                 if (headerBackFromReal.startsWith("X-Cache:")) {
                     return "X-Cache: cp1234 hit/8, cp3210 hit/3, cp3456 hit/11";
                 }
+                if (headerBackFromReal.startsWith("X-Cache-Status:")) {
+                    return "X-Cache-Status: hit-front";
+                }
                 if (headerBackFromReal.startsWith("X-Varnish:")) {
                     return "X-Varnish: 123456789 123456788, 123456787 123456786, 123456785 1234546784";
                 }
                 if (headerBackFromReal.startsWith("X-Trans-Id:")) {
                     return "X-Trans-Id: tx09ce3c78b8a9446082f80-005c30fd26";
+                }
+                if (headerBackFromReal.startsWith("Server-Timing:")) {
+                    return "Server-Timing: cache;desc=\"hit-front\"";
                 }
                 return headerBackFromReal;
             }

@@ -131,7 +131,8 @@ public abstract class SvHttpServer {
                     requestBody(bodyToReal, contentType, ctx);
 
 
-                    ServiceResponse realResponse = getServiceResponse(method, headerManipulator.changeToRealURL(url), headersToReal);
+                    ServiceResponse realResponse = getServiceResponse(method, headerManipulator.changeToRealURL(url),
+                            headersToReal, ctx);
 
 
                     ArrayList<String > newHeaders = new ArrayList<>();
@@ -197,7 +198,7 @@ public abstract class SvHttpServer {
     public abstract void finishedMarkdownScript();
 
     protected abstract ServiceResponse getServiceResponse(String method, String url,
-                                                          Map<String, String> headersToReal) throws IOException;
+                                                          Map<String, String> headersToReal, Context ctx) throws IOException;
 
     protected abstract void responseBody(ServiceResponse rv, Context ctx) ;
 

@@ -32,22 +32,24 @@ package com.paulhammant.svhttp;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 import java.util.Map;
 
 import static java.nio.file.Files.readAllBytes;
 
 public class InteractionReplayingSvHttpServer extends SvHttpServer {
 
-    private String markdownConversation;
-    private int ix;
+    private List<String> markdownConversation = new ArrayList<>();
     private String bodyToReal;
     private String contentTypeToReal;
     private String headers;
-    private int num = -1;
     private String filename;
     private boolean forgivingOrderOfClientRquestHeaders = false;
+    public static final String SVHTTP_INTERACTION = "## Interaction ";
+    private int interactionNum;
 
     public InteractionReplayingSvHttpServer(int port, boolean ssl, HeaderManipulator headerManipultor) {
         super(port, ssl, headerManipultor);
@@ -69,85 +71,113 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
 
     public void setPlaybackConversation(String conversation) {
         this.filename = "n/a";
-        ix = 0;
-        markdownConversation = conversation;
+        int charPosn = -1;
+        int ctr = 0;
+        boolean again = true;
+        while (again) {
+            charPosn = conversation.indexOf(SVHTTP_INTERACTION + ctr + ":");
+            int charEndPosn;
+            if (charPosn > -1) {
+                charEndPosn = conversation.indexOf(SVHTTP_INTERACTION + (ctr+1) + ":");
+                if (charEndPosn == -1) {
+                    charEndPosn = conversation.length();
+                    again = false;
+                }
+                String interactionText = conversation.substring(charPosn, charEndPosn);
+                markdownConversation.add(interactionText);
+                ctr++;
+            }
+        }
+        System.out.println();
     }
 
     @Override
     public void finishedMarkdownScript() {
-        if (markdownConversation.length() - ix > 1) {
-            throw makeAssertionError("There are more recorded interactions after #" + num + " in " + filename + ", yet calling finishedMarkdownScript() implies there should be no more. Fail!!");
+        if (markdownConversation.size() - interactionNum > 1) {
+            throw makeAssertionError("There are more recorded interactions after last replayed inteaction: #" + interactionNum + " in " + filename + ", yet invocation of .finishedMarkdownScript() possibly via .stop() implies there should be no more. Fail!!");
+        }
+    }
+
+    public static class ReplayingContext extends Context {
+
+        private final String interactionText;
+        public int ix;
+        public int interactionNum;
+
+        public ReplayingContext(String interactionText, int interactionNum) {
+            this.interactionText = interactionText;
+            this.interactionNum = interactionNum;
         }
     }
 
     @Override
-    protected ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal) throws IOException {
+    protected ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
 
-        int expectedNum = num + 1;
+        ReplayingContext rc = (ReplayingContext) ctx;
+
         try {
-            final String SVHTTP_INTERACTION = "## Interaction ";
-            ix = markdownConversation.indexOf(SVHTTP_INTERACTION + expectedNum + ":", 0);
-            if (ix == -1) {
-                throw makeAssertionError("Could not find interactions #" + expectedNum + " in file '" + filename + "'");
+            rc.ix = rc.interactionText.indexOf(SVHTTP_INTERACTION + rc.interactionNum + ":", 0);
+            if (rc.ix == -1) {
+                throw makeAssertionError("Could not find interactions #" + rc.interactionNum + " in file '" + filename + "'");
             }
-            int lineEnd = markdownConversation.indexOf("\n", ix);
-            String line = markdownConversation.substring(ix + SVHTTP_INTERACTION.length(), lineEnd);
+            int lineEnd = rc.interactionText.indexOf("\n", rc.ix);
+            String line = rc.interactionText.substring(rc.ix + SVHTTP_INTERACTION.length(), lineEnd);
             String[] parts = line.split(" ");
-            num = Integer.parseInt(parts[0].replace(":",""));
+            int interactionNum = Integer.parseInt(parts[0].replace(":",""));
             String mdMethod = parts[1];
 //            if (!method.equals(mdMethod)) {
-//                throw makeAssertionError("Method " + num + " (" + mdMethod + ") in " + filename + ": " + url + " expected to be " + method);
+//                throw makeAssertionError("Method " + interactionNum + " (" + mdMethod + ") in " + filename + ": " + url + " expected to be " + method);
 //            }
 
             if (!method.equals(mdMethod)) {
-                throw makeAssertionError(methodAndFilePrefix(mdMethod) + ", method from the client that should be sent to real server are not the same as expected: " + method);
+                throw makeAssertionError(methodAndFilePrefix(rc.interactionNum, mdMethod) + ", method from the client that should be sent to real server are not the same as expected: " + method);
             }
             String mdUrl = parts[2];
             if (!url.endsWith(mdUrl)) {
-                throw makeAssertionError("Method " + num + " (" + mdMethod + ") in " + filename + ": " + url + " does not end in previously recorded " + mdUrl);
+                throw makeAssertionError("Method " + rc.interactionNum + " (" + mdMethod + ") in " + filename + ": " + url + " does not end in previously recorded " + mdUrl);
             }
 
             final String HEADERS_SENT_TO_REAL_SERVER = "### Request headers sent to the real server";
-            ix = markdownConversation.indexOf(HEADERS_SENT_TO_REAL_SERVER, ix);
-            if (ix == -1) {
-                throw makeAssertionError("Expected '" + HEADERS_SENT_TO_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
+            rc.ix = rc.interactionText.indexOf(HEADERS_SENT_TO_REAL_SERVER, rc.ix);
+            if (rc.ix == -1) {
+                throw makeAssertionError("Expected '" + HEADERS_SENT_TO_REAL_SERVER + "' for interaction #" + rc.interactionNum + " in " + filename + ", but it was not there");
             }
 
-            String headersReceived = getCodeBlock();
+            String headersReceived = getCodeBlock(rc);
 
             final String BODY_SENT_TO_REAL_SERVER = "### Body sent to the real server";
-            ix = markdownConversation.indexOf(BODY_SENT_TO_REAL_SERVER, ix);
-            if (ix == -1) {
-                throw makeAssertionError("Expected '" + BODY_SENT_TO_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
+            rc.ix = rc.interactionText.indexOf(BODY_SENT_TO_REAL_SERVER, rc.ix);
+            if (rc.ix == -1) {
+                throw makeAssertionError("Expected '" + BODY_SENT_TO_REAL_SERVER + "' for interaction #" + rc.interactionNum + " in " + filename + ", but it was not there");
             }
-            lineEnd = markdownConversation.indexOf("\n", ix);
-            line = markdownConversation.substring(ix +4, lineEnd);
+            lineEnd = rc.interactionText.indexOf("\n", rc.ix);
+            line = rc.interactionText.substring(rc.ix +4, lineEnd);
             String contentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
 
             // TODO remove trim()
             if (!this.reorderMaybe(headersReceived).equals(reorderMaybe(headers.trim()))) {
-                throw makeAssertionError(methodAndFilePrefix(mdMethod) + ", headers from the client that should be sent to real server are not the same as those previously recorded");
+                throw makeAssertionError(methodAndFilePrefix(rc.interactionNum, mdMethod) + ", headers from the client that should be sent to real server are not the same as those previously recorded");
             }
-            String bodyReceived = getCodeBlock();
+            String bodyReceived = getCodeBlock(rc);
             if (!this.bodyToReal.equals(bodyReceived)) {
-                throw makeAssertionError(methodAndFilePrefix(mdMethod) + ", body from the client that should be sent to real server are not the same those previously recorded");
+                throw makeAssertionError(methodAndFilePrefix(rc.interactionNum, mdMethod) + ", body from the client that should be sent to real server are not the same those previously recorded");
             }
             if (!this.contentTypeToReal.equals(contentType)) {
-                throw makeAssertionError(methodAndFilePrefix(mdMethod) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded");
+                throw makeAssertionError(methodAndFilePrefix(rc.interactionNum, mdMethod) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded");
             }
             final String RESULTING_HEADERS_BACK_FROM_REAL_SERVER = "### Resulting headers back from the real server";
-            ix = markdownConversation.indexOf(RESULTING_HEADERS_BACK_FROM_REAL_SERVER, ix);
-            if (ix == -1) {
-                throw makeAssertionError("Expected '" + RESULTING_HEADERS_BACK_FROM_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
+            rc.ix = rc.interactionText.indexOf(RESULTING_HEADERS_BACK_FROM_REAL_SERVER, rc.ix);
+            if (rc.ix == -1) {
+                throw makeAssertionError("Expected '" + RESULTING_HEADERS_BACK_FROM_REAL_SERVER + "' for interaction #" + rc.interactionNum + " in " + filename + ", but it was not there");
             }
-            String[] headersToReturn = getCodeBlock().split("\n");
+            String[] headersToReturn = getCodeBlock(rc).split("\n");
             final String RESULTING_BODY_BACK_FROM_REAL_SERVER = "### Resulting body back from the real server";
-            ix = markdownConversation.indexOf(RESULTING_BODY_BACK_FROM_REAL_SERVER, ix);
-            if (ix == -1) {
-                throw makeAssertionError("Expected '" + RESULTING_BODY_BACK_FROM_REAL_SERVER + "' for interaction #" + num + " in " + filename + ", but it was not there");
+            rc.ix = rc.interactionText.indexOf(RESULTING_BODY_BACK_FROM_REAL_SERVER, rc.ix);
+            if (rc.ix == -1) {
+                throw makeAssertionError("Expected '" + RESULTING_BODY_BACK_FROM_REAL_SERVER + "' for interaction #" + rc.interactionNum + " in " + filename + ", but it was not there");
             }
-            lineEnd = markdownConversation.indexOf("\n", ix);
-            line = markdownConversation.substring(ix +4, lineEnd);
+            lineEnd = rc.interactionText.indexOf("\n", rc.ix);
+            line = rc.interactionText.substring(rc.ix +4, lineEnd);
             String statusContent = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
             parts = statusContent.split(": ");
             int statusCode = Integer.parseInt(parts[0]);
@@ -155,11 +185,11 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
             Object bodyToReturn;
             if (contentType.endsWith("- Base64 below")) {
                 contentType = contentType.substring(0, contentType.indexOf(" "));
-                bodyToReturn = Base64.getDecoder().decode(getCodeBlock());
+                bodyToReturn = Base64.getDecoder().decode(getCodeBlock(rc));
             } else {
-                bodyToReturn = getCodeBlock();
+                bodyToReturn = getCodeBlock(rc);
             }
-            System.out.println(">> Svhttp >> Replay of interaction " + num + ": " + method + " " + url);
+            System.out.println(">> Svhttp >> Replay of interaction " + rc.interactionNum + ": " + method + " " + url);
             return new ServiceResponse(bodyToReturn, contentType, statusCode, headersToReturn);
         } catch (AssertionError e) {
 
@@ -183,15 +213,15 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
         return headersReceived;
     }
 
-    private String methodAndFilePrefix(String mdMethod) {
-        return "Interaction " + num + " (method: " + mdMethod + ") in " + filename;
+    private String methodAndFilePrefix(int interactionNum, String mdMethod) {
+        return "Interaction " + interactionNum + " (method: " + mdMethod + ") in " + filename;
     }
 
-    private String getCodeBlock() {
-        ix = markdownConversation.indexOf("\n```\n", ix);
-        int endCodeBlock = markdownConversation.indexOf("\n```\n", ix + 5);
-        String rv = markdownConversation.substring(ix + 5, endCodeBlock);
-        ix = endCodeBlock + 5;
+    private String getCodeBlock(ReplayingContext rc) {
+        rc.ix = rc.interactionText.indexOf("\n```\n", rc.ix);
+        int endCodeBlock = rc.interactionText.indexOf("\n```\n", rc.ix + 5);
+        String rv = rc.interactionText.substring(rc.ix + 5, endCodeBlock);
+        rc.ix = endCodeBlock + 5;
         return rv;
     }
 
@@ -223,6 +253,12 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
 
     @Override
     protected Context newInteraction(String method, String path) {
-        return new Context();
+        final String interactionText;
+        try {
+            interactionText = markdownConversation.get(interactionNum);
+        } catch (IndexOutOfBoundsException e) {
+            throw new AssertionError("Replay of script '" + filename + "' hit a problem when interaction " + interactionNum + " sought, but there were no more after " + (interactionNum-1));
+        }
+        return new ReplayingContext(interactionText, interactionNum++);
     }
 }

@@ -63,7 +63,7 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
         return root2;
     }
 
-    protected ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal) throws IOException {
+    protected ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
         headersToReal.remove("Accept-Encoding");
         return httpInteractor.invokeServiceEndpoint(method, this.bodyToReal, this.contentTypeToReal, url, headersToReal, headerManipulator);
     }
