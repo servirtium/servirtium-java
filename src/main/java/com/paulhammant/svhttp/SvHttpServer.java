@@ -72,6 +72,8 @@ public abstract class SvHttpServer {
                                HttpServletResponse response)
                     throws IOException, ServletException {
 
+                counter++;
+
                 String method = request.getMethod();
                 final String url = (request.getRequestURL().toString().startsWith("http://") || request.getRequestURL().toString().startsWith("https://"))
                         ? request.getRequestURL().toString()
@@ -85,7 +87,7 @@ public abstract class SvHttpServer {
 
                 try {
 
-                    Context ctx = newInteraction(method, request.getRequestURI().toString());
+                    Context ctx = newInteraction(method, request.getRequestURI().toString(), counter);
                     String contentType = request.getContentType();
                     if (contentType == null) {
                         contentType = "";
@@ -197,6 +199,15 @@ public abstract class SvHttpServer {
 
     public abstract void finishedMarkdownScript();
 
+
+    protected int getCounter() {
+        return counter;
+    }
+
+    protected void resetCounter() {
+        counter = -1;
+    }
+
     protected abstract ServiceResponse getServiceResponse(String method, String url,
                                                           Map<String, String> headersToReal, Context ctx) throws IOException;
 
@@ -208,7 +219,7 @@ public abstract class SvHttpServer {
 
     protected abstract void requestHeaders(Map<String, String> headers, Context ctx);
 
-    protected abstract Context newInteraction(String method, String path);
+    protected abstract Context newInteraction(String method, String path, int counter);
 
     public static class Context {
 

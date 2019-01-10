@@ -44,7 +44,6 @@ import static junit.framework.TestCase.fail;
 public class InteractionRecordingSvHttpServer extends SvHttpServer {
 
     private final ServiceInteroperation httpInteractor;
-    private int CTR = 0;
     private PrintStream out;
     private String bodyToReal;
     private String contentTypeToReal;
@@ -76,12 +75,12 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
     }
 
     @Override
-    protected Context newInteraction(String method, String path) {
+    protected Context newInteraction(String method, String path, int counter) {
         guardOut();
         RecordingContext rc = new RecordingContext();
 
-        rc.out.append("## Interaction ").append(CTR).append(": ").append(method).append(" ").append(path).append("\n\n");
-        rc.interactionNumber = CTR++;
+        rc.out.append("## Interaction ").append(counter).append(": ").append(method).append(" ").append(path).append("\n\n");
+        rc.interactionNumber = counter;
         return rc;
     }
 
@@ -175,7 +174,7 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
         if (out != null) {
             this.out = new PrintStream(out);
         }
-        CTR = 0;
+        resetCounter();
     }
 
     public static void main(String[] args)  {

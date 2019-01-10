@@ -49,7 +49,6 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
     private String filename;
     private boolean forgivingOrderOfClientRquestHeaders = false;
     public static final String SVHTTP_INTERACTION = "## Interaction ";
-    private int interactionNum;
 
     public InteractionReplayingSvHttpServer(int port, boolean ssl, HeaderManipulator headerManipultor) {
         super(port, ssl, headerManipultor);
@@ -93,8 +92,8 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
 
     @Override
     public void finishedMarkdownScript() {
-        if (markdownConversation.size() - interactionNum > 1) {
-            throw makeAssertionError("There are more recorded interactions after last replayed inteaction: #" + interactionNum + " in " + filename + ", yet invocation of .finishedMarkdownScript() possibly via .stop() implies there should be no more. Fail!!");
+        if (markdownConversation.size() - getCounter() > 1) {
+            throw makeAssertionError("There are more recorded interactions after last replayed inteaction: #" + getCounter() + " in " + filename + ", yet invocation of .finishedMarkdownScript() possibly via .stop() implies there should be no more. Fail!!");
         }
     }
 
@@ -123,11 +122,8 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
             int lineEnd = rc.interactionText.indexOf("\n", rc.ix);
             String line = rc.interactionText.substring(rc.ix + SVHTTP_INTERACTION.length(), lineEnd);
             String[] parts = line.split(" ");
-            int interactionNum = Integer.parseInt(parts[0].replace(":",""));
+            int iNum = Integer.parseInt(parts[0].replace(":",""));
             String mdMethod = parts[1];
-//            if (!method.equals(mdMethod)) {
-//                throw makeAssertionError("Method " + interactionNum + " (" + mdMethod + ") in " + filename + ": " + url + " expected to be " + method);
-//            }
 
             if (!method.equals(mdMethod)) {
                 throw makeAssertionError(methodAndFilePrefix(rc.interactionNum, mdMethod) + ", method from the client that should be sent to real server are not the same as expected: " + method);
@@ -252,13 +248,13 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
     }
 
     @Override
-    protected Context newInteraction(String method, String path) {
+    protected Context newInteraction(String method, String path, int counter) {
         final String interactionText;
         try {
-            interactionText = markdownConversation.get(interactionNum);
+            interactionText = markdownConversation.get(counter);
         } catch (IndexOutOfBoundsException e) {
-            throw new AssertionError("Replay of script '" + filename + "' hit a problem when interaction " + interactionNum + " sought, but there were no more after " + (interactionNum-1));
+            throw new AssertionError("Replay of script '" + filename + "' hit a problem when interaction " + counter + " sought, but there were no more after " + (counter-1));
         }
-        return new ReplayingContext(interactionText, interactionNum++);
+        return new ReplayingContext(interactionText, counter);
     }
 }
