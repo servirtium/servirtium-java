@@ -19,7 +19,7 @@ public class TodobackendDotComReplayerMain {
                 8099, false,
                 new SimpleHeaderManipulator("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
                     @Override
-                    public void messWithHeadersToSendToReal(Map<String, String> headersToReal) {
+                    public void changeHeadersToSendToReal(Map<String, String> headersToReal) {
                         headersToReal.put("Cache-Control","no-cache");
                         headersToReal.put("Pragma","no-cache");
                     }

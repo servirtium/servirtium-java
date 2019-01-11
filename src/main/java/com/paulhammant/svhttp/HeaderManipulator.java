@@ -44,7 +44,7 @@ public interface HeaderManipulator {
         return hdrVal;
     }
 
-    default String changeToRealURL(String url) {
+    default String changeUrlForRequestToReal(String url) {
         return url;
     }
 
@@ -56,7 +56,7 @@ public interface HeaderManipulator {
 
     }
 
-    default void messWithHeadersToSendToReal(Map<String, String> headersToReal) {
+    default void changeHeadersToSendToReal(Map<String, String> headersToReal) {
 
     }
 

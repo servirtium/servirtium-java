@@ -160,22 +160,13 @@ public class SimpleGetCentricBinaryTest {
             @Override
             public String changeHeaderBackFromReal(int ix, String headerBackFromReal) {
                 if (headerBackFromReal.startsWith("Age:")) {
-                    return "Age: 99999";
+                    return null;
                 }
-                if (headerBackFromReal.startsWith("X-Cache:")) {
-                    return "X-Cache: cp1234 hit/8, cp3210 hit/3, cp3456 hit/11";
-                }
-                if (headerBackFromReal.startsWith("X-Cache-Status:")) {
-                    return "X-Cache-Status: hit-front";
-                }
-                if (headerBackFromReal.startsWith("X-Varnish:")) {
-                    return "X-Varnish: 123456789 123456788, 123456787 123456786, 123456785 1234546784";
-                }
-                if (headerBackFromReal.startsWith("X-Trans-Id:")) {
-                    return "X-Trans-Id: tx91ba2b7e0fb34d2895206-005c2ff4de";
+                if (headerBackFromReal.startsWith("X-")) {
+                    return null;
                 }
                 if (headerBackFromReal.startsWith("Server-Timing:")) {
-                    return "Server-Timing: cache;desc=\"hit-front\"";
+                    return null;
                 }
                 return headerBackFromReal;
             }
@@ -226,17 +217,8 @@ public class SimpleGetCentricBinaryTest {
                 "Connection: keep-alive\n" +
                 "Last-Modified: Sat, 09 Jun 2018 17:56:24 GMT\n" +
                 "Etag: 0a8a432cd4d057f31a443b55743e26db\n" +
-                "X-Timestamp: 1528566983.48438\n" +
-                "X-Trans-Id: tx91ba2b7e0fb34d2895206-005c2ff4de\n" +
-                "X-Varnish: 123456789 123456788, 123456787 123456786, 123456785 1234546784\n" +
                 "Via: 1.1 varnish (Varnish/5.1), 1.1 varnish (Varnish/5.1), 1.1 varnish (Varnish/5.1)\n" +
-                "Age: 99999\n" +
-                "X-Cache: cp1234 hit/8, cp3210 hit/3, cp3456 hit/11\n" +
-                "X-Cache-Status: hit-front\n" +
-                "Server-Timing: cache;desc=\"hit-front\"\n" +
                 "Strict-Transport-Security: max-age=106384710; includeSubDomains; preload\n" +
-                "X-Analytics: https=1;nocookies=1\n" +
-                "X-Client-IP: 195.188.187.89\n" +
                 "Access-Control-Allow-Origin: *\n" +
                 "Access-Control-Expose-Headers: Age, Date, Content-Length, Content-Range, X-Content-Duration, X-Cache, X-Varnish\n" +
                 "Timing-Allow-Origin: *\n" +
@@ -263,23 +245,14 @@ public class SimpleGetCentricBinaryTest {
             @Override
             public String changeHeaderBackFromReal(int ix, String headerBackFromReal) {
                 if (headerBackFromReal.startsWith("Age:")) {
-                    return "Age: 99999";
+                    return null;
                 }
 
-                if (headerBackFromReal.startsWith("X-Cache:")) {
-                    return "X-Cache: cp1234 hit/8, cp3210 hit/3, cp3456 hit/11";
-                }
-                if (headerBackFromReal.startsWith("X-Cache-Status:")) {
-                    return "X-Cache-Status: hit-front";
-                }
-                if (headerBackFromReal.startsWith("X-Varnish:")) {
-                    return "X-Varnish: 123456789 123456788, 123456787 123456786, 123456785 1234546784";
-                }
-                if (headerBackFromReal.startsWith("X-Trans-Id:")) {
-                    return "X-Trans-Id: tx09ce3c78b8a9446082f80-005c30fd26";
+                if (headerBackFromReal.startsWith("X-")) {
+                    return null;
                 }
                 if (headerBackFromReal.startsWith("Server-Timing:")) {
-                    return "Server-Timing: cache;desc=\"hit-front\"";
+                    return null;
                 }
                 return headerBackFromReal;
             }
@@ -327,20 +300,10 @@ public class SimpleGetCentricBinaryTest {
                         "Content-Type: image/svg+xml\n" +
                         "Content-Length: 788\n" +
                         "Connection: keep-alive\n" +
-                        "X-Object-Meta-Sha1Base36: 9ie6ji4fu4s9h86fg2c56qhgx38d6py\n" +
                         "Last-Modified: Sat, 05 Oct 2013 15:01:03 GMT\n" +
                         "Etag: 5ab7d580ce21b2d63a0ce66aea8e71ce\n" +
-                        "X-Timestamp: 1380985262.45044\n" +
-                        "X-Trans-Id: tx09ce3c78b8a9446082f80-005c30fd26\n" +
-                        "X-Varnish: 123456789 123456788, 123456787 123456786, 123456785 1234546784\n" +
                         "Via: 1.1 varnish (Varnish/5.1), 1.1 varnish (Varnish/5.1), 1.1 varnish (Varnish/5.1)\n" +
-                        "Age: 99999\n" +
-                        "X-Cache: cp1234 hit/8, cp3210 hit/3, cp3456 hit/11\n" +
-                        "X-Cache-Status: hit-front\n" +
-                        "Server-Timing: cache;desc=\"hit-front\"\n" +
                         "Strict-Transport-Security: max-age=106384710; includeSubDomains; preload\n" +
-                        "X-Analytics: https=1;nocookies=1\n" +
-                        "X-Client-IP: 195.188.187.89\n" +
                         "Access-Control-Allow-Origin: *\n" +
                         "Access-Control-Expose-Headers: Age, Date, Content-Length, Content-Range, X-Content-Duration, X-Cache, X-Varnish\n" +
                         "Timing-Allow-Origin: *\n" +

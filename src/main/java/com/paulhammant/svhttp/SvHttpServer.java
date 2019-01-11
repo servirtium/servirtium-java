@@ -126,14 +126,15 @@ public abstract class SvHttpServer {
                         headerManipulator.potentiallyManipulateHeader(method, hdr, headersToReal);
                     }
 
-                    headerManipulator.messWithHeadersToSendToReal(headersToReal);
+                    headerManipulator.changeHeadersToSendToReal(headersToReal);
 
                     requestHeaders(headersToReal, ctx);
 
                     requestBody(bodyToReal, contentType, ctx);
 
 
-                    ServiceResponse realResponse = getServiceResponse(method, headerManipulator.changeToRealURL(url),
+                    final String requestUrl = headerManipulator.changeUrlForRequestToReal(url);
+                    ServiceResponse realResponse = getServiceResponse(method, requestUrl,
                             headersToReal, ctx);
 
 
@@ -141,7 +142,9 @@ public abstract class SvHttpServer {
                     for (int i = 0; i < realResponse.headers.length; i++) {
                         String headerBackFromReal = realResponse.headers[i];
                         String potentiallyChangedHeader = headerManipulator.changeHeaderBackFromReal(i, headerBackFromReal);
-                        newHeaders.add(potentiallyChangedHeader);
+                        if (potentiallyChangedHeader != null) {
+                            newHeaders.add(potentiallyChangedHeader);
+                        }
                     }
                     headerManipulator.messWithHeadersBackFromReal(newHeaders);
                     for (String header : newHeaders) {

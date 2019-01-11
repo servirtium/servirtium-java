@@ -16,7 +16,7 @@ public class SimpleHeaderManipulator implements HeaderManipulator {
     }
 
     @Override
-    public String changeToRealURL(String url) {
+    public String changeUrlForRequestToReal(String url) {
         return url.replace(fromUrl, toUrl);
     }
 
