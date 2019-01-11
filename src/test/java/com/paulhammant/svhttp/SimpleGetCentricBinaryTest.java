@@ -155,22 +155,8 @@ public class SimpleGetCentricBinaryTest {
 
         delegate = new InteractionRecordingSvHttpServer(
                 new ServiceInteropViaOkHttp(),
-               8080, false, new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org") {
-
-            @Override
-            public String changeHeaderBackFromReal(int ix, String headerBackFromReal) {
-                if (headerBackFromReal.startsWith("Age:")) {
-                    return null;
-                }
-                if (headerBackFromReal.startsWith("X-")) {
-                    return null;
-                }
-                if (headerBackFromReal.startsWith("Server-Timing:")) {
-                    return null;
-                }
-                return headerBackFromReal;
-            }
-        });
+               8080, false, new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org")
+                .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
         delegate.startApp();
@@ -240,23 +226,9 @@ public class SimpleGetCentricBinaryTest {
 
         delegate = new InteractionRecordingSvHttpServer(
                 new ServiceInteropViaOkHttp(),
-               8080, false, new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org") {
-
-            @Override
-            public String changeHeaderBackFromReal(int ix, String headerBackFromReal) {
-                if (headerBackFromReal.startsWith("Age:")) {
-                    return null;
-                }
-
-                if (headerBackFromReal.startsWith("X-")) {
-                    return null;
-                }
-                if (headerBackFromReal.startsWith("Server-Timing:")) {
-                    return null;
-                }
-                return headerBackFromReal;
-            }
-        });
+               8080, false, new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org")
+                .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:")
+        );
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
         delegate.startApp();

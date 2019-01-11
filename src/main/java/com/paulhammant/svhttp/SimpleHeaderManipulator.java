@@ -9,10 +9,16 @@ public class SimpleHeaderManipulator implements HeaderManipulator {
 
     protected final String fromUrl;
     protected final String toUrl;
+    private String[] headerPrefixesToRemove = new String[0];
 
     public SimpleHeaderManipulator(String fromUrl, String toUrl) {
         this.fromUrl = fromUrl;
         this.toUrl = toUrl;
+    }
+
+    public SimpleHeaderManipulator withHeaderPrefixesToRemoveFromRealResponse(String... headerPrefixesToRemove) {
+        this.headerPrefixesToRemove = headerPrefixesToRemove;
+        return this;
     }
 
     @Override
@@ -27,5 +33,15 @@ public class SimpleHeaderManipulator implements HeaderManipulator {
         }
     }
 
-
+    @Override
+    public void messWithHeadersBackFromReal(ArrayList<String> headers) {
+        String[] hdrs = headers.toArray(new String[0]);
+        for (String hdr : hdrs) {
+            for (String pfx : headerPrefixesToRemove) {
+                if (hdr.startsWith(pfx)) {
+                    headers.remove(hdr);
+                }
+            }
+        }
+    }
 }
