@@ -36,6 +36,8 @@ second interaction 19 that has request details and TWO sets of response details 
 ooops. [Here's the code for the recorder](https://github.com/paul-hammant/svhttp/blob/master/src/test/java/com/paulhammant/svhttp/SubversionCheckoutRecorderMain.java) 
 for that, and [here's the code for the replayer for that](https://github.com/paul-hammant/svhttp/blob/master/src/test/java/com/paulhammant/svhttp/SubversionCheckoutReplayerMain.java) 
 
+**Note: this limitation is being resolved, presently**
+
 ## Readiness for general industry by lovers of test automation?
 
 Not ready yet, but being actively worked on.
