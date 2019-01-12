@@ -53,18 +53,18 @@ public abstract class SvHttpServer {
     private final int port;
     protected final HeaderManipulator headerManipulator;
 
-    private Server server;
+    private Server jettyServer;
     private int counter = -1;
 
-    public SvHttpServer(int port, boolean ssl, HeaderManipulator headerManipulator) {
+    public SvHttpServer(ServerMonitor monitor, int port, boolean ssl, HeaderManipulator headerManipulator) {
         this.port = port;
         this.headerManipulator = headerManipulator;
 
-        server = new Server(port);
+        jettyServer = new Server(port);
         // How the f*** do you turn off Embedded Jetty's logging???
         // Everything I tried (mostly static operations on Log) didn't work.
 
-        server.setHandler(new AbstractHandler() {
+        jettyServer.setHandler(new AbstractHandler() {
 
             @Override
             public void handle(String target, org.eclipse.jetty.server.Request baseRequest,
@@ -82,8 +82,7 @@ public abstract class SvHttpServer {
                 String bodyToReal = "";
                 Map<String, String> headersToReal = new HashMap<>();
 
-                System.out.println(">> SvHttp >> interaction " + counter + " " + method + " " + url + " STARTED");
-
+                monitor.interactionStarted(counter, method, url);
 
                 try {
 
@@ -171,7 +170,7 @@ public abstract class SvHttpServer {
                         }
                     }
 
-                    System.out.println(">> SvHttp >> interaction " + counter + " " + method + " " + url + " DONE");
+                    monitor.interactionFinished(counter, method, url);
                 } catch (Throwable throwable) {
                     throw throwable; // stick your debugger here
                 }
@@ -180,6 +179,29 @@ public abstract class SvHttpServer {
                 baseRequest.setHandled(true);
             }
         });
+    }
+
+    public static interface ServerMonitor{
+
+        default void interactionFinished(int counter, String method, String url) {}
+
+        default void interactionStarted(int counter, String method, String url){}
+
+        class Default implements ServerMonitor {
+        }
+
+        class Console implements ServerMonitor {
+
+            @Override
+            public void interactionFinished(int counter, String method, String url) {
+                System.out.println(">> SvHttp >> interaction " + counter + " " + method + " " + url + " DONE");
+            }
+
+            @Override
+            public void interactionStarted(int counter, String method, String url) {
+                System.out.println(">> SvHttp >> interaction " + counter + " " + method + " " + url + " STARTED");
+            }
+        }
     }
 
     public static boolean isText(String contentType) {
@@ -193,7 +215,7 @@ public abstract class SvHttpServer {
 
     public SvHttpServer startApp() {
         try {
-            server.start();
+            jettyServer.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -237,11 +259,11 @@ public abstract class SvHttpServer {
             s.close();
             // expected
         } catch (IOException e) {
-            throw new AssertionError("There should have a socket server on the port");
+            throw new AssertionError("There should have a socket jettyServer on the port");
 
         }
         try {
-            server.stop();
+            jettyServer.stop();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

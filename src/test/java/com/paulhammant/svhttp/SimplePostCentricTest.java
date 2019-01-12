@@ -89,6 +89,7 @@ public class SimplePostCentricTest {
     public void canRecordASimplePostToPostmanEchoViaUniRest() {
 
         delegate = new InteractionRecordingSvHttpServer(
+                new SvHttpServer.ServerMonitor.Console(),
                 new ServiceInteroperationViaUniRest(),
                8080, false, new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -113,6 +114,7 @@ public class SimplePostCentricTest {
     public void canRecordASimplePostToPostmanEchoViaOkHttp() {
 
         delegate = new InteractionRecordingSvHttpServer(
+                new SvHttpServer.ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                8080, false, new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();

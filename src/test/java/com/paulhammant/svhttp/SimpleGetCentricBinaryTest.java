@@ -112,6 +112,7 @@ public class SimpleGetCentricBinaryTest {
     public void canRecordABinaryGetFromApachesSubversionViaUniRest() {
 
         delegate = new InteractionRecordingSvHttpServer(
+                new SvHttpServer.ServerMonitor.Console(),
                 new ServiceInteroperationViaUniRest(),
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -136,6 +137,7 @@ public class SimpleGetCentricBinaryTest {
     public void canRecordABinaryGetFromApachesSubversionViaOkHttp() {
 
         delegate = new InteractionRecordingSvHttpServer(
+                new SvHttpServer.ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -154,6 +156,7 @@ public class SimpleGetCentricBinaryTest {
     public void canRecordAPngGetFromWikimedia() {
 
         delegate = new InteractionRecordingSvHttpServer(
+                new SvHttpServer.ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                8080, false, new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org")
                 .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:"));
@@ -225,6 +228,7 @@ public class SimpleGetCentricBinaryTest {
     public void canRecordASvgGetFromWikimedia() {
 
         delegate = new InteractionRecordingSvHttpServer(
+                new SvHttpServer.ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                8080, false, new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org")
                 .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:")

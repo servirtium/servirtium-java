@@ -49,9 +49,9 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
     private String contentTypeToReal;
     private String filename;
 
-    public InteractionRecordingSvHttpServer(ServiceInteroperation realHttpInteractor,
+    public InteractionRecordingSvHttpServer(ServerMonitor serverMonitor, ServiceInteroperation realHttpInteractor,
                                             int port, boolean ssl, HeaderManipulator headerManipultor) {
-        super(port, ssl, headerManipultor);
+        super(serverMonitor, port, ssl, headerManipultor);
         this.httpInteractor = realHttpInteractor;
     }
 

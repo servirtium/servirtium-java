@@ -25,6 +25,7 @@ public class TodobackendDotComRecorderMain {
          */
 
         InteractionRecordingSvHttpServer recorder = new InteractionRecordingSvHttpServer(
+                new SvHttpServer.ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                 8099, false,
                 new SimpleHeaderManipulator("localhost:8099", "todo-backend-sinatra.herokuapp.com") {

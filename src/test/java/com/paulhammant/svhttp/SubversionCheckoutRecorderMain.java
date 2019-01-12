@@ -59,6 +59,7 @@ public class SubversionCheckoutRecorderMain {
         createWorkDirAndDeleteCheckout(tempDir);
 
         InteractionRecordingSvHttpServer recorder = new InteractionRecordingSvHttpServer(
+                new SvHttpServer.ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                 8099, false, new SvnHeaderManipulator("", ""));
         ByteArrayOutputStream out = new ByteArrayOutputStream();

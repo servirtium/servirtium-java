@@ -42,6 +42,97 @@ import static java.nio.file.Files.readAllBytes;
 
 public class InteractionReplayingSvHttpServer extends SvHttpServer {
 
+    private final ReplayMonitor monitor;
+
+    public static interface ReplayMonitor extends ServerMonitor {
+
+        void finishedButMoreInteractionsYetToDo(int interaction, String filename);
+
+        void couldNotFindInteraction(int interaction, String filename);
+
+        void methodNotAsExpected(int interaction, String filename, String mdMethod, String method);
+
+        void urlNotAsExpected(String url, ReplayingContext rc, String mdMethod, String mdUrl, String filename);
+
+        void markdownSectionHeadingMissing(int interaction, String HEADERS_SENT_TO_REAL_SERVER, String filename);
+
+        void headersFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename);
+
+        void bodyFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename);
+
+        void contentTypeFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename);
+
+        AssertionError unexpectedInteractionRequest(int counter, String filename);
+
+        class Default implements ReplayMonitor {
+
+            private final ServerMonitor serverMonitor;
+
+            @Override
+            public void interactionFinished(int counter, String method, String url) {
+                serverMonitor.interactionFinished(counter, method, url);
+            }
+
+            @Override
+            public void interactionStarted(int counter, String method, String url) {
+                serverMonitor.interactionStarted(counter, method, url);
+            }
+
+            public Default() {
+                this(new Console());
+            }
+
+            public Default(ServerMonitor serverMonitor) {
+                this.serverMonitor = serverMonitor;
+            }
+
+            public void finishedButMoreInteractionsYetToDo(int interaction, String filename) {
+                throw makeAssertionError("There are more recorded interactions after last replayed inteaction: #" + interaction + " in " + filename + ", yet invocation of .finishedMarkdownScript() possibly via .stop() implies there should be no more. Fail!!");
+            }
+
+            public void couldNotFindInteraction(int interaction, String filename) {
+                throw makeAssertionError("Could not find interactions #" + interaction + " in file '" + filename + "'");
+            }
+
+            public void methodNotAsExpected(int interaction, String filename, String mdMethod, String method) {
+                throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename) + ", method from the client that should be sent to real server are not the same as expected: " + method);
+            }
+
+            public void urlNotAsExpected(String url, ReplayingContext rc, String mdMethod, String mdUrl, String filename) {
+                throw makeAssertionError("Method " + rc.interactionNum + " (" + mdMethod + ") in " + filename + ": " + url + " does not end in previously recorded " + mdUrl);
+            }
+
+            public void markdownSectionHeadingMissing(int interaction, String HEADERS_SENT_TO_REAL_SERVER, String filename) {
+                throw makeAssertionError("Expected '" + HEADERS_SENT_TO_REAL_SERVER + "' for interaction #" + interaction + " in " + filename + ", but it was not there");
+            }
+
+            public void headersFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename) {
+                throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename) + ", headers from the client that should be sent to real server are not the same as those previously recorded");
+            }
+
+            public void bodyFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename) {
+                throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename) + ", body from the client that should be sent to real server are not the same those previously recorded");
+            }
+
+            public void contentTypeFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename) {
+                throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded");
+            }
+
+            public AssertionError unexpectedInteractionRequest(int counter, String filename) {
+                return makeAssertionError("Replay of script '" + filename + "' hit a problem when interaction " + counter + " sought, but there were no more after " + (counter-1));
+            }
+
+            private String methodAndFilePrefix(int interactionNum, String mdMethod, String filename) {
+                return "Interaction " + interactionNum + " (method: " + mdMethod + ") in " + filename;
+            }
+
+            private AssertionError makeAssertionError(String message) {
+                return new AssertionError(message);
+            }
+
+        }
+    }
+
     private List<String> markdownConversation = new ArrayList<>();
     private String bodyToReal;
     private String contentTypeToReal;
@@ -51,7 +142,12 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
     public static final String SVHTTP_INTERACTION = "## Interaction ";
 
     public InteractionReplayingSvHttpServer(int port, boolean ssl, HeaderManipulator headerManipultor) {
-        super(port, ssl, headerManipultor);
+        this(new ReplayMonitor.Default(), port, ssl, headerManipultor);
+    }
+
+    public InteractionReplayingSvHttpServer(ReplayMonitor monitor, int port, boolean ssl, HeaderManipulator headerManipultor) {
+        super(monitor, port, ssl, headerManipultor);
+        this.monitor = monitor;
     }
 
     public InteractionReplayingSvHttpServer withForgivingOrderOfClientRquestHeaders() {
@@ -93,7 +189,7 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
     @Override
     public void finishedMarkdownScript() {
         if (markdownConversation.size() - getCounter() > 1) {
-            throw makeAssertionError("There are more recorded interactions after last replayed inteaction: #" + getCounter() + " in " + filename + ", yet invocation of .finishedMarkdownScript() possibly via .stop() implies there should be no more. Fail!!");
+            monitor.finishedButMoreInteractionsYetToDo(getCounter(), filename);
         }
     }
 
@@ -117,7 +213,7 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
         try {
             rc.ix = rc.interactionText.indexOf(SVHTTP_INTERACTION + rc.interactionNum + ":", 0);
             if (rc.ix == -1) {
-                throw makeAssertionError("Could not find interactions #" + rc.interactionNum + " in file '" + filename + "'");
+                monitor.couldNotFindInteraction(rc.interactionNum, filename);
             }
             int lineEnd = rc.interactionText.indexOf("\n", rc.ix);
             String line = rc.interactionText.substring(rc.ix + SVHTTP_INTERACTION.length(), lineEnd);
@@ -126,17 +222,17 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
             String mdMethod = parts[1];
 
             if (!method.equals(mdMethod)) {
-                throw makeAssertionError(methodAndFilePrefix(rc.interactionNum, mdMethod) + ", method from the client that should be sent to real server are not the same as expected: " + method);
+                monitor.methodNotAsExpected(rc.interactionNum, filename, mdMethod, method);
             }
             String mdUrl = parts[2];
             if (!url.endsWith(mdUrl)) {
-                throw makeAssertionError("Method " + rc.interactionNum + " (" + mdMethod + ") in " + filename + ": " + url + " does not end in previously recorded " + mdUrl);
+                monitor.urlNotAsExpected(url, rc, mdMethod, mdUrl, filename);
             }
 
-            final String HEADERS_SENT_TO_REAL_SERVER = "### Request headers sent to the real server";
-            rc.ix = rc.interactionText.indexOf(HEADERS_SENT_TO_REAL_SERVER, rc.ix);
+            final String REQUEST_HEADERS_SENT_TO_REAL_SERVER = "### Request headers sent to the real server";
+            rc.ix = rc.interactionText.indexOf(REQUEST_HEADERS_SENT_TO_REAL_SERVER, rc.ix);
             if (rc.ix == -1) {
-                throw makeAssertionError("Expected '" + HEADERS_SENT_TO_REAL_SERVER + "' for interaction #" + rc.interactionNum + " in " + filename + ", but it was not there");
+                monitor.markdownSectionHeadingMissing(rc.interactionNum, REQUEST_HEADERS_SENT_TO_REAL_SERVER, filename);
             }
 
             String headersReceived = getCodeBlock(rc);
@@ -144,7 +240,7 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
             final String BODY_SENT_TO_REAL_SERVER = "### Body sent to the real server";
             rc.ix = rc.interactionText.indexOf(BODY_SENT_TO_REAL_SERVER, rc.ix);
             if (rc.ix == -1) {
-                throw makeAssertionError("Expected '" + BODY_SENT_TO_REAL_SERVER + "' for interaction #" + rc.interactionNum + " in " + filename + ", but it was not there");
+                monitor.markdownSectionHeadingMissing(rc.interactionNum, BODY_SENT_TO_REAL_SERVER, filename);
             }
             lineEnd = rc.interactionText.indexOf("\n", rc.ix);
             line = rc.interactionText.substring(rc.ix +4, lineEnd);
@@ -152,25 +248,25 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
 
             // TODO remove trim()
             if (!this.reorderMaybe(headersReceived).equals(reorderMaybe(headers.trim()))) {
-                throw makeAssertionError(methodAndFilePrefix(rc.interactionNum, mdMethod) + ", headers from the client that should be sent to real server are not the same as those previously recorded");
+                monitor.headersFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename);
             }
             String bodyReceived = getCodeBlock(rc);
             if (!this.bodyToReal.equals(bodyReceived)) {
-                throw makeAssertionError(methodAndFilePrefix(rc.interactionNum, mdMethod) + ", body from the client that should be sent to real server are not the same those previously recorded");
+                monitor.bodyFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename);
             }
             if (!this.contentTypeToReal.equals(contentType)) {
-                throw makeAssertionError(methodAndFilePrefix(rc.interactionNum, mdMethod) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded");
+                monitor.contentTypeFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename);
             }
             final String RESULTING_HEADERS_BACK_FROM_REAL_SERVER = "### Resulting headers back from the real server";
             rc.ix = rc.interactionText.indexOf(RESULTING_HEADERS_BACK_FROM_REAL_SERVER, rc.ix);
             if (rc.ix == -1) {
-                throw makeAssertionError("Expected '" + RESULTING_HEADERS_BACK_FROM_REAL_SERVER + "' for interaction #" + rc.interactionNum + " in " + filename + ", but it was not there");
+                monitor.markdownSectionHeadingMissing(rc.interactionNum, RESULTING_HEADERS_BACK_FROM_REAL_SERVER, filename);
             }
             String[] headersToReturn = getCodeBlock(rc).split("\n");
             final String RESULTING_BODY_BACK_FROM_REAL_SERVER = "### Resulting body back from the real server";
             rc.ix = rc.interactionText.indexOf(RESULTING_BODY_BACK_FROM_REAL_SERVER, rc.ix);
             if (rc.ix == -1) {
-                throw makeAssertionError("Expected '" + RESULTING_BODY_BACK_FROM_REAL_SERVER + "' for interaction #" + rc.interactionNum + " in " + filename + ", but it was not there");
+                monitor.markdownSectionHeadingMissing(rc.interactionNum, RESULTING_BODY_BACK_FROM_REAL_SERVER, filename);
             }
             lineEnd = rc.interactionText.indexOf("\n", rc.ix);
             line = rc.interactionText.substring(rc.ix +4, lineEnd);
@@ -196,10 +292,6 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
         }
     }
 
-    private AssertionError makeAssertionError(String message) {
-        return new AssertionError(message);
-    }
-
     private String reorderMaybe(String headersReceived) {
         if (forgivingOrderOfClientRquestHeaders) {
             String[] foo = headersReceived.split("\n");
@@ -207,10 +299,6 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
             return String.join("\n", foo);
         }
         return headersReceived;
-    }
-
-    private String methodAndFilePrefix(int interactionNum, String mdMethod) {
-        return "Interaction " + interactionNum + " (method: " + mdMethod + ") in " + filename;
     }
 
     private String getCodeBlock(ReplayingContext rc) {
@@ -253,8 +341,9 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
         try {
             interactionText = markdownConversation.get(counter);
         } catch (IndexOutOfBoundsException e) {
-            throw new AssertionError("Replay of script '" + filename + "' hit a problem when interaction " + counter + " sought, but there were no more after " + (counter-1));
+            throw monitor.unexpectedInteractionRequest(counter, filename);
         }
         return new ReplayingContext(interactionText, counter);
     }
+
 }

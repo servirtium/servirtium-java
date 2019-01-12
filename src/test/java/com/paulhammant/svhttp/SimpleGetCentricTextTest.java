@@ -113,6 +113,7 @@ public class SimpleGetCentricTextTest {
     public void canRecordASimpleGetFromApachesSubversionViaUniRest() {
 
         delegate = new InteractionRecordingSvHttpServer(
+                new SvHttpServer.ServerMonitor.Console(),
                 new ServiceInteroperationViaUniRest(),
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -137,6 +138,7 @@ public class SimpleGetCentricTextTest {
     public void canRecordASimpleGetFromApachesSubversionViaOkHttp() {
 
         delegate = new InteractionRecordingSvHttpServer(
+                new SvHttpServer.ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
