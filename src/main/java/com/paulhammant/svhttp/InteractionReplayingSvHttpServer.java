@@ -310,12 +310,12 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
     }
 
     @Override
-    protected void responseBody(ServiceResponse rv, Context ctx) {
+    protected void responseBody(Context ctx, Object body, int statusCode, String contentType) {
         // only useful for recording which is not this class
     }
 
     @Override
-    protected void responseHeaders(ServiceResponse rv, Context ctx) {
+    protected void responseHeaders(Context ctx, String[] headers) {
         // only useful for recording which is not this class
     }
 

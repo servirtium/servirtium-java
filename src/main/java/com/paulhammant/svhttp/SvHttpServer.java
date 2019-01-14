@@ -157,9 +157,9 @@ public abstract class SvHttpServer {
 
                     response.setStatus(revisedResponse.statusCode);
 
-                    responseHeaders(revisedResponse, ctx);
+                    responseHeaders(ctx, revisedResponse.headers);
 
-                    responseBody(revisedResponse, ctx);
+                    responseBody(ctx, revisedResponse.body, revisedResponse.statusCode, revisedResponse.contentType);
 
                     if (revisedResponse.contentType != null) {
                         response.setContentType(revisedResponse.contentType);
@@ -236,9 +236,9 @@ public abstract class SvHttpServer {
     protected abstract ServiceResponse getServiceResponse(String method, String url,
                                                           Map<String, String> headersToReal, Context ctx) throws IOException;
 
-    protected abstract void responseBody(ServiceResponse rv, Context ctx) ;
+    protected abstract void responseBody(Context ctx, Object body, int statusCode, String contentType) ;
 
-    protected abstract void responseHeaders(ServiceResponse rv, Context ctx);
+    protected abstract void responseHeaders(Context ctx, String[] headers);
 
     protected abstract void requestBody(String bodyToReal, String contentType, Context ctx);
 

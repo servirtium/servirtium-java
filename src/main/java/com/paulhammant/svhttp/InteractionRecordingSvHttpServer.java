@@ -118,13 +118,13 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
     }
 
     @Override
-    protected void responseHeaders(ServiceResponse rv, Context ctx) {
+    protected void responseHeaders(Context ctx, String[] headers) {
         RecordingContext rc = (RecordingContext) ctx;
         guardOut();
         rc.out.append("### Resulting headers back from the real server:\n");
         rc.out.append("\n");
         rc.out.append("```\n");
-        for (String hdrLine : rv.headers) {
+        for (String hdrLine : headers) {
             int ix = hdrLine.indexOf(": ");
             String hdrKey = hdrLine.substring(0, ix);
             String hdrVal = hdrLine.substring(ix + 2);
@@ -135,20 +135,20 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
     }
 
     @Override
-    protected void responseBody(ServiceResponse rv, Context ctx) {
+    protected void responseBody(Context ctx, Object body, int statusCode, String contentType) {
         RecordingContext rc = (RecordingContext) ctx;
         guardOut();
         String xtra = "";
-        if (rv.body instanceof byte[]) {
+        if (body instanceof byte[]) {
             xtra = " - Base64 below";
         }
-        rc.out.append("### Resulting body back from the real server (").append(rv.statusCode).append(": ").append(rv.contentType).append(xtra).append("):\n");
+        rc.out.append("### Resulting body back from the real server (").append(statusCode).append(": ").append(contentType).append(xtra).append("):\n");
         rc.out.append("\n");
         rc.out.append("```\n");
-        if (rv.body instanceof String) {
-            rc.out.append(rv.body).append("\n");
-        } else if (rv.body instanceof byte[]) {
-            rc.out.append(Base64.getEncoder().encodeToString((byte[]) rv.body)).append("\n");
+        if (body instanceof String) {
+            rc.out.append(body).append("\n");
+        } else if (body instanceof byte[]) {
+            rc.out.append(Base64.getEncoder().encodeToString((byte[]) body)).append("\n");
         } else {
             throw new UnsupportedOperationException();
         }
