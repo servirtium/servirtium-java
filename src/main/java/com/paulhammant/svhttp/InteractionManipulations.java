@@ -32,10 +32,9 @@
 package com.paulhammant.svhttp;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-public interface HeaderManipulator {
+public interface InteractionManipulations {
 
     default void potentiallyManipulateHeader(String method, String currentHeader, Map<String, String> allHeadersToReal) {
     }
@@ -60,7 +59,7 @@ public interface HeaderManipulator {
 
     }
 
-    class Noop implements HeaderManipulator {
+    class Noop implements InteractionManipulations {
 
     }
 

@@ -1,11 +1,9 @@
 package com.paulhammant.svhttp;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class SimpleHeaderManipulator implements HeaderManipulator {
+public class SimpleHeaderManipulator implements InteractionManipulations {
 
     protected final String fromUrl;
     protected final String toUrl;

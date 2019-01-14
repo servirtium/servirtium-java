@@ -50,8 +50,8 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
     private String filename;
 
     public InteractionRecordingSvHttpServer(ServerMonitor serverMonitor, ServiceInteroperation realHttpInteractor,
-                                            int port, boolean ssl, HeaderManipulator headerManipultor) {
-        super(serverMonitor, port, ssl, headerManipultor);
+                                            int port, boolean ssl, InteractionManipulations interactionManipulations) {
+        super(serverMonitor, port, ssl, interactionManipulations);
         this.httpInteractor = realHttpInteractor;
     }
 
@@ -64,7 +64,7 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
 
     protected ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
         headersToReal.remove("Accept-Encoding");
-        return httpInteractor.invokeServiceEndpoint(method, this.bodyToReal, this.contentTypeToReal, url, headersToReal, headerManipulator);
+        return httpInteractor.invokeServiceEndpoint(method, this.bodyToReal, this.contentTypeToReal, url, headersToReal, interactionManipulations);
     }
 
     public static class RecordingContext extends Context {
@@ -128,7 +128,7 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
             int ix = hdrLine.indexOf(": ");
             String hdrKey = hdrLine.substring(0, ix);
             String hdrVal = hdrLine.substring(ix + 2);
-            rc.out.append(hdrKey).append(": ").append(headerManipulator.headerReplacement(hdrKey, hdrVal)).append("\n");
+            rc.out.append(hdrKey).append(": ").append(interactionManipulations.headerReplacement(hdrKey, hdrVal)).append("\n");
         }
         rc.out.append("```\n");
         rc.out.append("\n");

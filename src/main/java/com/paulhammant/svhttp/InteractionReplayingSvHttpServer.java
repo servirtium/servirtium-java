@@ -141,11 +141,11 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
     private boolean forgivingOrderOfClientRquestHeaders = false;
     public static final String SVHTTP_INTERACTION = "## Interaction ";
 
-    public InteractionReplayingSvHttpServer(int port, boolean ssl, HeaderManipulator headerManipultor) {
+    public InteractionReplayingSvHttpServer(int port, boolean ssl, InteractionManipulations headerManipultor) {
         this(new ReplayMonitor.Default(), port, ssl, headerManipultor);
     }
 
-    public InteractionReplayingSvHttpServer(ReplayMonitor monitor, int port, boolean ssl, HeaderManipulator headerManipultor) {
+    public InteractionReplayingSvHttpServer(ReplayMonitor monitor, int port, boolean ssl, InteractionManipulations headerManipultor) {
         super(monitor, port, ssl, headerManipultor);
         this.monitor = monitor;
     }

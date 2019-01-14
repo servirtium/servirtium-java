@@ -51,14 +51,14 @@ import java.util.Scanner;
 public abstract class SvHttpServer {
 
     private final int port;
-    protected final HeaderManipulator headerManipulator;
+    protected final InteractionManipulations interactionManipulations;
 
     private Server jettyServer;
     private int counter = -1;
 
-    public SvHttpServer(ServerMonitor monitor, int port, boolean ssl, HeaderManipulator headerManipulator) {
+    public SvHttpServer(ServerMonitor monitor, int port, boolean ssl, InteractionManipulations interactionManipulations) {
         this.port = port;
-        this.headerManipulator = headerManipulator;
+        this.interactionManipulations = interactionManipulations;
 
         jettyServer = new Server(port);
         // How the f*** do you turn off Embedded Jetty's logging???
@@ -120,19 +120,19 @@ public abstract class SvHttpServer {
                     while (hdrs.hasMoreElements()) {
                         String hdr = hdrs.nextElement();
                         String hdrVal = request.getHeader(hdr);
-                        hdrVal = headerManipulator.headerReplacement(hdr, hdrVal);
+                        hdrVal = interactionManipulations.headerReplacement(hdr, hdrVal);
                         headersToReal.put(hdr, hdrVal);
-                        headerManipulator.potentiallyManipulateHeader(method, hdr, headersToReal);
+                        interactionManipulations.potentiallyManipulateHeader(method, hdr, headersToReal);
                     }
 
-                    headerManipulator.changeHeadersToSendToReal(headersToReal);
+                    interactionManipulations.changeHeadersToSendToReal(headersToReal);
 
                     requestHeaders(headersToReal, ctx);
 
                     requestBody(bodyToReal, contentType, ctx);
 
 
-                    final String requestUrl = headerManipulator.changeUrlForRequestToReal(url);
+                    final String requestUrl = interactionManipulations.changeUrlForRequestToReal(url);
                     ServiceResponse realResponse = getServiceResponse(method, requestUrl,
                             headersToReal, ctx);
 
@@ -140,12 +140,12 @@ public abstract class SvHttpServer {
                     ArrayList<String > newHeaders = new ArrayList<>();
                     for (int i = 0; i < realResponse.headers.length; i++) {
                         String headerBackFromReal = realResponse.headers[i];
-                        String potentiallyChangedHeader = headerManipulator.changeHeaderBackFromReal(i, headerBackFromReal);
+                        String potentiallyChangedHeader = interactionManipulations.changeHeaderBackFromReal(i, headerBackFromReal);
                         if (potentiallyChangedHeader != null) {
                             newHeaders.add(potentiallyChangedHeader);
                         }
                     }
-                    headerManipulator.messWithHeadersBackFromReal(newHeaders);
+                    interactionManipulations.messWithHeadersBackFromReal(newHeaders);
                     for (String header : newHeaders) {
                         int ix = header.indexOf(": ");
                         String hdrKey = header.substring(0, ix);

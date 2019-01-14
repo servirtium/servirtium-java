@@ -49,7 +49,7 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
     private OkHttpClient okHttpClient = new OkHttpClient();
 
     @Override
-    public ServiceResponse invokeServiceEndpoint(String method, String bodyToReal, String contentTypeToReal, String url, Map<String, String> headersToReal, HeaderManipulator headerManipulator) throws InteractionException {
+    public ServiceResponse invokeServiceEndpoint(String method, String bodyToReal, String contentTypeToReal, String url, Map<String, String> headersToReal, InteractionManipulations interactionManipulations) throws InteractionException {
 
         RequestBody nonGetBody = null;
         if (!method.equals("GET")) {
@@ -91,7 +91,7 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
                 int ix = hdrLine.indexOf(": ");
                 String hdrKey = hdrLine.substring(0, ix);
                 String hdrVal = hdrLine.substring(ix + 2);
-                responseHeaders2.add(hdrKey + ": " + headerManipulator.headerReplacement(hdrKey, hdrVal));
+                responseHeaders2.add(hdrKey + ": " + interactionManipulations.headerReplacement(hdrKey, hdrVal));
             }
             return new ServiceResponse(responseBody, responseContentType, statusCode, responseHeaders2.toArray(new String[responseHeaders.length]));
 

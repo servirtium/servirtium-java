@@ -53,7 +53,7 @@ public class ServiceInteroperationViaUniRest implements ServiceInteroperation {
         }
     }
 
-    public ServiceResponse invokeServiceEndpoint(String method, String bodyToReal, String contentTypeToReal, String url, Map<String, String> headersToReal, HeaderManipulator headerManipulator) throws InteractionException {
+    public ServiceResponse invokeServiceEndpoint(String method, String bodyToReal, String contentTypeToReal, String url, Map<String, String> headersToReal, InteractionManipulations interactionManipulations) throws InteractionException {
 
         com.mashape.unirest.http.Headers realResponseHeaders;
         com.mashape.unirest.http.HttpResponse<InputStream> httpResponse;
@@ -66,7 +66,7 @@ public class ServiceInteroperationViaUniRest implements ServiceInteroperation {
 
                     realResponseHeaders = httpResponse.getHeaders();
 
-                    List<String> hdrs = getHeaders(headerManipulator, realResponseHeaders);
+                    List<String> hdrs = getHeaders(interactionManipulations, realResponseHeaders);
 
                     String contentType = httpResponse.getHeaders().get("Content-Type").get(0);
 
@@ -100,7 +100,7 @@ public class ServiceInteroperationViaUniRest implements ServiceInteroperation {
 
                     realResponseHeaders = httpResponse.getHeaders();
 
-                    List<String> hdrs = getHeaders(headerManipulator, realResponseHeaders);
+                    List<String> hdrs = getHeaders(interactionManipulations, realResponseHeaders);
 
                     return new ServiceResponse(null,
                             realResponseHeaders.get("Content-Type").get(0),
@@ -115,11 +115,11 @@ public class ServiceInteroperationViaUniRest implements ServiceInteroperation {
 
     }
 
-    private List<String> getHeaders(HeaderManipulator headerManipulator, Headers realResponseHeaders) {
+    private List<String> getHeaders(InteractionManipulations interactionManipulations, Headers realResponseHeaders) {
         List<String> hdrs = new ArrayList<>();
         realResponseHeaders.forEach((k, v) -> {
             for (String s : v) {
-                hdrs.add(k + ": " + headerManipulator.headerReplacement(k, s));
+                hdrs.add(k + ": " + interactionManipulations.headerReplacement(k, s));
             }
         });
         return hdrs;

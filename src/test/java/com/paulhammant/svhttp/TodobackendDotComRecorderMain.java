@@ -33,6 +33,7 @@ public class TodobackendDotComRecorderMain {
                     public void changeHeadersToSendToReal(Map<String, String> headersToReal) {
                         headersToReal.put("Cache-Control","no-cache");
                         headersToReal.put("Pragma","no-cache");
+                        headersToReal.put("Referer", headersToReal.get("Referer").replace(super.fromUrl, super.toUrl));
                     }
                 });
 
