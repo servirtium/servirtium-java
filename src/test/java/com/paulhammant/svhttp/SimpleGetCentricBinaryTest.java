@@ -109,7 +109,7 @@ public class SimpleGetCentricBinaryTest {
     private SvHttpServer delegate;
 
     @Test
-    public void canRecordABinaryGetFromApachesSubversionViaUniRest() {
+    public void canRecordABinaryGetFromApachesSubversionViaUniRest() throws Exception {
 
         delegate = new InteractionRecordingSvHttpServer(
                 new SvHttpServer.ServerMonitor.Console(),
@@ -121,10 +121,11 @@ public class SimpleGetCentricBinaryTest {
 
         checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured();
 
+        delegate.finishedScript();
+
         // Order of headers is NOT as originally sent as UniRest uses a Map to store them
         assertEquals(simplidyForEqualsTesting(EXPECTED_1 + EXPECTED_2b + EXPECTED_3), simplidyForEqualsTesting(out.toString()));
 
-        delegate.finishedMarkdownScript();
     }
 
     @After
@@ -134,7 +135,7 @@ public class SimpleGetCentricBinaryTest {
 
 
     @Test
-    public void canRecordABinaryGetFromApachesSubversionViaOkHttp() {
+    public void canRecordABinaryGetFromApachesSubversionViaOkHttp() throws Exception {
 
         delegate = new InteractionRecordingSvHttpServer(
                 new SvHttpServer.ServerMonitor.Console(),
@@ -146,14 +147,15 @@ public class SimpleGetCentricBinaryTest {
 
         checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured();
 
+        delegate.finishedScript();
+
         // Order of headers is as originally sent
         assertEquals(simplidyForEqualsTesting(EXPECTED_1 + EXPECTED_2a + EXPECTED_3), simplidyForEqualsTesting(out.toString()));
 
-        delegate.finishedMarkdownScript();
     }
 
     @Test
-    public void canRecordAPngGetFromWikimedia() {
+    public void canRecordAPngGetFromWikimedia() throws Exception {
 
         delegate = new InteractionRecordingSvHttpServer(
                 new SvHttpServer.ServerMonitor.Console(),
@@ -176,6 +178,8 @@ public class SimpleGetCentricBinaryTest {
                 .body(containsString("PNG"))
                 .body(containsString("IHDR"))
                 .contentType("image/png");
+
+        delegate.finishedScript();
 
         // Order of headers is as originally sent
         assertEquals(simplidyForEqualsTesting(
@@ -221,11 +225,10 @@ public class SimpleGetCentricBinaryTest {
                 "```\n" +
                 "\n"), simplidyForEqualsTesting(out.toString()));
 
-        delegate.finishedMarkdownScript();
     }
 
     @Test
-    public void canRecordASvgGetFromWikimedia() {
+    public void canRecordASvgGetFromWikimedia() throws Exception {
 
         delegate = new InteractionRecordingSvHttpServer(
                 new SvHttpServer.ServerMonitor.Console(),
@@ -248,6 +251,8 @@ public class SimpleGetCentricBinaryTest {
                 .statusCode(200)
                 .body(containsString("http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"))
                 .contentType("image/svg+xml");
+
+        delegate.finishedScript();
 
         // Order of headers is as originally sent
         assertEquals(simplidyForEqualsTesting(
@@ -304,11 +309,10 @@ public class SimpleGetCentricBinaryTest {
                         "```\n" +
                         "\n"), simplidyForEqualsTesting(out.toString()));
 
-        delegate.finishedMarkdownScript();
     }
 
     @Test
-    public void canReplayABinaryGetFromApachesSubversion() {
+    public void canReplayABinaryGetFromApachesSubversion() throws Exception {
 
         delegate = new InteractionReplayingSvHttpServer(
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
@@ -317,7 +321,9 @@ public class SimpleGetCentricBinaryTest {
 
         checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured();
 
-        delegate.finishedMarkdownScript();
+        delegate.finishedScript();
+
+
     }
 
     private void checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured() {

@@ -110,7 +110,7 @@ public class SimpleGetCentricTextTest {
 
 
     @Test
-    public void canRecordASimpleGetFromApachesSubversionViaUniRest() {
+    public void canRecordASimpleGetFromApachesSubversionViaUniRest() throws Exception {
 
         delegate = new InteractionRecordingSvHttpServer(
                 new SvHttpServer.ServerMonitor.Console(),
@@ -122,10 +122,11 @@ public class SimpleGetCentricTextTest {
 
         checkGetOfApacheNoticeFileOverHttpViaRestAssured();
 
+        delegate.finishedScript();
+
         // Order of headers is NOT as originally sent as UniRest uses a Map to store them
         assertEquals(sanitizeDate(EXPECTED_1 + EXPECTED_2b + EXPECTED_3), sanitizeDate(out.toString()));
 
-        delegate.finishedMarkdownScript();
     }
 
     @After
@@ -135,7 +136,7 @@ public class SimpleGetCentricTextTest {
 
 
     @Test
-    public void canRecordASimpleGetFromApachesSubversionViaOkHttp() {
+    public void canRecordASimpleGetFromApachesSubversionViaOkHttp() throws Exception {
 
         delegate = new InteractionRecordingSvHttpServer(
                 new SvHttpServer.ServerMonitor.Console(),
@@ -147,14 +148,15 @@ public class SimpleGetCentricTextTest {
 
         checkGetOfApacheNoticeFileOverHttpViaRestAssured();
 
+        delegate.finishedScript();
+
         // Order of headers is as originally sent
         assertEquals(sanitizeDate(EXPECTED_1 + EXPECTED_2a + EXPECTED_3), sanitizeDate(out.toString()));
 
-        delegate.finishedMarkdownScript();
     }
 
     @Test
-    public void canReplayASimpleGetFromApachesSubversion() {
+    public void canReplayASimpleGetFromApachesSubversion() throws Exception {
 
         delegate = new InteractionReplayingSvHttpServer(
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
@@ -163,7 +165,7 @@ public class SimpleGetCentricTextTest {
 
         checkGetOfApacheNoticeFileOverHttpViaRestAssured();
 
-        delegate.finishedMarkdownScript();
+        delegate.finishedScript();
 
     }
 

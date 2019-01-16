@@ -41,7 +41,7 @@ import static com.paulhammant.svhttp.SubversionCheckoutRecorderMain.createWorkDi
 
 public class SubversionCheckoutReplayerMain {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws Exception {
 
         // Run this main() method from within Intellij
 

@@ -37,7 +37,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static junit.framework.TestCase.fail;
 
@@ -48,6 +50,7 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
     private String bodyToReal;
     private String contentTypeToReal;
     private String filename;
+    private Map<Integer, String> interactions = new HashMap<>();
 
     public InteractionRecordingSvHttpServer(ServerMonitor serverMonitor, ServiceInteroperation realHttpInteractor,
                                             int port, boolean ssl, InteractionManipulations interactionManipulations) {
@@ -69,7 +72,7 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
 
     public static class RecordingContext extends Context {
 
-        private StringBuilder out = new StringBuilder();
+        private StringBuilder recording = new StringBuilder();
         private int interactionNumber;
 
     }
@@ -79,14 +82,14 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
         guardOut();
         RecordingContext rc = new RecordingContext();
 
-        rc.out.append("## Interaction ").append(counter).append(": ").append(method).append(" ").append(path).append("\n\n");
+        rc.recording.append("## Interaction ").append(counter).append(": ").append(method).append(" ").append(path).append("\n\n");
         rc.interactionNumber = counter;
         return rc;
     }
 
     private void guardOut() {
         if (out == null) {
-            fail("Recording in progress, but previous recording was finishedMarkdownScript() and/or no new setMarkdownScriptFilename(..) started");
+            fail("Recording in progress, but previous recording was finishedScript() and/or no new setMarkdownScriptFilename(..) started");
         }
     }
 
@@ -94,13 +97,13 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
     protected void requestHeaders(Map<String, String> headers, Context ctx) {
         RecordingContext rc = (RecordingContext) ctx; 
         guardOut();
-        rc.out.append("### Request headers sent to the real server:\n\n");
-        rc.out.append("```\n");
+        rc.recording.append("### Request headers sent to the real server:\n\n");
+        rc.recording.append("```\n");
         for (String k : headers.keySet()) {
             String v = headers.get(k);
-            rc.out.append(k).append(": ").append(v).append("\n");
+            rc.recording.append(k).append(": ").append(v).append("\n");
         }
-        rc.out.append("```\n\n");
+        rc.recording.append("```\n\n");
     }
 
     @Override
@@ -109,29 +112,29 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
         this.bodyToReal = bodyToReal;
         this.contentTypeToReal = contentTypeToReal;
         guardOut();
-        rc.out.append("### Body sent to the real server (").append(contentTypeToReal).append("):\n");
-        rc.out.append("\n");
-        rc.out.append("```\n");
-        rc.out.append(bodyToReal).append("\n");
-        rc.out.append("```\n");
-        rc.out.append("\n");
+        rc.recording.append("### Body sent to the real server (").append(contentTypeToReal).append("):\n");
+        rc.recording.append("\n");
+        rc.recording.append("```\n");
+        rc.recording.append(bodyToReal).append("\n");
+        rc.recording.append("```\n");
+        rc.recording.append("\n");
     }
 
     @Override
     protected void responseHeaders(Context ctx, String[] headers) {
         RecordingContext rc = (RecordingContext) ctx;
         guardOut();
-        rc.out.append("### Resulting headers back from the real server:\n");
-        rc.out.append("\n");
-        rc.out.append("```\n");
+        rc.recording.append("### Resulting headers back from the real server:\n");
+        rc.recording.append("\n");
+        rc.recording.append("```\n");
         for (String hdrLine : headers) {
             int ix = hdrLine.indexOf(": ");
             String hdrKey = hdrLine.substring(0, ix);
             String hdrVal = hdrLine.substring(ix + 2);
-            rc.out.append(hdrKey).append(": ").append(interactionManipulations.headerReplacement(hdrKey, hdrVal)).append("\n");
+            rc.recording.append(hdrKey).append(": ").append(interactionManipulations.headerReplacement(hdrKey, hdrVal)).append("\n");
         }
-        rc.out.append("```\n");
-        rc.out.append("\n");
+        rc.recording.append("```\n");
+        rc.recording.append("\n");
     }
 
     @Override
@@ -142,24 +145,28 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
         if (body instanceof byte[]) {
             xtra = " - Base64 below";
         }
-        rc.out.append("### Resulting body back from the real server (").append(statusCode).append(": ").append(contentType).append(xtra).append("):\n");
-        rc.out.append("\n");
-        rc.out.append("```\n");
+        rc.recording.append("### Resulting body back from the real server (").append(statusCode).append(": ").append(contentType).append(xtra).append("):\n");
+        rc.recording.append("\n");
+        rc.recording.append("```\n");
         if (body instanceof String) {
-            rc.out.append(body).append("\n");
+            rc.recording.append(body).append("\n");
         } else if (body instanceof byte[]) {
-            rc.out.append(Base64.getEncoder().encodeToString((byte[]) body)).append("\n");
+            rc.recording.append(Base64.getEncoder().encodeToString((byte[]) body)).append("\n");
         } else {
             throw new UnsupportedOperationException();
         }
-        rc.out.append("```\n");
-        rc.out.append("\n");
+        rc.recording.append("```\n");
+        rc.recording.append("\n");
 
-        this.out.print(((RecordingContext) ctx).out.toString());
+        this.interactions.put(rc.interactionNumber, rc.recording.toString());
     }
 
-    public void finishedMarkdownScript() {
+    public void finishedScript() {
         if (this.out != null) {
+            int i = 0;
+            while (this.interactions.size() >0) {
+                this.out.print(this.interactions.remove(i++));
+            }
             this.out.close();
             this.out = null;
         }

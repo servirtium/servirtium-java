@@ -87,7 +87,7 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
             }
 
             public void finishedButMoreInteractionsYetToDo(int interaction, String filename) {
-                throw makeAssertionError("There are more recorded interactions after last replayed inteaction: #" + interaction + " in " + filename + ", yet invocation of .finishedMarkdownScript() possibly via .stop() implies there should be no more. Fail!!");
+                throw makeAssertionError("There are more recorded interactions after last replayed inteaction: #" + interaction + " in " + filename + ", yet invocation of .finishedScript() possibly via .stop() implies there should be no more. Fail!!");
             }
 
             public void couldNotFindInteraction(int interaction, String filename) {
@@ -183,11 +183,10 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
                 ctr++;
             }
         }
-        System.out.println();
     }
 
     @Override
-    public void finishedMarkdownScript() {
+    public void finishedScript() {
         if (markdownConversation.size() - getCounter() > 1) {
             monitor.finishedButMoreInteractionsYetToDo(getCounter(), filename);
         }

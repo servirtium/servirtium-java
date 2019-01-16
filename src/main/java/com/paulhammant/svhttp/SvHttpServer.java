@@ -172,12 +172,13 @@ public abstract class SvHttpServer {
 
                     monitor.interactionFinished(counter, method, url);
                 } catch (Throwable throwable) {
+                    monitor.unexpectedRequestError(throwable);
                     throw throwable; // stick your debugger here
+                } finally {
+                    // Inform jetty that this request has now been handled
+                    baseRequest.setHandled(true);
                 }
-
-                // Inform jetty that this request has now been handled
-                baseRequest.setHandled(true);
-            }
+           }
         });
     }
 
@@ -186,6 +187,8 @@ public abstract class SvHttpServer {
         default void interactionFinished(int counter, String method, String url) {}
 
         default void interactionStarted(int counter, String method, String url){}
+
+        default void unexpectedRequestError(Throwable throwable) {}
 
         class Default implements ServerMonitor {
         }
@@ -199,7 +202,11 @@ public abstract class SvHttpServer {
 
             @Override
             public void interactionStarted(int counter, String method, String url) {
-                System.out.println(">> SvHttp >> interaction " + counter + " " + method + " " + url + " STARTED");
+            }
+
+            @Override
+            public void unexpectedRequestError(Throwable throwable) {
+                System.out.println(">> SvHttp >> unexpected request error ");
             }
         }
     }
@@ -213,16 +220,12 @@ public abstract class SvHttpServer {
                 contentType.startsWith("application/xhtml+xml");
     }
 
-    public SvHttpServer startApp() {
-        try {
-            jettyServer.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public SvHttpServer startApp() throws Exception {
+        jettyServer.start();
         return this;
     }
 
-    public abstract void finishedMarkdownScript();
+    public abstract void finishedScript();
 
 
     protected int getCounter() {
@@ -250,36 +253,14 @@ public abstract class SvHttpServer {
 
     }
 
-
     public void stop() {
-        finishedMarkdownScript(); // just in case
+        finishedScript(); // just in case
         try {
-            final Socket s = new Socket("localhost", port);
-            OutputStream opStream = s.getOutputStream();
-            s.close();
-            // expected
-        } catch (IOException e) {
-            throw new AssertionError("There should have a socket jettyServer on the port");
-
-        }
-        try {
+            jettyServer.setStopTimeout(1);
             jettyServer.stop();
+            System.out.println("STOPPED? Jetty State: " + jettyServer.getState());
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-        while (true) {
-            try {
-                final Socket s = new Socket("localhost", port);
-                OutputStream opStream = s.getOutputStream();
-                s.close();
-                try {
-                    Thread.sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            } catch (IOException e) {
-                return;
-            }
         }
 
     }

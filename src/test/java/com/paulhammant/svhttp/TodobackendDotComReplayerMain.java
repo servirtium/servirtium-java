@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class TodobackendDotComReplayerMain {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws Exception {
 
         // Run this main() method from within Intellij
 

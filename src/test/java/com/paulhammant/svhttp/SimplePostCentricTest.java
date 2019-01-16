@@ -86,7 +86,7 @@ public class SimplePostCentricTest {
 
 
     @Test @Ignore
-    public void canRecordASimplePostToPostmanEchoViaUniRest() {
+    public void canRecordASimplePostToPostmanEchoViaUniRest() throws Exception {
 
         delegate = new InteractionRecordingSvHttpServer(
                 new SvHttpServer.ServerMonitor.Console(),
@@ -101,7 +101,7 @@ public class SimplePostCentricTest {
         // Order of headers is NOT as originally sent as UniRest uses a Map to store them
         assertEquals(sanitizeDate(EXPECTED), sanitizeDate(out.toString()));
 
-        delegate.finishedMarkdownScript();
+        delegate.finishedScript();
 
     }
 
@@ -111,7 +111,7 @@ public class SimplePostCentricTest {
     }
 
     @Test
-    public void canRecordASimplePostToPostmanEchoViaOkHttp() {
+    public void canRecordASimplePostToPostmanEchoViaOkHttp() throws Exception {
 
         delegate = new InteractionRecordingSvHttpServer(
                 new SvHttpServer.ServerMonitor.Console(),
@@ -123,14 +123,15 @@ public class SimplePostCentricTest {
 
         checkPostToPostmanEchoViaRestAssured();
 
+        delegate.finishedScript();
+
         // Order of headers is as originally sent
         assertEquals(sanitizeDate(EXPECTED), sanitizeDate(out.toString()));
 
-        delegate.finishedMarkdownScript();
     }
 
     @Test
-    public void canReplayASimplePostToPostmanEcho() {
+    public void canReplayASimplePostToPostmanEcho() throws Exception {
 
         delegate = new InteractionReplayingSvHttpServer(
                8080, false, new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"));
@@ -139,7 +140,7 @@ public class SimplePostCentricTest {
 
         checkPostToPostmanEchoViaRestAssured();
 
-        delegate.finishedMarkdownScript();
+        delegate.finishedScript();
     }
 
     private void checkPostToPostmanEchoViaRestAssured() {

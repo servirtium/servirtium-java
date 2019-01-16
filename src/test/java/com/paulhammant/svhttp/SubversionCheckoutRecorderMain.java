@@ -46,7 +46,7 @@ public class SubversionCheckoutRecorderMain {
 
     public static final String CHECKOUT_RECORDER_TEST_MD = "./src/test/resources/ExampleSubversionCheckoutRecording.md";
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws Exception {
 
         // Run this main() method from within Intellij
 
