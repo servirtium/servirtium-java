@@ -58,13 +58,6 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
         this.httpInteractor = realHttpInteractor;
     }
 
-    public static String localResourceFileEquivFor(Class<?> aClass, String testMethod) {
-        String file = aClass.getProtectionDomain().getCodeSource().getLocation().getFile();
-        String root = file.substring(0, file.indexOf("/target"));
-        String root2 = root + "/src/test/resources/" + aClass.getCanonicalName() + "." + testMethod + ".md";
-        return root2;
-    }
-
     protected ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
         headersToReal.remove("Accept-Encoding");
         return httpInteractor.invokeServiceEndpoint(method, this.bodyToReal, this.contentTypeToReal, url, headersToReal, interactionManipulations);
