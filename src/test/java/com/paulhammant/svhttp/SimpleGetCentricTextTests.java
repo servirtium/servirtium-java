@@ -41,7 +41,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 
-public class SimpleGetCentricTextTest {
+public class SimpleGetCentricTextTests {
 
     private static final String EXPECTED_1 =
             "## Interaction 0: GET /repos/asf/synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE\n" +
@@ -108,26 +108,6 @@ public class SimpleGetCentricTextTest {
 
     private SvHttpServer delegate;
 
-
-    @Test
-    public void canRecordASimpleGetFromApachesSubversionViaUniRest() throws Exception {
-
-        delegate = new InteractionRecordingSvHttpServer(
-                new SvHttpServer.ServerMonitor.Console(),
-                new ServiceInteroperationViaUniRest(),
-               8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
-        delegate.startApp();
-
-        checkGetOfApacheNoticeFileOverHttpViaRestAssured();
-
-        delegate.finishedScript();
-
-        // Order of headers is NOT as originally sent as UniRest uses a Map to store them
-        assertEquals(sanitizeDate(EXPECTED_1 + EXPECTED_2b + EXPECTED_3), sanitizeDate(out.toString()));
-
-    }
 
     @After
     public void tearDown() {

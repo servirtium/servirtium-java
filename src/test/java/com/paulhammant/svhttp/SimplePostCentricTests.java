@@ -36,12 +36,13 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 
-public class SimplePostCentricTest {
+public class SimplePostCentricTests {
 
     public static final String EXPECTED =
             "## Interaction 0: POST /post\n" +
@@ -84,26 +85,6 @@ public class SimplePostCentricTest {
             "\n";
     private SvHttpServer delegate;
 
-
-    @Test @Ignore
-    public void canRecordASimplePostToPostmanEchoViaUniRest() throws Exception {
-
-        delegate = new InteractionRecordingSvHttpServer(
-                new SvHttpServer.ServerMonitor.Console(),
-                new ServiceInteroperationViaUniRest(),
-               8080, false, new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"));
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
-        delegate.startApp();
-
-        checkPostToPostmanEchoViaRestAssured();
-
-        // Order of headers is NOT as originally sent as UniRest uses a Map to store them
-        assertEquals(sanitizeDate(EXPECTED), sanitizeDate(out.toString()));
-
-        delegate.finishedScript();
-
-    }
 
     @After
     public void tearDown() {

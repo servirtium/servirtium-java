@@ -38,6 +38,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -228,6 +229,8 @@ public abstract class SvHttpServer {
     public abstract void finishedScript();
 
 
+    public abstract void setMarkdownScriptFilename(String filename) throws FileNotFoundException;
+
     protected int getCounter() {
         return counter;
     }
@@ -264,5 +267,15 @@ public abstract class SvHttpServer {
         }
 
     }
+
+    public static String testName() {
+        return testName(1);
+    }
+
+    public static String testName(int i) {
+        StackTraceElement[] foo = Thread.currentThread().getStackTrace();
+        return foo[2+i].getClassName() + "." + foo[2+i].getMethodName();
+    }
+
 
 }
