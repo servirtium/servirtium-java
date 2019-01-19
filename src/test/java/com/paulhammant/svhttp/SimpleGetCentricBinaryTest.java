@@ -39,6 +39,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Base64;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -55,7 +56,7 @@ public class SimpleGetCentricBinaryTest {
             "```\n" +
             "Accept: */*\n" +
             "Connection: keep-alive\n" +
-            "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_181)\n" +
+            "User-Agent: SVN/1.10.0 (x86_64-apple-darwin17.0.0) serf/1.3.9\n" +
             "Host: svn.apache.org\n" +
             "Accept-Encoding: gzip,deflate\n" +
             "```\n" +
@@ -114,7 +115,12 @@ public class SimpleGetCentricBinaryTest {
         delegate = new InteractionRecordingSvHttpServer(
                 new SvHttpServer.ServerMonitor.Console(),
                 new ServiceInteroperationViaUniRest(),
-               8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
+               8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org") {
+            @Override
+            public void potentiallyManipulateHeader(String method, String currentHeader, Map<String, String> allHeadersToReal) {
+                super.potentiallyManipulateHeader(method, currentHeader, allHeadersToReal);
+            }
+        });
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
         delegate.startApp();

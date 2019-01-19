@@ -50,7 +50,7 @@ public class SimpleGetCentricTextTest {
             "\n" +
             "```\n" +
             "Accept: */*\n" +
-            "User-Agent: RestAssured\n" +
+            "User-Agent: SVN/1.10.0 (x86_64-apple-darwin17.0.0) serf/1.3.9\n" +
             "Connection: keep-alive\n" +
             "Host: svn.apache.org\n" +
             "Accept-Encoding: gzip,deflate\n" +

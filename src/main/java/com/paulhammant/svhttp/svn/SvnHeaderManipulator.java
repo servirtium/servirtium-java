@@ -49,7 +49,15 @@ public class SvnHeaderManipulator extends SimpleHeaderManipulator {
             allHeadersToReal.put("DAV ", "http://subversion.tigris.org/xmlns/dav/svn/mergeinfo");
             allHeadersToReal.put("DAV  ", "http://subversion.tigris.org/xmlns/dav/svn/log-revprops");
         }
+        if (currentHeader.equals("User-Agent")) {
+            allHeadersToReal.put("User-Agent", getUserAgentString());
+        }
+
         super.potentiallyManipulateHeader(method, currentHeader, allHeadersToReal);
+    }
+
+    protected String getUserAgentString() {
+        return "SVN/1.10.0 (x86_64-apple-darwin17.0.0) serf/1.3.9";
     }
 
     @Override
