@@ -19,11 +19,11 @@ public class ServirtiumServer {
 
     protected final InteractionManipulations interactionManipulations;
     private Server jettyServer;
-    private final RecordOrPlayback recordOrPlayback;
+    private final InteractionRecorderOrPlaybacker recordOrPlayback;
     private int interactionNum = -1;
 
     public ServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
-                            InteractionManipulations interactionManipulations, RecordOrPlayback recordOrPlayback) {
+                            InteractionManipulations interactionManipulations, InteractionRecorderOrPlaybacker recordOrPlayback) {
         this.interactionManipulations = interactionManipulations;
 
         jettyServer = new Server(port);
@@ -53,7 +53,7 @@ public class ServirtiumServer {
 
                 try {
 
-                    RecordOrPlayback.Context ctx = recordOrPlayback.newInteraction(method, request.getRequestURI().toString(), interactionNum);
+                    InteractionRecorderOrPlaybacker.Context ctx = recordOrPlayback.newInteraction(method, request.getRequestURI().toString(), interactionNum);
                     String contentType = request.getContentType();
                     if (contentType == null) {
                         contentType = "";

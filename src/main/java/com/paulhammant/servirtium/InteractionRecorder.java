@@ -42,7 +42,7 @@ import java.util.Map;
 
 import static junit.framework.TestCase.fail;
 
-public class InteractionRecorder implements RecordOrPlayback {
+public class InteractionRecorder implements InteractionRecorderOrPlaybacker {
 
     private final ServiceInteroperation serviceInteroperation;
     private final InteractionManipulations interactionManipulations;

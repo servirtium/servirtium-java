@@ -40,7 +40,7 @@ import java.util.Map;
 
 import static java.nio.file.Files.readAllBytes;
 
-public class InteractionReplayer implements RecordOrPlayback {
+public class InteractionReplayer implements InteractionRecorderOrPlaybacker {
 
     private final ReplayMonitor monitor;
 
