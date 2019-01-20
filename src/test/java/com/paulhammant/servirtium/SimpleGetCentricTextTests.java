@@ -1,5 +1,5 @@
 /*
-        SvHttp: Service Virtualized HTTP
+        Servirtium: Service Virtualized HTTP
 
         Copyright (c) 2018, Paul Hammant
         All rights reserved.
@@ -26,12 +26,12 @@
 
         The views and conclusions contained in the software and documentation are those
         of the authors and should not be interpreted as representing official policies,
-        either expressed or implied, of the SvHttp project.
+        either expressed or implied, of the Servirtium project.
 */
 
-package com.paulhammant.svhttp;
+package com.paulhammant.servirtium;
 
-import com.paulhammant.svhttp.svn.SvnHeaderManipulator;
+import com.paulhammant.servirtium.svn.SvnHeaderManipulator;
 import org.junit.After;
 import org.junit.Test;
 
@@ -106,7 +106,7 @@ public class SimpleGetCentricTextTests {
             "\n";
 
 
-    private SvHttpServer delegate;
+    private ServirtiumServer delegate;
 
 
     @After
@@ -118,12 +118,12 @@ public class SimpleGetCentricTextTests {
     @Test
     public void canRecordASimpleGetFromApachesSubversionViaOkHttp() throws Exception {
 
-        delegate = new InteractionRecordingSvHttpServer(
-                new SvHttpServer.ServerMonitor.Console(),
+        delegate = new InteractionRecordingServirtiumServer(
+                new ServirtiumServer.ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
+        ((InteractionRecordingServirtiumServer) delegate).setOutputStream("foo", out);
         delegate.startApp();
 
         checkGetOfApacheNoticeFileOverHttpViaRestAssured();
@@ -138,9 +138,9 @@ public class SimpleGetCentricTextTests {
     @Test
     public void canReplayASimpleGetFromApachesSubversion() throws Exception {
 
-        delegate = new InteractionReplayingSvHttpServer(
+        delegate = new InteractionReplayingServirtiumServer(
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
-        ((InteractionReplayingSvHttpServer) delegate).setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
+        ((InteractionReplayingServirtiumServer) delegate).setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
         delegate.startApp();
 
         checkGetOfApacheNoticeFileOverHttpViaRestAssured();

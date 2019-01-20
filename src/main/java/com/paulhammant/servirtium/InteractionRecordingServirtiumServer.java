@@ -1,5 +1,5 @@
 /*
-        SvHttp: Service Virtualized HTTP
+        Servirtium: Service Virtualized HTTP
 
         Copyright (c) 2018, Paul Hammant
         All rights reserved.
@@ -26,10 +26,10 @@
 
         The views and conclusions contained in the software and documentation are those
         of the authors and should not be interpreted as representing official policies,
-        either expressed or implied, of the SvHttp project.
+        either expressed or implied, of the Servirtium project.
 */
 
-package com.paulhammant.svhttp;
+package com.paulhammant.servirtium;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -39,11 +39,10 @@ import java.io.PrintStream;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import static junit.framework.TestCase.fail;
 
-public class InteractionRecordingSvHttpServer extends SvHttpServer {
+public class InteractionRecordingServirtiumServer extends ServirtiumServer {
 
     private final ServiceInteroperation httpInteractor;
     private PrintStream out;
@@ -52,8 +51,8 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
     private String filename;
     private Map<Integer, String> interactions = new HashMap<>();
 
-    public InteractionRecordingSvHttpServer(ServerMonitor serverMonitor, ServiceInteroperation realHttpInteractor,
-                                            int port, boolean ssl, InteractionManipulations interactionManipulations) {
+    public InteractionRecordingServirtiumServer(ServerMonitor serverMonitor, ServiceInteroperation realHttpInteractor,
+                                                int port, boolean ssl, InteractionManipulations interactionManipulations) {
         super(serverMonitor, port, ssl, interactionManipulations);
         this.httpInteractor = realHttpInteractor;
     }
@@ -175,9 +174,6 @@ public class InteractionRecordingSvHttpServer extends SvHttpServer {
             this.out = new PrintStream(out);
         }
         resetCounter();
-    }
-
-    public static void main(String[] args)  {
     }
 
 }

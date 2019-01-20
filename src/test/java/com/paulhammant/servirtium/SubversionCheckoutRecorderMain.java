@@ -1,5 +1,5 @@
 /*
-        SvHttp: Service Virtualized HTTP
+        Servirtium: Service Virtualized HTTP
 
         Copyright (c) 2018, Paul Hammant
         All rights reserved.
@@ -26,12 +26,12 @@
 
         The views and conclusions contained in the software and documentation are those
         of the authors and should not be interpreted as representing official policies,
-        either expressed or implied, of the SvHttp project.
+        either expressed or implied, of the Servirtium project.
 */
 
-package com.paulhammant.svhttp;
+package com.paulhammant.servirtium;
 
-import com.paulhammant.svhttp.svn.SvnHeaderManipulator;
+import com.paulhammant.servirtium.svn.SvnHeaderManipulator;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -53,13 +53,13 @@ public class SubversionCheckoutRecorderMain {
         // Or in the root of this project,
 
         // then run the following command on the command line (same directory)
-        // svn --config-option servers:global:http-proxy-host=localhost --config-option servers:global:http-proxy-port=8099 co http://svn.apache.org/repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/conf/ .svhttp_tmp/conf
+        // svn --config-option servers:global:http-proxy-host=localhost --config-option servers:global:http-proxy-port=8099 co http://svn.apache.org/repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/conf/ .servirtium_tmp/conf
 
-        String tempDir = new File(".").getAbsolutePath() + "/.svhttp_tmp/";
+        String tempDir = new File(".").getAbsolutePath() + "/.servirtium_tmp/";
         createWorkDirAndDeleteCheckout(tempDir);
 
-        InteractionRecordingSvHttpServer recorder = new InteractionRecordingSvHttpServer(
-                new SvHttpServer.ServerMonitor.Console(),
+        InteractionRecordingServirtiumServer recorder = new InteractionRecordingServirtiumServer(
+                new ServirtiumServer.ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                 8099, false, new SvnHeaderManipulator("", ""));
         ByteArrayOutputStream out = new ByteArrayOutputStream();

@@ -1,5 +1,5 @@
 /*
-        SvHttp: Service Virtualized HTTP
+        Servirtium: Service Virtualized HTTP
 
         Copyright (c) 2018, Paul Hammant
         All rights reserved.
@@ -26,26 +26,41 @@
 
         The views and conclusions contained in the software and documentation are those
         of the authors and should not be interpreted as representing official policies,
-        either expressed or implied, of the SvHttp project.
+        either expressed or implied, of the Servirtium project.
 */
 
-package com.paulhammant.svhttp;
+package com.paulhammant.servirtium;
 
-public class ServiceResponse {
+import java.util.ArrayList;
+import java.util.Map;
 
-    public final String[] headers;
-    public final Object body;
-    public final String contentType;
-    public final int statusCode;
+public interface InteractionManipulations {
 
-    public ServiceResponse(Object body, String contentType, int statusCode, String... headers) {
-        this.headers = headers;
-        this.body = body;
-        this.contentType = contentType;
-        this.statusCode = statusCode;
+    default void potentiallyManipulateHeader(String method, String currentHeader, Map<String, String> allHeadersToReal) {
     }
 
-    public ServiceResponse withRevisedHeaders(String[] headers) {
-        return new ServiceResponse(this.body, this.contentType, this.statusCode, headers);
+    default String headerReplacement(String hdrKey, String hdrVal) {
+        return hdrVal;
     }
+
+    default String changeUrlForRequestToReal(String url) {
+        return url;
+    }
+
+    default String changeHeaderBackFromReal(int ix, String headerBackFromReal) {
+        return headerBackFromReal;
+    }
+
+    default void messWithHeadersBackFromReal(ArrayList<String> headers) {
+
+    }
+
+    default void changeHeadersToSendToReal(Map<String, String> headersToReal) {
+
+    }
+
+    class Noop implements InteractionManipulations {
+
+    }
+
 }

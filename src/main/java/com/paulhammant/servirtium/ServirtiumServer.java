@@ -1,5 +1,5 @@
 /*
-        SvHttp: Service Virtualized HTTP
+        Servirtium: Service Virtualized HTTP
 
         Copyright (c) 2018, Paul Hammant
         All rights reserved.
@@ -26,10 +26,10 @@
 
         The views and conclusions contained in the software and documentation are those
         of the authors and should not be interpreted as representing official policies,
-        either expressed or implied, of the SvHttp project.
+        either expressed or implied, of the Servirtium project.
 */
 
-package com.paulhammant.svhttp;
+package com.paulhammant.servirtium;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
@@ -40,8 +40,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Enumeration;
@@ -49,7 +47,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public abstract class SvHttpServer {
+public abstract class ServirtiumServer {
 
     private final int port;
     protected final InteractionManipulations interactionManipulations;
@@ -57,7 +55,7 @@ public abstract class SvHttpServer {
     private Server jettyServer;
     private int counter = -1;
 
-    public SvHttpServer(ServerMonitor monitor, int port, boolean ssl, InteractionManipulations interactionManipulations) {
+    public ServirtiumServer(ServerMonitor monitor, int port, boolean ssl, InteractionManipulations interactionManipulations) {
         this.port = port;
         this.interactionManipulations = interactionManipulations;
 
@@ -111,7 +109,7 @@ public abstract class SvHttpServer {
                         } else {
                             byte[] targetArray = new byte[is.available()];
                             is.read(targetArray);
-                            bodyToReal = "//svHttp+Base64: " + Base64.getEncoder().encodeToString(targetArray)
+                            bodyToReal = "//SERVIRTIUM+Base64: " + Base64.getEncoder().encodeToString(targetArray)
                                     .replaceAll("(.{60})", "$1\n");
                             ;
                         }
@@ -198,7 +196,7 @@ public abstract class SvHttpServer {
 
             @Override
             public void interactionFinished(int counter, String method, String url) {
-                System.out.println(">> SvHttp >> interaction " + counter + " " + method + " " + url + " DONE");
+                System.out.println(">> Servirtium >> interaction " + counter + " " + method + " " + url + " DONE");
             }
 
             @Override
@@ -207,7 +205,7 @@ public abstract class SvHttpServer {
 
             @Override
             public void unexpectedRequestError(Throwable throwable) {
-                System.out.println(">> SvHttp >> unexpected request error ");
+                System.out.println(">> Servirtium >> unexpected request error ");
             }
         }
     }
@@ -221,7 +219,7 @@ public abstract class SvHttpServer {
                 contentType.startsWith("application/xhtml+xml");
     }
 
-    public SvHttpServer startApp() throws Exception {
+    public ServirtiumServer startApp() throws Exception {
         jettyServer.start();
         return this;
     }

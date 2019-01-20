@@ -1,5 +1,5 @@
 /*
-        SvHttp: Service Virtualized HTTP
+        Servirtium: Service Virtualized HTTP
 
         Copyright (c) 2018, Paul Hammant
         All rights reserved.
@@ -26,40 +26,26 @@
 
         The views and conclusions contained in the software and documentation are those
         of the authors and should not be interpreted as representing official policies,
-        either expressed or implied, of the SvHttp project.
+        either expressed or implied, of the Servirtium project.
 */
 
-package com.paulhammant.svhttp;
+package com.paulhammant.servirtium;
 
-import com.paulhammant.svhttp.svn.SvnHeaderManipulator;
+public class ServiceResponse {
 
-import java.io.File;
-import java.io.IOException;
+    public final String[] headers;
+    public final Object body;
+    public final String contentType;
+    public final int statusCode;
 
-import static com.paulhammant.svhttp.SubversionCheckoutRecorderMain.CHECKOUT_RECORDER_TEST_MD;
-import static com.paulhammant.svhttp.SubversionCheckoutRecorderMain.createWorkDirAndDeleteCheckout;
-
-public class SubversionCheckoutReplayerMain {
-
-    public static void main(String[] args) throws Exception {
-
-        // Run this main() method from within Intellij
-
-        // Or in the root of this project,
-
-        // then run the following command on the command line (same directory)
-        // svn --config-option servers:global:http-proxy-host=localhost --config-option servers:global:http-proxy-port=8099 co http://svn.apache.org/repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/conf/ .svhttp_tmp/conf
-
-        String tempDir = new File(".").getAbsolutePath() + "/.svhttp_tmp/";
-        createWorkDirAndDeleteCheckout(tempDir);
-
-
-        InteractionReplayingSvHttpServer replayer = new InteractionReplayingSvHttpServer(
-                8099, false, new SvnHeaderManipulator("", ""));
-        replayer.setMarkdownScriptFilename(CHECKOUT_RECORDER_TEST_MD);
-        replayer.startApp();
-
-
+    public ServiceResponse(Object body, String contentType, int statusCode, String... headers) {
+        this.headers = headers;
+        this.body = body;
+        this.contentType = contentType;
+        this.statusCode = statusCode;
     }
 
+    public ServiceResponse withRevisedHeaders(String[] headers) {
+        return new ServiceResponse(this.body, this.contentType, this.statusCode, headers);
+    }
 }

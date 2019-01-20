@@ -1,4 +1,4 @@
-package com.paulhammant.svhttp;
+package com.paulhammant.servirtium;
 
 import java.util.Map;
 

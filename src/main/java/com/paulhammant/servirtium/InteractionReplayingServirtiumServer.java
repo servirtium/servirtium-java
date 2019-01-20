@@ -1,5 +1,5 @@
 /*
-        SvHttp: Service Virtualized HTTP
+        Servirtium: Service Virtualized HTTP
 
         Copyright (c) 2018, Paul Hammant
         All rights reserved.
@@ -26,9 +26,9 @@
 
         The views and conclusions contained in the software and documentation are those
         of the authors and should not be interpreted as representing official policies,
-        either expressed or implied, of the SvHttp project.
+        either expressed or implied, of the Servirtium project.
 */
-package com.paulhammant.svhttp;
+package com.paulhammant.servirtium;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -40,7 +40,7 @@ import java.util.Map;
 
 import static java.nio.file.Files.readAllBytes;
 
-public class InteractionReplayingSvHttpServer extends SvHttpServer {
+public class InteractionReplayingServirtiumServer extends ServirtiumServer {
 
     private final ReplayMonitor monitor;
 
@@ -139,18 +139,18 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
     private String headers;
     private String filename;
     private boolean forgivingOrderOfClientRquestHeaders = false;
-    public static final String SVHTTP_INTERACTION = "## Interaction ";
+    public static final String SERVIRTIUM_INTERACTION = "## Interaction ";
 
-    public InteractionReplayingSvHttpServer(int port, boolean ssl, InteractionManipulations headerManipultor) {
+    public InteractionReplayingServirtiumServer(int port, boolean ssl, InteractionManipulations headerManipultor) {
         this(new ReplayMonitor.Default(), port, ssl, headerManipultor);
     }
 
-    public InteractionReplayingSvHttpServer(ReplayMonitor monitor, int port, boolean ssl, InteractionManipulations headerManipultor) {
+    public InteractionReplayingServirtiumServer(ReplayMonitor monitor, int port, boolean ssl, InteractionManipulations headerManipultor) {
         super(monitor, port, ssl, headerManipultor);
         this.monitor = monitor;
     }
 
-    public InteractionReplayingSvHttpServer withForgivingOrderOfClientRquestHeaders() {
+    public InteractionReplayingServirtiumServer withForgivingOrderOfClientRquestHeaders() {
         forgivingOrderOfClientRquestHeaders = true;
         return this;
     }
@@ -170,10 +170,10 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
         int ctr = 0;
         boolean again = true;
         while (again) {
-            charPosn = conversation.indexOf(SVHTTP_INTERACTION + ctr + ":");
+            charPosn = conversation.indexOf(SERVIRTIUM_INTERACTION + ctr + ":");
             int charEndPosn;
             if (charPosn > -1) {
-                charEndPosn = conversation.indexOf(SVHTTP_INTERACTION + (ctr+1) + ":");
+                charEndPosn = conversation.indexOf(SERVIRTIUM_INTERACTION + (ctr+1) + ":");
                 if (charEndPosn == -1) {
                     charEndPosn = conversation.length();
                     again = false;
@@ -210,12 +210,12 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
         ReplayingContext rc = (ReplayingContext) ctx;
 
         try {
-            rc.ix = rc.interactionText.indexOf(SVHTTP_INTERACTION + rc.interactionNum + ":", 0);
+            rc.ix = rc.interactionText.indexOf(SERVIRTIUM_INTERACTION + rc.interactionNum + ":", 0);
             if (rc.ix == -1) {
                 monitor.couldNotFindInteraction(rc.interactionNum, filename);
             }
             int lineEnd = rc.interactionText.indexOf("\n", rc.ix);
-            String line = rc.interactionText.substring(rc.ix + SVHTTP_INTERACTION.length(), lineEnd);
+            String line = rc.interactionText.substring(rc.ix + SERVIRTIUM_INTERACTION.length(), lineEnd);
             String[] parts = line.split(" ");
             int iNum = Integer.parseInt(parts[0].replace(":",""));
             String mdMethod = parts[1];
@@ -280,11 +280,11 @@ public class InteractionReplayingSvHttpServer extends SvHttpServer {
             } else {
                 bodyToReturn = getCodeBlock(rc);
             }
-            System.out.println(">> Svhttp >> Replay of interaction " + rc.interactionNum + ": " + method + " " + url);
+            System.out.println(">> SERVIRTIUM >> Replay of interaction " + rc.interactionNum + ": " + method + " " + url);
             return new ServiceResponse(bodyToReturn, contentType, statusCode, headersToReturn);
         } catch (AssertionError e) {
 
-            System.out.println(">> Svhttp >> Replay Assertion Error: " + e.getMessage());
+            System.out.println(">> SERVIRTIUM >> Replay Assertion Error: " + e.getMessage());
             e.printStackTrace();
             return new ServiceResponse("ServiceInteractionReplayer: " + e.getMessage(), "text/plain", 500);
 

@@ -1,5 +1,5 @@
 /*
-        SvHttp: Service Virtualized HTTP
+        Servirtium: Service Virtualized HTTP
 
         Copyright (c) 2018, Paul Hammant
         All rights reserved.
@@ -26,40 +26,38 @@
 
         The views and conclusions contained in the software and documentation are those
         of the authors and should not be interpreted as representing official policies,
-        either expressed or implied, of the SvHttp project.
+        either expressed or implied, of the Servirtium project.
 */
 
-package com.paulhammant.svhttp;
+package com.paulhammant.servirtium;
 
-import java.util.ArrayList;
-import java.util.Map;
+import com.paulhammant.servirtium.svn.SvnHeaderManipulator;
 
-public interface InteractionManipulations {
+import java.io.File;
 
-    default void potentiallyManipulateHeader(String method, String currentHeader, Map<String, String> allHeadersToReal) {
-    }
+import static com.paulhammant.servirtium.SubversionCheckoutRecorderMain.CHECKOUT_RECORDER_TEST_MD;
+import static com.paulhammant.servirtium.SubversionCheckoutRecorderMain.createWorkDirAndDeleteCheckout;
 
-    default String headerReplacement(String hdrKey, String hdrVal) {
-        return hdrVal;
-    }
+public class SubversionCheckoutReplayerMain {
 
-    default String changeUrlForRequestToReal(String url) {
-        return url;
-    }
+    public static void main(String[] args) throws Exception {
 
-    default String changeHeaderBackFromReal(int ix, String headerBackFromReal) {
-        return headerBackFromReal;
-    }
+        // Run this main() method from within Intellij
 
-    default void messWithHeadersBackFromReal(ArrayList<String> headers) {
+        // Or in the root of this project,
 
-    }
+        // then run the following command on the command line (same directory)
+        // svn --config-option servers:global:http-proxy-host=localhost --config-option servers:global:http-proxy-port=8099 co http://svn.apache.org/repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/conf/ .servirtium_tmp/conf
 
-    default void changeHeadersToSendToReal(Map<String, String> headersToReal) {
+        String tempDir = new File(".").getAbsolutePath() + "/.servirtium_tmp/";
+        createWorkDirAndDeleteCheckout(tempDir);
 
-    }
 
-    class Noop implements InteractionManipulations {
+        InteractionReplayingServirtiumServer replayer = new InteractionReplayingServirtiumServer(
+                8099, false, new SvnHeaderManipulator("", ""));
+        replayer.setMarkdownScriptFilename(CHECKOUT_RECORDER_TEST_MD);
+        replayer.startApp();
+
 
     }
 

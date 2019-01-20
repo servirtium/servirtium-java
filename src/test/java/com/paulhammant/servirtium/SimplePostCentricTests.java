@@ -1,5 +1,5 @@
 /*
-        SvHttp: Service Virtualized HTTP
+        Servirtium: Service Virtualized HTTP
 
         Copyright (c) 2018, Paul Hammant
         All rights reserved.
@@ -26,17 +26,15 @@
 
         The views and conclusions contained in the software and documentation are those
         of the authors and should not be interpreted as representing official policies,
-        either expressed or implied, of the SvHttp project.
+        either expressed or implied, of the Servirtium project.
 */
 
-package com.paulhammant.svhttp;
+package com.paulhammant.servirtium;
 
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -83,7 +81,7 @@ public class SimplePostCentricTests {
             "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}\n" +
             "```\n" +
             "\n";
-    private SvHttpServer delegate;
+    private ServirtiumServer delegate;
 
 
     @After
@@ -94,12 +92,12 @@ public class SimplePostCentricTests {
     @Test
     public void canRecordASimplePostToPostmanEchoViaOkHttp() throws Exception {
 
-        delegate = new InteractionRecordingSvHttpServer(
-                new SvHttpServer.ServerMonitor.Console(),
+        delegate = new InteractionRecordingServirtiumServer(
+                new ServirtiumServer.ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                8080, false, new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
+        ((InteractionRecordingServirtiumServer) delegate).setOutputStream("foo", out);
         delegate.startApp();
 
         checkPostToPostmanEchoViaRestAssured();
@@ -114,9 +112,9 @@ public class SimplePostCentricTests {
     @Test
     public void canReplayASimplePostToPostmanEcho() throws Exception {
 
-        delegate = new InteractionReplayingSvHttpServer(
+        delegate = new InteractionReplayingServirtiumServer(
                8080, false, new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"));
-        ((InteractionReplayingSvHttpServer) delegate).setPlaybackConversation(EXPECTED);
+        ((InteractionReplayingServirtiumServer) delegate).setPlaybackConversation(EXPECTED);
         delegate.startApp();
 
         checkPostToPostmanEchoViaRestAssured();

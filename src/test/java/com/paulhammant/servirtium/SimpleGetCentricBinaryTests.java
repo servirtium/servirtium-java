@@ -1,5 +1,5 @@
 /*
-        SvHttp: Service Virtualized HTTP
+        Servirtium: Service Virtualized HTTP
 
         Copyright (c) 2018, Paul Hammant
         All rights reserved.
@@ -26,12 +26,12 @@
 
         The views and conclusions contained in the software and documentation are those
         of the authors and should not be interpreted as representing official policies,
-        either expressed or implied, of the SvHttp project.
+        either expressed or implied, of the Servirtium project.
 */
 
-package com.paulhammant.svhttp;
+package com.paulhammant.servirtium;
 
-import com.paulhammant.svhttp.svn.SvnHeaderManipulator;
+import com.paulhammant.servirtium.svn.SvnHeaderManipulator;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.After;
@@ -39,7 +39,6 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Base64;
-import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -95,7 +94,7 @@ public class SimpleGetCentricBinaryTests {
             "\n";
 
 
-    private SvHttpServer delegate;
+    private ServirtiumServer delegate;
 
     @After
     public void tearDown() {
@@ -106,12 +105,12 @@ public class SimpleGetCentricBinaryTests {
     @Test
     public void canRecordABinaryGetFromApachesSubversionViaOkHttp() throws Exception {
 
-        delegate = new InteractionRecordingSvHttpServer(
-                new SvHttpServer.ServerMonitor.Console(),
+        delegate = new InteractionRecordingServirtiumServer(
+                new ServirtiumServer.ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
+        ((InteractionRecordingServirtiumServer) delegate).setOutputStream("foo", out);
         delegate.startApp();
 
         checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured();
@@ -126,13 +125,13 @@ public class SimpleGetCentricBinaryTests {
     @Test
     public void canRecordAPngGetFromWikimedia() throws Exception {
 
-        delegate = new InteractionRecordingSvHttpServer(
-                new SvHttpServer.ServerMonitor.Console(),
+        delegate = new InteractionRecordingServirtiumServer(
+                new ServirtiumServer.ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                8080, false, new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org")
                 .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:"));
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
+        ((InteractionRecordingServirtiumServer) delegate).setOutputStream("foo", out);
         delegate.startApp();
 
         // https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png
@@ -199,14 +198,14 @@ public class SimpleGetCentricBinaryTests {
     @Test
     public void canRecordASvgGetFromWikimedia() throws Exception {
 
-        delegate = new InteractionRecordingSvHttpServer(
-                new SvHttpServer.ServerMonitor.Console(),
+        delegate = new InteractionRecordingServirtiumServer(
+                new ServirtiumServer.ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                8080, false, new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org")
                 .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:")
         );
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((InteractionRecordingSvHttpServer) delegate).setOutputStream("foo", out);
+        ((InteractionRecordingServirtiumServer) delegate).setOutputStream("foo", out);
         delegate.startApp();
 
         // https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png
@@ -283,9 +282,9 @@ public class SimpleGetCentricBinaryTests {
     @Test
     public void canReplayABinaryGetFromApachesSubversion() throws Exception {
 
-        delegate = new InteractionReplayingSvHttpServer(
+        delegate = new InteractionReplayingServirtiumServer(
                8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
-        ((InteractionReplayingSvHttpServer) delegate).setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
+        ((InteractionReplayingServirtiumServer) delegate).setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
         delegate.startApp();
 
         checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured();

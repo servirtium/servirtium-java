@@ -1,5 +1,5 @@
 /*
-        SvHttp: Service Virtualized HTTP
+        Servirtium: Service Virtualized HTTP
 
         Copyright (c) 2018, Paul Hammant
         All rights reserved.
@@ -26,12 +26,12 @@
 
         The views and conclusions contained in the software and documentation are those
         of the authors and should not be interpreted as representing official policies,
-        either expressed or implied, of the SvHttp project.
+        either expressed or implied, of the Servirtium project.
 */
 
-package com.paulhammant.svhttp.svn;
+package com.paulhammant.servirtium.svn;
 
-import com.paulhammant.svhttp.SimpleHeaderManipulator;
+import com.paulhammant.servirtium.SimpleHeaderManipulator;
 
 import java.util.Map;
 

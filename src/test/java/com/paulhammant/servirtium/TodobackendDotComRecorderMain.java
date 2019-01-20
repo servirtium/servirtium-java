@@ -1,6 +1,5 @@
-package com.paulhammant.svhttp;
+package com.paulhammant.servirtium;
 
-import java.io.FileNotFoundException;
 import java.util.Map;
 
 public class TodobackendDotComRecorderMain {
@@ -24,8 +23,8 @@ public class TodobackendDotComRecorderMain {
 
          */
 
-        InteractionRecordingSvHttpServer recorder = new InteractionRecordingSvHttpServer(
-                new SvHttpServer.ServerMonitor.Console(),
+        InteractionRecordingServirtiumServer recorder = new InteractionRecordingServirtiumServer(
+                new ServirtiumServer.ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                 8099, false,
                 new SimpleHeaderManipulator("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
