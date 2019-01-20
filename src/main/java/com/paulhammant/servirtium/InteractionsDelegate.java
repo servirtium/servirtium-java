@@ -35,7 +35,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 
-public interface InteractionRecorderOrPlaybacker {
+public interface InteractionsDelegate {
 
     void finishedScript(int interactionNum);
 

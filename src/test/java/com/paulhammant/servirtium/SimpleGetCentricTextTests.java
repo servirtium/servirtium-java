@@ -116,7 +116,7 @@ public class SimpleGetCentricTextTests {
     public void canRecordASimpleGetFromApachesSubversionViaOkHttp() throws Exception {
 
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
-        InteractionRecorder recorder = new InteractionRecorder(
+        InteractionsRecorder recorder = new InteractionsRecorder(
                 new ServiceInteropViaOkHttp(),
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org"));
         servirtiumServer = new ServirtiumServer(serverMonitor,
@@ -139,7 +139,7 @@ public class SimpleGetCentricTextTests {
     @Test
     public void canReplayASimpleGetFromApachesSubversion() throws Exception {
 
-        InteractionReplayer replayer = new InteractionReplayer();
+        InteractionsReplayer replayer = new InteractionsReplayer();
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
 
         servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),

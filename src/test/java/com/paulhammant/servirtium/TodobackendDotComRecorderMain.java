@@ -32,7 +32,7 @@ public class TodobackendDotComRecorderMain {
                 headersToReal.put("Referer", headersToReal.get("Referer").replace(super.fromUrl, super.toUrl));
             }
         };
-        InteractionRecorder recorder = new InteractionRecorder(
+        InteractionsRecorder recorder = new InteractionsRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
         ServirtiumServer servirtiumServer = new ServirtiumServer(serverMonitor,

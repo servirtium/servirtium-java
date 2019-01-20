@@ -19,15 +19,15 @@ public class ServirtiumServer {
 
     protected final InteractionManipulations interactionManipulations;
     private Server jettyServer;
-    private final InteractionRecorderOrPlaybacker recordOrPlayback;
+    private final InteractionsDelegate interactionsDelegate;
     private int interactionNum = -1;
 
     public ServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
-                            InteractionManipulations interactionManipulations, InteractionRecorderOrPlaybacker recordOrPlayback) {
+                            InteractionManipulations interactionManipulations, InteractionsDelegate interactionsDelegate) {
         this.interactionManipulations = interactionManipulations;
 
         jettyServer = new Server(port);
-        this.recordOrPlayback = recordOrPlayback;
+        this.interactionsDelegate = interactionsDelegate;
         // How the f*** do you turn off Embedded Jetty's logging???
         // Everything I tried (mostly static operations on Log) didn't work.
 
@@ -53,7 +53,7 @@ public class ServirtiumServer {
 
                 try {
 
-                    InteractionRecorderOrPlaybacker.Context ctx = recordOrPlayback.newInteraction(method, request.getRequestURI().toString(), interactionNum);
+                    InteractionsDelegate.Context ctx = interactionsDelegate.newInteraction(method, request.getRequestURI().toString(), interactionNum);
                     String contentType = request.getContentType();
                     if (contentType == null) {
                         contentType = "";
@@ -94,13 +94,13 @@ public class ServirtiumServer {
 
                     interactionManipulations.changeHeadersToSendToReal(headersToReal);
 
-                    recordOrPlayback.requestHeaders(headersToReal, ctx);
+                    interactionsDelegate.requestHeaders(headersToReal, ctx);
 
-                    recordOrPlayback.requestBody(bodyToReal, contentType, ctx);
+                    interactionsDelegate.requestBody(bodyToReal, contentType, ctx);
 
 
                     final String requestUrl = interactionManipulations.changeUrlForRequestToReal(url);
-                    ServiceResponse realResponse = recordOrPlayback.getServiceResponse(method, requestUrl,
+                    ServiceResponse realResponse = interactionsDelegate.getServiceResponse(method, requestUrl,
                             headersToReal, ctx);
 
 
@@ -124,9 +124,9 @@ public class ServirtiumServer {
 
                     response.setStatus(revisedResponse.statusCode);
 
-                    recordOrPlayback.responseHeaders(ctx, revisedResponse.headers);
+                    interactionsDelegate.responseHeaders(ctx, revisedResponse.headers);
 
-                    recordOrPlayback.responseBody(ctx, revisedResponse.body, revisedResponse.statusCode, revisedResponse.contentType);
+                    interactionsDelegate.responseBody(ctx, revisedResponse.body, revisedResponse.statusCode, revisedResponse.contentType);
 
                     if (revisedResponse.contentType != null) {
                         response.setContentType(revisedResponse.contentType);
@@ -171,9 +171,8 @@ public class ServirtiumServer {
         interactionNum = -1;
     }
 
-
     public void stop() {
-        recordOrPlayback.finishedScript(getInteractionNum()); // just in case
+        interactionsDelegate.finishedScript(getInteractionNum()); // just in case
         try {
             jettyServer.setStopTimeout(1);
             jettyServer.stop();
@@ -181,7 +180,6 @@ public class ServirtiumServer {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public static String testName() {
@@ -193,8 +191,7 @@ public class ServirtiumServer {
         return foo[2+i].getClassName() + "." + foo[2+i].getMethodName();
     }
 
-
     public void finishedScript() {
-        recordOrPlayback.finishedScript(getInteractionNum());
+        interactionsDelegate.finishedScript(getInteractionNum());
     }
 }

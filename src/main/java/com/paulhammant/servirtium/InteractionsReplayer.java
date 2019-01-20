@@ -40,7 +40,7 @@ import java.util.Map;
 
 import static java.nio.file.Files.readAllBytes;
 
-public class InteractionReplayer implements InteractionRecorderOrPlaybacker {
+public class InteractionsReplayer implements InteractionsDelegate {
 
     private final ReplayMonitor monitor;
 
@@ -52,15 +52,15 @@ public class InteractionReplayer implements InteractionRecorderOrPlaybacker {
     private boolean forgivingOrderOfClientRquestHeaders = false;
     public static final String SERVIRTIUM_INTERACTION = "## Interaction ";
 
-    public InteractionReplayer() {
+    public InteractionsReplayer() {
         this(new ReplayMonitor.Default());
     }
 
-    public InteractionReplayer(ReplayMonitor monitor) {
+    public InteractionsReplayer(ReplayMonitor monitor) {
         this.monitor = monitor;
     }
 
-    public InteractionReplayer withForgivingOrderOfClientRequestHeaders() {
+    public InteractionsReplayer withForgivingOrderOfClientRequestHeaders() {
         forgivingOrderOfClientRquestHeaders = true;
         return this;
     }

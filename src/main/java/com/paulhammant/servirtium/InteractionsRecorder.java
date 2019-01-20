@@ -42,7 +42,7 @@ import java.util.Map;
 
 import static junit.framework.TestCase.fail;
 
-public class InteractionRecorder implements InteractionRecorderOrPlaybacker {
+public class InteractionsRecorder implements InteractionsDelegate {
 
     private final ServiceInteroperation serviceInteroperation;
     private final InteractionManipulations interactionManipulations;
@@ -52,8 +52,8 @@ public class InteractionRecorder implements InteractionRecorderOrPlaybacker {
     private String filename;
     private Map<Integer, String> interactions = new HashMap<>();
 
-    public InteractionRecorder(ServiceInteroperation serviceInteroperation,
-                               InteractionManipulations interactionManipulations) {
+    public InteractionsRecorder(ServiceInteroperation serviceInteroperation,
+                                InteractionManipulations interactionManipulations) {
         this.serviceInteroperation = serviceInteroperation;
         this.interactionManipulations = interactionManipulations;
     }
