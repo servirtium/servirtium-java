@@ -47,11 +47,11 @@ public interface InteractionManipulations {
         return url;
     }
 
-    default String changeHeaderBackFromReal(int ix, String headerBackFromReal) {
+    default String changeSingleHeaderBackFromReal(int ix, String headerBackFromReal) {
         return headerBackFromReal;
     }
 
-    default void messWithHeadersBackFromReal(ArrayList<String> headers) {
+    default void changeAllHeadersBackFromReal(ArrayList<String> headers) {
 
     }
 

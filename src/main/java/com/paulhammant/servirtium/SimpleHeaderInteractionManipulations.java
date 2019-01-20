@@ -32,7 +32,7 @@ public class SimpleHeaderInteractionManipulations implements InteractionManipula
     }
 
     @Override
-    public void messWithHeadersBackFromReal(ArrayList<String> headers) {
+    public void changeAllHeadersBackFromReal(ArrayList<String> headers) {
         String[] hdrs = headers.toArray(new String[0]);
         for (String hdr : hdrs) {
             for (String pfx : headerPrefixesToRemove) {

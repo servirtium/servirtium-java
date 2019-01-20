@@ -41,16 +41,16 @@ public interface InteractionsDelegate {
 
     void setMarkdownScriptFilename(String filename) throws FileNotFoundException;
 
-    ServiceResponse getServiceResponse(String method, String url,
-                                             Map<String, String> headersToReal, Context ctx) throws IOException;
+    ServiceResponse getServiceResponseForRequest(String method, String url,
+                                                 Map<String, String> headersToReal, Context ctx) throws IOException;
 
-    void responseBody(Context ctx, Object body, int statusCode, String contentType) ;
+    void recordRequestHeaders(Map<String, String> headers, Context ctx);
 
-    void responseHeaders(Context ctx, String[] headers);
+    void recordRequestBody(String bodyToReal, String contentType, Context ctx);
 
-    void requestBody(String bodyToReal, String contentType, Context ctx);
+    void recordResponseHeaders(Context ctx, String[] headers);
 
-    void requestHeaders(Map<String, String> headers, Context ctx);
+    void recordResponseBody(Context ctx, Object body, int statusCode, String contentType) ;
 
     Context newInteraction(String method, String path, int interactionNum);
 

@@ -94,25 +94,25 @@ public class ServirtiumServer {
 
                     interactionManipulations.changeHeadersToSendToReal(headersToReal);
 
-                    interactionsDelegate.requestHeaders(headersToReal, ctx);
+                    interactionsDelegate.recordRequestHeaders(headersToReal, ctx);
 
-                    interactionsDelegate.requestBody(bodyToReal, contentType, ctx);
+                    interactionsDelegate.recordRequestBody(bodyToReal, contentType, ctx);
 
 
                     final String requestUrl = interactionManipulations.changeUrlForRequestToReal(url);
-                    ServiceResponse realResponse = interactionsDelegate.getServiceResponse(method, requestUrl,
-                            headersToReal, ctx);
 
+                    ServiceResponse realResponse = interactionsDelegate.getServiceResponseForRequest(method, requestUrl,
+                            headersToReal, ctx);
 
                     ArrayList<String > newHeaders = new ArrayList<>();
                     for (int i = 0; i < realResponse.headers.length; i++) {
                         String headerBackFromReal = realResponse.headers[i];
-                        String potentiallyChangedHeader = interactionManipulations.changeHeaderBackFromReal(i, headerBackFromReal);
+                        String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderBackFromReal(i, headerBackFromReal);
                         if (potentiallyChangedHeader != null) {
                             newHeaders.add(potentiallyChangedHeader);
                         }
                     }
-                    interactionManipulations.messWithHeadersBackFromReal(newHeaders);
+                    interactionManipulations.changeAllHeadersBackFromReal(newHeaders);
                     for (String header : newHeaders) {
                         int ix = header.indexOf(": ");
                         String hdrKey = header.substring(0, ix);
@@ -120,13 +120,14 @@ public class ServirtiumServer {
                         response.setHeader(hdrKey, hdrVal);
                     }
 
+                    // recreate response
                     ServiceResponse revisedResponse = realResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
 
                     response.setStatus(revisedResponse.statusCode);
 
-                    interactionsDelegate.responseHeaders(ctx, revisedResponse.headers);
+                    interactionsDelegate.recordResponseHeaders(ctx, revisedResponse.headers);
 
-                    interactionsDelegate.responseBody(ctx, revisedResponse.body, revisedResponse.statusCode, revisedResponse.contentType);
+                    interactionsDelegate.recordResponseBody(ctx, revisedResponse.body, revisedResponse.statusCode, revisedResponse.contentType);
 
                     if (revisedResponse.contentType != null) {
                         response.setContentType(revisedResponse.contentType);

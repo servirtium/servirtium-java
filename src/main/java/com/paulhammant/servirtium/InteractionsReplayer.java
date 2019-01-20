@@ -50,6 +50,7 @@ public class InteractionsReplayer implements InteractionsDelegate {
     private String headers;
     private String filename;
     private boolean forgivingOrderOfClientRquestHeaders = false;
+
     public static final String SERVIRTIUM_INTERACTION = "## Interaction ";
 
     public InteractionsReplayer() {
@@ -114,7 +115,7 @@ public class InteractionsReplayer implements InteractionsDelegate {
     }
 
     @Override
-    public ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
+    public ServiceResponse getServiceResponseForRequest(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
 
         ReplayingContext rc = (ReplayingContext) ctx;
 
@@ -218,23 +219,23 @@ public class InteractionsReplayer implements InteractionsDelegate {
     }
 
     @Override
-    public void responseBody(Context ctx, Object body, int statusCode, String contentType) {
+    public void recordResponseBody(Context ctx, Object body, int statusCode, String contentType) {
         // only useful for recording which is not this class
     }
 
     @Override
-    public void responseHeaders(Context ctx, String[] headers) {
+    public void recordResponseHeaders(Context ctx, String[] headers) {
         // only useful for recording which is not this class
     }
 
     @Override
-    public void requestBody(String bodyToReal, String contentTypeToReal, Context ctx) {
+    public void recordRequestBody(String bodyToReal, String contentTypeToReal, Context ctx) {
         this.bodyToReal = bodyToReal;
         this.contentTypeToReal = contentTypeToReal;
     }
 
     @Override
-    public void requestHeaders(Map<String, String> headers, Context ctx) {
+    public void recordRequestHeaders(Map<String, String> headers, Context ctx) {
         StringBuilder sb = new StringBuilder();
         for (String k : headers.keySet()) {
             String v = headers.get(k);

@@ -58,7 +58,7 @@ public class InteractionsRecorder implements InteractionsDelegate {
         this.interactionManipulations = interactionManipulations;
     }
 
-    public ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
+    public ServiceResponse getServiceResponseForRequest(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
         headersToReal.remove("Accept-Encoding");
         return serviceInteroperation.invokeServiceEndpoint(method, this.bodyToReal, this.contentTypeToReal, url, headersToReal, interactionManipulations);
     }
@@ -88,7 +88,7 @@ public class InteractionsRecorder implements InteractionsDelegate {
     }
 
     @Override
-    public void requestHeaders(Map<String, String> headers, Context ctx) {
+    public void recordRequestHeaders(Map<String, String> headers, Context ctx) {
         RecordingContext rc = (RecordingContext) ctx; 
         guardOut();
         rc.recording.append("### Request headers sent to the real server:\n\n");
@@ -101,7 +101,7 @@ public class InteractionsRecorder implements InteractionsDelegate {
     }
 
     @Override
-    public void requestBody(String bodyToReal, String contentTypeToReal, Context ctx) {
+    public void recordRequestBody(String bodyToReal, String contentTypeToReal, Context ctx) {
         RecordingContext rc = (RecordingContext) ctx;
         this.bodyToReal = bodyToReal;
         this.contentTypeToReal = contentTypeToReal;
@@ -115,7 +115,7 @@ public class InteractionsRecorder implements InteractionsDelegate {
     }
 
     @Override
-    public void responseHeaders(Context ctx, String[] headers) {
+    public void recordResponseHeaders(Context ctx, String[] headers) {
         RecordingContext rc = (RecordingContext) ctx;
         guardOut();
         rc.recording.append("### Resulting headers back from the real server:\n");
@@ -132,7 +132,7 @@ public class InteractionsRecorder implements InteractionsDelegate {
     }
 
     @Override
-    public void responseBody(Context ctx, Object body, int statusCode, String contentType) {
+    public void recordResponseBody(Context ctx, Object body, int statusCode, String contentType) {
         RecordingContext rc = (RecordingContext) ctx;
         guardOut();
         String xtra = "";
