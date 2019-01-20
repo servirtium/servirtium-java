@@ -45,9 +45,6 @@ public class InteractionsReplayer implements InteractionsDelegate {
     private final ReplayMonitor monitor;
 
     private List<String> markdownConversation = new ArrayList<>();
-    private String bodyToReal;
-    private String contentTypeToReal;
-    private String headers;
     private String filename;
     private boolean forgivingOrderOfClientRquestHeaders = false;
 
@@ -107,6 +104,9 @@ public class InteractionsReplayer implements InteractionsDelegate {
 
         private final String interactionText;
         public int ix;
+        public String bodyToReal;
+        public String contentTypeToReal;
+        public String headers;
 
         public ReplayingContext(String interactionText, int interactionNum) {
             super(interactionNum);
@@ -156,14 +156,14 @@ public class InteractionsReplayer implements InteractionsDelegate {
             String contentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
 
             // TODO remove trim()
-            if (!this.reorderMaybe(headersReceived).equals(reorderMaybe(headers.trim()))) {
+            if (!this.reorderMaybe(headersReceived).equals(reorderMaybe(rc.headers.trim()))) {
                 monitor.headersFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename);
             }
             String bodyReceived = getCodeBlock(rc);
-            if (!this.bodyToReal.equals(bodyReceived)) {
+            if (!rc.bodyToReal.equals(bodyReceived)) {
                 monitor.bodyFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename);
             }
-            if (!this.contentTypeToReal.equals(contentType)) {
+            if (!rc.contentTypeToReal.equals(contentType)) {
                 monitor.contentTypeFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename);
             }
             final String RESULTING_HEADERS_BACK_FROM_REAL_SERVER = "### Resulting headers back from the real server";
@@ -230,18 +230,20 @@ public class InteractionsReplayer implements InteractionsDelegate {
 
     @Override
     public void recordRequestBody(String bodyToReal, String contentTypeToReal, Context ctx) {
-        this.bodyToReal = bodyToReal;
-        this.contentTypeToReal = contentTypeToReal;
+        ReplayingContext rc = (ReplayingContext) ctx;
+        rc.bodyToReal = bodyToReal;
+        rc.contentTypeToReal = contentTypeToReal;
     }
 
     @Override
     public void recordRequestHeaders(Map<String, String> headers, Context ctx) {
+        ReplayingContext rc = (ReplayingContext) ctx;
         StringBuilder sb = new StringBuilder();
         for (String k : headers.keySet()) {
             String v = headers.get(k);
             sb.append(k).append(": ").append(v).append("\n");
         }
-        this.headers = sb.toString();
+        rc.headers = sb.toString();
     }
 
     @Override
