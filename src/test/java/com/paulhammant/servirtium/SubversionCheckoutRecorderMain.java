@@ -58,14 +58,19 @@ public class SubversionCheckoutRecorderMain {
         String tempDir = new File(".").getAbsolutePath() + "/.servirtium_tmp/";
         createWorkDirAndDeleteCheckout(tempDir);
 
+        final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
         InteractionRecordingServirtiumServer recorder = new InteractionRecordingServirtiumServer(
-                new ServirtiumServer.ServerMonitor.Console(),
+                serverMonitor,
                 new ServiceInteropViaOkHttp(),
-                8099, false, new SvnHeaderManipulator("", ""));
+                new SvnHeaderManipulator("", ""));
+        NewServirtiumServer servirtiumServer = new NewServirtiumServer(serverMonitor,
+                8099, false,
+                new SvnHeaderManipulator("", ""), recorder);
+
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         FileOutputStream fos = new FileOutputStream(CHECKOUT_RECORDER_TEST_MD);
         recorder.setOutputStream(CHECKOUT_RECORDER_TEST_MD, fos);
-        recorder.startApp();
+        servirtiumServer.startApp();
 
 
     }

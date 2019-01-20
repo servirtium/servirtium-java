@@ -94,28 +94,35 @@ public class SimpleGetCentricBinaryTests {
             "\n";
 
 
-    private ServirtiumServer delegate;
+    private NewServirtiumServer servirtiumServer;
+    ;
 
     @After
     public void tearDown() {
-        delegate.stop();
+        servirtiumServer.stop();
     }
 
 
     @Test
     public void canRecordABinaryGetFromApachesSubversionViaOkHttp() throws Exception {
 
-        delegate = new InteractionRecordingServirtiumServer(
-                new ServirtiumServer.ServerMonitor.Console(),
+        final SvnHeaderManipulator interactionManipulations = new SvnHeaderManipulator("localhost:8080", "svn.apache.org");
+        InteractionRecordingServirtiumServer recorder = new InteractionRecordingServirtiumServer(
+                new ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
-               8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
+                interactionManipulations);
+
+        servirtiumServer = new NewServirtiumServer(new ServerMonitor.Console(),
+                8080, false,
+                interactionManipulations, recorder);
+
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((InteractionRecordingServirtiumServer) delegate).setOutputStream("foo", out);
-        delegate.startApp();
+        recorder.setOutputStream("foo", out);
+        servirtiumServer.startApp();
 
         checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured();
 
-        delegate.finishedScript();
+        servirtiumServer.finishedScript();
 
         // Order of headers is as originally sent
         assertEquals(simplifyForEqualsTesting(EXPECTED_1 + EXPECTED_2a + EXPECTED_3), simplifyForEqualsTesting(out.toString()));
@@ -125,14 +132,20 @@ public class SimpleGetCentricBinaryTests {
     @Test
     public void canRecordAPngGetFromWikimedia() throws Exception {
 
-        delegate = new InteractionRecordingServirtiumServer(
-                new ServirtiumServer.ServerMonitor.Console(),
+        final SimpleHeaderManipulator interactionManipulations = new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org");
+        InteractionRecordingServirtiumServer recorder = new InteractionRecordingServirtiumServer(
+                new ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
-               8080, false, new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org")
+                interactionManipulations
                 .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:"));
+
+        servirtiumServer = new NewServirtiumServer(new ServerMonitor.Console(),
+                8080, false,
+                interactionManipulations, recorder);
+
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((InteractionRecordingServirtiumServer) delegate).setOutputStream("foo", out);
-        delegate.startApp();
+        recorder.setOutputStream("foo", out);
+        servirtiumServer.startApp();
 
         // https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png
 
@@ -147,7 +160,7 @@ public class SimpleGetCentricBinaryTests {
                 .body(containsString("IHDR"))
                 .contentType("image/png");
 
-        delegate.finishedScript();
+        servirtiumServer.finishedScript();
 
         // Order of headers is as originally sent
         assertEquals(simplifyForEqualsTesting(
@@ -198,15 +211,21 @@ public class SimpleGetCentricBinaryTests {
     @Test
     public void canRecordASvgGetFromWikimedia() throws Exception {
 
-        delegate = new InteractionRecordingServirtiumServer(
-                new ServirtiumServer.ServerMonitor.Console(),
+        final SimpleHeaderManipulator interactionManipulations = new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org");
+        InteractionRecordingServirtiumServer recorder = new InteractionRecordingServirtiumServer(
+                new ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
-               8080, false, new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org")
+                interactionManipulations
                 .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:")
         );
+
+        servirtiumServer = new NewServirtiumServer(new ServerMonitor.Console(),
+                8080, false,
+                interactionManipulations, recorder);
+
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((InteractionRecordingServirtiumServer) delegate).setOutputStream("foo", out);
-        delegate.startApp();
+        recorder.setOutputStream("foo", out);
+        servirtiumServer.startApp();
 
         // https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png
 
@@ -220,7 +239,7 @@ public class SimpleGetCentricBinaryTests {
                 .body(containsString("http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"))
                 .contentType("image/svg+xml");
 
-        delegate.finishedScript();
+        servirtiumServer.finishedScript();
 
         // Order of headers is as originally sent
         assertEquals(simplifyForEqualsTesting(
@@ -282,15 +301,19 @@ public class SimpleGetCentricBinaryTests {
     @Test
     public void canReplayABinaryGetFromApachesSubversion() throws Exception {
 
-        delegate = new InteractionReplayingServirtiumServer(
-               8080, false, new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
-        ((InteractionReplayingServirtiumServer) delegate).setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
-        delegate.startApp();
+        final SvnHeaderManipulator interactionManipulations = new SvnHeaderManipulator("localhost:8080", "svn.apache.org");
+        InteractionReplayingServirtiumServer replayer = new InteractionReplayingServirtiumServer();
+        replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
+
+        servirtiumServer = new NewServirtiumServer(new ServerMonitor.Console(),
+                8080, false,
+                interactionManipulations, replayer);
+
+        servirtiumServer.startApp();
 
         checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured();
 
-        delegate.finishedScript();
-
+        servirtiumServer.finishedScript();
 
     }
 

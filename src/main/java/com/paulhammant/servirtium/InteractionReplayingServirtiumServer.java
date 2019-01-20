@@ -40,98 +40,9 @@ import java.util.Map;
 
 import static java.nio.file.Files.readAllBytes;
 
-public class InteractionReplayingServirtiumServer extends ServirtiumServer {
+public class InteractionReplayingServirtiumServer implements RecordOrPlayback {
 
     private final ReplayMonitor monitor;
-
-    public static interface ReplayMonitor extends ServerMonitor {
-
-        void finishedButMoreInteractionsYetToDo(int interaction, String filename);
-
-        void couldNotFindInteraction(int interaction, String filename);
-
-        void methodNotAsExpected(int interaction, String filename, String mdMethod, String method);
-
-        void urlNotAsExpected(String url, ReplayingContext rc, String mdMethod, String mdUrl, String filename);
-
-        void markdownSectionHeadingMissing(int interaction, String HEADERS_SENT_TO_REAL_SERVER, String filename);
-
-        void headersFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename);
-
-        void bodyFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename);
-
-        void contentTypeFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename);
-
-        AssertionError unexpectedInteractionRequest(int counter, String filename);
-
-        class Default implements ReplayMonitor {
-
-            private final ServerMonitor serverMonitor;
-
-            @Override
-            public void interactionFinished(int counter, String method, String url) {
-                serverMonitor.interactionFinished(counter, method, url);
-            }
-
-            @Override
-            public void interactionStarted(int counter, String method, String url) {
-                serverMonitor.interactionStarted(counter, method, url);
-            }
-
-            public Default() {
-                this(new Console());
-            }
-
-            public Default(ServerMonitor serverMonitor) {
-                this.serverMonitor = serverMonitor;
-            }
-
-            public void finishedButMoreInteractionsYetToDo(int interaction, String filename) {
-                throw makeAssertionError("There are more recorded interactions after last replayed inteaction: #" + interaction + " in " + filename + ", yet invocation of .finishedScript() possibly via .stop() implies there should be no more. Fail!!");
-            }
-
-            public void couldNotFindInteraction(int interaction, String filename) {
-                throw makeAssertionError("Could not find interactions #" + interaction + " in file '" + filename + "'");
-            }
-
-            public void methodNotAsExpected(int interaction, String filename, String mdMethod, String method) {
-                throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename) + ", method from the client that should be sent to real server are not the same as expected: " + method);
-            }
-
-            public void urlNotAsExpected(String url, ReplayingContext rc, String mdMethod, String mdUrl, String filename) {
-                throw makeAssertionError("Method " + rc.interactionNum + " (" + mdMethod + ") in " + filename + ": " + url + " does not end in previously recorded " + mdUrl);
-            }
-
-            public void markdownSectionHeadingMissing(int interaction, String HEADERS_SENT_TO_REAL_SERVER, String filename) {
-                throw makeAssertionError("Expected '" + HEADERS_SENT_TO_REAL_SERVER + "' for interaction #" + interaction + " in " + filename + ", but it was not there");
-            }
-
-            public void headersFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename) {
-                throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename) + ", headers from the client that should be sent to real server are not the same as those previously recorded");
-            }
-
-            public void bodyFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename) {
-                throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename) + ", body from the client that should be sent to real server are not the same those previously recorded");
-            }
-
-            public void contentTypeFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename) {
-                throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded");
-            }
-
-            public AssertionError unexpectedInteractionRequest(int counter, String filename) {
-                return makeAssertionError("Replay of script '" + filename + "' hit a problem when interaction " + counter + " sought, but there were no more after " + (counter-1));
-            }
-
-            private String methodAndFilePrefix(int interactionNum, String mdMethod, String filename) {
-                return "Interaction " + interactionNum + " (method: " + mdMethod + ") in " + filename;
-            }
-
-            private AssertionError makeAssertionError(String message) {
-                return new AssertionError(message);
-            }
-
-        }
-    }
 
     private List<String> markdownConversation = new ArrayList<>();
     private String bodyToReal;
@@ -141,16 +52,15 @@ public class InteractionReplayingServirtiumServer extends ServirtiumServer {
     private boolean forgivingOrderOfClientRquestHeaders = false;
     public static final String SERVIRTIUM_INTERACTION = "## Interaction ";
 
-    public InteractionReplayingServirtiumServer(int port, boolean ssl, InteractionManipulations headerManipultor) {
-        this(new ReplayMonitor.Default(), port, ssl, headerManipultor);
+    public InteractionReplayingServirtiumServer() {
+        this(new ReplayMonitor.Default());
     }
 
-    public InteractionReplayingServirtiumServer(ReplayMonitor monitor, int port, boolean ssl, InteractionManipulations headerManipultor) {
-        super(monitor, port, ssl, headerManipultor);
+    public InteractionReplayingServirtiumServer(ReplayMonitor monitor) {
         this.monitor = monitor;
     }
 
-    public InteractionReplayingServirtiumServer withForgivingOrderOfClientRquestHeaders() {
+    public InteractionReplayingServirtiumServer withForgivingOrderOfClientRequestHeaders() {
         forgivingOrderOfClientRquestHeaders = true;
         return this;
     }
@@ -186,9 +96,9 @@ public class InteractionReplayingServirtiumServer extends ServirtiumServer {
     }
 
     @Override
-    public void finishedScript() {
-        if (markdownConversation.size() - getCounter() > 1) {
-            monitor.finishedButMoreInteractionsYetToDo(getCounter(), filename);
+    public void finishedScript(int counter) {
+        if (markdownConversation.size() - counter > 1) {
+            monitor.finishedButMoreInteractionsYetToDo(counter, filename);
         }
     }
 
@@ -205,7 +115,7 @@ public class InteractionReplayingServirtiumServer extends ServirtiumServer {
     }
 
     @Override
-    protected ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
+    public ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
 
         ReplayingContext rc = (ReplayingContext) ctx;
 
@@ -309,23 +219,23 @@ public class InteractionReplayingServirtiumServer extends ServirtiumServer {
     }
 
     @Override
-    protected void responseBody(Context ctx, Object body, int statusCode, String contentType) {
+    public void responseBody(Context ctx, Object body, int statusCode, String contentType) {
         // only useful for recording which is not this class
     }
 
     @Override
-    protected void responseHeaders(Context ctx, String[] headers) {
+    public void responseHeaders(Context ctx, String[] headers) {
         // only useful for recording which is not this class
     }
 
     @Override
-    protected void requestBody(String bodyToReal, String contentTypeToReal, Context ctx) {
+    public void requestBody(String bodyToReal, String contentTypeToReal, Context ctx) {
         this.bodyToReal = bodyToReal;
         this.contentTypeToReal = contentTypeToReal;
     }
 
     @Override
-    protected void requestHeaders(Map<String, String> headers, Context ctx) {
+    public void requestHeaders(Map<String, String> headers, Context ctx) {
         StringBuilder sb = new StringBuilder();
         for (String k : headers.keySet()) {
             String v = headers.get(k);
@@ -335,7 +245,7 @@ public class InteractionReplayingServirtiumServer extends ServirtiumServer {
     }
 
     @Override
-    protected Context newInteraction(String method, String path, int counter) {
+    public Context newInteraction(String method, String path, int counter) {
         final String interactionText;
         try {
             interactionText = markdownConversation.get(counter);

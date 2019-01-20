@@ -14,19 +14,22 @@ public class TodobackendDotComReplayerMain {
         // ... src/test/resources/TodobackendDotComServiceRecording.md will be read and
         // hopefully the Jasmine tests in the browser still pass.
 
-        InteractionReplayingServirtiumServer replayer = new InteractionReplayingServirtiumServer(
+        final SimpleHeaderManipulator pragma = new SimpleHeaderManipulator("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
+            @Override
+            public void changeHeadersToSendToReal(Map<String, String> headersToReal) {
+                headersToReal.put("Cache-Control", "no-cache");
+                headersToReal.put("Pragma", "no-cache");
+            }
+        };
+        InteractionReplayingServirtiumServer replayer = new InteractionReplayingServirtiumServer()
+                .withForgivingOrderOfClientRequestHeaders();
+
+        NewServirtiumServer servirtiumServer = new NewServirtiumServer(new ServerMonitor.Console(),
                 8099, false,
-                new SimpleHeaderManipulator("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
-                    @Override
-                    public void changeHeadersToSendToReal(Map<String, String> headersToReal) {
-                        headersToReal.put("Cache-Control","no-cache");
-                        headersToReal.put("Pragma","no-cache");
-                    }
-                })
-                .withForgivingOrderOfClientRquestHeaders();
+                pragma, replayer);
 
         replayer.setMarkdownScriptFilename("src/test/resources/TodobackendDotComServiceRecording.md");
-        replayer.startApp();
+        servirtiumServer.startApp();
 
     }
 

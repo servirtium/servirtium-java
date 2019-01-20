@@ -31,36 +31,30 @@
 
 package com.paulhammant.servirtium;
 
-import com.paulhammant.servirtium.svn.SvnHeaderManipulator;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Map;
 
-import java.io.File;
+public interface RecordOrPlayback {
 
-import static com.paulhammant.servirtium.SubversionCheckoutRecorderMain.CHECKOUT_RECORDER_TEST_MD;
-import static com.paulhammant.servirtium.SubversionCheckoutRecorderMain.createWorkDirAndDeleteCheckout;
+    void finishedScript(int counter);
 
-public class SubversionCheckoutReplayerMain {
+    void setMarkdownScriptFilename(String filename) throws FileNotFoundException;
 
-    public static void main(String[] args) throws Exception {
+    ServiceResponse getServiceResponse(String method, String url,
+                                             Map<String, String> headersToReal, Context ctx) throws IOException;
 
-        // Run this main() method from within Intellij
+    void responseBody(Context ctx, Object body, int statusCode, String contentType) ;
 
-        // Or in the root of this project,
+    void responseHeaders(Context ctx, String[] headers);
 
-        // then run the following command on the command line (same directory)
-        // svn --config-option servers:global:http-proxy-host=localhost --config-option servers:global:http-proxy-port=8099 co http://svn.apache.org/repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/conf/ .servirtium_tmp/conf
+    void requestBody(String bodyToReal, String contentType, Context ctx);
 
-        String tempDir = new File(".").getAbsolutePath() + "/.servirtium_tmp/";
-        createWorkDirAndDeleteCheckout(tempDir);
+    void requestHeaders(Map<String, String> headers, Context ctx);
 
+    Context newInteraction(String method, String path, int counter);
 
-        InteractionReplayingServirtiumServer replayer = new InteractionReplayingServirtiumServer(new ReplayMonitor.Default());
-        NewServirtiumServer servirtiumServer = new NewServirtiumServer(
-                new ServerMonitor.Console(),
-                8099, false,
-                new SvnHeaderManipulator("", ""), replayer);
-        replayer.setMarkdownScriptFilename(CHECKOUT_RECORDER_TEST_MD);
-        servirtiumServer.startApp();
-
+    class Context {
 
     }
 

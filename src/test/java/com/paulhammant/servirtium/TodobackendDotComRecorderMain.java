@@ -23,21 +23,25 @@ public class TodobackendDotComRecorderMain {
 
          */
 
+        final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
+        final SimpleHeaderManipulator interactionManipulations = new SimpleHeaderManipulator("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
+            @Override
+            public void changeHeadersToSendToReal(Map<String, String> headersToReal) {
+                headersToReal.put("Cache-Control", "no-cache");
+                headersToReal.put("Pragma", "no-cache");
+                headersToReal.put("Referer", headersToReal.get("Referer").replace(super.fromUrl, super.toUrl));
+            }
+        };
         InteractionRecordingServirtiumServer recorder = new InteractionRecordingServirtiumServer(
-                new ServirtiumServer.ServerMonitor.Console(),
+                serverMonitor,
                 new ServiceInteropViaOkHttp(),
+                interactionManipulations);
+        NewServirtiumServer servirtiumServer = new NewServirtiumServer(serverMonitor,
                 8099, false,
-                new SimpleHeaderManipulator("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
-                    @Override
-                    public void changeHeadersToSendToReal(Map<String, String> headersToReal) {
-                        headersToReal.put("Cache-Control","no-cache");
-                        headersToReal.put("Pragma","no-cache");
-                        headersToReal.put("Referer", headersToReal.get("Referer").replace(super.fromUrl, super.toUrl));
-                    }
-                });
+                interactionManipulations, recorder);
 
         recorder.setMarkdownScriptFilename("src/test/resources/TodobackendDotComServiceRecording.md");
-        recorder.startApp();
+        servirtiumServer.startApp();
 
     }
 

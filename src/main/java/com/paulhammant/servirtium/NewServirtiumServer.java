@@ -1,34 +1,3 @@
-/*
-        Servirtium: Service Virtualized HTTP
-
-        Copyright (c) 2018, Paul Hammant
-        All rights reserved.
-
-        Redistribution and use in source and binary forms, with or without
-        modification, are permitted provided that the following conditions are met:
-
-        1. Redistributions of source code must retain the above copyright notice, this
-        list of conditions and the following disclaimer.
-        2. Redistributions in binary form must reproduce the above copyright notice,
-        this list of conditions and the following disclaimer in the documentation
-        and/or other materials provided with the distribution.
-
-        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-        ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-        WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-        DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-        ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-        (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-        LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-        ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-        (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-        SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-        The views and conclusions contained in the software and documentation are those
-        of the authors and should not be interpreted as representing official policies,
-        either expressed or implied, of the Servirtium project.
-*/
-
 package com.paulhammant.servirtium;
 
 import org.eclipse.jetty.server.Server;
@@ -38,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -47,19 +15,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public abstract class ServirtiumServer {
+public class NewServirtiumServer {
 
     private final int port;
     protected final InteractionManipulations interactionManipulations;
-
     private Server jettyServer;
+    private final RecordOrPlayback recordOrPlayback;
     private int counter = -1;
 
-    public ServirtiumServer(ServerMonitor monitor, int port, boolean ssl, InteractionManipulations interactionManipulations) {
+    public NewServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
+                               InteractionManipulations interactionManipulations, RecordOrPlayback recordOrPlayback) {
         this.port = port;
         this.interactionManipulations = interactionManipulations;
 
         jettyServer = new Server(port);
+        this.recordOrPlayback = recordOrPlayback;
         // How the f*** do you turn off Embedded Jetty's logging???
         // Everything I tried (mostly static operations on Log) didn't work.
 
@@ -85,7 +55,7 @@ public abstract class ServirtiumServer {
 
                 try {
 
-                    Context ctx = newInteraction(method, request.getRequestURI().toString(), counter);
+                    RecordOrPlayback.Context ctx = recordOrPlayback.newInteraction(method, request.getRequestURI().toString(), counter);
                     String contentType = request.getContentType();
                     if (contentType == null) {
                         contentType = "";
@@ -126,13 +96,13 @@ public abstract class ServirtiumServer {
 
                     interactionManipulations.changeHeadersToSendToReal(headersToReal);
 
-                    requestHeaders(headersToReal, ctx);
+                    recordOrPlayback.requestHeaders(headersToReal, ctx);
 
-                    requestBody(bodyToReal, contentType, ctx);
+                    recordOrPlayback.requestBody(bodyToReal, contentType, ctx);
 
 
                     final String requestUrl = interactionManipulations.changeUrlForRequestToReal(url);
-                    ServiceResponse realResponse = getServiceResponse(method, requestUrl,
+                    ServiceResponse realResponse = recordOrPlayback.getServiceResponse(method, requestUrl,
                             headersToReal, ctx);
 
 
@@ -156,9 +126,9 @@ public abstract class ServirtiumServer {
 
                     response.setStatus(revisedResponse.statusCode);
 
-                    responseHeaders(ctx, revisedResponse.headers);
+                    recordOrPlayback.responseHeaders(ctx, revisedResponse.headers);
 
-                    responseBody(ctx, revisedResponse.body, revisedResponse.statusCode, revisedResponse.contentType);
+                    recordOrPlayback.responseBody(ctx, revisedResponse.body, revisedResponse.statusCode, revisedResponse.contentType);
 
                     if (revisedResponse.contentType != null) {
                         response.setContentType(revisedResponse.contentType);
@@ -177,37 +147,8 @@ public abstract class ServirtiumServer {
                     // Inform jetty that this request has now been handled
                     baseRequest.setHandled(true);
                 }
-           }
+            }
         });
-    }
-
-    public static interface ServerMonitor{
-
-        default void interactionFinished(int counter, String method, String url) {}
-
-        default void interactionStarted(int counter, String method, String url){}
-
-        default void unexpectedRequestError(Throwable throwable) {}
-
-        class Default implements ServerMonitor {
-        }
-
-        class Console implements ServerMonitor {
-
-            @Override
-            public void interactionFinished(int counter, String method, String url) {
-                System.out.println(">> Servirtium >> interaction " + counter + " " + method + " " + url + " DONE");
-            }
-
-            @Override
-            public void interactionStarted(int counter, String method, String url) {
-            }
-
-            @Override
-            public void unexpectedRequestError(Throwable throwable) {
-                System.out.println(">> Servirtium >> unexpected request error ");
-            }
-        }
     }
 
     public static boolean isText(String contentType) {
@@ -219,15 +160,10 @@ public abstract class ServirtiumServer {
                 contentType.startsWith("application/xhtml+xml");
     }
 
-    public ServirtiumServer startApp() throws Exception {
+    public NewServirtiumServer startApp() throws Exception {
         jettyServer.start();
         return this;
     }
-
-    public abstract void finishedScript();
-
-
-    public abstract void setMarkdownScriptFilename(String filename) throws FileNotFoundException;
 
     protected int getCounter() {
         return counter;
@@ -237,25 +173,9 @@ public abstract class ServirtiumServer {
         counter = -1;
     }
 
-    protected abstract ServiceResponse getServiceResponse(String method, String url,
-                                                          Map<String, String> headersToReal, Context ctx) throws IOException;
-
-    protected abstract void responseBody(Context ctx, Object body, int statusCode, String contentType) ;
-
-    protected abstract void responseHeaders(Context ctx, String[] headers);
-
-    protected abstract void requestBody(String bodyToReal, String contentType, Context ctx);
-
-    protected abstract void requestHeaders(Map<String, String> headers, Context ctx);
-
-    protected abstract Context newInteraction(String method, String path, int counter);
-
-    public static class Context {
-
-    }
 
     public void stop() {
-        finishedScript(); // just in case
+        recordOrPlayback.finishedScript(getCounter()); // just in case
         try {
             jettyServer.setStopTimeout(1);
             jettyServer.stop();
@@ -275,4 +195,8 @@ public abstract class ServirtiumServer {
         return foo[2+i].getClassName() + "." + foo[2+i].getMethodName();
     }
 
+
+    public void finishedScript() {
+        recordOrPlayback.finishedScript(getCounter());
+    }
 }

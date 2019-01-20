@@ -42,9 +42,10 @@ import java.util.Map;
 
 import static junit.framework.TestCase.fail;
 
-public class InteractionRecordingServirtiumServer extends ServirtiumServer {
+public class InteractionRecordingServirtiumServer implements RecordOrPlayback {
 
     private final ServiceInteroperation httpInteractor;
+    private final InteractionManipulations interactionManipulations;
     private PrintStream out;
     private String bodyToReal;
     private String contentTypeToReal;
@@ -52,12 +53,12 @@ public class InteractionRecordingServirtiumServer extends ServirtiumServer {
     private Map<Integer, String> interactions = new HashMap<>();
 
     public InteractionRecordingServirtiumServer(ServerMonitor serverMonitor, ServiceInteroperation realHttpInteractor,
-                                                int port, boolean ssl, InteractionManipulations interactionManipulations) {
-        super(serverMonitor, port, ssl, interactionManipulations);
+                                                InteractionManipulations interactionManipulations) {
         this.httpInteractor = realHttpInteractor;
+        this.interactionManipulations = interactionManipulations;
     }
 
-    protected ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
+    public ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
         headersToReal.remove("Accept-Encoding");
         return httpInteractor.invokeServiceEndpoint(method, this.bodyToReal, this.contentTypeToReal, url, headersToReal, interactionManipulations);
     }
@@ -70,7 +71,7 @@ public class InteractionRecordingServirtiumServer extends ServirtiumServer {
     }
 
     @Override
-    protected Context newInteraction(String method, String path, int counter) {
+    public Context newInteraction(String method, String path, int counter) {
         guardOut();
         RecordingContext rc = new RecordingContext();
 
@@ -86,7 +87,7 @@ public class InteractionRecordingServirtiumServer extends ServirtiumServer {
     }
 
     @Override
-    protected void requestHeaders(Map<String, String> headers, Context ctx) {
+    public void requestHeaders(Map<String, String> headers, Context ctx) {
         RecordingContext rc = (RecordingContext) ctx; 
         guardOut();
         rc.recording.append("### Request headers sent to the real server:\n\n");
@@ -99,7 +100,7 @@ public class InteractionRecordingServirtiumServer extends ServirtiumServer {
     }
 
     @Override
-    protected void requestBody(String bodyToReal, String contentTypeToReal, Context ctx) {
+    public void requestBody(String bodyToReal, String contentTypeToReal, Context ctx) {
         RecordingContext rc = (RecordingContext) ctx;
         this.bodyToReal = bodyToReal;
         this.contentTypeToReal = contentTypeToReal;
@@ -113,7 +114,7 @@ public class InteractionRecordingServirtiumServer extends ServirtiumServer {
     }
 
     @Override
-    protected void responseHeaders(Context ctx, String[] headers) {
+    public void responseHeaders(Context ctx, String[] headers) {
         RecordingContext rc = (RecordingContext) ctx;
         guardOut();
         rc.recording.append("### Resulting headers back from the real server:\n");
@@ -130,7 +131,7 @@ public class InteractionRecordingServirtiumServer extends ServirtiumServer {
     }
 
     @Override
-    protected void responseBody(Context ctx, Object body, int statusCode, String contentType) {
+    public void responseBody(Context ctx, Object body, int statusCode, String contentType) {
         RecordingContext rc = (RecordingContext) ctx;
         guardOut();
         String xtra = "";
@@ -153,7 +154,7 @@ public class InteractionRecordingServirtiumServer extends ServirtiumServer {
         this.interactions.put(rc.interactionNumber, rc.recording.toString());
     }
 
-    public void finishedScript() {
+    public void finishedScript(int counter) {
         if (this.out != null) {
             int i = 0;
             while (this.interactions.size() >0) {
@@ -173,7 +174,6 @@ public class InteractionRecordingServirtiumServer extends ServirtiumServer {
         if (out != null) {
             this.out = new PrintStream(out);
         }
-        resetCounter();
     }
 
 }

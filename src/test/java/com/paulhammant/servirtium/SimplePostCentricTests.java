@@ -81,28 +81,35 @@ public class SimplePostCentricTests {
             "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}\n" +
             "```\n" +
             "\n";
-    private ServirtiumServer delegate;
+    private NewServirtiumServer servirtiumServer;
 
 
     @After
     public void tearDown() {
-        delegate.stop();
+        servirtiumServer.stop();
     }
 
     @Test
     public void canRecordASimplePostToPostmanEchoViaOkHttp() throws Exception {
 
-        delegate = new InteractionRecordingServirtiumServer(
-                new ServirtiumServer.ServerMonitor.Console(),
+        final SimpleHeaderManipulator interactionManipulations = new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com");
+
+        InteractionRecordingServirtiumServer recorder = new InteractionRecordingServirtiumServer(
+                new ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
-               8080, false, new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"));
+                interactionManipulations);
+
+        servirtiumServer = new NewServirtiumServer(new ServerMonitor.Console(),
+                8080, false,
+                interactionManipulations, recorder);
+
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ((InteractionRecordingServirtiumServer) delegate).setOutputStream("foo", out);
-        delegate.startApp();
+        recorder.setOutputStream("foo", out);
+        servirtiumServer.startApp();
 
         checkPostToPostmanEchoViaRestAssured();
 
-        delegate.finishedScript();
+        servirtiumServer.finishedScript();
 
         // Order of headers is as originally sent
         assertEquals(sanitizeDate(EXPECTED), sanitizeDate(out.toString()));
@@ -112,14 +119,18 @@ public class SimplePostCentricTests {
     @Test
     public void canReplayASimplePostToPostmanEcho() throws Exception {
 
-        delegate = new InteractionReplayingServirtiumServer(
-               8080, false, new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"));
-        ((InteractionReplayingServirtiumServer) delegate).setPlaybackConversation(EXPECTED);
-        delegate.startApp();
+        InteractionReplayingServirtiumServer replayer = new InteractionReplayingServirtiumServer();
+        replayer.setPlaybackConversation(EXPECTED);
+
+        servirtiumServer = new NewServirtiumServer(new ServerMonitor.Console(),
+                8080, false,
+                new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"), replayer);
+
+        servirtiumServer.startApp();
 
         checkPostToPostmanEchoViaRestAssured();
 
-        delegate.finishedScript();
+        servirtiumServer.finishedScript();
     }
 
     private void checkPostToPostmanEchoViaRestAssured() {
