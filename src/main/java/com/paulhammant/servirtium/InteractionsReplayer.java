@@ -219,16 +219,6 @@ public class InteractionsReplayer implements InteractionsDelegate {
     }
 
     @Override
-    public void recordResponseBody(Context ctx, Object body, int statusCode, String contentType) {
-        // only useful for recording which is not this class
-    }
-
-    @Override
-    public void recordResponseHeaders(Context ctx, String[] headers) {
-        // only useful for recording which is not this class
-    }
-
-    @Override
     public void recordRequestBody(String bodyToReal, String contentTypeToReal, Context ctx) {
         ReplayingContext rc = (ReplayingContext) ctx;
         rc.bodyToReal = bodyToReal;

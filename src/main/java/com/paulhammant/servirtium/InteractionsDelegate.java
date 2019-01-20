@@ -48,9 +48,9 @@ public interface InteractionsDelegate {
 
     void recordRequestBody(String bodyToReal, String contentType, Context ctx);
 
-    void recordResponseHeaders(Context ctx, String[] headers);
+    default void recordResponseHeaders(Context ctx, String[] headers) {}
 
-    void recordResponseBody(Context ctx, Object body, int statusCode, String contentType) ;
+    default void recordResponseBody(Context ctx, Object body, int statusCode, String contentType) {}
 
     Context newInteraction(String method, String path, int interactionNum);
 
