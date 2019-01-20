@@ -48,16 +48,18 @@ The former is dependable, the latter requires work. See @Ignore in the test suit
 
 ## License & Legal
 
-MIT (open source)
+BSD 2-Clause license (open source)
 
 Be careful: your contracts and EULAs with service providers 
 (as well as application/server makers for on-premises) might not allow you to 
-reverse engineer their over-the-wire APIs.
+reverse engineer their over-the-wire APIs.  
 
 A real case: [Reverse engineering of competitor’s software cost company big](http://blog.internetcases.com/2017/10/24/reverse-engineering-of-competitors-software-cost-company-big/) - and you might say that such clauses are needed to prevent licensees from competing with the original company with arguably "stolen" IP. 
 
-We (test engineers) might morally think that we should be OK for this, as we're just doing it for test-automation 
-purposes. No matter, the contracts that are signed often make no such distinction.
+We (test engineers) might morally think that we should be OK for this, as we're just doing it for 
+test-automation purposes. No matter, the contracts that are signed often make no such distinction, but 
+the case above was where the original maker of an API went after a company that was trying to make 
+something for the same ecosystem without a commercial relation on that specifically.
 
 ## Code of Conduct
 
