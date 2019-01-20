@@ -24,7 +24,7 @@ public class TodobackendDotComRecorderMain {
          */
 
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
-        final SimpleHeaderManipulator interactionManipulations = new SimpleHeaderManipulator("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
+        final SimpleHeaderInteractionManipulations interactionManipulations = new SimpleHeaderInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
             @Override
             public void changeHeadersToSendToReal(Map<String, String> headersToReal) {
                 headersToReal.put("Cache-Control", "no-cache");
@@ -33,7 +33,6 @@ public class TodobackendDotComRecorderMain {
             }
         };
         InteractionRecorder recorder = new InteractionRecorder(
-                serverMonitor,
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
         ServirtiumServer servirtiumServer = new ServirtiumServer(serverMonitor,

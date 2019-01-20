@@ -31,7 +31,7 @@
 
 package com.paulhammant.servirtium;
 
-import com.paulhammant.servirtium.svn.SvnHeaderManipulator;
+import com.paulhammant.servirtium.svn.SubversionInteractionManipulations;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -60,12 +60,11 @@ public class SubversionCheckoutRecorderMain {
 
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
         InteractionRecorder recorder = new InteractionRecorder(
-                serverMonitor,
                 new ServiceInteropViaOkHttp(),
-                new SvnHeaderManipulator("", ""));
+                new SubversionInteractionManipulations("", ""));
         ServirtiumServer servirtiumServer = new ServirtiumServer(serverMonitor,
                 8099, false,
-                new SvnHeaderManipulator("", ""), recorder);
+                new SubversionInteractionManipulations("", ""), recorder);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         FileOutputStream fos = new FileOutputStream(CHECKOUT_RECORDER_TEST_MD);

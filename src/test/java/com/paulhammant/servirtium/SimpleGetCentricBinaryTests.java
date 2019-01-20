@@ -31,7 +31,7 @@
 
 package com.paulhammant.servirtium;
 
-import com.paulhammant.servirtium.svn.SvnHeaderManipulator;
+import com.paulhammant.servirtium.svn.SubversionInteractionManipulations;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.junit.After;
@@ -106,9 +106,8 @@ public class SimpleGetCentricBinaryTests {
     @Test
     public void canRecordABinaryGetFromApachesSubversionViaOkHttp() throws Exception {
 
-        final SvnHeaderManipulator interactionManipulations = new SvnHeaderManipulator("localhost:8080", "svn.apache.org");
+        final SubversionInteractionManipulations interactionManipulations = new SubversionInteractionManipulations("localhost:8080", "svn.apache.org");
         InteractionRecorder recorder = new InteractionRecorder(
-                new ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
 
@@ -132,9 +131,8 @@ public class SimpleGetCentricBinaryTests {
     @Test
     public void canRecordAPngGetFromWikimedia() throws Exception {
 
-        final SimpleHeaderManipulator interactionManipulations = new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org");
+        final SimpleHeaderInteractionManipulations interactionManipulations = new SimpleHeaderInteractionManipulations("localhost:8080", "upload.wikimedia.org");
         InteractionRecorder recorder = new InteractionRecorder(
-                new ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
                 .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:"));
@@ -211,9 +209,8 @@ public class SimpleGetCentricBinaryTests {
     @Test
     public void canRecordASvgGetFromWikimedia() throws Exception {
 
-        final SimpleHeaderManipulator interactionManipulations = new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org");
+        final SimpleHeaderInteractionManipulations interactionManipulations = new SimpleHeaderInteractionManipulations("localhost:8080", "upload.wikimedia.org");
         InteractionRecorder recorder = new InteractionRecorder(
-                new ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
                 .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:")
@@ -301,7 +298,7 @@ public class SimpleGetCentricBinaryTests {
     @Test
     public void canReplayABinaryGetFromApachesSubversion() throws Exception {
 
-        final SvnHeaderManipulator interactionManipulations = new SvnHeaderManipulator("localhost:8080", "svn.apache.org");
+        final SubversionInteractionManipulations interactionManipulations = new SubversionInteractionManipulations("localhost:8080", "svn.apache.org");
         InteractionReplayer replayer = new InteractionReplayer();
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
 

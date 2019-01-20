@@ -31,13 +31,13 @@
 
 package com.paulhammant.servirtium.svn;
 
-import com.paulhammant.servirtium.SimpleHeaderManipulator;
+import com.paulhammant.servirtium.SimpleHeaderInteractionManipulations;
 
 import java.util.Map;
 
-public class SvnHeaderManipulator extends SimpleHeaderManipulator {
+public class SubversionInteractionManipulations extends SimpleHeaderInteractionManipulations {
 
-    public SvnHeaderManipulator(String fromUrl, String toUrl) {
+    public SubversionInteractionManipulations(String fromUrl, String toUrl) {
         super(fromUrl, toUrl);
     }
 

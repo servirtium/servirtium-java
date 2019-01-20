@@ -1,6 +1,6 @@
 package com.paulhammant.servirtium;
 
-public interface ReplayMonitor extends ServerMonitor {
+public interface ReplayMonitor {
 
     void finishedButMoreInteractionsYetToDo(int interaction, String filename);
 
@@ -21,29 +21,9 @@ public interface ReplayMonitor extends ServerMonitor {
     AssertionError unexpectedInteractionRequest(int counter, String filename);
 
     class Default implements ReplayMonitor {
-
-        private final ServerMonitor serverMonitor;
-
-        @Override
-        public void interactionFinished(int counter, String method, String url) {
-            serverMonitor.interactionFinished(counter, method, url);
-        }
-
-        @Override
-        public void interactionStarted(int counter, String method, String url) {
-            serverMonitor.interactionStarted(counter, method, url);
-        }
-
-        public Default() {
-            this(new Console());
-        }
-
-        public Default(ServerMonitor serverMonitor) {
-            this.serverMonitor = serverMonitor;
-        }
-
+        
         public void finishedButMoreInteractionsYetToDo(int interaction, String filename) {
-            throw makeAssertionError("There are more recorded interactions after last replayed inteaction: #" + interaction + " in " + filename + ", yet invocation of .finishedScript() possibly via .stop() implies there should be no more. Fail!!");
+            throw makeAssertionError("There are more recorded interactions after last replayed interaction: #" + interaction + " in " + filename + ", yet invocation of .finishedScript() possibly via .stop() implies there should be no more. Fail!!");
         }
 
         public void couldNotFindInteraction(int interaction, String filename) {

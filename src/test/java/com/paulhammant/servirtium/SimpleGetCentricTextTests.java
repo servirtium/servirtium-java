@@ -31,7 +31,7 @@
 
 package com.paulhammant.servirtium;
 
-import com.paulhammant.servirtium.svn.SvnHeaderManipulator;
+import com.paulhammant.servirtium.svn.SubversionInteractionManipulations;
 import org.junit.After;
 import org.junit.Test;
 
@@ -117,12 +117,11 @@ public class SimpleGetCentricTextTests {
 
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
         InteractionRecorder recorder = new InteractionRecorder(
-                serverMonitor,
                 new ServiceInteropViaOkHttp(),
-                new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
+                new SubversionInteractionManipulations("localhost:8080", "svn.apache.org"));
         servirtiumServer = new ServirtiumServer(serverMonitor,
                 8080, false,
-                new SvnHeaderManipulator("localhost:8080", "svn.apache.org"), recorder);
+                new SubversionInteractionManipulations("localhost:8080", "svn.apache.org"), recorder);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
@@ -145,7 +144,7 @@ public class SimpleGetCentricTextTests {
 
         servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
-                new SvnHeaderManipulator("localhost:8080", "svn.apache.org"), replayer);
+                new SubversionInteractionManipulations("localhost:8080", "svn.apache.org"), replayer);
 
         servirtiumServer.startApp();
 

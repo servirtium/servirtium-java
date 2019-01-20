@@ -14,7 +14,7 @@ public class TodobackendDotComReplayerMain {
         // ... src/test/resources/TodobackendDotComServiceRecording.md will be read and
         // hopefully the Jasmine tests in the browser still pass.
 
-        final SimpleHeaderManipulator pragma = new SimpleHeaderManipulator("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
+        final SimpleHeaderInteractionManipulations pragma = new SimpleHeaderInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
             @Override
             public void changeHeadersToSendToReal(Map<String, String> headersToReal) {
                 headersToReal.put("Cache-Control", "no-cache");

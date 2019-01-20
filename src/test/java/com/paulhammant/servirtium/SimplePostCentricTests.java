@@ -92,10 +92,9 @@ public class SimplePostCentricTests {
     @Test
     public void canRecordASimplePostToPostmanEchoViaOkHttp() throws Exception {
 
-        final SimpleHeaderManipulator interactionManipulations = new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com");
+        final SimpleHeaderInteractionManipulations interactionManipulations = new SimpleHeaderInteractionManipulations("http://localhost:8080", "https://postman-echo.com");
 
         InteractionRecorder recorder = new InteractionRecorder(
-                new ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
 
@@ -124,7 +123,7 @@ public class SimplePostCentricTests {
 
         servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
-                new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"), replayer);
+                new SimpleHeaderInteractionManipulations("http://localhost:8080", "https://postman-echo.com"), replayer);
 
         servirtiumServer.startApp();
 

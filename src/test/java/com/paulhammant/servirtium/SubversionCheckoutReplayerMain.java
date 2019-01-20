@@ -31,7 +31,7 @@
 
 package com.paulhammant.servirtium;
 
-import com.paulhammant.servirtium.svn.SvnHeaderManipulator;
+import com.paulhammant.servirtium.svn.SubversionInteractionManipulations;
 
 import java.io.File;
 
@@ -52,12 +52,11 @@ public class SubversionCheckoutReplayerMain {
         String tempDir = new File(".").getAbsolutePath() + "/.servirtium_tmp/";
         createWorkDirAndDeleteCheckout(tempDir);
 
-
         InteractionReplayer replayer = new InteractionReplayer(new ReplayMonitor.Default());
         ServirtiumServer servirtiumServer = new ServirtiumServer(
                 new ServerMonitor.Console(),
                 8099, false,
-                new SvnHeaderManipulator("", ""), replayer);
+                new SubversionInteractionManipulations("", ""), replayer);
         replayer.setMarkdownScriptFilename(CHECKOUT_RECORDER_TEST_MD);
         servirtiumServer.startApp();
 

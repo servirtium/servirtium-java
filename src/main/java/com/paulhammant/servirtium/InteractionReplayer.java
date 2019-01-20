@@ -106,11 +106,10 @@ public class InteractionReplayer implements RecordOrPlayback {
 
         private final String interactionText;
         public int ix;
-        public int interactionNum;
 
         public ReplayingContext(String interactionText, int interactionNum) {
+            super(interactionNum);
             this.interactionText = interactionText;
-            this.interactionNum = interactionNum;
         }
     }
 

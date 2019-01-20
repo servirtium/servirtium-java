@@ -44,7 +44,7 @@ import static junit.framework.TestCase.fail;
 
 public class InteractionRecorder implements RecordOrPlayback {
 
-    private final ServiceInteroperation httpInteractor;
+    private final ServiceInteroperation serviceInteroperation;
     private final InteractionManipulations interactionManipulations;
     private PrintStream out;
     private String bodyToReal;
@@ -52,31 +52,32 @@ public class InteractionRecorder implements RecordOrPlayback {
     private String filename;
     private Map<Integer, String> interactions = new HashMap<>();
 
-    public InteractionRecorder(ServerMonitor serverMonitor, ServiceInteroperation realHttpInteractor,
+    public InteractionRecorder(ServiceInteroperation serviceInteroperation,
                                InteractionManipulations interactionManipulations) {
-        this.httpInteractor = realHttpInteractor;
+        this.serviceInteroperation = serviceInteroperation;
         this.interactionManipulations = interactionManipulations;
     }
 
     public ServiceResponse getServiceResponse(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
         headersToReal.remove("Accept-Encoding");
-        return httpInteractor.invokeServiceEndpoint(method, this.bodyToReal, this.contentTypeToReal, url, headersToReal, interactionManipulations);
+        return serviceInteroperation.invokeServiceEndpoint(method, this.bodyToReal, this.contentTypeToReal, url, headersToReal, interactionManipulations);
     }
 
     public static class RecordingContext extends Context {
 
         private StringBuilder recording = new StringBuilder();
-        private int interactionNumber;
 
+        public RecordingContext(int interactionNumber) {
+            super(interactionNumber);
+        }
     }
 
     @Override
     public Context newInteraction(String method, String path, int counter) {
         guardOut();
-        RecordingContext rc = new RecordingContext();
+        RecordingContext rc = new RecordingContext(counter);
 
         rc.recording.append("## Interaction ").append(counter).append(": ").append(method).append(" ").append(path).append("\n\n");
-        rc.interactionNumber = counter;
         return rc;
     }
 
@@ -151,7 +152,7 @@ public class InteractionRecorder implements RecordOrPlayback {
         rc.recording.append("```\n");
         rc.recording.append("\n");
 
-        this.interactions.put(rc.interactionNumber, rc.recording.toString());
+        this.interactions.put(rc.interactionNum, rc.recording.toString());
     }
 
     public void finishedScript(int counter) {

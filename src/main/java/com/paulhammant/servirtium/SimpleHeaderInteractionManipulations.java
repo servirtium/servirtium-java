@@ -3,18 +3,18 @@ package com.paulhammant.servirtium;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class SimpleHeaderManipulator implements InteractionManipulations {
+public class SimpleHeaderInteractionManipulations implements InteractionManipulations {
 
     protected final String fromUrl;
     protected final String toUrl;
     private String[] headerPrefixesToRemove = new String[0];
 
-    public SimpleHeaderManipulator(String fromUrl, String toUrl) {
+    public SimpleHeaderInteractionManipulations(String fromUrl, String toUrl) {
         this.fromUrl = fromUrl;
         this.toUrl = toUrl;
     }
 
-    public SimpleHeaderManipulator withHeaderPrefixesToRemoveFromRealResponse(String... headerPrefixesToRemove) {
+    public SimpleHeaderInteractionManipulations withHeaderPrefixesToRemoveFromRealResponse(String... headerPrefixesToRemove) {
         this.headerPrefixesToRemove = headerPrefixesToRemove;
         return this;
     }

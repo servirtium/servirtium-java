@@ -56,6 +56,11 @@ public interface RecordOrPlayback {
 
     class Context {
 
+        public final int interactionNum;
+
+        public Context(int interactionNum) {
+            this.interactionNum = interactionNum;
+        }
     }
 
 }
