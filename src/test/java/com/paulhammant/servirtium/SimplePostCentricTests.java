@@ -94,7 +94,7 @@ public class SimplePostCentricTests {
 
         final SimpleHeaderManipulator interactionManipulations = new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com");
 
-        InteractionRecordingServirtiumServer recorder = new InteractionRecordingServirtiumServer(
+        InteractionRecorder recorder = new InteractionRecorder(
                 new ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
@@ -119,7 +119,7 @@ public class SimplePostCentricTests {
     @Test
     public void canReplayASimplePostToPostmanEcho() throws Exception {
 
-        InteractionReplayingServirtiumServer replayer = new InteractionReplayingServirtiumServer();
+        InteractionReplayer replayer = new InteractionReplayer();
         replayer.setPlaybackConversation(EXPECTED);
 
         servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),

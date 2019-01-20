@@ -42,7 +42,7 @@ import java.util.Map;
 
 import static junit.framework.TestCase.fail;
 
-public class InteractionRecordingServirtiumServer implements RecordOrPlayback {
+public class InteractionRecorder implements RecordOrPlayback {
 
     private final ServiceInteroperation httpInteractor;
     private final InteractionManipulations interactionManipulations;
@@ -52,8 +52,8 @@ public class InteractionRecordingServirtiumServer implements RecordOrPlayback {
     private String filename;
     private Map<Integer, String> interactions = new HashMap<>();
 
-    public InteractionRecordingServirtiumServer(ServerMonitor serverMonitor, ServiceInteroperation realHttpInteractor,
-                                                InteractionManipulations interactionManipulations) {
+    public InteractionRecorder(ServerMonitor serverMonitor, ServiceInteroperation realHttpInteractor,
+                               InteractionManipulations interactionManipulations) {
         this.httpInteractor = realHttpInteractor;
         this.interactionManipulations = interactionManipulations;
     }

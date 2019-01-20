@@ -107,7 +107,7 @@ public class SimpleGetCentricBinaryTests {
     public void canRecordABinaryGetFromApachesSubversionViaOkHttp() throws Exception {
 
         final SvnHeaderManipulator interactionManipulations = new SvnHeaderManipulator("localhost:8080", "svn.apache.org");
-        InteractionRecordingServirtiumServer recorder = new InteractionRecordingServirtiumServer(
+        InteractionRecorder recorder = new InteractionRecorder(
                 new ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
@@ -133,7 +133,7 @@ public class SimpleGetCentricBinaryTests {
     public void canRecordAPngGetFromWikimedia() throws Exception {
 
         final SimpleHeaderManipulator interactionManipulations = new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org");
-        InteractionRecordingServirtiumServer recorder = new InteractionRecordingServirtiumServer(
+        InteractionRecorder recorder = new InteractionRecorder(
                 new ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
@@ -212,7 +212,7 @@ public class SimpleGetCentricBinaryTests {
     public void canRecordASvgGetFromWikimedia() throws Exception {
 
         final SimpleHeaderManipulator interactionManipulations = new SimpleHeaderManipulator("localhost:8080", "upload.wikimedia.org");
-        InteractionRecordingServirtiumServer recorder = new InteractionRecordingServirtiumServer(
+        InteractionRecorder recorder = new InteractionRecorder(
                 new ServerMonitor.Console(),
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
@@ -302,7 +302,7 @@ public class SimpleGetCentricBinaryTests {
     public void canReplayABinaryGetFromApachesSubversion() throws Exception {
 
         final SvnHeaderManipulator interactionManipulations = new SvnHeaderManipulator("localhost:8080", "svn.apache.org");
-        InteractionReplayingServirtiumServer replayer = new InteractionReplayingServirtiumServer();
+        InteractionReplayer replayer = new InteractionReplayer();
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
 
         servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),

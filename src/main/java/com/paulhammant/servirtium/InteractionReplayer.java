@@ -40,7 +40,7 @@ import java.util.Map;
 
 import static java.nio.file.Files.readAllBytes;
 
-public class InteractionReplayingServirtiumServer implements RecordOrPlayback {
+public class InteractionReplayer implements RecordOrPlayback {
 
     private final ReplayMonitor monitor;
 
@@ -52,15 +52,15 @@ public class InteractionReplayingServirtiumServer implements RecordOrPlayback {
     private boolean forgivingOrderOfClientRquestHeaders = false;
     public static final String SERVIRTIUM_INTERACTION = "## Interaction ";
 
-    public InteractionReplayingServirtiumServer() {
+    public InteractionReplayer() {
         this(new ReplayMonitor.Default());
     }
 
-    public InteractionReplayingServirtiumServer(ReplayMonitor monitor) {
+    public InteractionReplayer(ReplayMonitor monitor) {
         this.monitor = monitor;
     }
 
-    public InteractionReplayingServirtiumServer withForgivingOrderOfClientRequestHeaders() {
+    public InteractionReplayer withForgivingOrderOfClientRequestHeaders() {
         forgivingOrderOfClientRquestHeaders = true;
         return this;
     }

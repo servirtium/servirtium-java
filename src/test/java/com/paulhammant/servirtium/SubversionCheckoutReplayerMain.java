@@ -53,7 +53,7 @@ public class SubversionCheckoutReplayerMain {
         createWorkDirAndDeleteCheckout(tempDir);
 
 
-        InteractionReplayingServirtiumServer replayer = new InteractionReplayingServirtiumServer(new ReplayMonitor.Default());
+        InteractionReplayer replayer = new InteractionReplayer(new ReplayMonitor.Default());
         ServirtiumServer servirtiumServer = new ServirtiumServer(
                 new ServerMonitor.Console(),
                 8099, false,
