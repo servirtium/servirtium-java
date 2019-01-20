@@ -96,9 +96,9 @@ public class InteractionReplayer implements RecordOrPlayback {
     }
 
     @Override
-    public void finishedScript(int counter) {
-        if (markdownConversation.size() - counter > 1) {
-            monitor.finishedButMoreInteractionsYetToDo(counter, filename);
+    public void finishedScript(int interactionNum) {
+        if (markdownConversation.size() - interactionNum > 1) {
+            monitor.finishedButMoreInteractionsYetToDo(interactionNum, filename);
         }
     }
 
@@ -244,14 +244,14 @@ public class InteractionReplayer implements RecordOrPlayback {
     }
 
     @Override
-    public Context newInteraction(String method, String path, int counter) {
+    public Context newInteraction(String method, String path, int interactionNum) {
         final String interactionText;
         try {
-            interactionText = markdownConversation.get(counter);
+            interactionText = markdownConversation.get(interactionNum);
         } catch (IndexOutOfBoundsException e) {
-            throw monitor.unexpectedInteractionRequest(counter, filename);
+            throw monitor.unexpectedInteractionRequest(interactionNum, filename);
         }
-        return new ReplayingContext(interactionText, counter);
+        return new ReplayingContext(interactionText, interactionNum);
     }
 
 }

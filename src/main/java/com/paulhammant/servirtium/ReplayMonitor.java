@@ -18,10 +18,10 @@ public interface ReplayMonitor {
 
     void contentTypeFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename);
 
-    AssertionError unexpectedInteractionRequest(int counter, String filename);
+    AssertionError unexpectedInteractionRequest(int interactionNum, String filename);
 
     class Default implements ReplayMonitor {
-        
+
         public void finishedButMoreInteractionsYetToDo(int interaction, String filename) {
             throw makeAssertionError("There are more recorded interactions after last replayed interaction: #" + interaction + " in " + filename + ", yet invocation of .finishedScript() possibly via .stop() implies there should be no more. Fail!!");
         }
@@ -54,8 +54,8 @@ public interface ReplayMonitor {
             throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded");
         }
 
-        public AssertionError unexpectedInteractionRequest(int counter, String filename) {
-            return makeAssertionError("Replay of script '" + filename + "' hit a problem when interaction " + counter + " sought, but there were no more after " + (counter-1));
+        public AssertionError unexpectedInteractionRequest(int interactionNum, String filename) {
+            return makeAssertionError("Replay of script '" + filename + "' hit a problem when interaction " + interactionNum + " sought, but there were no more after " + (interactionNum -1));
         }
 
         private String methodAndFilePrefix(int interactionNum, String mdMethod, String filename) {

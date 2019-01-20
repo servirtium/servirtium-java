@@ -2,9 +2,9 @@ package com.paulhammant.servirtium;
 
 public interface ServerMonitor {
 
-    default void interactionFinished(int counter, String method, String url) {}
+    default void interactionFinished(int interactionNum, String method, String url) {}
 
-    default void interactionStarted(int counter, String method, String url){}
+    default void interactionStarted(int interactionNum, String method, String url){}
 
     default void unexpectedRequestError(Throwable throwable) {}
 
@@ -14,12 +14,12 @@ public interface ServerMonitor {
     class Console implements ServerMonitor {
 
         @Override
-        public void interactionFinished(int counter, String method, String url) {
-            System.out.println(">> Servirtium >> interaction " + counter + " " + method + " " + url + " DONE");
+        public void interactionFinished(int interactionNum, String method, String url) {
+            System.out.println(">> Servirtium >> interaction " + interactionNum + " " + method + " " + url + " DONE");
         }
 
         @Override
-        public void interactionStarted(int counter, String method, String url) {
+        public void interactionStarted(int interactionNum, String method, String url) {
         }
 
         @Override

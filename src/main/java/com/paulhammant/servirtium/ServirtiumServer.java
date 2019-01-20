@@ -17,15 +17,13 @@ import java.util.Scanner;
 
 public class ServirtiumServer {
 
-    private final int port;
     protected final InteractionManipulations interactionManipulations;
     private Server jettyServer;
     private final RecordOrPlayback recordOrPlayback;
-    private int counter = -1;
+    private int interactionNum = -1;
 
     public ServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
                             InteractionManipulations interactionManipulations, RecordOrPlayback recordOrPlayback) {
-        this.port = port;
         this.interactionManipulations = interactionManipulations;
 
         jettyServer = new Server(port);
@@ -41,7 +39,7 @@ public class ServirtiumServer {
                                HttpServletResponse response)
                     throws IOException, ServletException {
 
-                counter++;
+                interactionNum++;
 
                 String method = request.getMethod();
                 final String url = (request.getRequestURL().toString().startsWith("http://") || request.getRequestURL().toString().startsWith("https://"))
@@ -51,11 +49,11 @@ public class ServirtiumServer {
                 String bodyToReal = "";
                 Map<String, String> headersToReal = new HashMap<>();
 
-                monitor.interactionStarted(counter, method, url);
+                monitor.interactionStarted(interactionNum, method, url);
 
                 try {
 
-                    RecordOrPlayback.Context ctx = recordOrPlayback.newInteraction(method, request.getRequestURI().toString(), counter);
+                    RecordOrPlayback.Context ctx = recordOrPlayback.newInteraction(method, request.getRequestURI().toString(), interactionNum);
                     String contentType = request.getContentType();
                     if (contentType == null) {
                         contentType = "";
@@ -139,7 +137,7 @@ public class ServirtiumServer {
                         }
                     }
 
-                    monitor.interactionFinished(counter, method, url);
+                    monitor.interactionFinished(interactionNum, method, url);
                 } catch (Throwable throwable) {
                     monitor.unexpectedRequestError(throwable);
                     throw throwable; // stick your debugger here
@@ -165,17 +163,17 @@ public class ServirtiumServer {
         return this;
     }
 
-    protected int getCounter() {
-        return counter;
+    protected int getInteractionNum() {
+        return interactionNum;
     }
 
-    protected void resetCounter() {
-        counter = -1;
+    protected void resetInteractionNumber() {
+        interactionNum = -1;
     }
 
 
     public void stop() {
-        recordOrPlayback.finishedScript(getCounter()); // just in case
+        recordOrPlayback.finishedScript(getInteractionNum()); // just in case
         try {
             jettyServer.setStopTimeout(1);
             jettyServer.stop();
@@ -197,6 +195,6 @@ public class ServirtiumServer {
 
 
     public void finishedScript() {
-        recordOrPlayback.finishedScript(getCounter());
+        recordOrPlayback.finishedScript(getInteractionNum());
     }
 }

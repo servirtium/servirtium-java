@@ -73,11 +73,11 @@ public class InteractionRecorder implements RecordOrPlayback {
     }
 
     @Override
-    public Context newInteraction(String method, String path, int counter) {
+    public Context newInteraction(String method, String path, int interactionNum) {
         guardOut();
-        RecordingContext rc = new RecordingContext(counter);
+        RecordingContext rc = new RecordingContext(interactionNum);
 
-        rc.recording.append("## Interaction ").append(counter).append(": ").append(method).append(" ").append(path).append("\n\n");
+        rc.recording.append("## Interaction ").append(interactionNum).append(": ").append(method).append(" ").append(path).append("\n\n");
         return rc;
     }
 
@@ -155,7 +155,7 @@ public class InteractionRecorder implements RecordOrPlayback {
         this.interactions.put(rc.interactionNum, rc.recording.toString());
     }
 
-    public void finishedScript(int counter) {
+    public void finishedScript(int interactionNum) {
         if (this.out != null) {
             int i = 0;
             while (this.interactions.size() >0) {

@@ -71,7 +71,7 @@ public class SubversionInteractionManipulations extends SimpleHeaderInteractionM
     @Override
     public String changeHeaderBackFromReal(int ix, String headerBackFromReal) {
         if (headerBackFromReal.startsWith("DAV:")) {
-            headerBackFromReal = "DAV:" + spaces(ix) + headerBackFromReal.substring(4, headerBackFromReal.length());
+            headerBackFromReal = "DAV:" + spaces(ix) + headerBackFromReal.substring(4);
         }
         return headerBackFromReal;
     }

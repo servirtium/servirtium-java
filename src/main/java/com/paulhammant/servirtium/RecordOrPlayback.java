@@ -37,7 +37,7 @@ import java.util.Map;
 
 public interface RecordOrPlayback {
 
-    void finishedScript(int counter);
+    void finishedScript(int interactionNum);
 
     void setMarkdownScriptFilename(String filename) throws FileNotFoundException;
 
@@ -52,7 +52,7 @@ public interface RecordOrPlayback {
 
     void requestHeaders(Map<String, String> headers, Context ctx);
 
-    Context newInteraction(String method, String path, int counter);
+    Context newInteraction(String method, String path, int interactionNum);
 
     class Context {
 
