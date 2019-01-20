@@ -54,7 +54,7 @@ public class SubversionCheckoutReplayerMain {
 
 
         InteractionReplayingServirtiumServer replayer = new InteractionReplayingServirtiumServer(new ReplayMonitor.Default());
-        NewServirtiumServer servirtiumServer = new NewServirtiumServer(
+        ServirtiumServer servirtiumServer = new ServirtiumServer(
                 new ServerMonitor.Console(),
                 8099, false,
                 new SvnHeaderManipulator("", ""), replayer);

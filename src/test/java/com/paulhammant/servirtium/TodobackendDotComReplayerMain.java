@@ -24,7 +24,7 @@ public class TodobackendDotComReplayerMain {
         InteractionReplayingServirtiumServer replayer = new InteractionReplayingServirtiumServer()
                 .withForgivingOrderOfClientRequestHeaders();
 
-        NewServirtiumServer servirtiumServer = new NewServirtiumServer(new ServerMonitor.Console(),
+        ServirtiumServer servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
                 8099, false,
                 pragma, replayer);
 

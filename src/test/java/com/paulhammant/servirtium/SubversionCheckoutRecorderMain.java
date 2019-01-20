@@ -63,7 +63,7 @@ public class SubversionCheckoutRecorderMain {
                 serverMonitor,
                 new ServiceInteropViaOkHttp(),
                 new SvnHeaderManipulator("", ""));
-        NewServirtiumServer servirtiumServer = new NewServirtiumServer(serverMonitor,
+        ServirtiumServer servirtiumServer = new ServirtiumServer(serverMonitor,
                 8099, false,
                 new SvnHeaderManipulator("", ""), recorder);
 

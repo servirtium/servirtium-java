@@ -42,7 +42,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static com.paulhammant.servirtium.NewServirtiumServer.isText;
+import static com.paulhammant.servirtium.ServirtiumServer.isText;
 
 public class ServiceInteropViaOkHttp implements ServiceInteroperation {
 

@@ -81,7 +81,7 @@ public class SimplePostCentricTests {
             "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}\n" +
             "```\n" +
             "\n";
-    private NewServirtiumServer servirtiumServer;
+    private ServirtiumServer servirtiumServer;
 
 
     @After
@@ -99,7 +99,7 @@ public class SimplePostCentricTests {
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
 
-        servirtiumServer = new NewServirtiumServer(new ServerMonitor.Console(),
+        servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
                 interactionManipulations, recorder);
 
@@ -122,7 +122,7 @@ public class SimplePostCentricTests {
         InteractionReplayingServirtiumServer replayer = new InteractionReplayingServirtiumServer();
         replayer.setPlaybackConversation(EXPECTED);
 
-        servirtiumServer = new NewServirtiumServer(new ServerMonitor.Console(),
+        servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
                 new SimpleHeaderManipulator("http://localhost:8080", "https://postman-echo.com"), replayer);
 

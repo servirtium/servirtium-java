@@ -105,7 +105,7 @@ public class SimpleGetCentricTextTests {
             "```\n" +
             "\n";
 
-    private NewServirtiumServer servirtiumServer;
+    private ServirtiumServer servirtiumServer;
 
     @After
     public void tearDown() {
@@ -120,7 +120,7 @@ public class SimpleGetCentricTextTests {
                 serverMonitor,
                 new ServiceInteropViaOkHttp(),
                 new SvnHeaderManipulator("localhost:8080", "svn.apache.org"));
-        servirtiumServer = new NewServirtiumServer(serverMonitor,
+        servirtiumServer = new ServirtiumServer(serverMonitor,
                 8080, false,
                 new SvnHeaderManipulator("localhost:8080", "svn.apache.org"), recorder);
 
@@ -143,7 +143,7 @@ public class SimpleGetCentricTextTests {
         InteractionReplayingServirtiumServer replayer = new InteractionReplayingServirtiumServer();
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
 
-        servirtiumServer = new NewServirtiumServer(new ServerMonitor.Console(),
+        servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
                 new SvnHeaderManipulator("localhost:8080", "svn.apache.org"), replayer);
 

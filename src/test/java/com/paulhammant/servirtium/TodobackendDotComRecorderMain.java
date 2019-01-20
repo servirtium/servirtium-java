@@ -36,7 +36,7 @@ public class TodobackendDotComRecorderMain {
                 serverMonitor,
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
-        NewServirtiumServer servirtiumServer = new NewServirtiumServer(serverMonitor,
+        ServirtiumServer servirtiumServer = new ServirtiumServer(serverMonitor,
                 8099, false,
                 interactionManipulations, recorder);
 

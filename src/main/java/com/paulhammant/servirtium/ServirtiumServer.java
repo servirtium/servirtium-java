@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class NewServirtiumServer {
+public class ServirtiumServer {
 
     private final int port;
     protected final InteractionManipulations interactionManipulations;
@@ -23,8 +23,8 @@ public class NewServirtiumServer {
     private final RecordOrPlayback recordOrPlayback;
     private int counter = -1;
 
-    public NewServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
-                               InteractionManipulations interactionManipulations, RecordOrPlayback recordOrPlayback) {
+    public ServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
+                            InteractionManipulations interactionManipulations, RecordOrPlayback recordOrPlayback) {
         this.port = port;
         this.interactionManipulations = interactionManipulations;
 
@@ -160,7 +160,7 @@ public class NewServirtiumServer {
                 contentType.startsWith("application/xhtml+xml");
     }
 
-    public NewServirtiumServer startApp() throws Exception {
+    public ServirtiumServer startApp() throws Exception {
         jettyServer.start();
         return this;
     }

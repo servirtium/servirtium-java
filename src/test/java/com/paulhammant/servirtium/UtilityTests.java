@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static com.paulhammant.servirtium.NewServirtiumServer.testName;
+import static com.paulhammant.servirtium.ServirtiumServer.testName;
 import static org.junit.Assert.assertEquals;
 
 public class UtilityTests {

@@ -94,7 +94,7 @@ public class SimpleGetCentricBinaryTests {
             "\n";
 
 
-    private NewServirtiumServer servirtiumServer;
+    private ServirtiumServer servirtiumServer;
     ;
 
     @After
@@ -112,7 +112,7 @@ public class SimpleGetCentricBinaryTests {
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
 
-        servirtiumServer = new NewServirtiumServer(new ServerMonitor.Console(),
+        servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
                 interactionManipulations, recorder);
 
@@ -139,7 +139,7 @@ public class SimpleGetCentricBinaryTests {
                 interactionManipulations
                 .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:"));
 
-        servirtiumServer = new NewServirtiumServer(new ServerMonitor.Console(),
+        servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
                 interactionManipulations, recorder);
 
@@ -219,7 +219,7 @@ public class SimpleGetCentricBinaryTests {
                 .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:")
         );
 
-        servirtiumServer = new NewServirtiumServer(new ServerMonitor.Console(),
+        servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
                 interactionManipulations, recorder);
 
@@ -305,7 +305,7 @@ public class SimpleGetCentricBinaryTests {
         InteractionReplayingServirtiumServer replayer = new InteractionReplayingServirtiumServer();
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
 
-        servirtiumServer = new NewServirtiumServer(new ServerMonitor.Console(),
+        servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
                 interactionManipulations, replayer);
 
