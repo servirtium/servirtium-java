@@ -60,6 +60,8 @@ public class SubversionCheckoutReplayerMain {
         replayer.setMarkdownScriptFilename(CHECKOUT_RECORDER_TEST_MD);
         servirtiumServer.startApp();
 
+        Runtime.getRuntime().addShutdownHook(new Thread(servirtiumServer::stop));
+
 
     }
 

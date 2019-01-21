@@ -31,6 +31,8 @@ public class TodobackendDotComReplayerMain {
         replayer.setMarkdownScriptFilename("src/test/resources/TodobackendDotComServiceRecording.md");
         servirtiumServer.startApp();
 
+        Runtime.getRuntime().addShutdownHook(new Thread(servirtiumServer::stop));
+
     }
 
 }
