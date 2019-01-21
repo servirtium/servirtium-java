@@ -121,20 +121,20 @@ public class ServirtiumServer {
                     }
 
                     // recreate response
-                    ServiceResponse revisedResponse = realResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
+                    realResponse = realResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
 
-                    response.setStatus(revisedResponse.statusCode);
+                    response.setStatus(realResponse.statusCode);
 
-                    interactionsDelegate.recordResponseHeaders(ctx, revisedResponse.headers);
+                    interactionsDelegate.recordResponseHeaders(ctx, realResponse.headers);
 
-                    interactionsDelegate.recordResponseBody(ctx, revisedResponse.body, revisedResponse.statusCode, revisedResponse.contentType);
+                    interactionsDelegate.recordResponseBody(ctx, realResponse.body, realResponse.statusCode, realResponse.contentType);
 
-                    if (revisedResponse.contentType != null) {
-                        response.setContentType(revisedResponse.contentType);
-                        if (revisedResponse.body instanceof String) {
-                            response.getWriter().write((String) revisedResponse.body);
+                    if (realResponse.contentType != null) {
+                        response.setContentType(realResponse.contentType);
+                        if (realResponse.body instanceof String) {
+                            response.getWriter().write((String) realResponse.body);
                         } else {
-                            response.getOutputStream().write((byte[]) revisedResponse.body);
+                            response.getOutputStream().write((byte[]) realResponse.body);
                         }
                     }
 
