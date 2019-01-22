@@ -27,7 +27,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:37 GMT
+Date: Tue, 22 Jan 2019 09:45:08 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -74,11 +74,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:37 GMT
+Date: Tue, 22 Jan 2019 09:45:09 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Content-Length: 1392
+Content-Length: 963
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
@@ -89,7 +89,32 @@ Via: 1.1 vegur
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
 
 ```
-[{"uid":"344f1e17-67ed-4983-ac06-9b0f786be4a6","title":"blah","order":0,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/344f1e17-67ed-4983-ac06-9b0f786be4a6","url":"http://todo-backend-sinatra.herokuapp.com/todos/344f1e17-67ed-4983-ac06-9b0f786be4a6"},{"uid":"c1e72bd6-64a7-4687-96f1-e673e2545f74","title":"blah","order":523,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/c1e72bd6-64a7-4687-96f1-e673e2545f74","url":"http://todo-backend-sinatra.herokuapp.com/todos/c1e72bd6-64a7-4687-96f1-e673e2545f74"},{"uid":"714a0da0-9981-44f8-8db0-ff72c8eae4f4","title":"blah","order":10,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/714a0da0-9981-44f8-8db0-ff72c8eae4f4","url":"http://todo-backend-sinatra.herokuapp.com/todos/714a0da0-9981-44f8-8db0-ff72c8eae4f4"},{"uid":"593bea4e-23ac-4b3c-9ad0-604a443b84d9","title":"blah","order":10,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/593bea4e-23ac-4b3c-9ad0-604a443b84d9","url":"http://todo-backend-sinatra.herokuapp.com/todos/593bea4e-23ac-4b3c-9ad0-604a443b84d9"},{"uid":"700bbab0-29f2-47c0-8929-ac710513d976","title":"a todo","order":0,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/700bbab0-29f2-47c0-8929-ac710513d976","url":"http://todo-backend-sinatra.herokuapp.com/todos/700bbab0-29f2-47c0-8929-ac710513d976"}]
+[
+  {
+    "uid": "b15ed264-1e82-4dd2-abf3-6c8a37824c1e",
+    "title": "blah",
+    "order": 523,
+    "completed": false,
+    "href": "http://todo-backend-sinatra.herokuapp.com/todos/b15ed264-1e82-4dd2-abf3-6c8a37824c1e",
+    "url": "http://todo-backend-sinatra.herokuapp.com/todos/b15ed264-1e82-4dd2-abf3-6c8a37824c1e"
+  },
+  {
+    "uid": "7240dbcd-cfba-46c6-8f85-56f132a26b74",
+    "title": "blah",
+    "order": 95,
+    "completed": false,
+    "href": "http://todo-backend-sinatra.herokuapp.com/todos/7240dbcd-cfba-46c6-8f85-56f132a26b74",
+    "url": "http://todo-backend-sinatra.herokuapp.com/todos/7240dbcd-cfba-46c6-8f85-56f132a26b74"
+  },
+  {
+    "uid": "b87bf849-b2b3-4cc2-a5b9-8744fe53a3a3",
+    "title": "blah",
+    "order": 95,
+    "completed": false,
+    "href": "http://todo-backend-sinatra.herokuapp.com/todos/b87bf849-b2b3-4cc2-a5b9-8744fe53a3a3",
+    "url": "http://todo-backend-sinatra.herokuapp.com/todos/b87bf849-b2b3-4cc2-a5b9-8744fe53a3a3"
+  }
+]
 ```
 
 ## Interaction 2: OPTIONS /todos
@@ -121,7 +146,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:37 GMT
+Date: Tue, 22 Jan 2019 09:45:09 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -171,11 +196,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:38 GMT
+Date: Tue, 22 Jan 2019 09:45:10 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/0d05ab29-256b-4dae-a662-777032aeee66
+Location: http://todo-backend-sinatra.herokuapp.com/todos/71a71cad-0f90-43f8-b676-3af14681b730
 Content-Length: 289
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
@@ -189,10 +214,10 @@ Via: 1.1 vegur
 ```
 {
   "title": "a todo",
-  "uid": "0d05ab29-256b-4dae-a662-777032aeee66",
+  "uid": "71a71cad-0f90-43f8-b676-3af14681b730",
   "completed": false,
-  "href": "http://todo-backend-sinatra.herokuapp.com/todos/0d05ab29-256b-4dae-a662-777032aeee66",
-  "url": "http://todo-backend-sinatra.herokuapp.com/todos/0d05ab29-256b-4dae-a662-777032aeee66"
+  "href": "http://todo-backend-sinatra.herokuapp.com/todos/71a71cad-0f90-43f8-b676-3af14681b730",
+  "url": "http://todo-backend-sinatra.herokuapp.com/todos/71a71cad-0f90-43f8-b676-3af14681b730"
 }
 ```
 
@@ -225,7 +250,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:38 GMT
+Date: Tue, 22 Jan 2019 09:45:10 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -272,7 +297,7 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:38 GMT
+Date: Tue, 22 Jan 2019 09:45:10 GMT
 Content-Length: 0
 Connection: keep-alive
 Access-Control-Allow-Origin: *
@@ -316,7 +341,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:38 GMT
+Date: Tue, 22 Jan 2019 09:45:11 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -363,7 +388,7 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:39 GMT
+Date: Tue, 22 Jan 2019 09:45:12 GMT
 Content-Length: 0
 Connection: keep-alive
 Access-Control-Allow-Origin: *
@@ -407,7 +432,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:39 GMT
+Date: Tue, 22 Jan 2019 09:45:12 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -454,7 +479,7 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:40 GMT
+Date: Tue, 22 Jan 2019 09:45:11 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -501,7 +526,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:40 GMT
+Date: Tue, 22 Jan 2019 09:45:12 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -548,7 +573,7 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:40 GMT
+Date: Tue, 22 Jan 2019 09:45:12 GMT
 Content-Length: 0
 Connection: keep-alive
 Access-Control-Allow-Origin: *
@@ -592,7 +617,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:41 GMT
+Date: Tue, 22 Jan 2019 09:45:12 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -642,11 +667,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:40 GMT
+Date: Tue, 22 Jan 2019 09:45:13 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/d73c10d3-e00b-4bc0-9516-8c7468a821aa
+Location: http://todo-backend-sinatra.herokuapp.com/todos/baab9603-f09a-4ab7-a269-4d8b794cd0f6
 Content-Length: 295
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
@@ -660,10 +685,10 @@ Via: 1.1 vegur
 ```
 {
   "title": "walk the dog",
-  "uid": "d73c10d3-e00b-4bc0-9516-8c7468a821aa",
+  "uid": "baab9603-f09a-4ab7-a269-4d8b794cd0f6",
   "completed": false,
-  "href": "http://todo-backend-sinatra.herokuapp.com/todos/d73c10d3-e00b-4bc0-9516-8c7468a821aa",
-  "url": "http://todo-backend-sinatra.herokuapp.com/todos/d73c10d3-e00b-4bc0-9516-8c7468a821aa"
+  "href": "http://todo-backend-sinatra.herokuapp.com/todos/baab9603-f09a-4ab7-a269-4d8b794cd0f6",
+  "url": "http://todo-backend-sinatra.herokuapp.com/todos/baab9603-f09a-4ab7-a269-4d8b794cd0f6"
 }
 ```
 
@@ -696,7 +721,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:40 GMT
+Date: Tue, 22 Jan 2019 09:45:13 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -743,11 +768,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:41 GMT
+Date: Tue, 22 Jan 2019 09:45:13 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Content-Length: 286
+Content-Length: 329
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
@@ -758,7 +783,16 @@ Via: 1.1 vegur
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
 
 ```
-[{"uid":"d73c10d3-e00b-4bc0-9516-8c7468a821aa","title":"walk the dog","order":0,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/d73c10d3-e00b-4bc0-9516-8c7468a821aa","url":"http://todo-backend-sinatra.herokuapp.com/todos/d73c10d3-e00b-4bc0-9516-8c7468a821aa"}]
+[
+  {
+    "uid": "baab9603-f09a-4ab7-a269-4d8b794cd0f6",
+    "title": "walk the dog",
+    "order": 0,
+    "completed": false,
+    "href": "http://todo-backend-sinatra.herokuapp.com/todos/baab9603-f09a-4ab7-a269-4d8b794cd0f6",
+    "url": "http://todo-backend-sinatra.herokuapp.com/todos/baab9603-f09a-4ab7-a269-4d8b794cd0f6"
+  }
+]
 ```
 
 ## Interaction 16: OPTIONS /todos
@@ -790,7 +824,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:42 GMT
+Date: Tue, 22 Jan 2019 09:45:13 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -837,7 +871,7 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:41 GMT
+Date: Tue, 22 Jan 2019 09:45:14 GMT
 Content-Length: 0
 Connection: keep-alive
 Access-Control-Allow-Origin: *
@@ -881,7 +915,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:41 GMT
+Date: Tue, 22 Jan 2019 09:45:14 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -931,11 +965,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:42 GMT
+Date: Tue, 22 Jan 2019 09:45:14 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/d480387b-b855-4c7f-8771-b9611f983b7f
+Location: http://todo-backend-sinatra.herokuapp.com/todos/05ab5c18-fd7d-4c66-a69d-46bec4c7320a
 Content-Length: 287
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
@@ -949,10 +983,10 @@ Via: 1.1 vegur
 ```
 {
   "title": "blah",
-  "uid": "d480387b-b855-4c7f-8771-b9611f983b7f",
+  "uid": "05ab5c18-fd7d-4c66-a69d-46bec4c7320a",
   "completed": false,
-  "href": "http://todo-backend-sinatra.herokuapp.com/todos/d480387b-b855-4c7f-8771-b9611f983b7f",
-  "url": "http://todo-backend-sinatra.herokuapp.com/todos/d480387b-b855-4c7f-8771-b9611f983b7f"
+  "href": "http://todo-backend-sinatra.herokuapp.com/todos/05ab5c18-fd7d-4c66-a69d-46bec4c7320a",
+  "url": "http://todo-backend-sinatra.herokuapp.com/todos/05ab5c18-fd7d-4c66-a69d-46bec4c7320a"
 }
 ```
 
@@ -985,7 +1019,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:43 GMT
+Date: Tue, 22 Jan 2019 09:45:15 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -1032,11 +1066,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:43 GMT
+Date: Tue, 22 Jan 2019 09:45:14 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Content-Length: 278
+Content-Length: 321
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
@@ -1047,7 +1081,16 @@ Via: 1.1 vegur
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
 
 ```
-[{"uid":"d480387b-b855-4c7f-8771-b9611f983b7f","title":"blah","order":0,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/d480387b-b855-4c7f-8771-b9611f983b7f","url":"http://todo-backend-sinatra.herokuapp.com/todos/d480387b-b855-4c7f-8771-b9611f983b7f"}]
+[
+  {
+    "uid": "05ab5c18-fd7d-4c66-a69d-46bec4c7320a",
+    "title": "blah",
+    "order": 0,
+    "completed": false,
+    "href": "http://todo-backend-sinatra.herokuapp.com/todos/05ab5c18-fd7d-4c66-a69d-46bec4c7320a",
+    "url": "http://todo-backend-sinatra.herokuapp.com/todos/05ab5c18-fd7d-4c66-a69d-46bec4c7320a"
+  }
+]
 ```
 
 ## Interaction 22: OPTIONS /todos
@@ -1079,7 +1122,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:43 GMT
+Date: Tue, 22 Jan 2019 09:45:15 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -1126,7 +1169,7 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:43 GMT
+Date: Tue, 22 Jan 2019 09:45:15 GMT
 Content-Length: 0
 Connection: keep-alive
 Access-Control-Allow-Origin: *
@@ -1170,7 +1213,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:43 GMT
+Date: Tue, 22 Jan 2019 09:45:15 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -1220,11 +1263,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:43 GMT
+Date: Tue, 22 Jan 2019 09:45:16 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/7229c3b0-2267-4faf-9103-fff0b4d0cd5a
+Location: http://todo-backend-sinatra.herokuapp.com/todos/d3808825-fd94-4fbb-a5c0-69a8879f1957
 Content-Length: 287
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
@@ -1238,10 +1281,10 @@ Via: 1.1 vegur
 ```
 {
   "title": "blah",
-  "uid": "7229c3b0-2267-4faf-9103-fff0b4d0cd5a",
+  "uid": "d3808825-fd94-4fbb-a5c0-69a8879f1957",
   "completed": false,
-  "href": "http://todo-backend-sinatra.herokuapp.com/todos/7229c3b0-2267-4faf-9103-fff0b4d0cd5a",
-  "url": "http://todo-backend-sinatra.herokuapp.com/todos/7229c3b0-2267-4faf-9103-fff0b4d0cd5a"
+  "href": "http://todo-backend-sinatra.herokuapp.com/todos/d3808825-fd94-4fbb-a5c0-69a8879f1957",
+  "url": "http://todo-backend-sinatra.herokuapp.com/todos/d3808825-fd94-4fbb-a5c0-69a8879f1957"
 }
 ```
 
@@ -1274,7 +1317,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:43 GMT
+Date: Tue, 22 Jan 2019 09:45:16 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -1321,11 +1364,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:44 GMT
+Date: Tue, 22 Jan 2019 09:45:16 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Content-Length: 278
+Content-Length: 321
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
@@ -1336,7 +1379,16 @@ Via: 1.1 vegur
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
 
 ```
-[{"uid":"7229c3b0-2267-4faf-9103-fff0b4d0cd5a","title":"blah","order":0,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/7229c3b0-2267-4faf-9103-fff0b4d0cd5a","url":"http://todo-backend-sinatra.herokuapp.com/todos/7229c3b0-2267-4faf-9103-fff0b4d0cd5a"}]
+[
+  {
+    "uid": "d3808825-fd94-4fbb-a5c0-69a8879f1957",
+    "title": "blah",
+    "order": 0,
+    "completed": false,
+    "href": "http://todo-backend-sinatra.herokuapp.com/todos/d3808825-fd94-4fbb-a5c0-69a8879f1957",
+    "url": "http://todo-backend-sinatra.herokuapp.com/todos/d3808825-fd94-4fbb-a5c0-69a8879f1957"
+  }
+]
 ```
 
 ## Interaction 28: OPTIONS /todos
@@ -1368,7 +1420,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:44 GMT
+Date: Tue, 22 Jan 2019 09:45:17 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -1415,7 +1467,7 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:45 GMT
+Date: Tue, 22 Jan 2019 09:45:16 GMT
 Content-Length: 0
 Connection: keep-alive
 Access-Control-Allow-Origin: *
@@ -1459,7 +1511,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:45 GMT
+Date: Tue, 22 Jan 2019 09:45:17 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -1509,11 +1561,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:45 GMT
+Date: Tue, 22 Jan 2019 09:45:17 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/bd9051cb-b336-4bd1-9f1b-023bbfc9ceb0
+Location: http://todo-backend-sinatra.herokuapp.com/todos/222612c3-18f8-4ac9-8643-e38da86528b2
 Content-Length: 290
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
@@ -1527,10 +1579,10 @@ Via: 1.1 vegur
 ```
 {
   "title": "my todo",
-  "uid": "bd9051cb-b336-4bd1-9f1b-023bbfc9ceb0",
+  "uid": "222612c3-18f8-4ac9-8643-e38da86528b2",
   "completed": false,
-  "href": "http://todo-backend-sinatra.herokuapp.com/todos/bd9051cb-b336-4bd1-9f1b-023bbfc9ceb0",
-  "url": "http://todo-backend-sinatra.herokuapp.com/todos/bd9051cb-b336-4bd1-9f1b-023bbfc9ceb0"
+  "href": "http://todo-backend-sinatra.herokuapp.com/todos/222612c3-18f8-4ac9-8643-e38da86528b2",
+  "url": "http://todo-backend-sinatra.herokuapp.com/todos/222612c3-18f8-4ac9-8643-e38da86528b2"
 }
 ```
 
@@ -1563,7 +1615,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:46 GMT
+Date: Tue, 22 Jan 2019 09:45:18 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -1610,7 +1662,7 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:47 GMT
+Date: Tue, 22 Jan 2019 09:45:19 GMT
 Content-Length: 0
 Connection: keep-alive
 Access-Control-Allow-Origin: *
@@ -1654,7 +1706,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:47 GMT
+Date: Tue, 22 Jan 2019 09:45:19 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -1702,7 +1754,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:47 GMT
+Date: Tue, 22 Jan 2019 09:45:19 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -1752,11 +1804,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:47 GMT
+Date: Tue, 22 Jan 2019 09:45:19 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/18748799-cea4-4a4e-a642-e0355e8b1978
+Location: http://todo-backend-sinatra.herokuapp.com/todos/a26415e6-e295-4a31-9d07-77d0dd9204d7
 Content-Length: 297
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
@@ -1770,10 +1822,10 @@ Via: 1.1 vegur
 ```
 {
   "title": "todo the first",
-  "uid": "18748799-cea4-4a4e-a642-e0355e8b1978",
+  "uid": "a26415e6-e295-4a31-9d07-77d0dd9204d7",
   "completed": false,
-  "href": "http://todo-backend-sinatra.herokuapp.com/todos/18748799-cea4-4a4e-a642-e0355e8b1978",
-  "url": "http://todo-backend-sinatra.herokuapp.com/todos/18748799-cea4-4a4e-a642-e0355e8b1978"
+  "href": "http://todo-backend-sinatra.herokuapp.com/todos/a26415e6-e295-4a31-9d07-77d0dd9204d7",
+  "url": "http://todo-backend-sinatra.herokuapp.com/todos/a26415e6-e295-4a31-9d07-77d0dd9204d7"
 }
 ```
 
@@ -1808,11 +1860,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:47 GMT
+Date: Tue, 22 Jan 2019 09:45:20 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/686cbfea-7b82-46e6-8f20-cc50bba7cffe
+Location: http://todo-backend-sinatra.herokuapp.com/todos/e6b1989c-4191-435d-a612-f1f41d0632da
 Content-Length: 298
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
@@ -1826,10 +1878,10 @@ Via: 1.1 vegur
 ```
 {
   "title": "todo the second",
-  "uid": "686cbfea-7b82-46e6-8f20-cc50bba7cffe",
+  "uid": "e6b1989c-4191-435d-a612-f1f41d0632da",
   "completed": false,
-  "href": "http://todo-backend-sinatra.herokuapp.com/todos/686cbfea-7b82-46e6-8f20-cc50bba7cffe",
-  "url": "http://todo-backend-sinatra.herokuapp.com/todos/686cbfea-7b82-46e6-8f20-cc50bba7cffe"
+  "href": "http://todo-backend-sinatra.herokuapp.com/todos/e6b1989c-4191-435d-a612-f1f41d0632da",
+  "url": "http://todo-backend-sinatra.herokuapp.com/todos/e6b1989c-4191-435d-a612-f1f41d0632da"
 }
 ```
 
@@ -1862,7 +1914,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:47 GMT
+Date: Tue, 22 Jan 2019 09:45:19 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -1909,11 +1961,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:48 GMT
+Date: Tue, 22 Jan 2019 09:45:20 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Content-Length: 576
+Content-Length: 661
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
@@ -1924,7 +1976,24 @@ Via: 1.1 vegur
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
 
 ```
-[{"uid":"18748799-cea4-4a4e-a642-e0355e8b1978","title":"todo the first","order":0,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/18748799-cea4-4a4e-a642-e0355e8b1978","url":"http://todo-backend-sinatra.herokuapp.com/todos/18748799-cea4-4a4e-a642-e0355e8b1978"},{"uid":"686cbfea-7b82-46e6-8f20-cc50bba7cffe","title":"todo the second","order":0,"completed":false,"href":"http://todo-backend-sinatra.herokuapp.com/todos/686cbfea-7b82-46e6-8f20-cc50bba7cffe","url":"http://todo-backend-sinatra.herokuapp.com/todos/686cbfea-7b82-46e6-8f20-cc50bba7cffe"}]
+[
+  {
+    "uid": "a26415e6-e295-4a31-9d07-77d0dd9204d7",
+    "title": "todo the first",
+    "order": 0,
+    "completed": false,
+    "href": "http://todo-backend-sinatra.herokuapp.com/todos/a26415e6-e295-4a31-9d07-77d0dd9204d7",
+    "url": "http://todo-backend-sinatra.herokuapp.com/todos/a26415e6-e295-4a31-9d07-77d0dd9204d7"
+  },
+  {
+    "uid": "e6b1989c-4191-435d-a612-f1f41d0632da",
+    "title": "todo the second",
+    "order": 0,
+    "completed": false,
+    "href": "http://todo-backend-sinatra.herokuapp.com/todos/e6b1989c-4191-435d-a612-f1f41d0632da",
+    "url": "http://todo-backend-sinatra.herokuapp.com/todos/e6b1989c-4191-435d-a612-f1f41d0632da"
+  }
+]
 ```
 
 ## Interaction 40: OPTIONS /todos
@@ -1956,7 +2025,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:48 GMT
+Date: Tue, 22 Jan 2019 09:45:21 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -2003,7 +2072,7 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:48 GMT
+Date: Tue, 22 Jan 2019 09:45:20 GMT
 Content-Length: 0
 Connection: keep-alive
 Access-Control-Allow-Origin: *
@@ -2047,7 +2116,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:48 GMT
+Date: Tue, 22 Jan 2019 09:45:21 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -2097,11 +2166,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:49 GMT
+Date: Tue, 22 Jan 2019 09:45:21 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/08c499df-2164-43a3-a1ea-4c0230d58604
+Location: http://todo-backend-sinatra.herokuapp.com/todos/d87e265e-3b74-404a-9a0a-f6759e82f397
 Content-Length: 296
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
@@ -2115,10 +2184,10 @@ Via: 1.1 vegur
 ```
 {
   "title": "initial title",
-  "uid": "08c499df-2164-43a3-a1ea-4c0230d58604",
+  "uid": "d87e265e-3b74-404a-9a0a-f6759e82f397",
   "completed": false,
-  "href": "http://todo-backend-sinatra.herokuapp.com/todos/08c499df-2164-43a3-a1ea-4c0230d58604",
-  "url": "http://todo-backend-sinatra.herokuapp.com/todos/08c499df-2164-43a3-a1ea-4c0230d58604"
+  "href": "http://todo-backend-sinatra.herokuapp.com/todos/d87e265e-3b74-404a-9a0a-f6759e82f397",
+  "url": "http://todo-backend-sinatra.herokuapp.com/todos/d87e265e-3b74-404a-9a0a-f6759e82f397"
 }
 ```
 
@@ -2151,7 +2220,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:50 GMT
+Date: Tue, 22 Jan 2019 09:45:21 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -2198,7 +2267,7 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:50 GMT
+Date: Tue, 22 Jan 2019 09:45:22 GMT
 Content-Length: 0
 Connection: keep-alive
 Access-Control-Allow-Origin: *
@@ -2242,7 +2311,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:50 GMT
+Date: Tue, 22 Jan 2019 09:45:22 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -2292,11 +2361,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:51 GMT
+Date: Tue, 22 Jan 2019 09:45:22 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/b27aaa98-c618-4659-9f2d-ef854eef317d
+Location: http://todo-backend-sinatra.herokuapp.com/todos/f475a1da-bbe2-4741-b1d2-79ed4a92f0d4
 Content-Length: 287
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
@@ -2310,10 +2379,10 @@ Via: 1.1 vegur
 ```
 {
   "title": "blah",
-  "uid": "b27aaa98-c618-4659-9f2d-ef854eef317d",
+  "uid": "f475a1da-bbe2-4741-b1d2-79ed4a92f0d4",
   "completed": false,
-  "href": "http://todo-backend-sinatra.herokuapp.com/todos/b27aaa98-c618-4659-9f2d-ef854eef317d",
-  "url": "http://todo-backend-sinatra.herokuapp.com/todos/b27aaa98-c618-4659-9f2d-ef854eef317d"
+  "href": "http://todo-backend-sinatra.herokuapp.com/todos/f475a1da-bbe2-4741-b1d2-79ed4a92f0d4",
+  "url": "http://todo-backend-sinatra.herokuapp.com/todos/f475a1da-bbe2-4741-b1d2-79ed4a92f0d4"
 }
 ```
 
@@ -2346,7 +2415,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:51 GMT
+Date: Tue, 22 Jan 2019 09:45:23 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -2393,7 +2462,7 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:51 GMT
+Date: Tue, 22 Jan 2019 09:45:24 GMT
 Content-Length: 0
 Connection: keep-alive
 Access-Control-Allow-Origin: *
@@ -2437,7 +2506,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:52 GMT
+Date: Tue, 22 Jan 2019 09:45:24 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -2487,11 +2556,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:51 GMT
+Date: Tue, 22 Jan 2019 09:45:24 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/f2bc5d9d-7d48-43b5-b9e5-680e17a9e7a0
+Location: http://todo-backend-sinatra.herokuapp.com/todos/34eb6eaf-e792-45d0-8044-e27201500587
 Content-Length: 287
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
@@ -2505,10 +2574,10 @@ Via: 1.1 vegur
 ```
 {
   "title": "blah",
-  "uid": "f2bc5d9d-7d48-43b5-b9e5-680e17a9e7a0",
+  "uid": "34eb6eaf-e792-45d0-8044-e27201500587",
   "completed": false,
-  "href": "http://todo-backend-sinatra.herokuapp.com/todos/f2bc5d9d-7d48-43b5-b9e5-680e17a9e7a0",
-  "url": "http://todo-backend-sinatra.herokuapp.com/todos/f2bc5d9d-7d48-43b5-b9e5-680e17a9e7a0"
+  "href": "http://todo-backend-sinatra.herokuapp.com/todos/34eb6eaf-e792-45d0-8044-e27201500587",
+  "url": "http://todo-backend-sinatra.herokuapp.com/todos/34eb6eaf-e792-45d0-8044-e27201500587"
 }
 ```
 
@@ -2541,7 +2610,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:52 GMT
+Date: Tue, 22 Jan 2019 09:45:25 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -2588,11 +2657,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:52 GMT
+Date: Tue, 22 Jan 2019 09:45:25 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Content-Length: 286
+Content-Length: 329
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
@@ -2603,7 +2672,16 @@ Via: 1.1 vegur
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
 
 ```
-[{"uid":"f2bc5d9d-7d48-43b5-b9e5-680e17a9e7a0","title":"changed title","order":0,"completed":true,"href":"http://todo-backend-sinatra.herokuapp.com/todos/f2bc5d9d-7d48-43b5-b9e5-680e17a9e7a0","url":"http://todo-backend-sinatra.herokuapp.com/todos/f2bc5d9d-7d48-43b5-b9e5-680e17a9e7a0"}]
+[
+  {
+    "uid": "34eb6eaf-e792-45d0-8044-e27201500587",
+    "title": "changed title",
+    "order": 0,
+    "completed": true,
+    "href": "http://todo-backend-sinatra.herokuapp.com/todos/34eb6eaf-e792-45d0-8044-e27201500587",
+    "url": "http://todo-backend-sinatra.herokuapp.com/todos/34eb6eaf-e792-45d0-8044-e27201500587"
+  }
+]
 ```
 
 ## Interaction 54: OPTIONS /todos
@@ -2635,7 +2713,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:52 GMT
+Date: Tue, 22 Jan 2019 09:45:25 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -2682,7 +2760,7 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:53 GMT
+Date: Tue, 22 Jan 2019 09:45:26 GMT
 Content-Length: 0
 Connection: keep-alive
 Access-Control-Allow-Origin: *
@@ -2726,7 +2804,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:53 GMT
+Date: Tue, 22 Jan 2019 09:45:26 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -2776,11 +2854,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:53 GMT
+Date: Tue, 22 Jan 2019 09:45:27 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/e2a187a2-d4eb-4e99-8175-3dfd1a0dc82e
+Location: http://todo-backend-sinatra.herokuapp.com/todos/4b661c7b-b17f-4651-a7dc-94f9895f119d
 Content-Length: 287
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
@@ -2794,10 +2872,10 @@ Via: 1.1 vegur
 ```
 {
   "title": "blah",
-  "uid": "e2a187a2-d4eb-4e99-8175-3dfd1a0dc82e",
+  "uid": "4b661c7b-b17f-4651-a7dc-94f9895f119d",
   "completed": false,
-  "href": "http://todo-backend-sinatra.herokuapp.com/todos/e2a187a2-d4eb-4e99-8175-3dfd1a0dc82e",
-  "url": "http://todo-backend-sinatra.herokuapp.com/todos/e2a187a2-d4eb-4e99-8175-3dfd1a0dc82e"
+  "href": "http://todo-backend-sinatra.herokuapp.com/todos/4b661c7b-b17f-4651-a7dc-94f9895f119d",
+  "url": "http://todo-backend-sinatra.herokuapp.com/todos/4b661c7b-b17f-4651-a7dc-94f9895f119d"
 }
 ```
 
@@ -2830,7 +2908,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:54 GMT
+Date: Tue, 22 Jan 2019 09:45:27 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -2877,7 +2955,7 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:54 GMT
+Date: Tue, 22 Jan 2019 09:45:28 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -2924,7 +3002,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:54 GMT
+Date: Tue, 22 Jan 2019 09:45:28 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -2975,11 +3053,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:55 GMT
+Date: Tue, 22 Jan 2019 09:45:28 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/b15ed264-1e82-4dd2-abf3-6c8a37824c1e
+Location: http://todo-backend-sinatra.herokuapp.com/todos/13fb2abe-43a2-4d3c-aaa7-84e118677bf6
 Content-Length: 303
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
@@ -2994,10 +3072,10 @@ Via: 1.1 vegur
 {
   "title": "blah",
   "order": 523,
-  "uid": "b15ed264-1e82-4dd2-abf3-6c8a37824c1e",
+  "uid": "13fb2abe-43a2-4d3c-aaa7-84e118677bf6",
   "completed": false,
-  "href": "http://todo-backend-sinatra.herokuapp.com/todos/b15ed264-1e82-4dd2-abf3-6c8a37824c1e",
-  "url": "http://todo-backend-sinatra.herokuapp.com/todos/b15ed264-1e82-4dd2-abf3-6c8a37824c1e"
+  "href": "http://todo-backend-sinatra.herokuapp.com/todos/13fb2abe-43a2-4d3c-aaa7-84e118677bf6",
+  "url": "http://todo-backend-sinatra.herokuapp.com/todos/13fb2abe-43a2-4d3c-aaa7-84e118677bf6"
 }
 ```
 
@@ -3030,7 +3108,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:55 GMT
+Date: Tue, 22 Jan 2019 09:45:28 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -3081,11 +3159,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:55 GMT
+Date: Tue, 22 Jan 2019 09:45:28 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/7240dbcd-cfba-46c6-8f85-56f132a26b74
+Location: http://todo-backend-sinatra.herokuapp.com/todos/86a62dda-5c14-4d7d-927f-38a211d005b8
 Content-Length: 302
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
@@ -3100,10 +3178,10 @@ Via: 1.1 vegur
 {
   "order": 10,
   "title": "blah",
-  "uid": "7240dbcd-cfba-46c6-8f85-56f132a26b74",
+  "uid": "86a62dda-5c14-4d7d-927f-38a211d005b8",
   "completed": false,
-  "href": "http://todo-backend-sinatra.herokuapp.com/todos/7240dbcd-cfba-46c6-8f85-56f132a26b74",
-  "url": "http://todo-backend-sinatra.herokuapp.com/todos/7240dbcd-cfba-46c6-8f85-56f132a26b74"
+  "href": "http://todo-backend-sinatra.herokuapp.com/todos/86a62dda-5c14-4d7d-927f-38a211d005b8",
+  "url": "http://todo-backend-sinatra.herokuapp.com/todos/86a62dda-5c14-4d7d-927f-38a211d005b8"
 }
 ```
 
@@ -3136,7 +3214,7 @@ Accept-Language: en-US,en;q=0.5
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:56 GMT
+Date: Tue, 22 Jan 2019 09:45:29 GMT
 Connection: close
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
@@ -3187,11 +3265,11 @@ Content-Type: application/json
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 22 Jan 2019 09:30:56 GMT
+Date: Tue, 22 Jan 2019 09:45:30 GMT
 Connection: keep-alive
 Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/b87bf849-b2b3-4cc2-a5b9-8744fe53a3a3
+Location: http://todo-backend-sinatra.herokuapp.com/todos/62dc03cf-a572-4b99-ac49-c26dc02ef6b7
 Content-Length: 302
 X-Xss-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
@@ -3206,10 +3284,10 @@ Via: 1.1 vegur
 {
   "order": 10,
   "title": "blah",
-  "uid": "b87bf849-b2b3-4cc2-a5b9-8744fe53a3a3",
+  "uid": "62dc03cf-a572-4b99-ac49-c26dc02ef6b7",
   "completed": false,
-  "href": "http://todo-backend-sinatra.herokuapp.com/todos/b87bf849-b2b3-4cc2-a5b9-8744fe53a3a3",
-  "url": "http://todo-backend-sinatra.herokuapp.com/todos/b87bf849-b2b3-4cc2-a5b9-8744fe53a3a3"
+  "href": "http://todo-backend-sinatra.herokuapp.com/todos/62dc03cf-a572-4b99-ac49-c26dc02ef6b7",
+  "url": "http://todo-backend-sinatra.herokuapp.com/todos/62dc03cf-a572-4b99-ac49-c26dc02ef6b7"
 }
 ```
 

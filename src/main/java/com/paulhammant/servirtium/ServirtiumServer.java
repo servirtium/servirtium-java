@@ -1,5 +1,6 @@
 package com.paulhammant.servirtium;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import org.eclipse.jetty.server.Server;
@@ -231,12 +232,14 @@ public class ServirtiumServer {
     }
 
     private String maybePrettifyBody(String bodyToReal) {
+        final Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
-
-            return new GsonBuilder()
-                    .setPrettyPrinting().create()
-                    .toJson(new JsonParser().parse(bodyToReal).getAsJsonObject());
+            return gson.toJson(new JsonParser().parse(bodyToReal).getAsJsonObject());
         } catch (Exception e) {
+        }
+        try {
+            return gson.toJson(new JsonParser().parse(bodyToReal).getAsJsonArray());
+        } catch (Exception e2) {
         }
         return bodyToReal;
     }
