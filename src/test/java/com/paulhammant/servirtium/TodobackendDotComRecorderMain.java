@@ -37,7 +37,8 @@ public class TodobackendDotComRecorderMain {
                 interactionManipulations);
         ServirtiumServer servirtiumServer = new ServirtiumServer(serverMonitor,
                 8099, false,
-                interactionManipulations, recorder);
+                interactionManipulations, recorder)
+                .withPrettyPrintedTextBodies();
 
         recorder.setMarkdownScriptFilename("src/test/resources/TodobackendDotComServiceRecording.md");
         servirtiumServer.startApp();

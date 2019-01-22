@@ -77,7 +77,9 @@ public class ServirtiumServer {
                             try (Scanner scanner = new Scanner(is, characterEncoding)) {
                                 bodyToReal = scanner.useDelimiter("\\A").next();
                             }
-                            bodyToReal = maybePrettifyBody(bodyToReal);
+                            if (pretty) {
+                                bodyToReal = maybePrettifyBody(bodyToReal);
+                            }
                         } else {
                             byte[] targetArray = new byte[is.available()];
                             is.read(targetArray);
@@ -117,6 +119,34 @@ public class ServirtiumServer {
                         }
                     }
                     interactionManipulations.changeAllHeadersBackFromReal(newHeaders);
+
+                    // recreate response
+
+                    response.setStatus(realResponse.statusCode);
+
+                    if (realResponse.body instanceof String) {
+                        if (pretty) {
+                            String body = maybePrettifyBody((String) realResponse.body);
+                            if (!body.equals(realResponse.body)) {
+//                                realResponse.headers
+                                realResponse = realResponse.withRevisedBody(body);
+                                ArrayList<String> tmp = new ArrayList<>();
+                                for (String header : newHeaders) {
+                                    if (header.startsWith("Content-Length")) {
+                                        tmp.add("Content-Length: " + body.length());
+                                    } else {
+                                        tmp.add(header);
+                                    }
+                                }
+                                newHeaders = tmp;
+
+                            }
+
+                        }
+                    }
+
+                    realResponse = realResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
+
                     for (String header : newHeaders) {
                         int ix = header.indexOf(": ");
                         String hdrKey = header.substring(0, ix);
@@ -124,16 +154,7 @@ public class ServirtiumServer {
                         response.setHeader(hdrKey, hdrVal);
                     }
 
-                    // recreate response
-                    realResponse = realResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
-
-                    response.setStatus(realResponse.statusCode);
-
                     interactionsDelegate.recordResponseHeaders(ctx, realResponse.headers);
-
-                    if (realResponse.body instanceof String) {
-                        realResponse = realResponse.withRevisedBody(maybePrettifyBody((String)realResponse.body));
-                    }
 
                     interactionsDelegate.recordResponseBody(ctx, realResponse.body, realResponse.statusCode, realResponse.contentType);
 
@@ -210,23 +231,15 @@ public class ServirtiumServer {
     }
 
     private String maybePrettifyBody(String bodyToReal) {
-        if (pretty) {
-            try {
+        try {
 
-                return new GsonBuilder()
-                        .setPrettyPrinting().create()
-                        .toJson(new JsonParser().parse(bodyToReal).getAsJsonObject());
-            } catch (Exception e) {
-            }
+            return new GsonBuilder()
+                    .setPrettyPrinting().create()
+                    .toJson(new JsonParser().parse(bodyToReal).getAsJsonObject());
+        } catch (Exception e) {
         }
         return bodyToReal;
     }
 
-    public static String toPrettyFormat(String jsonString) {
-
-        return new GsonBuilder()
-                .setPrettyPrinting().create()
-                .toJson(new JsonParser().parse(jsonString).getAsJsonObject());
-    }
 
 }
