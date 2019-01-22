@@ -30,6 +30,8 @@
 */
 package com.paulhammant.servirtium;
 
+import org.hamcrest.core.IsEqual;
+
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -39,6 +41,9 @@ import java.util.List;
 import java.util.Map;
 
 import static java.nio.file.Files.readAllBytes;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
+import static org.hamcrest.core.IsEqual.equalTo;
 
 public class InteractionsReplayer implements InteractionsDelegate {
 
@@ -156,9 +161,15 @@ public class InteractionsReplayer implements InteractionsDelegate {
             String contentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
 
             // TODO remove trim()
-            if (!this.reorderMaybe(headersReceived).equals(reorderMaybe(rc.headers.trim()))) {
-                monitor.headersFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename);
+            final String[] prevRecorded = this.reorderMaybe(headersReceived).split("\n");
+            final String[] current = reorderMaybe(rc.headers.trim()).split("\n");
+            try {
+                assertThat(current, arrayContainingInAnyOrder(prevRecorded));
+            } catch (AssertionError e) {
+                String msg = e.getMessage();
+                monitor.headersFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename, msg);
             }
+
             String bodyReceived = getCodeBlock(rc);
             if (!rc.bodyToReal.equals(bodyReceived)) {
                 monitor.bodyFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename);

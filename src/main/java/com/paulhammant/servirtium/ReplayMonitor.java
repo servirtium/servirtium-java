@@ -12,7 +12,7 @@ public interface ReplayMonitor {
 
     void markdownSectionHeadingMissing(int interaction, String HEADERS_SENT_TO_REAL_SERVER, String filename);
 
-    void headersFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename);
+    void headersFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String msg);
 
     void bodyFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename);
 
@@ -42,8 +42,10 @@ public interface ReplayMonitor {
             throw makeAssertionError("Expected '" + HEADERS_SENT_TO_REAL_SERVER + "' for interaction #" + interaction + " in " + filename + ", but it was not there");
         }
 
-        public void headersFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename) {
-            throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename) + ", headers from the client that should be sent to real server are not the same as those previously recorded");
+        public void headersFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String msg) {
+            throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename)
+                    + ", headers from the client that should be sent to real server are not the same as those previously recorded"
+                    + ", Hamcrest message: " + msg);
         }
 
         public void bodyFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename) {
