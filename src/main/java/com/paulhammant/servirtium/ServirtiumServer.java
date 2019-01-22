@@ -1,5 +1,7 @@
 package com.paulhammant.servirtium;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
@@ -21,6 +23,7 @@ public class ServirtiumServer {
     private Server jettyServer;
     private final InteractionsDelegate interactionsDelegate;
     private int interactionNum = -1;
+    private boolean pretty = false;
 
     public ServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
                             InteractionManipulations interactionManipulations, InteractionsDelegate interactionsDelegate) {
@@ -74,6 +77,7 @@ public class ServirtiumServer {
                             try (Scanner scanner = new Scanner(is, characterEncoding)) {
                                 bodyToReal = scanner.useDelimiter("\\A").next();
                             }
+                            bodyToReal = maybePrettifyBody(bodyToReal);
                         } else {
                             byte[] targetArray = new byte[is.available()];
                             is.read(targetArray);
@@ -127,6 +131,10 @@ public class ServirtiumServer {
 
                     interactionsDelegate.recordResponseHeaders(ctx, realResponse.headers);
 
+                    if (realResponse.body instanceof String) {
+                        realResponse = realResponse.withRevisedBody(maybePrettifyBody((String)realResponse.body));
+                    }
+
                     interactionsDelegate.recordResponseBody(ctx, realResponse.body, realResponse.statusCode, realResponse.contentType);
 
                     if (realResponse.contentType != null) {
@@ -148,6 +156,11 @@ public class ServirtiumServer {
                 }
             }
         });
+    }
+
+    public ServirtiumServer withPrettyPrintedTextBodies() {
+        pretty = true;
+        return this;
     }
 
     public static boolean isText(String contentType) {
@@ -195,4 +208,25 @@ public class ServirtiumServer {
     public void finishedScript() {
         interactionsDelegate.finishedScript(getInteractionNum());
     }
+
+    private String maybePrettifyBody(String bodyToReal) {
+        if (pretty) {
+            try {
+
+                return new GsonBuilder()
+                        .setPrettyPrinting().create()
+                        .toJson(new JsonParser().parse(bodyToReal).getAsJsonObject());
+            } catch (Exception e) {
+            }
+        }
+        return bodyToReal;
+    }
+
+    public static String toPrettyFormat(String jsonString) {
+
+        return new GsonBuilder()
+                .setPrettyPrinting().create()
+                .toJson(new JsonParser().parse(jsonString).getAsJsonObject());
+    }
+
 }

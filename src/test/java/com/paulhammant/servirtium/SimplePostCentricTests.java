@@ -51,7 +51,7 @@ public class SimplePostCentricTests {
             "Accept: */*\n" +
             "User-Agent: RestAssured\n" +
             "Connection: keep-alive\n" +
-            "Host: localhost:8080\n" +
+            "Host: postman-echo.com\n" +
             "Accept-Encoding: gzip,deflate\n" +
             "Content-Length: 19\n" +
             "Content-Type: text/plain; charset=ISO-8859-1\n" +
@@ -68,7 +68,7 @@ public class SimplePostCentricTests {
             "```\n" +
             "Content-Type: application/json; charset=utf-8\n" +
             "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-            "ETag: W/\"145-Jwv9/WWsc6+3MH1D6qmR3cqfUn8\"\n" +
+            "ETag: W/\"153-InEEm1mVJgfG705oGbxXxiguOuU\"\n" +
             "Server: nginx\n" +
             "set-cookie: sails.sid=s%3AQpYXn4PNOGmzId3jttU03ZketH2aY6Zz.dj6l8lpXUtFJTCoRxWRPPx4fISmmCKzgOAlIxT2DSxM; Path=/; HttpOnly\n" +
             "Vary: Accept-Encoding\n" +
@@ -78,7 +78,7 @@ public class SimplePostCentricTests {
             "### Resulting body back from the real server (200: application/json; charset=utf-8):\n" +
             "\n" +
             "```\n" +
-            "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}\n" +
+            "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"postman-echo.com\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://postman-echo.com/post\"}\n" +
             "```\n" +
             "\n";
     private ServirtiumServer servirtiumServer;
@@ -141,7 +141,7 @@ public class SimplePostCentricTests {
         .then()
                 .assertThat()
                 .statusCode(200)
-                .body(equalTo("{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"localhost\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://localhost/post\"}"))
+                .body(equalTo("{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"postman-echo.com\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://postman-echo.com/post\"}"))
                 .contentType("application/json;charset=utf-8");
     }
 

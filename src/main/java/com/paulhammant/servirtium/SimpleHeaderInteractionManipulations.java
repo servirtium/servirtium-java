@@ -7,11 +7,15 @@ public class SimpleHeaderInteractionManipulations implements InteractionManipula
 
     protected final String fromUrl;
     protected final String toUrl;
+    protected final String fromHost;
+    protected final String toHost;
     private String[] headerPrefixesToRemove = new String[0];
 
     public SimpleHeaderInteractionManipulations(String fromUrl, String toUrl) {
         this.fromUrl = fromUrl;
         this.toUrl = toUrl;
+        this.fromHost = fromUrl.replaceAll("https://","").replaceAll("http://","");
+        this.toHost = toUrl.replaceAll("https://","").replaceAll("http://","");
     }
 
     public SimpleHeaderInteractionManipulations withHeaderPrefixesToRemoveFromRealResponse(String... headerPrefixesToRemove) {
@@ -27,7 +31,7 @@ public class SimpleHeaderInteractionManipulations implements InteractionManipula
     @Override
     public void potentiallyManipulateHeader(String method, String currentHeader, Map<String, String> allHeadersToReal) {
         if (currentHeader.equals("Host")) {
-            allHeadersToReal.put("Host", allHeadersToReal.get("Host").replace(fromUrl, toUrl));
+            allHeadersToReal.put("Host", allHeadersToReal.get("Host").replace(fromHost, toHost));
         }
     }
 

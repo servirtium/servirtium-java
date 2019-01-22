@@ -48,4 +48,7 @@ public class ServiceResponse {
     public ServiceResponse withRevisedHeaders(String[] headers) {
         return new ServiceResponse(this.body, this.contentType, this.statusCode, headers);
     }
+    public ServiceResponse withRevisedBody(String body) {
+        return new ServiceResponse(body, this.contentType, this.statusCode, this.headers);
+    }
 }
