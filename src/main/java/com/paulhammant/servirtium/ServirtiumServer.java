@@ -223,12 +223,23 @@ public class ServirtiumServer {
     }
 
     public static String testName() {
-        return testName(1);
+        return testName(0);
     }
 
-    public static String testName(int i) {
-        StackTraceElement[] foo = Thread.currentThread().getStackTrace();
-        return foo[2+i].getClassName() + "." + foo[2+i].getMethodName();
+    public static String testName(int numRemovedFromCaller) {
+        StackTraceElement[] stes = Thread.currentThread().getStackTrace();
+        int ix = 0;
+        for (int j = 0; j < stes.length; j++) {
+            StackTraceElement ste = stes[j];
+            if (!ste.getClassName().startsWith("sun.")
+                    && !ste.getClassName().startsWith("java")
+                    && !ste.getMethodName().equals("testName")) {
+                if (ix++ == numRemovedFromCaller) {
+                    return ste.getClassName() + "." + ste.getMethodName();
+                }
+            }
+        }
+        throw new UnsupportedOperationException("could net get method name");
     }
 
     public void finishedScript() {
@@ -248,14 +259,14 @@ public class ServirtiumServer {
         return bodyToReal;
     }
 
-    public class NullObject extends ServirtiumServer {
+    public static class NullObject extends ServirtiumServer {
         @Override
         public ServirtiumServer withPrettyPrintedTextBodies() {
             return this;
         }
 
         @Override
-        public ServirtiumServer startApp() throws Exception {
+        public ServirtiumServer startApp() {
             return this;
         }
 
