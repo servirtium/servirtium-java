@@ -20,18 +20,22 @@ import java.util.Scanner;
 
 public class ServirtiumServer {
 
-    protected final InteractionManipulations interactionManipulations;
+    private InteractionManipulations interactionManipulations;
     private Server jettyServer;
-    private final InteractionsDelegate interactionsDelegate;
+    private InteractionsDelegate interactionsDelegate;
     private int interactionNum = -1;
     private boolean pretty = false;
 
+    private ServirtiumServer() {
+    }
+
     public ServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
-                            InteractionManipulations interactionManipulations, InteractionsDelegate interactionsDelegate) {
+                            InteractionManipulations interactionManipulations,
+                            InteractionsDelegate interactionsDelegate) {
         this.interactionManipulations = interactionManipulations;
+        this.interactionsDelegate = interactionsDelegate;
 
         jettyServer = new Server(port);
-        this.interactionsDelegate = interactionsDelegate;
         // How the f*** do you turn off Embedded Jetty's logging???
         // Everything I tried (mostly static operations on Log) didn't work.
 
@@ -244,5 +248,33 @@ public class ServirtiumServer {
         return bodyToReal;
     }
 
+    public class NullObject extends ServirtiumServer {
+        @Override
+        public ServirtiumServer withPrettyPrintedTextBodies() {
+            return this;
+        }
+
+        @Override
+        public ServirtiumServer startApp() throws Exception {
+            return this;
+        }
+
+        @Override
+        protected int getInteractionNum() {
+            return -1;
+        }
+
+        @Override
+        protected void resetInteractionNumber() {
+        }
+
+        @Override
+        public void stop() {
+        }
+
+        @Override
+        public void finishedScript() {
+        }
+    }
 
 }
