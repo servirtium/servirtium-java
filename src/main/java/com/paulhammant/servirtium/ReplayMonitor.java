@@ -14,9 +14,9 @@ public interface ReplayMonitor {
 
     void headersFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String msg);
 
-    void bodyFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename);
+    void bodyFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String msg);
 
-    void contentTypeFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename);
+    void contentTypeFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String msg);
 
     AssertionError unexpectedInteractionRequest(int interactionNum, String filename);
 
@@ -48,12 +48,14 @@ public interface ReplayMonitor {
                     + ", Hamcrest message: " + msg);
         }
 
-        public void bodyFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename) {
-            throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename) + ", body from the client that should be sent to real server are not the same those previously recorded");
+        public void bodyFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String msg) {
+            throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename) + ", body from the client that should be sent to real server are not the same those previously recorded"
+                    + ", Hamcrest message: " + msg);
         }
 
-        public void contentTypeFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename) {
-            throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded");
+        public void contentTypeFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String msg) {
+            throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded"
+            + ", Hamcrest message: " + msg);
         }
 
         public AssertionError unexpectedInteractionRequest(int interactionNum, String filename) {

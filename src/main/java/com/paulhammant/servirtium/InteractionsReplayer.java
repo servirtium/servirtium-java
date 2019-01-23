@@ -171,12 +171,21 @@ public class InteractionsReplayer implements InteractionsDelegate {
             }
 
             String bodyReceived = getCodeBlock(rc);
-            if (!rc.bodyToReal.equals(bodyReceived)) {
-                monitor.bodyFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename);
+
+            try {
+                assertThat(rc.bodyToReal, equalTo(bodyReceived));
+            } catch (AssertionError e) {
+                String msg = e.getMessage();
+                monitor.bodyFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename, msg);
             }
-            if (!rc.contentTypeToReal.equals(contentType)) {
-                monitor.contentTypeFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename);
+
+            try {
+                assertThat(rc.contentTypeToReal, equalTo(contentType));
+            } catch (AssertionError e) {
+                String msg = e.getMessage();
+                monitor.contentTypeFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename, msg);
             }
+
             final String RESULTING_HEADERS_BACK_FROM_REAL_SERVER = "### Resulting headers back from the real server";
             rc.ix = rc.interactionText.indexOf(RESULTING_HEADERS_BACK_FROM_REAL_SERVER, rc.ix);
             if (rc.ix == -1) {
