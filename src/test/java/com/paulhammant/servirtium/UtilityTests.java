@@ -4,14 +4,14 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static com.paulhammant.servirtium.ServirtiumServer.testName;
+import static com.paulhammant.servirtium.ServirtiumServer.classAndTestName;
 import static org.junit.Assert.assertEquals;
 
 public class UtilityTests {
 
     @Test
     public void testNameCanBeCalculated() throws IOException {
-        assertEquals("com.paulhammant.servirtium.UtilityTests.testNameCanBeCalculated", testName());
+        assertEquals("com.paulhammant.servirtium.UtilityTests.testNameCanBeCalculated", ServirtiumServer.classAndTestName());
     }
 
     @Test
@@ -20,7 +20,7 @@ public class UtilityTests {
     }
 
     private String delegateToTestNameForDepthTestingPurposes() {
-        return testName(1);
+        return classAndTestName(1);
     }
 
 }

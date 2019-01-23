@@ -222,18 +222,18 @@ public class ServirtiumServer {
         }
     }
 
-    public static String testName() {
-        return testName(0);
+    public static String classAndTestName() {
+        return classAndTestName(0);
     }
 
-    public static String testName(int numRemovedFromCaller) {
+    public static String classAndTestName(int numRemovedFromCaller) {
         StackTraceElement[] stes = Thread.currentThread().getStackTrace();
         int ix = 0;
         for (int j = 0; j < stes.length; j++) {
             StackTraceElement ste = stes[j];
             if (!ste.getClassName().startsWith("sun.")
                     && !ste.getClassName().startsWith("java")
-                    && !ste.getMethodName().equals("testName")) {
+                    && !ste.getMethodName().equals("classAndTestName")) {
                 if (ix++ == numRemovedFromCaller) {
                     return ste.getClassName() + "." + ste.getMethodName();
                 }
