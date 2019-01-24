@@ -84,7 +84,12 @@ public class MarkdownRecorder implements Interactor {
             this.recording.append("```\n");
             for (String k : headers.keySet()) {
                 String v = headers.get(k);
-                this.recording.append(k).append(": ").append(v).append("\n");
+                String kv = k + ": " + v;
+                String kv2 = kv;
+                for (String redactionRegex : redactions.keySet()) {
+                    kv2 = kv.replaceAll(redactionRegex, redactions.get(redactionRegex));
+                }
+                this.recording.append(kv2).append("\n");
             }
             this.recording.append("```\n\n");
         }
@@ -96,6 +101,9 @@ public class MarkdownRecorder implements Interactor {
             this.recording.append("### Body sent to the real server (").append(contentTypeToReal).append("):\n");
             this.recording.append("\n");
             this.recording.append("```\n");
+            for (String redactionRegex : redactions.keySet()) {
+                bodyToReal = bodyToReal.replaceAll(redactionRegex, redactions.get(redactionRegex));
+            }
             this.recording.append(bodyToReal).append("\n");
             this.recording.append("```\n");
             this.recording.append("\n");
