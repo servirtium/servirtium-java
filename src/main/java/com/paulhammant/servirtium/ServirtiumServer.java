@@ -21,7 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ServirtiumServer {
 
     private Server jettyServer;
-    private InteractionsDelegate interactionsDelegate;
+    private Interactor interactor;
     private int interactionNum = -1;
     private boolean pretty = false;
 
@@ -30,8 +30,8 @@ public class ServirtiumServer {
 
     public ServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
                             InteractionManipulations interactionManipulations,
-                            InteractionsDelegate interactor) {
-        this.interactionsDelegate = interactor;
+                            Interactor interactor) {
+        this.interactor = interactor;
 
         jettyServer = new Server(port);
         // How the f*** do you turn off Embedded Jetty's logging???
@@ -59,7 +59,7 @@ public class ServirtiumServer {
 
                 try {
 
-                    InteractionsDelegate.Context context = interactor.newInteraction(method, request.getRequestURI().toString(), interactionNum);
+                    Interactor.Context context = interactor.newInteraction(method, request.getRequestURI().toString(), interactionNum);
                     String contentType = request.getContentType();
                     if (contentType == null) {
                         contentType = "";
@@ -96,7 +96,7 @@ public class ServirtiumServer {
         });
     }
 
-    private ServiceResponse processHeadersAndBodyBackFromReal(HttpServletResponse response, InteractionsDelegate.Context context, ServiceResponse realResponse, InteractionManipulations interactionManipulations) {
+    private ServiceResponse processHeadersAndBodyBackFromReal(HttpServletResponse response, Interactor.Context context, ServiceResponse realResponse, InteractionManipulations interactionManipulations) {
         ArrayList<String > newHeaders = new ArrayList<>();
         for (int i = 0; i < realResponse.headers.length; i++) {
             String headerBackFromReal = realResponse.headers[i];
@@ -146,7 +146,7 @@ public class ServirtiumServer {
         return realResponse;
     }
 
-    private String prepareHeadersAndBodyForReal(HttpServletRequest request, String method, String url, String bodyToReal, Map<String, String> headersToReal, InteractionsDelegate.Context context, String contentType, InteractionManipulations interactionManipulations) throws IOException {
+    private String prepareHeadersAndBodyForReal(HttpServletRequest request, String method, String url, String bodyToReal, Map<String, String> headersToReal, Interactor.Context context, String contentType, InteractionManipulations interactionManipulations) throws IOException {
         Enumeration<String> hdrs = request.getHeaderNames();
 
         ServletInputStream is = request.getInputStream();
@@ -221,7 +221,7 @@ public class ServirtiumServer {
     }
 
     public void stop() {
-        interactionsDelegate.finishedScript(getInteractionNum()); // just in case
+        interactor.finishedScript(getInteractionNum()); // just in case
         try {
             jettyServer.setStopTimeout(1);
             jettyServer.stop();
@@ -252,7 +252,7 @@ public class ServirtiumServer {
     }
 
     public void finishedScript() {
-        interactionsDelegate.finishedScript(getInteractionNum());
+        interactor.finishedScript(getInteractionNum());
     }
 
     public static class NullObject extends ServirtiumServer {

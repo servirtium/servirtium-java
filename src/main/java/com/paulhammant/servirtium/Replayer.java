@@ -30,8 +30,6 @@
 */
 package com.paulhammant.servirtium;
 
-import org.hamcrest.core.IsEqual;
-
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -45,7 +43,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class InteractionsReplayer implements InteractionsDelegate {
+public class Replayer implements Interactor {
 
     private final ReplayMonitor monitor;
 
@@ -55,15 +53,15 @@ public class InteractionsReplayer implements InteractionsDelegate {
 
     public static final String SERVIRTIUM_INTERACTION = "## Interaction ";
 
-    public InteractionsReplayer() {
+    public Replayer() {
         this(new ReplayMonitor.Default());
     }
 
-    public InteractionsReplayer(ReplayMonitor monitor) {
+    public Replayer(ReplayMonitor monitor) {
         this.monitor = monitor;
     }
 
-    public InteractionsReplayer withForgivingOrderOfClientRequestHeaders() {
+    public Replayer withForgivingOrderOfClientRequestHeaders() {
         forgivingOrderOfClientRquestHeaders = true;
         return this;
     }

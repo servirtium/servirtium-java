@@ -8,7 +8,7 @@ public interface ReplayMonitor {
 
     void methodNotAsExpected(int interaction, String filename, String mdMethod, String method);
 
-    void urlNotAsExpected(String url, InteractionsReplayer.ReplayingContext rc, String mdMethod, String mdUrl, String filename);
+    void urlNotAsExpected(String url, Replayer.ReplayingContext rc, String mdMethod, String mdUrl, String filename);
 
     void markdownSectionHeadingMissing(int interaction, String HEADERS_SENT_TO_REAL_SERVER, String filename);
 
@@ -34,7 +34,7 @@ public interface ReplayMonitor {
             throw makeAssertionError(methodAndFilePrefix(interaction, mdMethod, filename) + ", method from the client that should be sent to real server are not the same as expected: " + method);
         }
 
-        public void urlNotAsExpected(String url, InteractionsReplayer.ReplayingContext rc, String mdMethod, String mdUrl, String filename) {
+        public void urlNotAsExpected(String url, Replayer.ReplayingContext rc, String mdMethod, String mdUrl, String filename) {
             throw makeAssertionError("Method " + rc.interactionNum + " (" + mdMethod + ") in " + filename + ": " + url + " does not end in previously recorded " + mdUrl);
         }
 

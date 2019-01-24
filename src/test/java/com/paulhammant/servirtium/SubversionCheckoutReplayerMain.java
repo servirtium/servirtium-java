@@ -52,7 +52,7 @@ public class SubversionCheckoutReplayerMain {
         String tempDir = new File(".").getAbsolutePath() + "/.servirtium_tmp/";
         createWorkDirAndDeleteCheckout(tempDir);
 
-        InteractionsReplayer replayer = new InteractionsReplayer(new ReplayMonitor.Default());
+        Replayer replayer = new Replayer(new ReplayMonitor.Default());
         ServirtiumServer servirtiumServer = new ServirtiumServer(
                 new ServerMonitor.Console(),
                 8099, false,

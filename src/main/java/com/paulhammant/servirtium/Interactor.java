@@ -35,7 +35,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 
-public interface InteractionsDelegate {
+public interface Interactor {
 
     void finishedScript(int interactionNum);
 

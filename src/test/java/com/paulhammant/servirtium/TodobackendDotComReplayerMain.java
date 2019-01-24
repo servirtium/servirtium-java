@@ -21,7 +21,7 @@ public class TodobackendDotComReplayerMain {
                 headersToReal.put("Pragma", "no-cache");
             }
         };
-        InteractionsReplayer replayer = new InteractionsReplayer()
+        Replayer replayer = new Replayer()
                 .withForgivingOrderOfClientRequestHeaders();
 
         ServirtiumServer servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),

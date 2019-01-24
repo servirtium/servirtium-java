@@ -42,16 +42,15 @@ import java.util.Map;
 
 import static junit.framework.TestCase.fail;
 
-public class InteractionsRecorder implements InteractionsDelegate {
+public class Recorder implements Interactor {
 
     private final ServiceInteroperation serviceInteroperation;
     private final InteractionManipulations interactionManipulations;
     private PrintStream out;
-    private String filename;
     private Map<Integer, String> interactions = new HashMap<>();
 
-    public InteractionsRecorder(ServiceInteroperation serviceInteroperation,
-                                InteractionManipulations interactionManipulations) {
+    public Recorder(ServiceInteroperation serviceInteroperation,
+                    InteractionManipulations interactionManipulations) {
         this.serviceInteroperation = serviceInteroperation;
         this.interactionManipulations = interactionManipulations;
     }
@@ -168,7 +167,6 @@ public class InteractionsRecorder implements InteractionsDelegate {
     }
 
     public void setOutputStream(String filename, OutputStream out) {
-        this.filename = filename;
         if (out != null) {
             this.out = new PrintStream(out);
         }

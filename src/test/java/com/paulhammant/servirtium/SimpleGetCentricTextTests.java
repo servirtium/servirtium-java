@@ -36,7 +36,6 @@ import org.junit.After;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -117,7 +116,7 @@ public class SimpleGetCentricTextTests {
     public void canRecordASimpleGetFromApachesSubversionViaOkHttp() throws Exception {
 
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
-        InteractionsRecorder recorder = new InteractionsRecorder(
+        Recorder recorder = new Recorder(
                 new ServiceInteropViaOkHttp(),
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org"));
         servirtiumServer = new ServirtiumServer(serverMonitor,
@@ -145,7 +144,7 @@ public class SimpleGetCentricTextTests {
                 .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:");
 
 
-        InteractionsRecorder recorder = new InteractionsRecorder(
+        Recorder recorder = new Recorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
         servirtiumServer = new ServirtiumServer(serverMonitor,
@@ -219,7 +218,7 @@ public class SimpleGetCentricTextTests {
                 .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:");
 
 
-        InteractionsRecorder recorder = new InteractionsRecorder(
+        Recorder recorder = new Recorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
         servirtiumServer = new ServirtiumServer(serverMonitor,
@@ -300,7 +299,7 @@ public class SimpleGetCentricTextTests {
     @Test
     public void canReplayASimpleGetFromApachesSubversion() throws Exception {
 
-        InteractionsReplayer replayer = new InteractionsReplayer();
+        Replayer replayer = new Replayer();
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
 
         servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
