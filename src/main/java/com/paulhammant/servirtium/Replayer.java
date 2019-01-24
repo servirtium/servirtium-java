@@ -47,9 +47,9 @@ public class Replayer implements Interactor {
 
     private final ReplayMonitor monitor;
 
-    private List<String> markdownConversation = new ArrayList<>();
+    private List<String> allMarkdownInteractions = new ArrayList<>();
     private String filename;
-    private boolean forgivingOrderOfClientRquestHeaders = false;
+    private boolean forgivingOrderOfClientRequestHeaders = false;
 
     public static final String SERVIRTIUM_INTERACTION = "## Interaction ";
 
@@ -62,7 +62,7 @@ public class Replayer implements Interactor {
     }
 
     public Replayer withForgivingOrderOfClientRequestHeaders() {
-        forgivingOrderOfClientRquestHeaders = true;
+        forgivingOrderOfClientRequestHeaders = true;
         return this;
     }
 
@@ -90,7 +90,7 @@ public class Replayer implements Interactor {
                     again = false;
                 }
                 String interactionText = conversation.substring(charPosn, charEndPosn);
-                markdownConversation.add(interactionText);
+                allMarkdownInteractions.add(interactionText);
                 ctr++;
             }
         }
@@ -98,18 +98,17 @@ public class Replayer implements Interactor {
 
     @Override
     public void finishedScript(int interactionNum) {
-        if (markdownConversation.size() - interactionNum > 1) {
+        if (allMarkdownInteractions.size() - interactionNum > 1) {
             monitor.finishedButMoreInteractionsYetToDo(interactionNum, filename);
         }
     }
 
-    public class ReplayingContext extends Context {
-
+    public class ReplayingInteraction extends Interaction {
         private final String interactionText;
         int ix;
         private String headers;
 
-        public ReplayingContext(String interactionText, int interactionNum) {
+        ReplayingInteraction(String interactionText, int interactionNum) {
             super(interactionNum);
             this.interactionText = interactionText;
         }
@@ -123,13 +122,12 @@ public class Replayer implements Interactor {
             }
             this.headers = sb.toString();
         }
-
     }
 
     @Override
-    public ServiceResponse getServiceResponseForRequest(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
+    public ServiceResponse getServiceResponseForRequest(String method, String url, Map<String, String> headersToReal, Interaction interaction) throws IOException {
 
-        ReplayingContext rc = (ReplayingContext) ctx;
+        ReplayingInteraction rc = (ReplayingInteraction) interaction;
 
         try {
             rc.ix = rc.interactionText.indexOf(SERVIRTIUM_INTERACTION + rc.interactionNum + ":", 0);
@@ -229,7 +227,7 @@ public class Replayer implements Interactor {
     }
 
     private String reorderMaybe(String headersReceived) {
-        if (forgivingOrderOfClientRquestHeaders) {
+        if (forgivingOrderOfClientRequestHeaders) {
             String[] foo = headersReceived.split("\n");
             Arrays.sort(foo);
             return String.join("\n", foo);
@@ -237,7 +235,7 @@ public class Replayer implements Interactor {
         return headersReceived;
     }
 
-    private String getCodeBlock(ReplayingContext rc) {
+    private String getCodeBlock(ReplayingInteraction rc) {
         rc.ix = rc.interactionText.indexOf("\n```\n", rc.ix);
         int endCodeBlock = rc.interactionText.indexOf("\n```\n", rc.ix + 5);
         String rv = rc.interactionText.substring(rc.ix + 5, endCodeBlock);
@@ -246,14 +244,14 @@ public class Replayer implements Interactor {
     }
 
     @Override
-    public Context newInteraction(String method, String path, int interactionNum) {
+    public Interaction newInteraction(String method, String path, int interactionNum) {
         final String interactionText;
         try {
-            interactionText = markdownConversation.get(interactionNum);
+            interactionText = allMarkdownInteractions.get(interactionNum);
         } catch (IndexOutOfBoundsException e) {
             throw monitor.unexpectedInteractionRequest(interactionNum, filename);
         }
-        return new ReplayingContext(interactionText, interactionNum);
+        return new ReplayingInteraction(interactionText, interactionNum);
     }
 
 }

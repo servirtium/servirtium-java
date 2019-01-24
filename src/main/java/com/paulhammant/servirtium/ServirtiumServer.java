@@ -59,20 +59,20 @@ public class ServirtiumServer {
 
                 try {
 
-                    Interactor.Context context = interactor.newInteraction(method, request.getRequestURI().toString(), interactionNum);
+                    Interactor.Interaction interaction = interactor.newInteraction(method, request.getRequestURI().toString(), interactionNum);
                     String contentType = request.getContentType();
                     if (contentType == null) {
                         contentType = "";
                     }
 
-                    final String requestUrl = prepareHeadersAndBodyForReal(request, method, url, bodyToReal, headersToReal, context, contentType, interactionManipulations);
+                    final String requestUrl = prepareHeadersAndBodyForReal(request, method, url, bodyToReal, headersToReal, interaction, contentType, interactionManipulations);
 
                     // INTERACTION
-                    ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, headersToReal, context);
+                    ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, headersToReal, interaction);
 
-                    realResponse = processHeadersAndBodyBackFromReal(response, context, realResponse, interactionManipulations);
+                    realResponse = processHeadersAndBodyBackFromReal(response, interaction, realResponse, interactionManipulations);
 
-                    interactor.addInteraction(context);
+                    interactor.addInteraction(interaction);
 
 
                     if (realResponse.contentType != null) {
@@ -96,7 +96,7 @@ public class ServirtiumServer {
         });
     }
 
-    private ServiceResponse processHeadersAndBodyBackFromReal(HttpServletResponse response, Interactor.Context context, ServiceResponse realResponse, InteractionManipulations interactionManipulations) {
+    private ServiceResponse processHeadersAndBodyBackFromReal(HttpServletResponse response, Interactor.Interaction interaction, ServiceResponse realResponse, InteractionManipulations interactionManipulations) {
         ArrayList<String > newHeaders = new ArrayList<>();
         for (int i = 0; i < realResponse.headers.length; i++) {
             String headerBackFromReal = realResponse.headers[i];
@@ -140,13 +140,13 @@ public class ServirtiumServer {
             response.setHeader(hdrKey, hdrVal);
         }
 
-        context.recordResponseHeaders(realResponse.headers);
+        interaction.recordResponseHeaders(realResponse.headers);
 
-        context.recordResponseBody(realResponse.body, realResponse.statusCode, realResponse.contentType);
+        interaction.recordResponseBody(realResponse.body, realResponse.statusCode, realResponse.contentType);
         return realResponse;
     }
 
-    private String prepareHeadersAndBodyForReal(HttpServletRequest request, String method, String url, String bodyToReal, Map<String, String> headersToReal, Interactor.Context context, String contentType, InteractionManipulations interactionManipulations) throws IOException {
+    private String prepareHeadersAndBodyForReal(HttpServletRequest request, String method, String url, String bodyToReal, Map<String, String> headersToReal, Interactor.Interaction interaction, String contentType, InteractionManipulations interactionManipulations) throws IOException {
         Enumeration<String> hdrs = request.getHeaderNames();
 
         ServletInputStream is = request.getInputStream();
@@ -184,11 +184,11 @@ public class ServirtiumServer {
 
         interactionManipulations.changeAllHeadersForRequestToReal(headersToReal);
 
-        context.recordRequestHeaders(headersToReal);
+        interaction.recordRequestHeaders(headersToReal);
 
         bodyToReal = interactionManipulations.changeBodyForRequestToReal(bodyToReal);
 
-        context.recordRequestBody(bodyToReal, contentType);
+        interaction.recordRequestBody(bodyToReal, contentType);
 
         return interactionManipulations.changeUrlForRequestToReal(url);
     }

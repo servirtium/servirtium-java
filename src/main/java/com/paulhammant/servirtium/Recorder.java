@@ -55,16 +55,16 @@ public class Recorder implements Interactor {
         this.interactionManipulations = interactionManipulations;
     }
 
-    public ServiceResponse getServiceResponseForRequest(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
+    public ServiceResponse getServiceResponseForRequest(String method, String url, Map<String, String> headersToReal, Interaction interaction) throws IOException {
         headersToReal.remove("Accept-Encoding");
-        return serviceInteroperation.invokeServiceEndpoint(method, ctx.bodyToReal, ctx.contentTypeToReal, url, headersToReal, interactionManipulations);
+        return serviceInteroperation.invokeServiceEndpoint(method, interaction.bodyToReal, interaction.contentTypeToReal, url, headersToReal, interactionManipulations);
     }
 
-    public class RecordingContext extends Context {
+    public class RecordingInteraction extends Interaction {
 
         private StringBuilder recording = new StringBuilder();
 
-        RecordingContext(int interactionNumber) {
+        RecordingInteraction(int interactionNumber) {
             super(interactionNumber);
         }
 
@@ -132,14 +132,14 @@ public class Recorder implements Interactor {
     }
 
     @Override
-    public void addInteraction(Context context) {
-        this.interactions.put(context.interactionNum, ((RecordingContext) context).recording.toString());
+    public void addInteraction(Interaction interaction) {
+        this.interactions.put(interaction.interactionNum, ((RecordingInteraction) interaction).recording.toString());
     }
 
     @Override
-    public Context newInteraction(String method, String path, int interactionNum) {
+    public Interaction newInteraction(String method, String path, int interactionNum) {
         guardOut();
-        RecordingContext rc = new RecordingContext(interactionNum);
+        RecordingInteraction rc = new RecordingInteraction(interactionNum);
 
         rc.recording.append("## Interaction ").append(interactionNum).append(": ").append(method).append(" ").append(path).append("\n\n");
         return rc;

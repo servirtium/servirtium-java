@@ -42,19 +42,19 @@ public interface Interactor {
     void setMarkdownScriptFilename(String filename) throws FileNotFoundException;
 
     ServiceResponse getServiceResponseForRequest(String method, String url,
-                                                 Map<String, String> headersToReal, Context ctx) throws IOException;
+                                                 Map<String, String> headersToReal, Interaction interaction) throws IOException;
 
-    Context newInteraction(String method, String path, int interactionNum);
+    Interaction newInteraction(String method, String path, int interactionNum);
 
-    default void addInteraction(Context context) {}
+    default void addInteraction(Interaction interaction) {}
 
-    abstract class Context {
+    abstract class Interaction {
 
         final int interactionNum;
         String bodyToReal;
         String contentTypeToReal;
 
-        Context(int interactionNum) {
+        Interaction(int interactionNum) {
             this.interactionNum = interactionNum;
         }
 
