@@ -109,8 +109,6 @@ public class InteractionsReplayer implements InteractionsDelegate {
 
         private final String interactionText;
         int ix;
-        String bodyToReal;
-        String contentTypeToReal;
         private String headers;
 
         public ReplayingContext(String interactionText, int interactionNum) {
@@ -247,13 +245,6 @@ public class InteractionsReplayer implements InteractionsDelegate {
         String rv = rc.interactionText.substring(rc.ix + 5, endCodeBlock);
         rc.ix = endCodeBlock + 5;
         return rv;
-    }
-
-    @Override
-    public void recordRequestBody(String bodyToReal, String contentTypeToReal, Context ctx) {
-        ReplayingContext rc = (ReplayingContext) ctx;
-        rc.bodyToReal = bodyToReal;
-        rc.contentTypeToReal = contentTypeToReal;
     }
 
     @Override

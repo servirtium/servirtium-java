@@ -65,21 +65,34 @@ public class InteractionsRecorder implements InteractionsDelegate {
 
         private StringBuilder recording = new StringBuilder();
 
-        public RecordingContext(int interactionNumber) {
+        RecordingContext(int interactionNumber) {
             super(interactionNumber);
         }
 
         @Override
         public void recordRequestHeaders(Map<String, String> headers) {
             guardOut();
-            recording.append("### Request headers sent to the real server:\n\n");
-            recording.append("```\n");
+            this.recording.append("### Request headers sent to the real server:\n\n");
+            this.recording.append("```\n");
             for (String k : headers.keySet()) {
                 String v = headers.get(k);
-                recording.append(k).append(": ").append(v).append("\n");
+                this.recording.append(k).append(": ").append(v).append("\n");
             }
-            recording.append("```\n\n");
+            this.recording.append("```\n\n");
         }
+
+        @Override
+        public void recordRequestBody(String bodyToReal, String contentTypeToReal) {
+            super.recordRequestBody(bodyToReal, contentTypeToReal);
+            guardOut();
+            this.recording.append("### Body sent to the real server (").append(contentTypeToReal).append("):\n");
+            this.recording.append("\n");
+            this.recording.append("```\n");
+            this.recording.append(bodyToReal).append("\n");
+            this.recording.append("```\n");
+            this.recording.append("\n");
+        }
+
 
     }
 
@@ -96,20 +109,6 @@ public class InteractionsRecorder implements InteractionsDelegate {
         if (out == null) {
             fail("Recording in progress, but previous recording was finishedScript() and/or no new setMarkdownScriptFilename(..) started");
         }
-    }
-
-    @Override
-    public void recordRequestBody(String bodyToReal, String contentTypeToReal, Context ctx) {
-        RecordingContext rc = (RecordingContext) ctx;
-        ctx.bodyToReal = bodyToReal;
-        ctx.contentTypeToReal = contentTypeToReal;
-        guardOut();
-        rc.recording.append("### Body sent to the real server (").append(contentTypeToReal).append("):\n");
-        rc.recording.append("\n");
-        rc.recording.append("```\n");
-        rc.recording.append(bodyToReal).append("\n");
-        rc.recording.append("```\n");
-        rc.recording.append("\n");
     }
 
     @Override

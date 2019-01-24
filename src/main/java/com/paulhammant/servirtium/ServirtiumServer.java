@@ -107,7 +107,8 @@ public class ServirtiumServer {
                     context.recordRequestHeaders(headersToReal);
 
                     bodyToReal = interactionManipulations.changeBodyForRequestToReal(bodyToReal);
-                    interactionsDelegate.recordRequestBody(bodyToReal, contentType, context);
+
+                    context.recordRequestBody(bodyToReal, contentType);
 
                     final String requestUrl = interactionManipulations.changeUrlForRequestToReal(url);
 
