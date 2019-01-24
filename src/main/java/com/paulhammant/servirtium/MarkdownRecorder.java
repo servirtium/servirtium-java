@@ -137,7 +137,7 @@ public class MarkdownRecorder implements Interactor {
     }
 
     @Override
-    public Interaction newInteraction(String method, String path, int interactionNum) {
+    public Interaction newInteraction(String method, String path, int interactionNum, String url) {
         guardOut();
         RecordingInteraction rc = new RecordingInteraction(interactionNum);
 

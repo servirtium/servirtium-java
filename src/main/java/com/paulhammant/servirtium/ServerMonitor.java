@@ -2,9 +2,11 @@ package com.paulhammant.servirtium;
 
 public interface ServerMonitor {
 
+    default void interactionStarted(int interactionNum, Interactor.Interaction interactionl){}
+
     default void interactionFinished(int interactionNum, String method, String url) {}
 
-    default void interactionStarted(int interactionNum, String method, String url){}
+    default void interactionFailed(int interactionNum, String method, String url, AssertionError assertionError) {}
 
     default void unexpectedRequestError(Throwable throwable) {}
 
@@ -14,17 +16,30 @@ public interface ServerMonitor {
     class Console implements ServerMonitor {
 
         @Override
-        public void interactionFinished(int interactionNum, String method, String url) {
-            System.out.println(">> Servirtium >> interaction " + interactionNum + " " + method + " " + url + " DONE");
-        }
-
-        @Override
-        public void interactionStarted(int interactionNum, String method, String url) {
-        }
-
-        @Override
         public void unexpectedRequestError(Throwable throwable) {
-            System.out.println(">> Servirtium >> unexpected request error ");
+            printShevrons();
+            System.out.println(">> Servirtium >> unexpected request error: " + throwable.getMessage());
+            printShevrons();        }
+
+        private void printShevrons() {
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         }
+
+        @Override
+        public void interactionFinished(int interactionNum, String method, String url) {
+            printShevrons();
+            System.out.println(">> Servirtium >> interaction " + interactionNum + " " + method + " " + url + " FINISHED");
+            printShevrons();
+        }
+
+
+        @Override
+        public void interactionFailed(int interactionNum, String method, String url, AssertionError assertionError) {
+            printShevrons();
+            System.out.println(">> Servirtium >> interaction " + interactionNum + " " + method + " " + url + " FAILED");
+            System.out.println(">> " + assertionError.getMessage());
+            printShevrons();
+        }
+
     }
 }

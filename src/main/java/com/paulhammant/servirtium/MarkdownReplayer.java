@@ -129,101 +129,94 @@ public class MarkdownReplayer implements Interactor {
 
         ReplayingInteraction rc = (ReplayingInteraction) interaction;
 
-        try {
-            rc.ix = rc.interactionText.indexOf(SERVIRTIUM_INTERACTION + rc.interactionNum + ":", 0);
-            if (rc.ix == -1) {
-                monitor.couldNotFindInteraction(rc.interactionNum, filename);
-            }
-            int lineEnd = rc.interactionText.indexOf("\n", rc.ix);
-            String line = rc.interactionText.substring(rc.ix + SERVIRTIUM_INTERACTION.length(), lineEnd);
-            String[] parts = line.split(" ");
-            int iNum = Integer.parseInt(parts[0].replace(":",""));
-            String mdMethod = parts[1];
-
-            if (!method.equals(mdMethod)) {
-                monitor.methodNotAsExpected(rc.interactionNum, filename, mdMethod, method);
-            }
-            String mdUrl = parts[2];
-            if (!url.endsWith(mdUrl)) {
-                monitor.urlNotAsExpected(url, rc, mdMethod, mdUrl, filename);
-            }
-
-            final String REQUEST_HEADERS_SENT_TO_REAL_SERVER = "### Request headers sent to the real server";
-            rc.ix = rc.interactionText.indexOf(REQUEST_HEADERS_SENT_TO_REAL_SERVER, rc.ix);
-            if (rc.ix == -1) {
-                monitor.markdownSectionHeadingMissing(rc.interactionNum, REQUEST_HEADERS_SENT_TO_REAL_SERVER, filename);
-            }
-
-            String headersReceived = getCodeBlock(rc);
-
-            final String BODY_SENT_TO_REAL_SERVER = "### Body sent to the real server";
-            rc.ix = rc.interactionText.indexOf(BODY_SENT_TO_REAL_SERVER, rc.ix);
-            if (rc.ix == -1) {
-                monitor.markdownSectionHeadingMissing(rc.interactionNum, BODY_SENT_TO_REAL_SERVER, filename);
-            }
-            lineEnd = rc.interactionText.indexOf("\n", rc.ix);
-            line = rc.interactionText.substring(rc.ix +4, lineEnd);
-            String contentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
-
-            // TODO remove trim()
-            final String[] prevRecorded = this.reorderMaybe(headersReceived).split("\n");
-            final String[] current = reorderMaybe(rc.headers.trim()).split("\n");
-            try {
-                assertThat(current, arrayContainingInAnyOrder(prevRecorded));
-            } catch (AssertionError e) {
-                String msg = e.getMessage();
-                monitor.headersFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename, msg);
-            }
-
-            String bodyReceived = getCodeBlock(rc);
-
-            try {
-                assertThat(rc.bodyToReal, equalTo(bodyReceived));
-            } catch (AssertionError e) {
-                String msg = e.getMessage();
-                monitor.bodyFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename, msg);
-            }
-
-            try {
-                assertThat(rc.contentTypeToReal, equalTo(contentType));
-            } catch (AssertionError e) {
-                String msg = e.getMessage();
-                monitor.contentTypeFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename, msg);
-            }
-
-            final String RESULTING_HEADERS_BACK_FROM_REAL_SERVER = "### Resulting headers back from the real server";
-            rc.ix = rc.interactionText.indexOf(RESULTING_HEADERS_BACK_FROM_REAL_SERVER, rc.ix);
-            if (rc.ix == -1) {
-                monitor.markdownSectionHeadingMissing(rc.interactionNum, RESULTING_HEADERS_BACK_FROM_REAL_SERVER, filename);
-            }
-            String[] headersToReturn = getCodeBlock(rc).split("\n");
-            final String RESULTING_BODY_BACK_FROM_REAL_SERVER = "### Resulting body back from the real server";
-            rc.ix = rc.interactionText.indexOf(RESULTING_BODY_BACK_FROM_REAL_SERVER, rc.ix);
-            if (rc.ix == -1) {
-                monitor.markdownSectionHeadingMissing(rc.interactionNum, RESULTING_BODY_BACK_FROM_REAL_SERVER, filename);
-            }
-            lineEnd = rc.interactionText.indexOf("\n", rc.ix);
-            line = rc.interactionText.substring(rc.ix +4, lineEnd);
-            String statusContent = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
-            parts = statusContent.split(": ");
-            int statusCode = Integer.parseInt(parts[0]);
-            contentType = parts[1];
-            Object bodyToReturn;
-            if (contentType.endsWith("- Base64 below")) {
-                contentType = contentType.substring(0, contentType.indexOf(" "));
-                bodyToReturn = Base64.getDecoder().decode(getCodeBlock(rc));
-            } else {
-                bodyToReturn = getCodeBlock(rc);
-            }
-            System.out.println(">> SERVIRTIUM >> Replay of interaction " + rc.interactionNum + ": " + method + " " + url);
-            return new ServiceResponse(bodyToReturn, contentType, statusCode, headersToReturn);
-        } catch (AssertionError e) {
-
-            System.out.println(">> SERVIRTIUM >> Replay Assertion Error: " + e.getMessage());
-            e.printStackTrace();
-            return new ServiceResponse("ServiceInteractionReplayer: " + e.getMessage(), "text/plain", 500);
-
+        rc.ix = rc.interactionText.indexOf(SERVIRTIUM_INTERACTION + rc.interactionNum + ":", 0);
+        if (rc.ix == -1) {
+            monitor.couldNotFindInteraction(rc.interactionNum, filename);
         }
+        int lineEnd = rc.interactionText.indexOf("\n", rc.ix);
+        String line = rc.interactionText.substring(rc.ix + SERVIRTIUM_INTERACTION.length(), lineEnd);
+        String[] parts = line.split(" ");
+        int iNum = Integer.parseInt(parts[0].replace(":",""));
+        String mdMethod = parts[1];
+
+        if (!method.equals(mdMethod)) {
+            monitor.methodNotAsExpected(rc.interactionNum, filename, mdMethod, method);
+        }
+        String mdUrl = parts[2];
+        if (!url.endsWith(mdUrl)) {
+            monitor.urlNotAsExpected(url, rc, mdMethod, mdUrl, filename);
+        }
+
+        final String REQUEST_HEADERS_SENT_TO_REAL_SERVER = "### Request headers sent to the real server";
+        rc.ix = rc.interactionText.indexOf(REQUEST_HEADERS_SENT_TO_REAL_SERVER, rc.ix);
+        if (rc.ix == -1) {
+            monitor.markdownSectionHeadingMissing(rc.interactionNum, REQUEST_HEADERS_SENT_TO_REAL_SERVER, filename);
+        }
+
+        String headersReceived = getCodeBlock(rc);
+
+        final String BODY_SENT_TO_REAL_SERVER = "### Body sent to the real server";
+        rc.ix = rc.interactionText.indexOf(BODY_SENT_TO_REAL_SERVER, rc.ix);
+        if (rc.ix == -1) {
+            monitor.markdownSectionHeadingMissing(rc.interactionNum, BODY_SENT_TO_REAL_SERVER, filename);
+        }
+        lineEnd = rc.interactionText.indexOf("\n", rc.ix);
+        line = rc.interactionText.substring(rc.ix +4, lineEnd);
+        String contentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
+
+        // TODO remove trim()
+        final String[] prevRecorded = this.reorderMaybe(headersReceived).split("\n");
+        final String[] current = reorderMaybe(rc.headers.trim()).split("\n");
+        try {
+            assertThat(current, arrayContainingInAnyOrder(prevRecorded));
+        } catch (AssertionError e) {
+            String msg = e.getMessage();
+            monitor.headersFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename, msg);
+        }
+
+        String bodyReceived = getCodeBlock(rc);
+
+        try {
+            assertThat(rc.bodyToReal, equalTo(bodyReceived));
+        } catch (AssertionError e) {
+            String msg = e.getMessage();
+            monitor.bodyFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename, msg);
+        }
+
+        try {
+            assertThat(rc.contentTypeToReal, equalTo(contentType));
+        } catch (AssertionError e) {
+            String msg = e.getMessage();
+            monitor.contentTypeFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename, msg);
+        }
+
+        final String RESULTING_HEADERS_BACK_FROM_REAL_SERVER = "### Resulting headers back from the real server";
+        rc.ix = rc.interactionText.indexOf(RESULTING_HEADERS_BACK_FROM_REAL_SERVER, rc.ix);
+        if (rc.ix == -1) {
+            monitor.markdownSectionHeadingMissing(rc.interactionNum, RESULTING_HEADERS_BACK_FROM_REAL_SERVER, filename);
+        }
+        String[] headersToReturn = getCodeBlock(rc).split("\n");
+        final String RESULTING_BODY_BACK_FROM_REAL_SERVER = "### Resulting body back from the real server";
+        rc.ix = rc.interactionText.indexOf(RESULTING_BODY_BACK_FROM_REAL_SERVER, rc.ix);
+        if (rc.ix == -1) {
+            monitor.markdownSectionHeadingMissing(rc.interactionNum, RESULTING_BODY_BACK_FROM_REAL_SERVER, filename);
+        }
+        lineEnd = rc.interactionText.indexOf("\n", rc.ix);
+        line = rc.interactionText.substring(rc.ix +4, lineEnd);
+        String statusContent = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
+        parts = statusContent.split(": ");
+        int statusCode = Integer.parseInt(parts[0]);
+        contentType = parts[1];
+        Object bodyToReturn;
+        if (contentType.endsWith("- Base64 below")) {
+            contentType = contentType.substring(0, contentType.indexOf(" "));
+            bodyToReturn = Base64.getDecoder().decode(getCodeBlock(rc));
+        } else {
+            bodyToReturn = getCodeBlock(rc);
+        }
+        return new ServiceResponse(bodyToReturn, contentType, statusCode, headersToReturn);
+
+
     }
 
     private String reorderMaybe(String headersReceived) {
@@ -244,7 +237,7 @@ public class MarkdownReplayer implements Interactor {
     }
 
     @Override
-    public Interaction newInteraction(String method, String path, int interactionNum) {
+    public Interaction newInteraction(String method, String path, int interactionNum, String url) {
         final String interactionText;
         try {
             interactionText = allMarkdownInteractions.get(interactionNum);

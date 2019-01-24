@@ -44,7 +44,7 @@ public interface Interactor {
     ServiceResponse getServiceResponseForRequest(String method, String url,
                                                  Map<String, String> headersToReal, Interaction interaction) throws IOException;
 
-    Interaction newInteraction(String method, String path, int interactionNum);
+    Interaction newInteraction(String method, String path, int interactionNum, String url);
 
     default void addInteraction(Interaction interaction) {}
 

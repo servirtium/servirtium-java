@@ -3,7 +3,6 @@ package com.paulhammant.servirtium;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
-import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,9 +40,7 @@ public class ServirtiumServer {
 
             @Override
             public void handle(String target, org.eclipse.jetty.server.Request baseRequest,
-                               HttpServletRequest request,
-                               HttpServletResponse response)
-                    throws IOException, ServletException {
+                               HttpServletRequest request, HttpServletResponse response) throws IOException {
 
                 interactionNum++;
 
@@ -55,11 +52,11 @@ public class ServirtiumServer {
                 String bodyToReal = "";
                 Map<String, String> headersToReal = new HashMap<>();
 
-                monitor.interactionStarted(interactionNum, method, url);
-
                 try {
+                    Interactor.Interaction interaction = interactor.newInteraction(method, request.getRequestURI().toString(), interactionNum, url);
 
-                    Interactor.Interaction interaction = interactor.newInteraction(method, request.getRequestURI().toString(), interactionNum);
+                    monitor.interactionStarted(interactionNum, interaction);
+
                     String contentType = request.getContentType();
                     if (contentType == null) {
                         contentType = "";
@@ -74,7 +71,6 @@ public class ServirtiumServer {
 
                     interactor.addInteraction(interaction);
 
-
                     if (realResponse.contentType != null) {
                         response.setContentType(realResponse.contentType);
                         if (realResponse.body instanceof String) {
@@ -85,7 +81,13 @@ public class ServirtiumServer {
                     }
 
                     monitor.interactionFinished(interactionNum, method, url);
+                } catch (AssertionError assertionError) {
+                    response.setContentType("text/plain");
+                    response.getWriter().write("Servirtium Server AssertionError: " + assertionError.getMessage());
+                    monitor.interactionFailed(interactionNum, method, url, assertionError);
                 } catch (Throwable throwable) {
+                    response.setContentType("text/plain");
+                    response.getWriter().write("Servirtium Server unexpected Throwable: " + throwable.getMessage());
                     monitor.unexpectedRequestError(throwable);
                     throw throwable; // stick your debugger here
                 } finally {
