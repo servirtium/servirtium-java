@@ -47,8 +47,6 @@ public class InteractionsRecorder implements InteractionsDelegate {
     private final ServiceInteroperation serviceInteroperation;
     private final InteractionManipulations interactionManipulations;
     private PrintStream out;
-    private String bodyToReal;
-    private String contentTypeToReal;
     private String filename;
     private Map<Integer, String> interactions = new HashMap<>();
 
@@ -60,7 +58,7 @@ public class InteractionsRecorder implements InteractionsDelegate {
 
     public ServiceResponse getServiceResponseForRequest(String method, String url, Map<String, String> headersToReal, Context ctx) throws IOException {
         headersToReal.remove("Accept-Encoding");
-        return serviceInteroperation.invokeServiceEndpoint(method, this.bodyToReal, this.contentTypeToReal, url, headersToReal, interactionManipulations);
+        return serviceInteroperation.invokeServiceEndpoint(method, ctx.bodyToReal, ctx.contentTypeToReal, url, headersToReal, interactionManipulations);
     }
 
     public class RecordingContext extends Context {
@@ -103,8 +101,8 @@ public class InteractionsRecorder implements InteractionsDelegate {
     @Override
     public void recordRequestBody(String bodyToReal, String contentTypeToReal, Context ctx) {
         RecordingContext rc = (RecordingContext) ctx;
-        this.bodyToReal = bodyToReal;
-        this.contentTypeToReal = contentTypeToReal;
+        ctx.bodyToReal = bodyToReal;
+        ctx.contentTypeToReal = contentTypeToReal;
         guardOut();
         rc.recording.append("### Body sent to the real server (").append(contentTypeToReal).append("):\n");
         rc.recording.append("\n");

@@ -55,6 +55,8 @@ public interface InteractionsDelegate {
     abstract class Context {
 
         final int interactionNum;
+        public String bodyToReal;
+        public String contentTypeToReal;
 
         Context(int interactionNum) {
             this.interactionNum = interactionNum;
