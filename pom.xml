@@ -11,7 +11,7 @@
 
     <groupId>com.paulhammant</groupId>
     <artifactId>servirtium</artifactId>
-    <version>0.2.3-SNAPSHOT</version>
+    <version>0.3</version>
     <packaging>jar</packaging>
 
     <name>Service Virtualized HTTP</name>
