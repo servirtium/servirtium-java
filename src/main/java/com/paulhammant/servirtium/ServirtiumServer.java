@@ -159,7 +159,7 @@ public class ServirtiumServer {
                         response.setHeader(hdrKey, hdrVal);
                     }
 
-                    interactionsDelegate.recordResponseHeaders(context, realResponse.headers);
+                    context.recordResponseHeaders(realResponse.headers);
 
                     interactionsDelegate.recordResponseBody(context, realResponse.body, realResponse.statusCode, realResponse.contentType);
 

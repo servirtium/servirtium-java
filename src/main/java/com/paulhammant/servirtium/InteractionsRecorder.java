@@ -93,6 +93,21 @@ public class InteractionsRecorder implements InteractionsDelegate {
             this.recording.append("\n");
         }
 
+        @Override
+        public void recordResponseHeaders(String[] headers) {
+            guardOut();
+            this.recording.append("### Resulting headers back from the real server:\n");
+            this.recording.append("\n");
+            this.recording.append("```\n");
+            for (String hdrLine : headers) {
+                int ix = hdrLine.indexOf(": ");
+                String hdrKey = hdrLine.substring(0, ix);
+                String hdrVal = hdrLine.substring(ix + 2);
+                this.recording.append(hdrKey).append(": ").append(interactionManipulations.headerReplacement(hdrKey, hdrVal)).append("\n");
+            }
+            this.recording.append("```\n");
+            this.recording.append("\n");
+        }
 
     }
 
@@ -109,23 +124,6 @@ public class InteractionsRecorder implements InteractionsDelegate {
         if (out == null) {
             fail("Recording in progress, but previous recording was finishedScript() and/or no new setMarkdownScriptFilename(..) started");
         }
-    }
-
-    @Override
-    public void recordResponseHeaders(Context ctx, String[] headers) {
-        RecordingContext rc = (RecordingContext) ctx;
-        guardOut();
-        rc.recording.append("### Resulting headers back from the real server:\n");
-        rc.recording.append("\n");
-        rc.recording.append("```\n");
-        for (String hdrLine : headers) {
-            int ix = hdrLine.indexOf(": ");
-            String hdrKey = hdrLine.substring(0, ix);
-            String hdrVal = hdrLine.substring(ix + 2);
-            rc.recording.append(hdrKey).append(": ").append(interactionManipulations.headerReplacement(hdrKey, hdrVal)).append("\n");
-        }
-        rc.recording.append("```\n");
-        rc.recording.append("\n");
     }
 
     @Override
