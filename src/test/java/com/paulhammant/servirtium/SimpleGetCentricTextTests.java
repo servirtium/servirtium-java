@@ -210,6 +210,7 @@ public class SimpleGetCentricTextTests {
                 "\n"), sanitizeDate(out.toString()));
 
     }
+
     @Test
     public void canRecordASimpleGetOfARedditJsonDocumentAndPrettify() throws Exception {
 
@@ -289,6 +290,96 @@ public class SimpleGetCentricTextTests {
                 "  \"Accept-Language\": \"en-US,en;q\\u003d0.8\",\n" +
                 "  \"Host\": \"headers.jsontest.com\",\n" +
                 "  \"Accept-Charset\": \"ISO-8859-1,utf-8;q\\u003d0.7,*;q\\u003d0.3\",\n" +
+                "  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q\\u003d0.9,*/*;q\\u003d0.8\"\n" +
+                "}\n" +
+                "```\n" +
+                "\n"), sanitizeDate(out.toString()));
+
+    }
+
+    @Test
+    public void canRecordASimpleGetOfARedditJsonDocumentAndPrettifyAndRedactPartOfTheRecordingOnly() throws Exception {
+
+        final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
+
+        final SimpleHeaderInteractionManipulations interactionManipulations =
+                new SimpleHeaderInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
+                .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:");
+
+        MarkdownRecorder recorder = new MarkdownRecorder(
+                new ServiceInteropViaOkHttp(),
+                interactionManipulations)
+                .withRedaction("ISO-\\d\\d\\d\\d-1", "ISO-NNNN-1")
+                .withRedaction("dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36", "XxXxXxXxX");
+
+        servirtiumServer = new ServirtiumServer(serverMonitor,
+                8080, false,
+                interactionManipulations, recorder)
+                .withPrettyPrintedTextBodies();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        recorder.setOutputStream("foo", out);
+        servirtiumServer.startApp();
+
+        given()
+                .header("User-Agent", "RestAssured")
+        .when()
+                .get("/paul-hammant/servirtium/master/src/test/resources/test.json")
+        .then()
+                .assertThat()
+                .statusCode(200)
+                .body(equalTo("{\n" +
+                        "  \"Accept-Language\": \"en-US,en;q\\u003d0.8\",\n" +
+                        "  \"Host\": \"headers.jsontest.com\",\n" +
+                        "  \"Accept-Charset\": \"ISO-8859-1,utf-8;q\\u003d0.7,*;q\\u003d0.3\",\n" +
+                        "  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q\\u003d0.9,*/*;q\\u003d0.8\"\n" +
+                        "}"))
+                .contentType("text/plain;charset=utf-8");
+
+        servirtiumServer.finishedScript();
+
+        // Order of headers is as originally sent
+        assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/src/test/resources/test.json\n" +
+                "\n" +
+                "### Request headers sent to the real server:\n" +
+                "\n" +
+                "```\n" +
+                "Accept: */*\n" +
+                "User-Agent: RestAssured\n" +
+                "Connection: keep-alive\n" +
+                "Host: raw.githubusercontent.com\n" +
+                "Accept-Encoding: gzip,deflate\n" +
+                "```\n" +
+                "\n" +
+                "### Body sent to the real server ():\n" +
+                "\n" +
+                "```\n" +
+                "\n" +
+                "```\n" +
+                "\n" +
+                "### Resulting headers back from the real server:\n" +
+                "\n" +
+                "```\n" +
+                "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
+                "Strict-Transport-Security: max-age=31536000\n" +
+                "ETag: \"XxXxXxXxX\"\n" +
+                "Content-Type: text/plain; charset=utf-8\n" +
+                "Cache-Control: max-age=300\n" +
+                "Accept-Ranges: bytes\n" +
+                "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+                "Via: 1.1 varnish\n" +
+                "Connection: keep-alive\n" +
+                "Vary: Authorization,Accept-Encoding\n" +
+                "Access-Control-Allow-Origin: *\n" +
+                "```\n" +
+                "\n" +
+                "### Resulting body back from the real server (200: text/plain; charset=utf-8):\n" +
+                "\n" +
+                "```\n" +
+                "{\n" +
+                "  \"Accept-Language\": \"en-US,en;q\\u003d0.8\",\n" +
+                "  \"Host\": \"headers.jsontest.com\",\n" +
+                "  \"Accept-Charset\": \"ISO-NNNN-1,utf-8;q\\u003d0.7,*;q\\u003d0.3\",\n" +
                 "  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q\\u003d0.9,*/*;q\\u003d0.8\"\n" +
                 "}\n" +
                 "```\n" +

@@ -38,7 +38,10 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import static junit.framework.TestCase.fail;
 
@@ -48,6 +51,7 @@ public class MarkdownRecorder implements Interactor {
     private final InteractionManipulations interactionManipulations;
     private PrintStream out;
     private Map<Integer, String> interactions = new HashMap<>();
+    private Map<String, String> redactions = new HashMap<>();
 
     public MarkdownRecorder(ServiceInteroperation serviceInteroperation,
                             InteractionManipulations interactionManipulations) {
@@ -58,6 +62,11 @@ public class MarkdownRecorder implements Interactor {
     public ServiceResponse getServiceResponseForRequest(String method, String url, Map<String, String> headersToReal, Interaction interaction) throws IOException {
         headersToReal.remove("Accept-Encoding");
         return serviceInteroperation.invokeServiceEndpoint(method, interaction.bodyToReal, interaction.contentTypeToReal, url, headersToReal, interactionManipulations);
+    }
+
+    public MarkdownRecorder withRedaction(String regex, String replacement) {
+        redactions.put(regex, replacement);
+        return this;
     }
 
     public class RecordingInteraction extends Interaction {
@@ -102,6 +111,9 @@ public class MarkdownRecorder implements Interactor {
                 int ix = hdrLine.indexOf(": ");
                 String hdrKey = hdrLine.substring(0, ix);
                 String hdrVal = hdrLine.substring(ix + 2);
+                for (String next : redactions.keySet()) {
+                    hdrVal = hdrVal.replaceAll(next, redactions.get(next));
+                }
                 this.recording.append(hdrKey).append(": ").append(interactionManipulations.headerReplacement(hdrKey, hdrVal)).append("\n");
             }
             this.recording.append("```\n");
@@ -119,6 +131,9 @@ public class MarkdownRecorder implements Interactor {
             this.recording.append("\n");
             this.recording.append("```\n");
             if (body instanceof String) {
+                for (String next : redactions.keySet()) {
+                    body = ((String) body).replaceAll(next, redactions.get(next));
+                }
                 this.recording.append(body).append("\n");
             } else if (body instanceof byte[]) {
                 this.recording.append(Base64.getEncoder().encodeToString((byte[]) body)).append("\n");
