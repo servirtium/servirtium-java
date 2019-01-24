@@ -20,7 +20,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ServirtiumServer {
 
-    private InteractionManipulations interactionManipulations;
     private Server jettyServer;
     private InteractionsDelegate interactionsDelegate;
     private int interactionNum = -1;
@@ -31,9 +30,8 @@ public class ServirtiumServer {
 
     public ServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
                             InteractionManipulations interactionManipulations,
-                            InteractionsDelegate interactionsDelegate) {
-        this.interactionManipulations = interactionManipulations;
-        this.interactionsDelegate = interactionsDelegate;
+                            InteractionsDelegate interactor) {
+        this.interactionsDelegate = interactor;
 
         jettyServer = new Server(port);
         // How the f*** do you turn off Embedded Jetty's logging???
@@ -61,109 +59,20 @@ public class ServirtiumServer {
 
                 try {
 
-                    InteractionsDelegate.Context context = interactionsDelegate.newInteraction(method, request.getRequestURI().toString(), interactionNum);
+                    InteractionsDelegate.Context context = interactor.newInteraction(method, request.getRequestURI().toString(), interactionNum);
                     String contentType = request.getContentType();
                     if (contentType == null) {
                         contentType = "";
                     }
 
-                    Enumeration<String> hdrs = request.getHeaderNames();
-
-                    ServletInputStream is = request.getInputStream();
-
-                    if (is.available() > 0) {
-
-                        if (isText(contentType)) {
-                            bodyToReal = null;
-                            String characterEncoding = request.getCharacterEncoding();
-                            if (characterEncoding == null) {
-                                characterEncoding = "utf-8";
-                            }
-                            try (Scanner scanner = new Scanner(is, characterEncoding)) {
-                                bodyToReal = scanner.useDelimiter("\\A").next();
-                            }
-                            if (pretty) {
-                                bodyToReal = prettifyJson(bodyToReal);
-                            }
-                        } else {
-                            byte[] targetArray = new byte[is.available()];
-                            is.read(targetArray);
-                            bodyToReal = "//SERVIRTIUM+Base64: " + Base64.getEncoder().encodeToString(targetArray)
-                                    .replaceAll("(.{60})", "$1\n");
-                            ;
-                        }
-                    }
-
-                    while (hdrs.hasMoreElements()) {
-                        String hdr = hdrs.nextElement();
-                        String hdrVal = request.getHeader(hdr);
-                        hdrVal = interactionManipulations.headerReplacement(hdr, hdrVal);
-                        headersToReal.put(hdr, hdrVal);
-                        interactionManipulations.changeSingleHeaderForRequestToReal(method, hdr, headersToReal);
-                    }
-
-                    interactionManipulations.changeAllHeadersForRequestToReal(headersToReal);
-
-                    context.recordRequestHeaders(headersToReal);
-
-                    bodyToReal = interactionManipulations.changeBodyForRequestToReal(bodyToReal);
-
-                    context.recordRequestBody(bodyToReal, contentType);
-
-                    final String requestUrl = interactionManipulations.changeUrlForRequestToReal(url);
+                    final String requestUrl = prepareHeadersAndBodyForReal(request, method, url, bodyToReal, headersToReal, context, contentType, interactionManipulations);
 
                     // INTERACTION
-                    ServiceResponse realResponse = interactionsDelegate.getServiceResponseForRequest(method, requestUrl,
-                            headersToReal, context);
+                    ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, headersToReal, context);
 
-                    ArrayList<String > newHeaders = new ArrayList<>();
-                    for (int i = 0; i < realResponse.headers.length; i++) {
-                        String headerBackFromReal = realResponse.headers[i];
-                        String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderReturnedBackFromReal(i, headerBackFromReal);
-                        if (potentiallyChangedHeader != null) {
-                            newHeaders.add(potentiallyChangedHeader);
-                        }
-                    }
-                    interactionManipulations.changeAllHeadersReturnedBackFromReal(newHeaders);
+                    realResponse = processHeadersAndBodyBackFromReal(response, context, realResponse, interactionManipulations);
 
-                    // recreate response
-                    response.setStatus(realResponse.statusCode);
-
-                    if (realResponse.body instanceof String) {
-                        if (pretty) {
-                            String body = prettifyJson((String) realResponse.body);
-                            if (!body.equals(realResponse.body)) {
-//                                realResponse.headers
-                                realResponse = realResponse.withRevisedBody(body);
-                                ArrayList<String> tmp = new ArrayList<>();
-                                for (String header : newHeaders) {
-                                    if (header.startsWith("Content-Length")) {
-                                        tmp.add("Content-Length: " + body.length());
-                                    } else {
-                                        tmp.add(header);
-                                    }
-                                }
-                                newHeaders = tmp;
-
-                            }
-
-                        }
-                    }
-
-                    realResponse = realResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
-
-                    for (String header : newHeaders) {
-                        int ix = header.indexOf(": ");
-                        String hdrKey = header.substring(0, ix);
-                        String hdrVal = header.substring(ix + 2);
-                        response.setHeader(hdrKey, hdrVal);
-                    }
-
-                    context.recordResponseHeaders(realResponse.headers);
-
-                    context.recordResponseBody(realResponse.body, realResponse.statusCode, realResponse.contentType);
-
-                    interactionsDelegate.addInteraction(context);
+                    interactor.addInteraction(context);
 
 
                     if (realResponse.contentType != null) {
@@ -185,6 +94,103 @@ public class ServirtiumServer {
                 }
             }
         });
+    }
+
+    private ServiceResponse processHeadersAndBodyBackFromReal(HttpServletResponse response, InteractionsDelegate.Context context, ServiceResponse realResponse, InteractionManipulations interactionManipulations) {
+        ArrayList<String > newHeaders = new ArrayList<>();
+        for (int i = 0; i < realResponse.headers.length; i++) {
+            String headerBackFromReal = realResponse.headers[i];
+            String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderReturnedBackFromReal(i, headerBackFromReal);
+            if (potentiallyChangedHeader != null) {
+                newHeaders.add(potentiallyChangedHeader);
+            }
+        }
+        interactionManipulations.changeAllHeadersReturnedBackFromReal(newHeaders);
+
+        // recreate response
+        response.setStatus(realResponse.statusCode);
+
+        if (realResponse.body instanceof String) {
+            if (pretty) {
+                String body = prettifyJson((String) realResponse.body);
+                if (!body.equals(realResponse.body)) {
+//                                realResponse.headers
+                    realResponse = realResponse.withRevisedBody(body);
+                    ArrayList<String> tmp = new ArrayList<>();
+                    for (String header : newHeaders) {
+                        if (header.startsWith("Content-Length")) {
+                            tmp.add("Content-Length: " + body.length());
+                        } else {
+                            tmp.add(header);
+                        }
+                    }
+                    newHeaders = tmp;
+
+                }
+
+            }
+        }
+
+        realResponse = realResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
+
+        for (String header : newHeaders) {
+            int ix = header.indexOf(": ");
+            String hdrKey = header.substring(0, ix);
+            String hdrVal = header.substring(ix + 2);
+            response.setHeader(hdrKey, hdrVal);
+        }
+
+        context.recordResponseHeaders(realResponse.headers);
+
+        context.recordResponseBody(realResponse.body, realResponse.statusCode, realResponse.contentType);
+        return realResponse;
+    }
+
+    private String prepareHeadersAndBodyForReal(HttpServletRequest request, String method, String url, String bodyToReal, Map<String, String> headersToReal, InteractionsDelegate.Context context, String contentType, InteractionManipulations interactionManipulations) throws IOException {
+        Enumeration<String> hdrs = request.getHeaderNames();
+
+        ServletInputStream is = request.getInputStream();
+
+        if (is.available() > 0) {
+
+            if (isText(contentType)) {
+                bodyToReal = null;
+                String characterEncoding = request.getCharacterEncoding();
+                if (characterEncoding == null) {
+                    characterEncoding = "utf-8";
+                }
+                try (Scanner scanner = new Scanner(is, characterEncoding)) {
+                    bodyToReal = scanner.useDelimiter("\\A").next();
+                }
+                if (pretty) {
+                    bodyToReal = prettifyJson(bodyToReal);
+                }
+            } else {
+                byte[] targetArray = new byte[is.available()];
+                is.read(targetArray);
+                bodyToReal = "//SERVIRTIUM+Base64: " + Base64.getEncoder().encodeToString(targetArray)
+                        .replaceAll("(.{60})", "$1\n");
+                ;
+            }
+        }
+
+        while (hdrs.hasMoreElements()) {
+            String hdr = hdrs.nextElement();
+            String hdrVal = request.getHeader(hdr);
+            hdrVal = interactionManipulations.headerReplacement(hdr, hdrVal);
+            headersToReal.put(hdr, hdrVal);
+            interactionManipulations.changeSingleHeaderForRequestToReal(method, hdr, headersToReal);
+        }
+
+        interactionManipulations.changeAllHeadersForRequestToReal(headersToReal);
+
+        context.recordRequestHeaders(headersToReal);
+
+        bodyToReal = interactionManipulations.changeBodyForRequestToReal(bodyToReal);
+
+        context.recordRequestBody(bodyToReal, contentType);
+
+        return interactionManipulations.changeUrlForRequestToReal(url);
     }
 
     public ServirtiumServer withPrettyPrintedTextBodies() {
