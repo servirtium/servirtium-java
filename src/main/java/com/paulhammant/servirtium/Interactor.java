@@ -71,4 +71,24 @@ public interface Interactor {
 
     }
 
+    public class NullObject implements Interactor {
+        @Override
+        public void finishedScript(int interactionNum) {
+        }
+
+        @Override
+        public void setScriptFilename(String filename) {
+        }
+
+        @Override
+        public ServiceResponse getServiceResponseForRequest(String method, String url, Map<String, String> headersToReal, Interaction interaction) throws IOException {
+            return null;
+        }
+
+        @Override
+        public Interaction newInteraction(String method, String path, int interactionNum, String url) {
+            return null;
+        }
+    }
+
 }
