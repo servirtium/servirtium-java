@@ -1,8 +1,5 @@
 package com.paulhammant.servirtium;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParser;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
@@ -17,6 +14,9 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
+import static com.paulhammant.servirtium.IsJsonEqual.prettifyJson;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ServirtiumServer {
 
@@ -83,7 +83,7 @@ public class ServirtiumServer {
                                 bodyToReal = scanner.useDelimiter("\\A").next();
                             }
                             if (pretty) {
-                                bodyToReal = maybePrettifyBody(bodyToReal);
+                                bodyToReal = prettifyJson(bodyToReal);
                             }
                         } else {
                             byte[] targetArray = new byte[is.available()];
@@ -94,44 +94,43 @@ public class ServirtiumServer {
                         }
                     }
 
-
                     while (hdrs.hasMoreElements()) {
                         String hdr = hdrs.nextElement();
                         String hdrVal = request.getHeader(hdr);
                         hdrVal = interactionManipulations.headerReplacement(hdr, hdrVal);
                         headersToReal.put(hdr, hdrVal);
-                        interactionManipulations.potentiallyManipulateHeader(method, hdr, headersToReal);
+                        interactionManipulations.changeSingleHeaderForRequestToReal(method, hdr, headersToReal);
                     }
 
-                    interactionManipulations.changeHeadersToSendToReal(headersToReal);
+                    interactionManipulations.changeAllHeadersForRequestToReal(headersToReal);
 
                     interactionsDelegate.recordRequestHeaders(headersToReal, ctx);
 
+                    bodyToReal = interactionManipulations.changeBodyForRequestToReal(bodyToReal);
                     interactionsDelegate.recordRequestBody(bodyToReal, contentType, ctx);
-
 
                     final String requestUrl = interactionManipulations.changeUrlForRequestToReal(url);
 
+                    // INTERACTION
                     ServiceResponse realResponse = interactionsDelegate.getServiceResponseForRequest(method, requestUrl,
                             headersToReal, ctx);
 
                     ArrayList<String > newHeaders = new ArrayList<>();
                     for (int i = 0; i < realResponse.headers.length; i++) {
                         String headerBackFromReal = realResponse.headers[i];
-                        String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderBackFromReal(i, headerBackFromReal);
+                        String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderReturnedBackFromReal(i, headerBackFromReal);
                         if (potentiallyChangedHeader != null) {
                             newHeaders.add(potentiallyChangedHeader);
                         }
                     }
-                    interactionManipulations.changeAllHeadersBackFromReal(newHeaders);
+                    interactionManipulations.changeAllHeadersReturnedBackFromReal(newHeaders);
 
                     // recreate response
-
                     response.setStatus(realResponse.statusCode);
 
                     if (realResponse.body instanceof String) {
                         if (pretty) {
-                            String body = maybePrettifyBody((String) realResponse.body);
+                            String body = prettifyJson((String) realResponse.body);
                             if (!body.equals(realResponse.body)) {
 //                                realResponse.headers
                                 realResponse = realResponse.withRevisedBody(body);
@@ -244,19 +243,6 @@ public class ServirtiumServer {
 
     public void finishedScript() {
         interactionsDelegate.finishedScript(getInteractionNum());
-    }
-
-    private String maybePrettifyBody(String bodyToReal) {
-        final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try {
-            return gson.toJson(new JsonParser().parse(bodyToReal).getAsJsonObject());
-        } catch (Exception e) {
-        }
-        try {
-            return gson.toJson(new JsonParser().parse(bodyToReal).getAsJsonArray());
-        } catch (Exception e2) {
-        }
-        return bodyToReal;
     }
 
     public static class NullObject extends ServirtiumServer {

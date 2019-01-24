@@ -36,7 +36,7 @@ import java.util.Map;
 
 public interface InteractionManipulations {
 
-    default void potentiallyManipulateHeader(String method, String currentHeader, Map<String, String> allHeadersToReal) {
+    default void changeSingleHeaderForRequestToReal(String method, String currentHeader, Map<String, String> allHeadersToReal) {
     }
 
     default String headerReplacement(String hdrKey, String hdrVal) {
@@ -47,16 +47,19 @@ public interface InteractionManipulations {
         return url;
     }
 
-    default String changeSingleHeaderBackFromReal(int ix, String headerBackFromReal) {
+    default String changeSingleHeaderReturnedBackFromReal(int ix, String headerBackFromReal) {
         return headerBackFromReal;
     }
 
-    default void changeAllHeadersBackFromReal(ArrayList<String> headers) {
-
+    default void changeAllHeadersReturnedBackFromReal(ArrayList<String> headers) {
     }
 
-    default void changeHeadersToSendToReal(Map<String, String> headersToReal) {
+    default void changeAllHeadersForRequestToReal(Map<String, String> headersToReal) {
+    }
 
+    /** This may be Base84 encoded binary, but you're seldomn going to want to change that */
+    default String changeBodyForRequestToReal(String body) {
+        return body;
     }
 
     class Noop implements InteractionManipulations {

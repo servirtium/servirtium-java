@@ -42,7 +42,7 @@ public class SubversionInteractionManipulations extends SimpleHeaderInteractionM
     }
 
     @Override
-    public void potentiallyManipulateHeader(String method, String currentHeader, Map<String, String> allHeadersToReal) {
+    public void changeSingleHeaderForRequestToReal(String method, String currentHeader, Map<String, String> allHeadersToReal) {
         if (method.equals("OPTIONS") && currentHeader.equals("DAV")) {
             // hack: Subversion has THREE 'DAV' headers. OkHttp uses a map - oops
             // So let's pad the key with spaces to make unique keys ... annd that seems to work :)
@@ -53,7 +53,7 @@ public class SubversionInteractionManipulations extends SimpleHeaderInteractionM
             allHeadersToReal.put("User-Agent", getUserAgentString());
         }
 
-        super.potentiallyManipulateHeader(method, currentHeader, allHeadersToReal);
+        super.changeSingleHeaderForRequestToReal(method, currentHeader, allHeadersToReal);
     }
 
     protected String getUserAgentString() {
@@ -69,7 +69,7 @@ public class SubversionInteractionManipulations extends SimpleHeaderInteractionM
     }
 
     @Override
-    public String changeSingleHeaderBackFromReal(int ix, String headerBackFromReal) {
+    public String changeSingleHeaderReturnedBackFromReal(int ix, String headerBackFromReal) {
         if (headerBackFromReal.startsWith("DAV:")) {
             headerBackFromReal = "DAV:" + spaces(ix) + headerBackFromReal.substring(4);
         }

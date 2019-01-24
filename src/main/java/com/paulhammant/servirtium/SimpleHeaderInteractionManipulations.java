@@ -29,14 +29,14 @@ public class SimpleHeaderInteractionManipulations implements InteractionManipula
     }
 
     @Override
-    public void potentiallyManipulateHeader(String method, String currentHeader, Map<String, String> allHeadersToReal) {
+    public void changeSingleHeaderForRequestToReal(String method, String currentHeader, Map<String, String> allHeadersToReal) {
         if (currentHeader.equals("Host")) {
             allHeadersToReal.put("Host", allHeadersToReal.get("Host").replace(fromHost, toHost));
         }
     }
 
     @Override
-    public void changeAllHeadersBackFromReal(ArrayList<String> headers) {
+    public void changeAllHeadersReturnedBackFromReal(ArrayList<String> headers) {
         String[] hdrs = headers.toArray(new String[0]);
         for (String hdr : hdrs) {
             for (String pfx : headerPrefixesToRemove) {
