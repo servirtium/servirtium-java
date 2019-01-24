@@ -161,7 +161,10 @@ public class ServirtiumServer {
 
                     context.recordResponseHeaders(realResponse.headers);
 
-                    interactionsDelegate.recordResponseBody(context, realResponse.body, realResponse.statusCode, realResponse.contentType);
+                    context.recordResponseBody(realResponse.body, realResponse.statusCode, realResponse.contentType);
+
+                    interactionsDelegate.addInteraction(context);
+
 
                     if (realResponse.contentType != null) {
                         response.setContentType(realResponse.contentType);

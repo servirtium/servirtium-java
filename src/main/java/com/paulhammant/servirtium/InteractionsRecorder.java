@@ -109,6 +109,32 @@ public class InteractionsRecorder implements InteractionsDelegate {
             this.recording.append("\n");
         }
 
+        @Override
+        public void recordResponseBody(Object body, int statusCode, String contentType) {
+            guardOut();
+            String xtra = "";
+            if (body instanceof byte[]) {
+                xtra = " - Base64 below";
+            }
+            this.recording.append("### Resulting body back from the real server (").append(statusCode).append(": ").append(contentType).append(xtra).append("):\n");
+            this.recording.append("\n");
+            this.recording.append("```\n");
+            if (body instanceof String) {
+                this.recording.append(body).append("\n");
+            } else if (body instanceof byte[]) {
+                this.recording.append(Base64.getEncoder().encodeToString((byte[]) body)).append("\n");
+            } else {
+                throw new UnsupportedOperationException();
+            }
+            this.recording.append("```\n");
+            this.recording.append("\n");
+        }
+
+    }
+
+    @Override
+    public void addInteraction(Context context) {
+        this.interactions.put(context.interactionNum, ((RecordingContext) context).recording.toString());
     }
 
     @Override
@@ -124,30 +150,6 @@ public class InteractionsRecorder implements InteractionsDelegate {
         if (out == null) {
             fail("Recording in progress, but previous recording was finishedScript() and/or no new setMarkdownScriptFilename(..) started");
         }
-    }
-
-    @Override
-    public void recordResponseBody(Context ctx, Object body, int statusCode, String contentType) {
-        RecordingContext rc = (RecordingContext) ctx;
-        guardOut();
-        String xtra = "";
-        if (body instanceof byte[]) {
-            xtra = " - Base64 below";
-        }
-        rc.recording.append("### Resulting body back from the real server (").append(statusCode).append(": ").append(contentType).append(xtra).append("):\n");
-        rc.recording.append("\n");
-        rc.recording.append("```\n");
-        if (body instanceof String) {
-            rc.recording.append(body).append("\n");
-        } else if (body instanceof byte[]) {
-            rc.recording.append(Base64.getEncoder().encodeToString((byte[]) body)).append("\n");
-        } else {
-            throw new UnsupportedOperationException();
-        }
-        rc.recording.append("```\n");
-        rc.recording.append("\n");
-
-        this.interactions.put(rc.interactionNum, rc.recording.toString());
     }
 
     public void finishedScript(int interactionNum) {
