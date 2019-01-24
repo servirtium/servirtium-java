@@ -32,7 +32,7 @@ public class TodobackendDotComRecorderMain {
                 headersToReal.put("Referer", headersToReal.get("Referer").replace(super.fromUrl, super.toUrl));
             }
         };
-        Recorder recorder = new Recorder(
+        MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
         ServirtiumServer servirtiumServer = new ServirtiumServer(serverMonitor,
@@ -40,7 +40,7 @@ public class TodobackendDotComRecorderMain {
                 interactionManipulations, recorder)
                 .withPrettyPrintedTextBodies();
 
-        recorder.setMarkdownScriptFilename("src/test/resources/TodobackendDotComServiceRecording.md");
+        recorder.setScriptFilename("src/test/resources/TodobackendDotComServiceRecording.md");
         servirtiumServer.startApp();
 
         Runtime.getRuntime().addShutdownHook(new Thread(servirtiumServer::stop));

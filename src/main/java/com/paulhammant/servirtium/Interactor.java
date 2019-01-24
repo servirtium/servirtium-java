@@ -39,7 +39,7 @@ public interface Interactor {
 
     void finishedScript(int interactionNum);
 
-    void setMarkdownScriptFilename(String filename) throws FileNotFoundException;
+    void setScriptFilename(String filename) throws FileNotFoundException;
 
     ServiceResponse getServiceResponseForRequest(String method, String url,
                                                  Map<String, String> headersToReal, Interaction interaction) throws IOException;

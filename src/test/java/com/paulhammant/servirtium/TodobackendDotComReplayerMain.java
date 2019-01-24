@@ -21,14 +21,14 @@ public class TodobackendDotComReplayerMain {
                 headersToReal.put("Pragma", "no-cache");
             }
         };
-        Replayer replayer = new Replayer()
+        MarkdownReplayer replayer = new MarkdownReplayer()
                 .withForgivingOrderOfClientRequestHeaders();
 
         ServirtiumServer servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
                 8099, false,
                 pragma, replayer);
 
-        replayer.setMarkdownScriptFilename("src/test/resources/TodobackendDotComServiceRecording.md");
+        replayer.setScriptFilename("src/test/resources/TodobackendDotComServiceRecording.md");
         servirtiumServer.startApp();
 
         Runtime.getRuntime().addShutdownHook(new Thread(servirtiumServer::stop));

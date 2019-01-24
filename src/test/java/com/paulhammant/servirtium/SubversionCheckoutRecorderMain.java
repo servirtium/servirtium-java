@@ -59,7 +59,7 @@ public class SubversionCheckoutRecorderMain {
         createWorkDirAndDeleteCheckout(tempDir);
 
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
-        Recorder recorder = new Recorder(
+        MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 new SubversionInteractionManipulations("", ""));
         ServirtiumServer servirtiumServer = new ServirtiumServer(serverMonitor,

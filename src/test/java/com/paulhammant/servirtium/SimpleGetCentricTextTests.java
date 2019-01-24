@@ -116,7 +116,7 @@ public class SimpleGetCentricTextTests {
     public void canRecordASimpleGetFromApachesSubversionViaOkHttp() throws Exception {
 
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
-        Recorder recorder = new Recorder(
+        MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org"));
         servirtiumServer = new ServirtiumServer(serverMonitor,
@@ -144,7 +144,7 @@ public class SimpleGetCentricTextTests {
                 .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:");
 
 
-        Recorder recorder = new Recorder(
+        MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
         servirtiumServer = new ServirtiumServer(serverMonitor,
@@ -218,7 +218,7 @@ public class SimpleGetCentricTextTests {
                 .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:");
 
 
-        Recorder recorder = new Recorder(
+        MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
         servirtiumServer = new ServirtiumServer(serverMonitor,
@@ -299,7 +299,7 @@ public class SimpleGetCentricTextTests {
     @Test
     public void canReplayASimpleGetFromApachesSubversion() throws Exception {
 
-        Replayer replayer = new Replayer();
+        MarkdownReplayer replayer = new MarkdownReplayer();
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
 
         servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),

@@ -52,12 +52,12 @@ public class SubversionCheckoutReplayerMain {
         String tempDir = new File(".").getAbsolutePath() + "/.servirtium_tmp/";
         createWorkDirAndDeleteCheckout(tempDir);
 
-        Replayer replayer = new Replayer(new ReplayMonitor.Default());
+        MarkdownReplayer replayer = new MarkdownReplayer(new MarkdownReplayer.ReplayMonitor.Default());
         ServirtiumServer servirtiumServer = new ServirtiumServer(
                 new ServerMonitor.Console(),
                 8099, false,
                 new SubversionInteractionManipulations("", ""), replayer);
-        replayer.setMarkdownScriptFilename(CHECKOUT_RECORDER_TEST_MD);
+        replayer.setScriptFilename(CHECKOUT_RECORDER_TEST_MD);
         servirtiumServer.startApp();
 
         Runtime.getRuntime().addShutdownHook(new Thread(servirtiumServer::stop));

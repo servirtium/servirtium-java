@@ -42,15 +42,15 @@ import java.util.Map;
 
 import static junit.framework.TestCase.fail;
 
-public class Recorder implements Interactor {
+public class MarkdownRecorder implements Interactor {
 
     private final ServiceInteroperation serviceInteroperation;
     private final InteractionManipulations interactionManipulations;
     private PrintStream out;
     private Map<Integer, String> interactions = new HashMap<>();
 
-    public Recorder(ServiceInteroperation serviceInteroperation,
-                    InteractionManipulations interactionManipulations) {
+    public MarkdownRecorder(ServiceInteroperation serviceInteroperation,
+                            InteractionManipulations interactionManipulations) {
         this.serviceInteroperation = serviceInteroperation;
         this.interactionManipulations = interactionManipulations;
     }
@@ -147,7 +147,7 @@ public class Recorder implements Interactor {
 
     private void guardOut() {
         if (out == null) {
-            fail("Recording in progress, but previous recording was finishedScript() and/or no new setMarkdownScriptFilename(..) started");
+            fail("Recording in progress, but previous recording was finishedScript() and/or no new setScriptFilename(..) started");
         }
     }
 
@@ -162,7 +162,7 @@ public class Recorder implements Interactor {
         }
     }
 
-    public void setMarkdownScriptFilename(String filename) throws FileNotFoundException {
+    public void setScriptFilename(String filename) throws FileNotFoundException {
         setOutputStream(filename, new FileOutputStream(filename));
     }
 

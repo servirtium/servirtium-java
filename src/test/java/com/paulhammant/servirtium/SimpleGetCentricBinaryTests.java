@@ -107,7 +107,7 @@ public class SimpleGetCentricBinaryTests {
     public void canRecordABinaryGetFromApachesSubversionViaOkHttp() throws Exception {
 
         final SubversionInteractionManipulations interactionManipulations = new SubversionInteractionManipulations("localhost:8080", "svn.apache.org");
-        Recorder recorder = new Recorder(
+        MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
 
@@ -132,7 +132,7 @@ public class SimpleGetCentricBinaryTests {
     public void canRecordAPngGetFromWikimedia() throws Exception {
 
         final SimpleHeaderInteractionManipulations interactionManipulations = new SimpleHeaderInteractionManipulations("localhost:8080", "upload.wikimedia.org");
-        Recorder recorder = new Recorder(
+        MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
                 .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:"));
@@ -210,7 +210,7 @@ public class SimpleGetCentricBinaryTests {
     public void canRecordASvgGetFromWikimedia() throws Exception {
 
         final SimpleHeaderInteractionManipulations interactionManipulations = new SimpleHeaderInteractionManipulations("localhost:8080", "upload.wikimedia.org");
-        Recorder recorder = new Recorder(
+        MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
                 .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:")
@@ -299,7 +299,7 @@ public class SimpleGetCentricBinaryTests {
     public void canReplayABinaryGetFromApachesSubversion() throws Exception {
 
         final SubversionInteractionManipulations interactionManipulations = new SubversionInteractionManipulations("localhost:8080", "svn.apache.org");
-        Replayer replayer = new Replayer();
+        MarkdownReplayer replayer = new MarkdownReplayer();
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
 
         servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
