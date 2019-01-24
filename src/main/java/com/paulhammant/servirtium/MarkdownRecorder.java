@@ -60,7 +60,7 @@ public class MarkdownRecorder implements Interactor {
     }
 
     public ServiceResponse getServiceResponseForRequest(String method, String url, Map<String, String> headersToReal, Interaction interaction) throws IOException {
-        headersToReal.remove("Accept-Encoding");
+        //headersToReal.remove("Accept-Encoding");
         return serviceInteroperation.invokeServiceEndpoint(method, interaction.bodyToReal, interaction.contentTypeToReal, url, headersToReal, interactionManipulations);
     }
 

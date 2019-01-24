@@ -39,6 +39,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Base64;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -57,7 +58,6 @@ public class SimpleGetCentricBinaryTests {
             "Connection: keep-alive\n" +
             "User-Agent: SVN/1.10.0 (x86_64-apple-darwin17.0.0) serf/1.3.9\n" +
             "Host: svn.apache.org\n" +
-            "Accept-Encoding: gzip,deflate\n" +
             "```\n" +
             "\n" +
             "### Body sent to the real server ():\n" +
@@ -106,7 +106,10 @@ public class SimpleGetCentricBinaryTests {
     @Test
     public void canRecordABinaryGetFromApachesSubversionViaOkHttp() throws Exception {
 
-        final SubversionInteractionManipulations interactionManipulations = new SubversionInteractionManipulations("localhost:8080", "svn.apache.org");
+        final SimpleInteractionManipulations interactionManipulations =
+                new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
+                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
@@ -131,7 +134,8 @@ public class SimpleGetCentricBinaryTests {
     @Test
     public void canRecordAPngGetFromWikimedia() throws Exception {
 
-        final SimpleHeaderInteractionManipulations interactionManipulations = new SimpleHeaderInteractionManipulations("localhost:8080", "upload.wikimedia.org");
+        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("localhost:8080", "upload.wikimedia.org");
+
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
@@ -209,7 +213,8 @@ public class SimpleGetCentricBinaryTests {
     @Test
     public void canRecordASvgGetFromWikimedia() throws Exception {
 
-        final SimpleHeaderInteractionManipulations interactionManipulations = new SimpleHeaderInteractionManipulations("localhost:8080", "upload.wikimedia.org");
+        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("localhost:8080", "upload.wikimedia.org");
+
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
@@ -298,7 +303,10 @@ public class SimpleGetCentricBinaryTests {
     @Test
     public void canReplayABinaryGetFromApachesSubversion() throws Exception {
 
-        final SubversionInteractionManipulations interactionManipulations = new SubversionInteractionManipulations("localhost:8080", "svn.apache.org");
+        final SimpleInteractionManipulations interactionManipulations =
+                new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
+                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+
         MarkdownReplayer replayer = new MarkdownReplayer();
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
 

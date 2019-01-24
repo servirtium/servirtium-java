@@ -127,82 +127,82 @@ public class MarkdownReplayer implements Interactor {
     @Override
     public ServiceResponse getServiceResponseForRequest(String method, String url, Map<String, String> headersToReal, Interaction interaction) throws IOException {
 
-        ReplayingInteraction rc = (ReplayingInteraction) interaction;
+        ReplayingInteraction replay = (ReplayingInteraction) interaction;
 
-        rc.ix = rc.interactionText.indexOf(SERVIRTIUM_INTERACTION + rc.interactionNum + ":", 0);
-        if (rc.ix == -1) {
-            monitor.couldNotFindInteraction(rc.interactionNum, filename);
+        replay.ix = replay.interactionText.indexOf(SERVIRTIUM_INTERACTION + replay.interactionNum + ":", 0);
+        if (replay.ix == -1) {
+            monitor.couldNotFindInteraction(replay.interactionNum, filename);
         }
-        int lineEnd = rc.interactionText.indexOf("\n", rc.ix);
-        String line = rc.interactionText.substring(rc.ix + SERVIRTIUM_INTERACTION.length(), lineEnd);
+        int lineEnd = replay.interactionText.indexOf("\n", replay.ix);
+        String line = replay.interactionText.substring(replay.ix + SERVIRTIUM_INTERACTION.length(), lineEnd);
         String[] parts = line.split(" ");
         int iNum = Integer.parseInt(parts[0].replace(":",""));
         String mdMethod = parts[1];
 
         if (!method.equals(mdMethod)) {
-            monitor.methodNotAsExpected(rc.interactionNum, filename, mdMethod, method);
+            monitor.methodNotAsExpected(replay.interactionNum, filename, mdMethod, method);
         }
         String mdUrl = parts[2];
         if (!url.endsWith(mdUrl)) {
-            monitor.urlNotAsExpected(url, rc, mdMethod, mdUrl, filename);
+            monitor.urlNotAsExpected(url, replay, mdMethod, mdUrl, filename);
         }
 
         final String REQUEST_HEADERS_SENT_TO_REAL_SERVER = "### Request headers sent to the real server";
-        rc.ix = rc.interactionText.indexOf(REQUEST_HEADERS_SENT_TO_REAL_SERVER, rc.ix);
-        if (rc.ix == -1) {
-            monitor.markdownSectionHeadingMissing(rc.interactionNum, REQUEST_HEADERS_SENT_TO_REAL_SERVER, filename);
+        replay.ix = replay.interactionText.indexOf(REQUEST_HEADERS_SENT_TO_REAL_SERVER, replay.ix);
+        if (replay.ix == -1) {
+            monitor.markdownSectionHeadingMissing(replay.interactionNum, REQUEST_HEADERS_SENT_TO_REAL_SERVER, filename);
         }
 
-        String headersReceived = getCodeBlock(rc);
+        String headersReceived = getCodeBlock(replay);
 
         final String BODY_SENT_TO_REAL_SERVER = "### Body sent to the real server";
-        rc.ix = rc.interactionText.indexOf(BODY_SENT_TO_REAL_SERVER, rc.ix);
-        if (rc.ix == -1) {
-            monitor.markdownSectionHeadingMissing(rc.interactionNum, BODY_SENT_TO_REAL_SERVER, filename);
+        replay.ix = replay.interactionText.indexOf(BODY_SENT_TO_REAL_SERVER, replay.ix);
+        if (replay.ix == -1) {
+            monitor.markdownSectionHeadingMissing(replay.interactionNum, BODY_SENT_TO_REAL_SERVER, filename);
         }
-        lineEnd = rc.interactionText.indexOf("\n", rc.ix);
-        line = rc.interactionText.substring(rc.ix +4, lineEnd);
+        lineEnd = replay.interactionText.indexOf("\n", replay.ix);
+        line = replay.interactionText.substring(replay.ix +4, lineEnd);
         String contentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
 
         // TODO remove trim()
         final String[] prevRecorded = this.reorderMaybe(headersReceived).split("\n");
-        final String[] current = reorderMaybe(rc.headers.trim()).split("\n");
+        final String[] current = reorderMaybe(replay.headers.trim()).split("\n");
         try {
             assertThat(current, arrayContainingInAnyOrder(prevRecorded));
         } catch (AssertionError e) {
             String msg = e.getMessage();
-            monitor.headersFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename, msg);
+            monitor.headersFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, msg);
         }
 
-        String bodyReceived = getCodeBlock(rc);
+        String bodyReceived = getCodeBlock(replay);
 
         try {
-            assertThat(rc.bodyToReal, equalTo(bodyReceived));
+            assertThat(replay.bodyToReal, equalTo(bodyReceived));
         } catch (AssertionError e) {
             String msg = e.getMessage();
-            monitor.bodyFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename, msg);
+            monitor.bodyFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, msg);
         }
 
         try {
-            assertThat(rc.contentTypeToReal, equalTo(contentType));
+            assertThat(replay.contentTypeToReal, equalTo(contentType));
         } catch (AssertionError e) {
             String msg = e.getMessage();
-            monitor.contentTypeFromClientToRealNotAsExpected(rc.interactionNum, mdMethod, filename, msg);
+            monitor.contentTypeFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, msg);
         }
 
         final String RESULTING_HEADERS_BACK_FROM_REAL_SERVER = "### Resulting headers back from the real server";
-        rc.ix = rc.interactionText.indexOf(RESULTING_HEADERS_BACK_FROM_REAL_SERVER, rc.ix);
-        if (rc.ix == -1) {
-            monitor.markdownSectionHeadingMissing(rc.interactionNum, RESULTING_HEADERS_BACK_FROM_REAL_SERVER, filename);
+        replay.ix = replay.interactionText.indexOf(RESULTING_HEADERS_BACK_FROM_REAL_SERVER, replay.ix);
+        if (replay.ix == -1) {
+            monitor.markdownSectionHeadingMissing(replay.interactionNum, RESULTING_HEADERS_BACK_FROM_REAL_SERVER, filename);
         }
-        String[] headersToReturn = getCodeBlock(rc).split("\n");
+        String[] headersToReturn = getCodeBlock(replay).split("\n");
         final String RESULTING_BODY_BACK_FROM_REAL_SERVER = "### Resulting body back from the real server";
-        rc.ix = rc.interactionText.indexOf(RESULTING_BODY_BACK_FROM_REAL_SERVER, rc.ix);
-        if (rc.ix == -1) {
-            monitor.markdownSectionHeadingMissing(rc.interactionNum, RESULTING_BODY_BACK_FROM_REAL_SERVER, filename);
+        replay.ix = replay.interactionText.indexOf(RESULTING_BODY_BACK_FROM_REAL_SERVER, replay.ix);
+        if (replay.ix == -1) {
+            monitor.markdownSectionHeadingMissing(replay.interactionNum, RESULTING_BODY_BACK_FROM_REAL_SERVER, filename);
         }
-        lineEnd = rc.interactionText.indexOf("\n", rc.ix);
-        line = rc.interactionText.substring(rc.ix +4, lineEnd);
+        lineEnd = replay.interactionText.indexOf("\n", replay.ix);
+        line = replay.interactionText.substring(replay.ix +4, lineEnd);
         String statusContent = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
         parts = statusContent.split(": ");
         int statusCode = Integer.parseInt(parts[0]);
@@ -210,9 +210,9 @@ public class MarkdownReplayer implements Interactor {
         Object bodyToReturn;
         if (contentType.endsWith("- Base64 below")) {
             contentType = contentType.substring(0, contentType.indexOf(" "));
-            bodyToReturn = Base64.getDecoder().decode(getCodeBlock(rc));
+            bodyToReturn = Base64.getDecoder().decode(getCodeBlock(replay));
         } else {
-            bodyToReturn = getCodeBlock(rc);
+            bodyToReturn = getCodeBlock(replay);
         }
         return new ServiceResponse(bodyToReturn, contentType, statusCode, headersToReturn);
 
@@ -228,11 +228,11 @@ public class MarkdownReplayer implements Interactor {
         return headersReceived;
     }
 
-    private String getCodeBlock(ReplayingInteraction rc) {
-        rc.ix = rc.interactionText.indexOf("\n```\n", rc.ix);
-        int endCodeBlock = rc.interactionText.indexOf("\n```\n", rc.ix + 5);
-        String rv = rc.interactionText.substring(rc.ix + 5, endCodeBlock);
-        rc.ix = endCodeBlock + 5;
+    private String getCodeBlock(ReplayingInteraction replayingInteraction) {
+        replayingInteraction.ix = replayingInteraction.interactionText.indexOf("\n```\n", replayingInteraction.ix);
+        int endCodeBlock = replayingInteraction.interactionText.indexOf("\n```\n", replayingInteraction.ix + 5);
+        String rv = replayingInteraction.interactionText.substring(replayingInteraction.ix + 5, endCodeBlock);
+        replayingInteraction.ix = endCodeBlock + 5;
         return rv;
     }
 
@@ -247,7 +247,7 @@ public class MarkdownReplayer implements Interactor {
         return new ReplayingInteraction(interactionText, interactionNum);
     }
 
-    interface ReplayMonitor {
+    public interface ReplayMonitor {
 
         void finishedButMoreInteractionsYetToDo(int interaction, String filename);
 

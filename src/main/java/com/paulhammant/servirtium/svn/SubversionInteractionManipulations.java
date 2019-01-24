@@ -31,11 +31,11 @@
 
 package com.paulhammant.servirtium.svn;
 
-import com.paulhammant.servirtium.SimpleHeaderInteractionManipulations;
+import com.paulhammant.servirtium.SimpleInteractionManipulations;
 
 import java.util.Map;
 
-public class SubversionInteractionManipulations extends SimpleHeaderInteractionManipulations {
+public class SubversionInteractionManipulations extends SimpleInteractionManipulations {
 
     public SubversionInteractionManipulations(String fromUrl, String toUrl) {
         super(fromUrl, toUrl);

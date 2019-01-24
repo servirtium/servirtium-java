@@ -24,7 +24,7 @@ public class TodobackendDotComRecorderMain {
          */
 
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
-        final SimpleHeaderInteractionManipulations interactionManipulations = new SimpleHeaderInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
+        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
             @Override
             public void changeAllHeadersForRequestToReal(Map<String, String> headersToReal) {
                 headersToReal.put("Cache-Control", "no-cache");

@@ -52,7 +52,6 @@ public class SimplePostCentricTests {
             "User-Agent: RestAssured\n" +
             "Connection: keep-alive\n" +
             "Host: postman-echo.com\n" +
-            "Accept-Encoding: gzip,deflate\n" +
             "Content-Length: 19\n" +
             "Content-Type: text/plain; charset=ISO-8859-1\n" +
             "```\n" +
@@ -92,7 +91,9 @@ public class SimplePostCentricTests {
     @Test
     public void canRecordASimplePostToPostmanEchoViaOkHttp() throws Exception {
 
-        final SimpleHeaderInteractionManipulations interactionManipulations = new SimpleHeaderInteractionManipulations("http://localhost:8080", "https://postman-echo.com");
+        final SimpleInteractionManipulations interactionManipulations =
+                new SimpleInteractionManipulations("http://localhost:8080", "https://postman-echo.com")
+                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -123,7 +124,8 @@ public class SimplePostCentricTests {
 
         servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
-                new SimpleHeaderInteractionManipulations("http://localhost:8080", "https://postman-echo.com"), replayer);
+                new SimpleInteractionManipulations("http://localhost:8080", "https://postman-echo.com")
+                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding"), replayer);
 
         servirtiumServer.startApp();
 

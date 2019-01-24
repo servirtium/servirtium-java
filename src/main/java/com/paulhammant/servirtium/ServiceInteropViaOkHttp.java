@@ -46,7 +46,15 @@ import static com.paulhammant.servirtium.ServirtiumServer.isText;
 
 public class ServiceInteropViaOkHttp implements ServiceInteroperation {
 
-    private OkHttpClient okHttpClient = new OkHttpClient();
+    private OkHttpClient okHttpClient;
+
+    public ServiceInteropViaOkHttp() {
+        makeOkHttpClient();
+    }
+
+    protected void makeOkHttpClient() {
+        okHttpClient = new OkHttpClient();
+    }
 
     @Override
     public ServiceResponse invokeServiceEndpoint(String method, String bodyToReal, String contentTypeToReal, String url, Map<String, String> headersToReal, InteractionManipulations interactionManipulations) throws InteractionException {
