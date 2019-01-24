@@ -63,13 +63,26 @@ public class InteractionsRecorder implements InteractionsDelegate {
         return serviceInteroperation.invokeServiceEndpoint(method, this.bodyToReal, this.contentTypeToReal, url, headersToReal, interactionManipulations);
     }
 
-    public static class RecordingContext extends Context {
+    public class RecordingContext extends Context {
 
         private StringBuilder recording = new StringBuilder();
 
         public RecordingContext(int interactionNumber) {
             super(interactionNumber);
         }
+
+        @Override
+        public void recordRequestHeaders(Map<String, String> headers) {
+            guardOut();
+            recording.append("### Request headers sent to the real server:\n\n");
+            recording.append("```\n");
+            for (String k : headers.keySet()) {
+                String v = headers.get(k);
+                recording.append(k).append(": ").append(v).append("\n");
+            }
+            recording.append("```\n\n");
+        }
+
     }
 
     @Override
@@ -85,19 +98,6 @@ public class InteractionsRecorder implements InteractionsDelegate {
         if (out == null) {
             fail("Recording in progress, but previous recording was finishedScript() and/or no new setMarkdownScriptFilename(..) started");
         }
-    }
-
-    @Override
-    public void recordRequestHeaders(Map<String, String> headers, Context ctx) {
-        RecordingContext rc = (RecordingContext) ctx; 
-        guardOut();
-        rc.recording.append("### Request headers sent to the real server:\n\n");
-        rc.recording.append("```\n");
-        for (String k : headers.keySet()) {
-            String v = headers.get(k);
-            rc.recording.append(k).append(": ").append(v).append("\n");
-        }
-        rc.recording.append("```\n\n");
     }
 
     @Override

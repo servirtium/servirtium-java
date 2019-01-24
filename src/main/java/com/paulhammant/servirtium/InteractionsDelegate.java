@@ -44,8 +44,6 @@ public interface InteractionsDelegate {
     ServiceResponse getServiceResponseForRequest(String method, String url,
                                                  Map<String, String> headersToReal, Context ctx) throws IOException;
 
-    void recordRequestHeaders(Map<String, String> headers, Context ctx);
-
     void recordRequestBody(String bodyToReal, String contentType, Context ctx);
 
     default void recordResponseHeaders(Context ctx, String[] headers) {}
@@ -54,13 +52,15 @@ public interface InteractionsDelegate {
 
     Context newInteraction(String method, String path, int interactionNum);
 
-    class Context {
+    abstract class Context {
 
-        public final int interactionNum;
+        final int interactionNum;
 
-        public Context(int interactionNum) {
+        Context(int interactionNum) {
             this.interactionNum = interactionNum;
         }
+
+        abstract void recordRequestHeaders(Map<String, String> header);
     }
 
 }

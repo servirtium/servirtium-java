@@ -105,18 +105,29 @@ public class InteractionsReplayer implements InteractionsDelegate {
         }
     }
 
-    public static class ReplayingContext extends Context {
+    public class ReplayingContext extends Context {
 
         private final String interactionText;
-        public int ix;
-        public String bodyToReal;
-        public String contentTypeToReal;
-        public String headers;
+        int ix;
+        String bodyToReal;
+        String contentTypeToReal;
+        private String headers;
 
         public ReplayingContext(String interactionText, int interactionNum) {
             super(interactionNum);
             this.interactionText = interactionText;
         }
+
+        @Override
+        public void recordRequestHeaders(Map<String, String> headers) {
+            StringBuilder sb = new StringBuilder();
+            for (String k : headers.keySet()) {
+                String v = headers.get(k);
+                sb.append(k).append(": ").append(v).append("\n");
+            }
+            this.headers = sb.toString();
+        }
+
     }
 
     @Override
@@ -243,17 +254,6 @@ public class InteractionsReplayer implements InteractionsDelegate {
         ReplayingContext rc = (ReplayingContext) ctx;
         rc.bodyToReal = bodyToReal;
         rc.contentTypeToReal = contentTypeToReal;
-    }
-
-    @Override
-    public void recordRequestHeaders(Map<String, String> headers, Context ctx) {
-        ReplayingContext rc = (ReplayingContext) ctx;
-        StringBuilder sb = new StringBuilder();
-        for (String k : headers.keySet()) {
-            String v = headers.get(k);
-            sb.append(k).append(": ").append(v).append("\n");
-        }
-        rc.headers = sb.toString();
     }
 
     @Override

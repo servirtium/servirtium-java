@@ -61,7 +61,7 @@ public class ServirtiumServer {
 
                 try {
 
-                    InteractionsDelegate.Context ctx = interactionsDelegate.newInteraction(method, request.getRequestURI().toString(), interactionNum);
+                    InteractionsDelegate.Context context = interactionsDelegate.newInteraction(method, request.getRequestURI().toString(), interactionNum);
                     String contentType = request.getContentType();
                     if (contentType == null) {
                         contentType = "";
@@ -104,16 +104,16 @@ public class ServirtiumServer {
 
                     interactionManipulations.changeAllHeadersForRequestToReal(headersToReal);
 
-                    interactionsDelegate.recordRequestHeaders(headersToReal, ctx);
+                    context.recordRequestHeaders(headersToReal);
 
                     bodyToReal = interactionManipulations.changeBodyForRequestToReal(bodyToReal);
-                    interactionsDelegate.recordRequestBody(bodyToReal, contentType, ctx);
+                    interactionsDelegate.recordRequestBody(bodyToReal, contentType, context);
 
                     final String requestUrl = interactionManipulations.changeUrlForRequestToReal(url);
 
                     // INTERACTION
                     ServiceResponse realResponse = interactionsDelegate.getServiceResponseForRequest(method, requestUrl,
-                            headersToReal, ctx);
+                            headersToReal, context);
 
                     ArrayList<String > newHeaders = new ArrayList<>();
                     for (int i = 0; i < realResponse.headers.length; i++) {
@@ -158,9 +158,9 @@ public class ServirtiumServer {
                         response.setHeader(hdrKey, hdrVal);
                     }
 
-                    interactionsDelegate.recordResponseHeaders(ctx, realResponse.headers);
+                    interactionsDelegate.recordResponseHeaders(context, realResponse.headers);
 
-                    interactionsDelegate.recordResponseBody(ctx, realResponse.body, realResponse.statusCode, realResponse.contentType);
+                    interactionsDelegate.recordResponseBody(context, realResponse.body, realResponse.statusCode, realResponse.contentType);
 
                     if (realResponse.contentType != null) {
                         response.setContentType(realResponse.contentType);
