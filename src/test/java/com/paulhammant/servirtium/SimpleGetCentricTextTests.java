@@ -38,6 +38,9 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 
 import static io.restassured.RestAssured.given;
+import static junit.framework.TestCase.assertTrue;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 
@@ -152,7 +155,9 @@ public class SimpleGetCentricTextTests {
 
     @After
     public void tearDown() {
-        servirtiumServer.stop();
+        if (servirtiumServer != null) {
+            servirtiumServer.stop();
+        }
     }
 
     @Test
@@ -183,7 +188,7 @@ public class SimpleGetCentricTextTests {
     }
 
     @Test
-    public void canRecordASimpleGetOfARedditJsonDocument() throws Exception {
+    public void canRecordASequenceThenBarfInPlaybackWithClearMessagingIfUnplayedInteractions() throws Exception {
 
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
@@ -194,28 +199,16 @@ public class SimpleGetCentricTextTests {
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
+
         servirtiumServer = new ServirtiumServer(serverMonitor,
                 8080, false,
                 interactionManipulations, recorder);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
-        servirtiumServer.startApp();
-
-        given()
-                .header("User-Agent", "RestAssured")
-        .when()
-                .get("/paul-hammant/servirtium/master/src/test/resources/test.json")
-        .then()
-                .assertThat()
-                .statusCode(200)
-                .body(equalTo("{\"Accept-Language\": \"en-US,en;q=0.8\",  \"Host\": \"headers.jsontest.com\",  \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\" }\n"))
-                .contentType("text/plain;charset=utf-8");
-
-        servirtiumServer.finishedScript();
 
         // Order of headers is as originally sent
-        assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/src/test/resources/test.json\n" +
+        String expected = "## Interaction 0: GET /paul-hammant/servirtium/master/src/test/resources/test.json\n" +
                 "\n" +
                 "### Request headers sent to the real server:\n" +
                 "\n" +
@@ -253,7 +246,103 @@ public class SimpleGetCentricTextTests {
                 "```\n" +
                 "{\"Accept-Language\": \"en-US,en;q=0.8\",  \"Host\": \"headers.jsontest.com\",  \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\" }\n\n" +
                 "```\n" +
-                "\n"), sanitizeDate(out.toString()));
+                "\n" +
+                "## Interaction 1: GET /paul-hammant/servirtium/master/src/test/resources/does-not-exist.json\n" +
+                "\n" +
+                "### Request headers sent to the real server:\n" +
+                "\n" +
+                "```\n" +
+                "Accept: */*\n" +
+                "User-Agent: RestAssured\n" +
+                "Connection: keep-alive\n" +
+                "Host: raw.githubusercontent.com\n" +
+                "```\n" +
+                "\n" +
+                "### Body sent to the real server ():\n" +
+                "\n" +
+                "```\n" +
+                "\n" +
+                "```\n" +
+                "\n" +
+                "### Resulting headers back from the real server:\n" +
+                "\n" +
+                "```\n" +
+                "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
+                "Strict-Transport-Security: max-age=31536000\n" +
+                "Content-Length: 15\n" +
+                "Accept-Ranges: bytes\n" +
+                "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+                "Via: 1.1 varnish\n" +
+                "Connection: keep-alive\n" +
+                "Vary: Authorization,Accept-Encoding\n" +
+                "Access-Control-Allow-Origin: *\n" +
+                "```\n" +
+                "\n" +
+                "### Resulting body back from the real server (404: null - Base64 below):\n" +
+                "\n" +
+                "```\n" +
+                "NDA0OiBOb3QgRm91bmQK\n" +
+                "```\n" +
+                "\n";
+
+        servirtiumServer.startApp();
+
+        given()
+                .header("User-Agent", "RestAssured")
+        .when()
+                .get("/paul-hammant/servirtium/master/src/test/resources/test.json")
+        .then()
+                .assertThat()
+                .statusCode(200)
+                .body(equalTo("{\"Accept-Language\": \"en-US,en;q=0.8\",  \"Host\": \"headers.jsontest.com\",  \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\" }\n"))
+                .contentType("text/plain;charset=utf-8");
+
+        given()
+                .header("User-Agent", "RestAssured")
+        .when()
+                .get("/paul-hammant/servirtium/master/src/test/resources/does-not-exist.json")
+        .then()
+                .assertThat()
+                .statusCode(404);
+
+        servirtiumServer.stop();
+        servirtiumServer = null;
+
+        assertEquals(sanitizeDate(expected), sanitizeDate(out.toString()));
+
+        expected = expected.replace("RestAssured", "Hack-To-Force-Failure");
+
+        MarkdownReplayer replayer = new MarkdownReplayer(new MarkdownReplayer.ReplayMonitor.Default());
+
+        replayer.setPlaybackConversation(expected);
+
+        servirtiumServer = new ServirtiumServer(serverMonitor,
+                8080, false,
+                interactionManipulations, replayer);
+
+        servirtiumServer.startApp();
+
+        try {
+            given()
+                    .header("User-Agent", "RestAssured")
+                    .when()
+                    .get("/paul-hammant/servirtium/master/src/test/resources/test.json")
+                    .then()
+                    .assertThat()
+                    .statusCode(200)
+                    .body(equalTo("{\"Accept-Language\": \"en-US,en;q=0.8\",  \"Host\": \"headers.jsontest.com\",  \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\" }\n"))
+                    .contentType("text/plain;charset=utf-8");
+        } catch (AssertionError e) {
+            assertThat(e.getMessage(), containsString("but: Not matched: \"User-Agent: RestAssured\""));
+        }
+
+        try {
+            servirtiumServer.stop();
+        } catch (AssertionError e) {
+            assertThat(e.getMessage(), containsString("There are more recorded interactions after last replayed interaction: #0"));
+        }
+        servirtiumServer = null;
+
 
     }
 

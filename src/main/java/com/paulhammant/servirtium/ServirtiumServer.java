@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 import static com.paulhammant.servirtium.IsJsonEqual.prettifyJson;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ServirtiumServer {
 
@@ -23,6 +22,7 @@ public class ServirtiumServer {
     private Interactor interactor;
     private int interactionNum = -1;
     private boolean pretty = false;
+    boolean failed = false;
 
     private ServirtiumServer() {
     }
@@ -67,25 +67,37 @@ public class ServirtiumServer {
                     // INTERACTION
                     ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, headersToReal, interaction);
 
-                    realResponse = processHeadersAndBodyBackFromReal(response, interaction, realResponse, interactionManipulations);
+                    realResponse = processHeadersAndBodyBackFromReal(interaction, realResponse, interactionManipulations);
 
                     interactor.addInteraction(interaction);
 
+                    response.setStatus(realResponse.statusCode);
+
+                    for (String header : realResponse.headers) {
+                        int ix = header.indexOf(": ");
+                        String hdrKey = header.substring(0, ix);
+                        String hdrVal = header.substring(ix + 2);
+                        response.setHeader(hdrKey, hdrVal);
+                    }
+
                     if (realResponse.contentType != null) {
                         response.setContentType(realResponse.contentType);
-                        if (realResponse.body instanceof String) {
-                            response.getWriter().write((String) realResponse.body);
-                        } else {
-                            response.getOutputStream().write((byte[]) realResponse.body);
-                        }
+                    }
+
+                    if (realResponse.body instanceof String) {
+                        response.getWriter().write((String) realResponse.body);
+                    } else {
+                        response.getOutputStream().write((byte[]) realResponse.body);
                     }
 
                     monitor.interactionFinished(interactionNum, method, url);
                 } catch (AssertionError assertionError) {
+                    failed = true;
                     response.setContentType("text/plain");
                     response.getWriter().write("Servirtium Server AssertionError: " + assertionError.getMessage());
                     monitor.interactionFailed(interactionNum, method, url, assertionError);
                 } catch (Throwable throwable) {
+                    failed = true;
                     response.setContentType("text/plain");
                     response.getWriter().write("Servirtium Server unexpected Throwable: " + throwable.getMessage());
                     monitor.unexpectedRequestError(throwable);
@@ -98,7 +110,7 @@ public class ServirtiumServer {
         });
     }
 
-    private ServiceResponse processHeadersAndBodyBackFromReal(HttpServletResponse response, Interactor.Interaction interaction, ServiceResponse realResponse, InteractionManipulations interactionManipulations) {
+    private ServiceResponse processHeadersAndBodyBackFromReal(Interactor.Interaction interaction, ServiceResponse realResponse, InteractionManipulations interactionManipulations) {
         ArrayList<String > newHeaders = new ArrayList<>();
         for (int i = 0; i < realResponse.headers.length; i++) {
             String headerBackFromReal = realResponse.headers[i];
@@ -110,8 +122,6 @@ public class ServirtiumServer {
         interactionManipulations.changeAllHeadersReturnedBackFromReal(newHeaders);
 
         // recreate response
-        response.setStatus(realResponse.statusCode);
-
         if (realResponse.body instanceof String) {
             if (pretty) {
                 String body = prettifyJson((String) realResponse.body);
@@ -134,13 +144,6 @@ public class ServirtiumServer {
         }
 
         realResponse = realResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
-
-        for (String header : newHeaders) {
-            int ix = header.indexOf(": ");
-            String hdrKey = header.substring(0, ix);
-            String hdrVal = header.substring(ix + 2);
-            response.setHeader(hdrKey, hdrVal);
-        }
 
         interaction.recordResponseHeaders(realResponse.headers);
 
@@ -223,13 +226,16 @@ public class ServirtiumServer {
     }
 
     public void stop() {
-        interactor.finishedScript(getInteractionNum()); // just in case
         try {
-            jettyServer.setStopTimeout(1);
-            jettyServer.stop();
-            System.out.println("STOPPED? Jetty State: " + jettyServer.getState());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            interactor.finishedScript(getInteractionNum(), failed); // just in case
+        } finally {
+            try {
+                jettyServer.setStopTimeout(1);
+                jettyServer.stop();
+                System.out.println("STOPPED? Jetty State: " + jettyServer.getState());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -254,7 +260,7 @@ public class ServirtiumServer {
     }
 
     public void finishedScript() {
-        interactor.finishedScript(getInteractionNum());
+        interactor.finishedScript(getInteractionNum(), failed);
     }
 
     public static class NullObject extends ServirtiumServer {

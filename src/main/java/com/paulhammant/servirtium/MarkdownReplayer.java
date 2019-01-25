@@ -97,8 +97,8 @@ public class MarkdownReplayer implements Interactor {
     }
 
     @Override
-    public void finishedScript(int interactionNum) {
-        if (allMarkdownInteractions.size() - interactionNum > 1) {
+    public void finishedScript(int interactionNum, boolean failed) {
+        if (failed && (allMarkdownInteractions.size() - interactionNum) > 1) {
             monitor.finishedButMoreInteractionsYetToDo(interactionNum, filename);
         }
     }

@@ -37,7 +37,7 @@ import java.util.Map;
 
 public interface Interactor {
 
-    void finishedScript(int interactionNum);
+    void finishedScript(int interactionNum, boolean failed);
 
     void setScriptFilename(String filename) throws FileNotFoundException;
 
@@ -73,7 +73,7 @@ public interface Interactor {
 
     public class NullObject implements Interactor {
         @Override
-        public void finishedScript(int interactionNum) {
+        public void finishedScript(int interactionNum, boolean failed) {
         }
 
         @Override

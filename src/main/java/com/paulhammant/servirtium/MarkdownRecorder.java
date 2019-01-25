@@ -38,10 +38,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Base64;
 import java.util.HashMap;
-import java.util.IdentityHashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import static junit.framework.TestCase.fail;
 
@@ -174,11 +171,15 @@ public class MarkdownRecorder implements Interactor {
         }
     }
 
-    public void finishedScript(int interactionNum) {
+    public void finishedScript(int interactionNum, boolean failed) {
         if (this.out != null) {
             int i = 0;
             while (this.interactions.size() >0) {
                 this.out.print(this.interactions.remove(i++));
+            }
+            if (failed) {
+                this.out.println("# Failure noted during recording.\n\nMeaning this recording may be shorter than intended. " +
+                        "That all depends on how the test was coded though.");
             }
             this.out.close();
             this.out = null;
