@@ -70,8 +70,8 @@ public class MarkdownRecorder implements Interactor {
 
         private StringBuilder recording = new StringBuilder();
 
-        RecordingInteraction(int interactionNumber) {
-            super(interactionNumber);
+        RecordingInteraction(int interactionNumber, String context) {
+            super(interactionNumber, context);
         }
 
         @Override
@@ -157,9 +157,9 @@ public class MarkdownRecorder implements Interactor {
     }
 
     @Override
-    public Interaction newInteraction(String method, String path, int interactionNum, String url) {
+    public Interaction newInteraction(String method, String path, int interactionNum, String url, String context) {
         guardOut();
-        RecordingInteraction rc = new RecordingInteraction(interactionNum);
+        RecordingInteraction rc = new RecordingInteraction(interactionNum, context);
 
         rc.recording.append("## Interaction ").append(interactionNum).append(": ").append(method).append(" ").append(path).append("\n\n");
         return rc;

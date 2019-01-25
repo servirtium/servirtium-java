@@ -44,18 +44,20 @@ public interface Interactor {
     ServiceResponse getServiceResponseForRequest(String method, String url,
                                                  Map<String, String> headersToReal, Interaction interaction) throws IOException;
 
-    Interaction newInteraction(String method, String path, int interactionNum, String url);
+    Interaction newInteraction(String method, String path, int interactionNum, String url, String context);
 
     default void addInteraction(Interaction interaction) {}
 
     abstract class Interaction {
 
         final int interactionNum;
+        public final String context;
         String bodyToReal;
         String contentTypeToReal;
 
-        Interaction(int interactionNum) {
+        Interaction(int interactionNum, String context) {
             this.interactionNum = interactionNum;
+            this.context = context;
         }
 
         abstract void recordRequestHeaders(Map<String, String> header);
@@ -86,7 +88,7 @@ public interface Interactor {
         }
 
         @Override
-        public Interaction newInteraction(String method, String path, int interactionNum, String url) {
+        public Interaction newInteraction(String method, String path, int interactionNum, String url, String context) {
             return null;
         }
     }

@@ -54,6 +54,10 @@ public interface InteractionManipulations {
     default void changeAllHeadersReturnedBackFromReal(ArrayList<String> headers) {
     }
 
+    default String changeBodyReturnedBackFromReal(String body) {
+        return body;
+    }
+
     default void changeAllHeadersForRequestToReal(Map<String, String> headersToReal) {
     }
 

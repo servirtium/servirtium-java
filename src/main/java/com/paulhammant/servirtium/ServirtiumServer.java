@@ -2,6 +2,7 @@ package com.paulhammant.servirtium;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.eclipse.jetty.util.log.Logger;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,8 @@ public class ServirtiumServer {
     private int interactionNum = -1;
     private boolean pretty = false;
     boolean failed = false;
+
+    private String context = "no context";
 
     private ServirtiumServer() {
     }
@@ -53,7 +56,7 @@ public class ServirtiumServer {
                 Map<String, String> headersToReal = new HashMap<>();
 
                 try {
-                    Interactor.Interaction interaction = interactor.newInteraction(method, request.getRequestURI().toString(), interactionNum, url);
+                    Interactor.Interaction interaction = interactor.newInteraction(method, request.getRequestURI().toString(), interactionNum, url, context);
 
                     monitor.interactionStarted(interactionNum, interaction);
 
@@ -90,17 +93,17 @@ public class ServirtiumServer {
                         response.getOutputStream().write((byte[]) realResponse.body);
                     }
 
-                    monitor.interactionFinished(interactionNum, method, url);
+                    monitor.interactionFinished(interactionNum, method, url, context);
                 } catch (AssertionError assertionError) {
                     failed = true;
                     response.setContentType("text/plain");
                     response.getWriter().write("Servirtium Server AssertionError: " + assertionError.getMessage());
-                    monitor.interactionFailed(interactionNum, method, url, assertionError);
+                    monitor.interactionFailed(interactionNum, method, url, assertionError, context);
                 } catch (Throwable throwable) {
                     failed = true;
                     response.setContentType("text/plain");
                     response.getWriter().write("Servirtium Server unexpected Throwable: " + throwable.getMessage());
-                    monitor.unexpectedRequestError(throwable);
+                    monitor.unexpectedRequestError(throwable, context);
                     throw throwable; // stick your debugger here
                 } finally {
                     // Inform jetty that this request has now been handled
@@ -108,6 +111,10 @@ public class ServirtiumServer {
                 }
             }
         });
+    }
+
+    public void setContext(String context) {
+        this.context = context;
     }
 
     private ServiceResponse processHeadersAndBodyBackFromReal(Interactor.Interaction interaction, ServiceResponse realResponse, InteractionManipulations interactionManipulations) {
@@ -121,8 +128,10 @@ public class ServirtiumServer {
         }
         interactionManipulations.changeAllHeadersReturnedBackFromReal(newHeaders);
 
-        // recreate response
         if (realResponse.body instanceof String) {
+            realResponse = realResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromReal((String) realResponse.body));
+            // recreate response
+
             if (pretty) {
                 String body = prettifyJson((String) realResponse.body);
                 if (!body.equals(realResponse.body)) {
@@ -137,9 +146,7 @@ public class ServirtiumServer {
                         }
                     }
                     newHeaders = tmp;
-
                 }
-
             }
         }
 
@@ -232,7 +239,6 @@ public class ServirtiumServer {
             try {
                 jettyServer.setStopTimeout(1);
                 jettyServer.stop();
-                System.out.println("STOPPED? Jetty State: " + jettyServer.getState());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -290,6 +296,30 @@ public class ServirtiumServer {
         @Override
         public void finishedScript() {
         }
+    }
+
+    public static void disableJettyLogging() {
+        System.setProperty("org.eclipse.jetty.util.log.class", "org.eclipse.jetty.util.log.StdErrLog");
+        System.setProperty("org.eclipse.jetty.LEVEL", "OFF");
+        org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+
+    }
+    public static class NoLogging implements Logger {
+        @Override public String getName() { return "no"; }
+        @Override public void warn(String msg, Object... args) { }
+        @Override public void warn(Throwable thrown) { }
+        @Override public void warn(String msg, Throwable thrown) { }
+        @Override public void info(String msg, Object... args) { }
+        @Override public void info(Throwable thrown) { }
+        @Override public void info(String msg, Throwable thrown) { }
+        @Override public boolean isDebugEnabled() { return false; }
+        @Override public void setDebugEnabled(boolean enabled) { }
+        @Override public void debug(String msg, Object... args) { }
+        @Override public void debug(Throwable thrown) { }
+        @Override public void debug(String msg, Throwable thrown) { }
+        @Override public Logger getLogger(String name) { return this; }
+        @Override public void ignore(Throwable ignored) { }
+        @Override public void debug(String s, long l) { }
     }
 
 }
