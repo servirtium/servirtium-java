@@ -40,8 +40,6 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-import static junit.framework.TestCase.fail;
-
 public class MarkdownRecorder implements Interactor {
 
     private final ServiceInteroperation serviceInteroperation;
@@ -167,7 +165,7 @@ public class MarkdownRecorder implements Interactor {
 
     private void guardOut() {
         if (out == null) {
-            fail("Recording in progress, but previous recording was finishedScript() and/or no new setScriptFilename(..) started");
+            throw new AssertionError("Recording in progress, but previous recording was finishedScript() and/or no new setScriptFilename(..) started");
         }
     }
 
