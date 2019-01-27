@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import static com.paulhammant.servirtium.IsJsonEqual.prettifyDocOrNot;
 import static com.paulhammant.servirtium.IsJsonEqual.prettifyJson;
 
 public class ServirtiumServer {
@@ -133,7 +134,7 @@ public class ServirtiumServer {
             // recreate response
 
             if (pretty) {
-                String body = prettifyJson((String) realResponse.body);
+                String body = prettifyDocOrNot((String) realResponse.body);
                 if (!body.equals(realResponse.body)) {
 //                                realResponse.headers
                     realResponse = realResponse.withRevisedBody(body);
