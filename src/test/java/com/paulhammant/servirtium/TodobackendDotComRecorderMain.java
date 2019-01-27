@@ -25,8 +25,27 @@ public class TodobackendDotComRecorderMain {
 
         // ([0-9a-f\-]{28,60})
 
-        final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
-        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
+        final SimpleInteractionManipulations manipulations = makeInteractionManipulations();
+
+        MarkdownRecorder recorder = new MarkdownRecorder(
+                new ServiceInteropViaOkHttp(), manipulations);
+
+        ServirtiumServer servirtiumServer = makeServirtiumServer(manipulations, recorder);
+
+        recorder.setScriptFilename("src/test/resources/TodobackendDotComServiceRecording.md");
+        servirtiumServer.startApp();
+
+        Runtime.getRuntime().addShutdownHook(new Thread(servirtiumServer::stop));
+    }
+
+    public static ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations manipulations, Interactor interactor) {
+        return new ServirtiumServer(new ServerMonitor.Console(), 8099, false,
+                manipulations, interactor)
+                .withPrettyPrintedTextBodies();
+    }
+
+    public static SimpleInteractionManipulations makeInteractionManipulations() {
+        return new SimpleInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
             @Override
             public void changeAllHeadersForRequestToReal(Map<String, String> headersToReal) {
                 headersToReal.put("Cache-Control", "no-cache");
@@ -34,19 +53,6 @@ public class TodobackendDotComRecorderMain {
                 headersToReal.put("Referer", headersToReal.get("Referer").replace(super.fromUrl, super.toUrl));
             }
         };
-        MarkdownRecorder recorder = new MarkdownRecorder(
-                new ServiceInteropViaOkHttp(),
-                interactionManipulations);
-        ServirtiumServer servirtiumServer = new ServirtiumServer(serverMonitor,
-                8099, false,
-                interactionManipulations, recorder)
-                .withPrettyPrintedTextBodies();
-
-        recorder.setScriptFilename("src/test/resources/TodobackendDotComServiceRecording.md");
-        servirtiumServer.startApp();
-
-        Runtime.getRuntime().addShutdownHook(new Thread(servirtiumServer::stop));
-
     }
 
 }
