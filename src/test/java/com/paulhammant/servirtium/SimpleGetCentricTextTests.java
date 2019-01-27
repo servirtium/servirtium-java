@@ -37,6 +37,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 
+import static com.paulhammant.servirtium.IsJsonEqual.jsonEqualTo;
 import static io.restassured.RestAssured.given;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -67,7 +68,6 @@ public class SimpleGetCentricTextTests {
             "### Resulting headers back from the real server:\n" +
             "\n" +
             "```\n";
-
 
     private static final String EXPECTED_2a =
             "Date: Thu, 08 Nov 2018 09:52:36 GMT\n" +
@@ -106,6 +106,7 @@ public class SimpleGetCentricTextTests {
             "\tThe Apache Software Foundation (http://www.apache.org/).\n" +
             "```\n" +
             "\n";
+
     public static final String REDACTED_CONVERSATION = "## Interaction 0: GET /paul-hammant/servirtium/master/src/test/resources/test.json\n" +
             "\n" +
             "### Request headers sent to the real server:\n" +
@@ -150,6 +151,13 @@ public class SimpleGetCentricTextTests {
             "}\n" +
             "```\n" +
             "\n";
+
+    final String sillyJSONdoc = "{\n" +
+            "  \"Accept-Language\": \"en-US,en;q\\u003d0.8\",\n" +
+            "  \"Host\": \"headers.jsontest.com\",\n" +
+            "  \"Accept-Charset\": \"ISO-8859-1,utf-8;q\\u003d0.7,*;q\\u003d0.3\",\n" +
+            "  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q\\u003d0.9,*/*;q\\u003d0.8\"\n" +
+            "}";
 
     private ServirtiumServer servirtiumServer;
 
@@ -294,7 +302,7 @@ public class SimpleGetCentricTextTests {
         .then()
                 .assertThat()
                 .statusCode(200)
-                .body(equalTo("{\"Accept-Language\": \"en-US,en;q=0.8\",  \"Host\": \"headers.jsontest.com\",  \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\" }\n"))
+                .body(jsonEqualTo(sillyJSONdoc))
                 .contentType("text/plain;charset=utf-8");
 
         given()
@@ -375,12 +383,7 @@ public class SimpleGetCentricTextTests {
         .then()
                 .assertThat()
                 .statusCode(200)
-                .body(equalTo("{\n" +
-                        "  \"Accept-Language\": \"en-US,en;q\\u003d0.8\",\n" +
-                        "  \"Host\": \"headers.jsontest.com\",\n" +
-                        "  \"Accept-Charset\": \"ISO-8859-1,utf-8;q\\u003d0.7,*;q\\u003d0.3\",\n" +
-                        "  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q\\u003d0.9,*/*;q\\u003d0.8\"\n" +
-                        "}"))
+                .body(equalTo(sillyJSONdoc))
                 .contentType("text/plain;charset=utf-8");
 
         servirtiumServer.finishedScript();
@@ -422,13 +425,163 @@ public class SimpleGetCentricTextTests {
                 "### Resulting body back from the real server (200: text/plain; charset=utf-8):\n" +
                 "\n" +
                 "```\n" +
-                "{\n" +
-                "  \"Accept-Language\": \"en-US,en;q\\u003d0.8\",\n" +
-                "  \"Host\": \"headers.jsontest.com\",\n" +
-                "  \"Accept-Charset\": \"ISO-8859-1,utf-8;q\\u003d0.7,*;q\\u003d0.3\",\n" +
-                "  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q\\u003d0.9,*/*;q\\u003d0.8\"\n" +
-                "}\n" +
+                sillyJSONdoc +
+                "\n" +
                 "```\n" +
+                "\n"), sanitizeDate(out.toString()));
+
+    }
+
+    @Test
+    public void worksThroughAproxyServer() throws Exception {
+
+        final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
+
+        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
+                .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
+                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+
+        MarkdownRecorder recorder = new MarkdownRecorder(
+                new ServiceInteropViaOkHttp(),
+                interactionManipulations);
+        servirtiumServer = new ServirtiumServer(serverMonitor,
+                8080, false,
+                interactionManipulations, recorder)
+                .withPrettyPrintedTextBodies();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        recorder.setOutputStream("foo", out);
+        servirtiumServer.startApp();
+
+        given()
+                .proxy("localhost", 8080)
+                .header("User-Agent", "RestAssured")
+        .when()
+                .get("http://raw.githubusercontent.com/paul-hammant/servirtium/master/src/test/resources/test.json")
+        .then()
+                .assertThat()
+                .statusCode(200)
+                .body(equalTo(sillyJSONdoc))
+                .contentType("text/plain;charset=utf-8");
+
+        servirtiumServer.finishedScript();
+
+        // Order of headers is as originally sent
+        assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/src/test/resources/test.json\n" +
+                "\n" +
+                "### Request headers sent to the real server:\n" +
+                "\n" +
+                "```\n" +
+                "Accept: */*\n" +
+                "User-Agent: RestAssured\n" +
+                "Host: raw.githubusercontent.com\n" +
+                "Proxy-Connection: Keep-Alive\n" +
+                "```\n" +
+                "\n" +
+                "### Body sent to the real server ():\n" +
+                "\n" +
+                "```\n" +
+                "\n" +
+                "```\n" +
+                "\n" +
+                "### Resulting headers back from the real server:\n" +
+                "\n" +
+                "```\n" +
+                "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
+                "Strict-Transport-Security: max-age=31536000\n" +
+                "ETag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
+                "Content-Type: text/plain; charset=utf-8\n" +
+                "Cache-Control: max-age=300\n" +
+                "Accept-Ranges: bytes\n" +
+                "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+                "Via: 1.1 varnish\n" +
+                "Connection: keep-alive\n" +
+                "Vary: Authorization,Accept-Encoding\n" +
+                "Access-Control-Allow-Origin: *\n" +
+                "```\n" +
+                "\n" +
+                "### Resulting body back from the real server (200: text/plain; charset=utf-8):\n" +
+                "\n" +
+                "```\n" +
+                sillyJSONdoc +
+                "\n```\n" +
+                "\n"), sanitizeDate(out.toString()));
+
+    }
+
+    @Test
+    public void worksThroughAproxyServer2() throws Exception {
+
+        final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
+
+        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
+                .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
+                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+
+        MarkdownRecorder recorder = new MarkdownRecorder(
+                new ServiceInteropViaOkHttp(),
+                interactionManipulations);
+        servirtiumServer = new ServirtiumServer(serverMonitor,
+                8080, false,
+                interactionManipulations, recorder)
+                .withPrettyPrintedTextBodies();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        recorder.setOutputStream("foo", out);
+        servirtiumServer.startApp();
+
+        given()
+                .proxy("localhost", 8080)
+                .header("User-Agent", "RestAssured")
+        .when()
+                .get("https://localhost:8080/paul-hammant/servirtium/master/src/test/resources/test.json")
+        .then()
+                .assertThat()
+                .statusCode(200)
+                .body(equalTo(sillyJSONdoc))
+                .contentType("text/plain;charset=utf-8");
+
+        servirtiumServer.finishedScript();
+
+        // Order of headers is as originally sent
+        assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/src/test/resources/test.json\n" +
+                "\n" +
+                "### Request headers sent to the real server:\n" +
+                "\n" +
+                "```\n" +
+                "Accept: */*\n" +
+                "User-Agent: RestAssured\n" +
+                "Host: raw.githubusercontent.com\n" +
+                "Proxy-Connection: Keep-Alive\n" +
+                "```\n" +
+                "\n" +
+                "### Body sent to the real server ():\n" +
+                "\n" +
+                "```\n" +
+                "\n" +
+                "```\n" +
+                "\n" +
+                "### Resulting headers back from the real server:\n" +
+                "\n" +
+                "```\n" +
+                "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
+                "Strict-Transport-Security: max-age=31536000\n" +
+                "ETag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
+                "Content-Type: text/plain; charset=utf-8\n" +
+                "Cache-Control: max-age=300\n" +
+                "Accept-Ranges: bytes\n" +
+                "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+                "Via: 1.1 varnish\n" +
+                "Connection: keep-alive\n" +
+                "Vary: Authorization,Accept-Encoding\n" +
+                "Access-Control-Allow-Origin: *\n" +
+                "```\n" +
+                "\n" +
+                "### Resulting body back from the real server (200: text/plain; charset=utf-8):\n" +
+                "\n" +
+                "```\n" +
+                sillyJSONdoc +
+                "\n```\n" +
                 "\n"), sanitizeDate(out.toString()));
 
     }
