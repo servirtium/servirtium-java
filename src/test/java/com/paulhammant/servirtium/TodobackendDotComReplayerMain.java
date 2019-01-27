@@ -19,6 +19,7 @@ public class TodobackendDotComReplayerMain {
             public void changeAllHeadersForRequestToReal(Map<String, String> headersToReal) {
                 headersToReal.put("Cache-Control", "no-cache");
                 headersToReal.put("Pragma", "no-cache");
+                headersToReal.put("Referer", headersToReal.get("Referer").replace(super.fromUrl, super.toUrl));
             }
         };
         MarkdownReplayer replayer = new MarkdownReplayer()
@@ -26,7 +27,8 @@ public class TodobackendDotComReplayerMain {
 
         ServirtiumServer servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
                 8099, false,
-                pragma, replayer);
+                pragma, replayer)
+                .withPrettyPrintedTextBodies();
 
         replayer.setScriptFilename("src/test/resources/TodobackendDotComServiceRecording.md");
         servirtiumServer.startApp();

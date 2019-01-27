@@ -23,6 +23,8 @@ public class TodobackendDotComRecorderMain {
 
          */
 
+        // ([0-9a-f\-]{28,60})
+
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
             @Override
