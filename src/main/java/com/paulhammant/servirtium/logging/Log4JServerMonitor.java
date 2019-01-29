@@ -11,7 +11,7 @@ public class Log4JServerMonitor implements ServerMonitor {
 
     @Override
     public void unexpectedRequestError(Throwable throwable, String context) {
-        log.debug("(context: " + context + ") unexpected request error: " + throwable.getMessage());
+        log.debug("(context: " + context + ") unexpected request error", throwable);
     }
 
     @Override

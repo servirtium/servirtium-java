@@ -1,5 +1,9 @@
 package com.paulhammant.servirtium;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+
 public interface ServerMonitor {
 
     default void interactionStarted(int interactionNum, Interactor.Interaction interactionl){}
@@ -18,7 +22,7 @@ public interface ServerMonitor {
         @Override
         public void unexpectedRequestError(Throwable throwable, String context) {
             printShevrons();
-            System.out.println(">> Servirtium >> (context: " + context + ") unexpected request error: " + throwable.getMessage());
+            System.out.println(">> Servirtium >> (context: " + context + ") unexpected request error: " + throwable.getMessage() + "\nStackTrace:\n" + stackTrace(throwable));
             printShevrons();        }
 
         private void printShevrons() {
@@ -41,5 +45,18 @@ public interface ServerMonitor {
             printShevrons();
         }
 
+    }
+
+    static String stackTrace(Throwable throwable) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        String stack = "";
+        throwable.printStackTrace(new PrintStream(baos));
+        try {
+            baos.close();
+            stack = baos.toString();
+        } catch (IOException e) {
+        }
+        return stack;
     }
 }
