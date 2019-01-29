@@ -12,6 +12,9 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
     private String[] headerPrefixesToRemoveFromRequest = new String[0];
     private String[] headerPrefixesToRemoveFromResponse = new String[0];
 
+    public SimpleInteractionManipulations() {
+        this("xx8suf98su98sf98sjxjcvlkxjcv" , "s89s8798s7df98sdf98sdf98sdf9");
+    }
     public SimpleInteractionManipulations(String fromUrl, String toUrl) {
         this.fromUrl = fromUrl;
         this.toUrl = toUrl;

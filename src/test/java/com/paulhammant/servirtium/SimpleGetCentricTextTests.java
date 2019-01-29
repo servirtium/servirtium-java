@@ -33,6 +33,7 @@ package com.paulhammant.servirtium;
 
 import com.paulhammant.servirtium.svn.SubversionInteractionManipulations;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -509,12 +510,12 @@ public class SimpleGetCentricTextTests {
 
     }
 
-    @Test
+    @Test @Ignore
     public void worksThroughAproxyServer2() throws Exception {
 
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
 
-        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
+        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations()
                 .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
                 .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
 

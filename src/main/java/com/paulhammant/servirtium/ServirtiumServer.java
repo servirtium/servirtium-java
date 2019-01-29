@@ -49,6 +49,7 @@ public class ServirtiumServer {
                 interactionNum++;
 
                 String method = request.getMethod();
+
                 final String url = (request.getRequestURL().toString().startsWith("http://") || request.getRequestURL().toString().startsWith("https://"))
                         ? request.getRequestURL().toString()
                         : "http://" + request.getRemoteHost() + ":" + request.getRemotePort() + request.getRequestURI();
@@ -57,6 +58,14 @@ public class ServirtiumServer {
                 Map<String, String> headersToReal = new HashMap<>();
 
                 try {
+
+                    if (method.equals("CONNECT")) {
+                        response.getWriter().write("Servirtium does not support CONNECT yet");
+                        response.setContentType("text/plain");
+                        response.setStatus(500);
+                        return;
+                    }
+
                     Interactor.Interaction interaction = interactor.newInteraction(method, request.getRequestURI().toString(), interactionNum, url, context);
 
                     monitor.interactionStarted(interactionNum, interaction);

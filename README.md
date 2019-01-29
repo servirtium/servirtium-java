@@ -15,6 +15,11 @@ And this is just for Java teams. Use [Mountebank](http://mbtest.org) for a more 
 solution and there's an established [WireMock](http://wiremock.org/) that's available for Java 
 solutions.
 
+Not only is this just for Java teams, it is for teams that want to do the testing that would 
+poke remote services, but do so **in process** and completely choreographed from the test class
+itself. In other words, no other processes involved, even if multiple threads are cooperating 
+here.
+
 ## What does that look like?
 
 See [ExampleSubversionCheckoutRecording.md](https://github.com/paul-hammant/servirtium/blob/master/src/test/resources/ExampleSubversionCheckoutRecording.md) 
@@ -27,26 +32,42 @@ the replayer for that recorded conversation.
 
 ## Limitations
 
-The recorder **isn't very good at handling parallel requests**. Most of the 
+1. The recorder **isn't very good at handling parallel requests**. Most of the 
 things you want to test will be serial (and  short) but if your client is a browser, 
-then you should half expect for parallelized operation to mess up a 
-recorded conversation. See that here [TodobackendDotComServiceRecording.md](https://github.com/paul-hammant/servirtium/blob/master/src/test/resources/TodobackendDotComServiceRecording.md). 
-Interaction 19 has request details but no response details. That's followed by a 
-second interaction 19 that has request details and TWO sets of response details - 
-ooops. [Here's the code for the recorder](https://github.com/paul-hammant/servirtium/blob/master/src/test/java/com/paulhammant/servirtium/SubversionCheckoutRecorderMain.java) 
-for that, and [here's the code for the replayer for that](https://github.com/paul-hammant/servirtium/blob/master/src/test/java/com/paulhammant/servirtium/SubversionCheckoutReplayerMain.java) 
+then you should half expect for parallelized operations.
+
+2. This tech can't function as a HTTP Proxy server over HTTPS. It must be a "man in the middle", 
+meaning you have to be able to override the endpoints of services during JUnit/TestNG invocation 
+in order to be able to record them (and play them back).
+ 
+3. Some server technologies (like Amazon S3) sign payloads in a way that breaks for middle-man 
+deployments. See [S3](https://github.com/paul-hammant/servirtium/wiki/S3).
+ 
+# Notable examples
+
+## Todobackend record and playback
+
+[TodobackendDotComServiceRecording.md](https://github.com/paul-hammant/servirtium/blob/master/src/test/resources/TodobackendDotComServiceRecording.md) 
+is a recording of the Mocha test site of "TodoBackend.com" against a real Ruby/Sinatra/Heroku 
+endpoint. This is not an example of something you'd orchestrate in Java/JUnit, but it is 
+an example of a sophisticated series of interactions over HTTP between a client (the browser) 
+and that Heroku server. Indeed, the intent of the site is show that multiple backends should be
+compatible with that JavaScript/Browser test suite.
+
+[Here's the code for the recorder](https://github.com/paul-hammant/servirtium/blob/master/src/test/java/com/paulhammant/servirtium/SubversionCheckoutRecorderMain.java) 
+of that, and [here's the code for the replayer](https://github.com/paul-hammant/servirtium/blob/master/src/test/java/com/paulhammant/servirtium/SubversionCheckoutReplayerMain.java)
+for that.  
+
+Note: playback doesn't pass all the tests because tehre's a randomized GUID in the request 
+payload that changes every time you run the test suite. It get's 1/3 of the way through though.
 
 **Note: this limitation is being resolved, presently**
 
 ## Readiness for general industry by lovers of test automation?
 
-Not ready yet, but being actively worked on.
+Nearly ready, but still being actively worked on.
 
-## OkHttp UniRest recorders
-
-The former is dependable, the latter requires work. See @Ignore in the test suite.
-
-## License & Legal
+## License & Legal warning
 
 BSD 2-Clause license (open source)
 
