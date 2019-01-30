@@ -1,5 +1,6 @@
 package com.paulhammant.servirtium;
 
+import com.github.underscore.lodash.U;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
@@ -8,14 +9,14 @@ import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
-public class IsJsonEqual extends BaseMatcher<String> {
+public class JsonAndXmlUtilities extends BaseMatcher<String> {
 
     private final static Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final JsonParser JSON_PARSER = new JsonParser();
 
     private final String expectedValue;
 
-    public IsJsonEqual(String equalArg) {
+    public JsonAndXmlUtilities(String equalArg) {
         expectedValue = prettifyJson(equalArg);
     }
 
@@ -48,19 +49,30 @@ public class IsJsonEqual extends BaseMatcher<String> {
     }
 
     public static String prettifyDocOrNot(String doc) {
-        try {
-            return GSON.toJson(JSON_PARSER.parse(doc).getAsJsonObject());
-        } catch (Exception e) {
+        char firstNonBlankChar = doc.trim().charAt(0);
+        if (firstNonBlankChar == '{') {
             try {
-                return GSON.toJson(JSON_PARSER.parse(doc).getAsJsonArray());
-            } catch (Exception e2) {
-                return doc;
+                return GSON.toJson(JSON_PARSER.parse(doc).getAsJsonObject());
+            } catch (Exception e) {
             }
         }
+        if (firstNonBlankChar == '[') {
+            try {
+                return GSON.toJson(JSON_PARSER.parse(doc).getAsJsonArray());
+            } catch (Exception e) {
+            }
+        }
+        if (firstNonBlankChar == '<') {
+            try {
+                return U.formatXml(doc);
+            } catch (Exception e) {
+            }
+        }
+        return doc;
     }
 
     @Factory
     public static Matcher<String> jsonEqualTo(String operand) {
-        return new IsJsonEqual(operand);
+        return new JsonAndXmlUtilities(operand);
     }
 }

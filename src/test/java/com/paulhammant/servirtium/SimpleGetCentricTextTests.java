@@ -38,7 +38,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 
-import static com.paulhammant.servirtium.IsJsonEqual.jsonEqualTo;
+import static com.paulhammant.servirtium.JsonAndXmlUtilities.jsonEqualTo;
 import static io.restassured.RestAssured.given;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.containsString;

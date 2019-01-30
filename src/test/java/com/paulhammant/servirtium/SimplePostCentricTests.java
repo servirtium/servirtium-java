@@ -50,7 +50,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static com.paulhammant.servirtium.IsJsonEqual.jsonEqualTo;
+import static com.paulhammant.servirtium.JsonAndXmlUtilities.jsonEqualTo;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
@@ -156,7 +156,7 @@ public class SimplePostCentricTests {
         StringBuilder whatHappened = new StringBuilder();
 
         Server target = makeTargetServer(whatHappened);
-        
+
         target.start();
 
         try {

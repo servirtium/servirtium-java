@@ -2,7 +2,7 @@ package com.paulhammant.servirtium;
 
 import org.junit.Test;
 
-import static com.paulhammant.servirtium.IsJsonEqual.jsonEqualTo;
+import static com.paulhammant.servirtium.JsonAndXmlUtilities.jsonEqualTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.*;
 

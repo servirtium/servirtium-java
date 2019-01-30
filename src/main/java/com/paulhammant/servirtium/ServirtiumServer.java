@@ -7,18 +7,14 @@ import org.eclipse.jetty.util.log.Logger;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
-import static com.paulhammant.servirtium.IsJsonEqual.prettifyDocOrNot;
-import static com.paulhammant.servirtium.IsJsonEqual.prettifyJson;
+import static com.paulhammant.servirtium.JsonAndXmlUtilities.prettifyDocOrNot;
 
 public class ServirtiumServer {
 
@@ -246,6 +242,7 @@ public class ServirtiumServer {
                 contentType.startsWith("image/svg") ||
                 contentType.startsWith("multipart/form-data") ||
                 contentType.startsWith("application/json") ||
+                contentType.startsWith("application/xml") ||
                 (contentType.startsWith("application/") && contentType.contains("script")) ||
                 contentType.startsWith("application/xhtml+xml");
     }
