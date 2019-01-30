@@ -34,6 +34,7 @@ package com.paulhammant.servirtium;
 import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -57,23 +58,36 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
     }
 
     @Override
-    public ServiceResponse invokeServiceEndpoint(String method, String bodyToReal, String contentTypeToReal, String url, Map<String, String> headersToReal, InteractionManipulations interactionManipulations) throws InteractionException {
+    public ServiceResponse invokeServiceEndpoint(String method, Object bodyToReal, String contentTypeToReal, String url, Map<String, String> headersToReal, InteractionManipulations interactionManipulations) throws InteractionException {
 
         RequestBody nonGetBody = null;
         if (!method.equals("GET")) {
             MediaType mediaType = MediaType.parse(contentTypeToReal);
-            nonGetBody = RequestBody.create(mediaType, bodyToReal);
+            if (bodyToReal != null) {
+                if (bodyToReal instanceof String) {
+                    nonGetBody = RequestBody.create(mediaType, (String) bodyToReal);
+                } else {
+                    nonGetBody = RequestBody.create(mediaType, (byte[]) bodyToReal);
+                }
+            }
         }
-
 
         Response response = null;
         try {
+            Request.Builder reqBuilder = null;
+            if (method.equalsIgnoreCase("POST")) {
+                reqBuilder = new Request.Builder().url(url).post(nonGetBody)
+                        .headers(Headers.of(headersToReal));
+            } else {
+                try {
+                    reqBuilder = new Request.Builder().url(url).method(method, nonGetBody)
+                            .headers(Headers.of(headersToReal));
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                }
+            }
+            response = okHttpClient.newCall(reqBuilder.build()).execute();
 
-            response = okHttpClient.newCall(new okhttp3.Request.Builder()
-                    .url(url)
-                    .method(method, nonGetBody)
-                    .headers(Headers.of(headersToReal))
-                    .build()).execute();
             ResponseBody body = response.body();
             Object responseBody = null;
             String contentType;

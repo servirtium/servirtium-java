@@ -7,6 +7,7 @@ import org.eclipse.jetty.util.log.Logger;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -14,6 +15,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import static com.paulhammant.servirtium.IsJsonEqual.prettifyDocOrNot;
 import static com.paulhammant.servirtium.IsJsonEqual.prettifyJson;
@@ -54,7 +56,7 @@ public class ServirtiumServer {
                         ? request.getRequestURL().toString()
                         : "http://" + request.getRemoteHost() + ":" + request.getRemotePort() + request.getRequestURI();
 
-                String bodyToReal = "";
+                //String bodyToReal = "";
                 Map<String, String> headersToReal = new HashMap<>();
 
                 try {
@@ -75,7 +77,17 @@ public class ServirtiumServer {
                         contentType = "";
                     }
 
-                    final String requestUrl = prepareHeadersAndBodyForReal(request, method, url, bodyToReal, headersToReal, interaction, contentType, interactionManipulations);
+//                    if (isText(contentType)) {
+//                        BufferedReader reader = baseRequest.getReader();
+//                        bodyToReal = reader.lines().collect(Collectors.joining("\n"));
+//                    } else {
+//                        ServletInputStream is = baseRequest.getInputStream();
+//                        bodyToReal = new byte[is.available()];
+//
+//                    }
+//
+
+                    final String requestUrl = prepareHeadersAndBodyForReal(request, method, url, headersToReal, interaction, contentType, interactionManipulations);
 
                     // INTERACTION
                     ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, headersToReal, interaction);
@@ -106,11 +118,13 @@ public class ServirtiumServer {
                     monitor.interactionFinished(interactionNum, method, url, context);
                 } catch (AssertionError assertionError) {
                     failed = true;
+                    response.setStatus(500);
                     response.setContentType("text/plain");
                     response.getWriter().write("Servirtium Server AssertionError: " + assertionError.getMessage());
                     monitor.interactionFailed(interactionNum, method, url, assertionError, context);
                 } catch (Throwable throwable) {
                     failed = true;
+                    response.setStatus(500);
                     response.setContentType("text/plain");
                     response.getWriter().write("Servirtium Server unexpected Throwable: " + throwable.getMessage());
                     monitor.unexpectedRequestError(throwable, context);
@@ -168,10 +182,12 @@ public class ServirtiumServer {
         return realResponse;
     }
 
-    private String prepareHeadersAndBodyForReal(HttpServletRequest request, String method, String url, String bodyToReal, Map<String, String> headersToReal, Interactor.Interaction interaction, String contentType, InteractionManipulations interactionManipulations) throws IOException {
+    private String prepareHeadersAndBodyForReal(HttpServletRequest request, String method, String url, Map<String, String> headersToReal, Interactor.Interaction interaction, String contentType, InteractionManipulations interactionManipulations) throws IOException {
         Enumeration<String> hdrs = request.getHeaderNames();
 
         ServletInputStream is = request.getInputStream();
+
+        Object bodyToReal = null;
 
         if (is.available() > 0) {
 
@@ -184,14 +200,13 @@ public class ServirtiumServer {
                 try (Scanner scanner = new Scanner(is, characterEncoding)) {
                     bodyToReal = scanner.useDelimiter("\\A").next();
                 }
-                if (pretty) {
-                    bodyToReal = prettifyJson(bodyToReal);
+                if (pretty && bodyToReal != null) {
+                    bodyToReal = prettifyDocOrNot((String) bodyToReal);
                 }
             } else {
                 byte[] targetArray = new byte[is.available()];
                 is.read(targetArray);
-                bodyToReal = "//SERVIRTIUM+Base64: " + Base64.getEncoder().encodeToString(targetArray)
-                        .replaceAll("(.{60})", "$1\n");
+                bodyToReal = targetArray;
                 ;
             }
         }
@@ -208,7 +223,13 @@ public class ServirtiumServer {
 
         interaction.recordRequestHeaders(headersToReal);
 
-        bodyToReal = interactionManipulations.changeBodyForRequestToReal(bodyToReal);
+        if (bodyToReal instanceof String) {
+            bodyToReal = interactionManipulations.changeBodyForRequestToReal((String) bodyToReal);
+        }
+
+        if (bodyToReal == null) {
+            bodyToReal = "";
+        }
 
         interaction.recordRequestBody(bodyToReal, contentType);
 

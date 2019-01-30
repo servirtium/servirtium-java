@@ -90,16 +90,25 @@ public class MarkdownRecorder implements Interactor {
         }
 
         @Override
-        public void recordRequestBody(String bodyToReal, String contentTypeToReal) {
+        public void recordRequestBody(Object bodyToReal, String contentTypeToReal) {
             super.recordRequestBody(bodyToReal, contentTypeToReal);
             guardOut();
             this.recording.append("### Body sent to the real server (").append(contentTypeToReal).append("):\n");
             this.recording.append("\n");
             this.recording.append("```\n");
-            for (String redactionRegex : redactions.keySet()) {
-                bodyToReal = bodyToReal.replaceAll(redactionRegex, redactions.get(redactionRegex));
+            String forRecording = null;
+            if (bodyToReal == null) {
+                forRecording = "";
+            } else if (bodyToReal instanceof String) {
+                forRecording = (String) bodyToReal;
+                for (String redactionRegex : redactions.keySet()) {
+                    forRecording = ((String) forRecording).replaceAll(redactionRegex, redactions.get(redactionRegex));
+                }
+            } else {
+                forRecording = "//SERVIRTIUM+Base64: " + Base64.getEncoder().encodeToString((byte[]) bodyToReal).replaceAll("(.{60})", "$1\n");
             }
-            this.recording.append(bodyToReal).append("\n");
+            this.recording.append(forRecording).append("\n");
+
             this.recording.append("```\n");
             this.recording.append("\n");
         }

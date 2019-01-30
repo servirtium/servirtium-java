@@ -45,6 +45,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class SimpleGetCentricTextTests {
 
@@ -331,26 +332,28 @@ public class SimpleGetCentricTextTests {
 
         servirtiumServer.startApp();
 
-        try {
-            given()
-                    .header("User-Agent", "RestAssured")
-                    .when()
-                    .get("/paul-hammant/servirtium/master/src/test/resources/test.json")
-                    .then()
-                    .assertThat()
-                    .statusCode(200)
-                    .body(equalTo("{\"Accept-Language\": \"en-US,en;q=0.8\",  \"Host\": \"headers.jsontest.com\",  \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\" }\n"))
-                    .contentType("text/plain;charset=utf-8");
-        } catch (AssertionError e) {
-            assertThat(e.getMessage(), containsString("but: Not matched: \"User-Agent: RestAssured\""));
-        }
+//        given()
+//                .header("User-Agent", "RestAssured")
+//                .when()
+//                .get("/paul-hammant/servirtium/master/src/test/resources/test.json")
+//                .then()
+//                .assertThat()
+//                .statusCode(500)
+//                .body(containsString("headers from the client that should be sent to real server are not the same as those previously recorded"));
+//
+//        try {
+//        } catch (AssertionError e) {
+//            assertThat(e.getMessage(), containsString("but: Not matched: \"User-Agent: RestAssured\""));
+//        }
 
         try {
             servirtiumServer.stop();
+            fail();
         } catch (AssertionError e) {
-            assertThat(e.getMessage(), containsString("There are more recorded interactions after last replayed interaction: #0"));
+            assertThat(e.getMessage(), containsString("There are more recorded interactions after last replayed interaction: #-1"));
+        } finally {
+            servirtiumServer = null;
         }
-        servirtiumServer = null;
 
 
     }
@@ -678,7 +681,7 @@ public class SimpleGetCentricTextTests {
     @Test
     public void canReplayASimpleGetFromApachesSubversion() throws Exception {
 
-        MarkdownReplayer replayer = new MarkdownReplayer();
+        MarkdownReplayer replayer = new MarkdownReplayer(new MarkdownReplayer.ReplayMonitor.Console());
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
 
         servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),

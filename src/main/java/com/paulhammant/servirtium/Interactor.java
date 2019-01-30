@@ -52,7 +52,7 @@ public interface Interactor {
 
         final int interactionNum;
         public final String context;
-        String bodyToReal;
+        Object bodyToReal;
         String contentTypeToReal;
 
         Interaction(int interactionNum, String context) {
@@ -62,7 +62,7 @@ public interface Interactor {
 
         abstract void recordRequestHeaders(Map<String, String> header);
 
-        void recordRequestBody(String bodyToReal, String contentTypeToReal) {
+        void recordRequestBody(Object bodyToReal, String contentTypeToReal) {
             this.bodyToReal = bodyToReal;
             this.contentTypeToReal = contentTypeToReal;
         }
