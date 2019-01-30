@@ -155,6 +155,176 @@ public class SimplePostCentricTests {
 
         StringBuilder whatHappened = new StringBuilder();
 
+        Server target = makeTargetServer(whatHappened);
+        
+        target.start();
+
+        try {
+            final SimpleInteractionManipulations interactionManipulations =
+            new SimpleInteractionManipulations("http://localhost:8080", "http://localhost:8001")
+                    .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+
+            MarkdownRecorder recorder = new MarkdownRecorder(
+                    new ServiceInteropViaOkHttp(),
+                    interactionManipulations);
+
+            servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
+                    8080, false,
+                    interactionManipulations, recorder);
+
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            recorder.setOutputStream("foo", out);
+            servirtiumServer.startApp();
+
+            final InputStream resourceAsStream = new FileInputStream("src/test/resources/png-transparent.png");
+            byte[] pic = new byte[resourceAsStream.available()];
+            resourceAsStream.read(pic);
+            System.out.println();
+
+            given()
+                    .header("User-Agent", "RestAssured")
+                    .contentType("image/png")
+                    .body(pic).
+            when()
+                    .post("/not-important")
+            .then()
+                    .assertThat()
+                    .statusCode(200)
+                    .body(equalTo("yee ha!"));
+
+            servirtiumServer.finishedScript();
+
+            assertEquals(whatHappened.toString(), "/not-important, body-length=67, body[1]=-119, body[1]=80");
+
+            // Order of headers is as originally sent
+            assertEquals(sanitizeDate("## Interaction 0: POST /not-important\n" +
+            "\n" +
+            "### Request headers sent to the real server:\n" +
+            "\n" +
+            "```\n" +
+            "Accept: */*\n" +
+            "User-Agent: RestAssured\n" +
+            "Connection: keep-alive\n" +
+            "Host: localhost:8001\n" +
+            "Content-Length: 67\n" +
+            "Content-Type: image/png; charset=ISO-8859-1\n" +
+            "```\n" +
+            "\n" +
+            "### Body sent to the real server (image/png; charset=ISO-8859-1):\n" +
+            "\n" +
+            "```\n" +
+            "//SERVIRTIUM+Base64: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMA\n" +
+                    "AQAABQABDQottAAAAABJRU5ErkJggg==\n" +
+            "```\n" +
+            "\n" +
+            "### Resulting headers back from the real server:\n" +
+            "\n" +
+            "```\n" +
+            "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+            "Content-Type: text/plain;charset=iso-8859-1\n" +
+            "Content-Length: 7\n" +
+            "Server: Jetty(9.4.14.v20181114)\n" +
+            "```\n" +
+            "\n" +
+            "### Resulting body back from the real server (200: text/plain;charset=iso-8859-1):\n" +
+            "\n" +
+            "```\n" +
+            "yee ha!\n" +
+            "```\n\n"), sanitizeDate(out.toString()));
+        } finally {
+            target.stop();
+        }
+
+    }
+
+    @Test
+    public void canRecordABinaryPut() throws Exception {
+
+        StringBuilder whatHappened = new StringBuilder();
+
+        Server target = makeTargetServer(whatHappened);
+        target.start();
+
+        try {
+            final SimpleInteractionManipulations interactionManipulations =
+            new SimpleInteractionManipulations("http://localhost:8080", "http://localhost:8001")
+                    .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+
+            MarkdownRecorder recorder = new MarkdownRecorder(
+                    new ServiceInteropViaOkHttp(),
+                    interactionManipulations);
+
+            servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
+                    8080, false,
+                    interactionManipulations, recorder);
+
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            recorder.setOutputStream("foo", out);
+            servirtiumServer.startApp();
+
+            final InputStream resourceAsStream = new FileInputStream("src/test/resources/png-transparent.png");
+            byte[] pic = new byte[resourceAsStream.available()];
+            resourceAsStream.read(pic);
+            System.out.println();
+
+            given()
+                    .header("User-Agent", "RestAssured")
+                    .contentType("image/png")
+                    .body(pic).
+            when()
+                    .put("/not-important")
+            .then()
+                    .assertThat()
+                    .statusCode(200)
+                    .body(equalTo("yee ha!"));
+
+            servirtiumServer.finishedScript();
+
+            assertEquals(whatHappened.toString(), "/not-important, body-length=67, body[1]=-119, body[1]=80");
+
+            // Order of headers is as originally sent
+            assertEquals(sanitizeDate("## Interaction 0: PUT /not-important\n" +
+            "\n" +
+            "### Request headers sent to the real server:\n" +
+            "\n" +
+            "```\n" +
+            "Accept: */*\n" +
+            "User-Agent: RestAssured\n" +
+            "Connection: keep-alive\n" +
+            "Host: localhost:8001\n" +
+            "Content-Length: 67\n" +
+            "Content-Type: image/png; charset=ISO-8859-1\n" +
+            "```\n" +
+            "\n" +
+            "### Body sent to the real server (image/png; charset=ISO-8859-1):\n" +
+            "\n" +
+            "```\n" +
+            "//SERVIRTIUM+Base64: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMA\n" +
+                    "AQAABQABDQottAAAAABJRU5ErkJggg==\n" +
+            "```\n" +
+            "\n" +
+            "### Resulting headers back from the real server:\n" +
+            "\n" +
+            "```\n" +
+            "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+            "Content-Type: text/plain;charset=iso-8859-1\n" +
+            "Content-Length: 7\n" +
+            "Server: Jetty(9.4.14.v20181114)\n" +
+            "```\n" +
+            "\n" +
+            "### Resulting body back from the real server (200: text/plain;charset=iso-8859-1):\n" +
+            "\n" +
+            "```\n" +
+            "yee ha!\n" +
+            "```\n\n"), sanitizeDate(out.toString()));
+        } finally {
+            target.stop();
+
+        }
+
+    }
+
+    public static Server makeTargetServer(StringBuilder whatHappened) {
         Server target = new Server(8001);
         // How the f*** do you turn off Embedded Jetty's logging???
         // Everything I tried (mostly static operations on Log) didn't work.
@@ -184,82 +354,9 @@ public class SimplePostCentricTests {
                 baseRequest.setHandled(true);
             }
         });
-        target.start();
-
-                final SimpleInteractionManipulations interactionManipulations =
-                new SimpleInteractionManipulations("http://localhost:8080", "http://localhost:8001")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
-
-        MarkdownRecorder recorder = new MarkdownRecorder(
-                new ServiceInteropViaOkHttp(),
-                interactionManipulations);
-
-        servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
-                8080, false,
-                interactionManipulations, recorder);
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        recorder.setOutputStream("foo", out);
-        servirtiumServer.startApp();
-
-        final InputStream resourceAsStream = new FileInputStream("src/test/resources/png-transparent.png");
-        byte[] pic = new byte[resourceAsStream.available()];
-        resourceAsStream.read(pic);
-        System.out.println();
-
-        given()
-                .header("User-Agent", "RestAssured")
-                .contentType("image/png")
-                .body(pic).
-        when()
-                .post("/not-important")
-        .then()
-                .assertThat()
-                .statusCode(200)
-                .body(equalTo("yee ha!"));
-
-        servirtiumServer.finishedScript();
-
-        assertEquals(whatHappened.toString(), "/not-important, body-length=67, body[1]=-119, body[1]=80");
-
-        // Order of headers is as originally sent
-        assertEquals(sanitizeDate("## Interaction 0: POST /not-important\n" +
-        "\n" +
-        "### Request headers sent to the real server:\n" +
-        "\n" +
-        "```\n" +
-        "Accept: */*\n" +
-        "User-Agent: RestAssured\n" +
-        "Connection: keep-alive\n" +
-        "Host: localhost:8001\n" +
-        "Content-Length: 67\n" +
-        "Content-Type: image/png; charset=ISO-8859-1\n" +
-        "```\n" +
-        "\n" +
-        "### Body sent to the real server (image/png; charset=ISO-8859-1):\n" +
-        "\n" +
-        "```\n" +
-        "//SERVIRTIUM+Base64: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMA\n" +
-                "AQAABQABDQottAAAAABJRU5ErkJggg==\n" +
-        "```\n" +
-        "\n" +
-        "### Resulting headers back from the real server:\n" +
-        "\n" +
-        "```\n" +
-        "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-        "Content-Type: text/plain;charset=iso-8859-1\n" +
-        "Content-Length: 7\n" +
-        "Server: Jetty(9.4.14.v20181114)\n" +
-        "```\n" +
-        "\n" +
-        "### Resulting body back from the real server (200: text/plain;charset=iso-8859-1):\n" +
-        "\n" +
-        "```\n" +
-        "yee ha!\n" +
-        "```\n\n"), sanitizeDate(out.toString()));
-
+        return target;
     }
-    
+
     private void checkPostToPostmanEchoViaRestAssured() {
         given()
                 .header("User-Agent", "RestAssured")
