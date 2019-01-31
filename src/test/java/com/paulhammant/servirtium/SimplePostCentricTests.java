@@ -95,7 +95,7 @@ public class SimplePostCentricTests {
             "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"postman-echo.com\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://postman-echo.com/post\"}\n" +
             "```\n" +
             "\n";
-    private ServirtiumServer servirtiumServer;
+    private JettyServirtiumServer servirtiumServer;
 
 
     @After
@@ -114,7 +114,7 @@ public class SimplePostCentricTests {
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
 
-        servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
+        servirtiumServer = new JettyServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
                 interactionManipulations, recorder);
 
@@ -137,7 +137,7 @@ public class SimplePostCentricTests {
         MarkdownReplayer replayer = new MarkdownReplayer();
         replayer.setPlaybackConversation(EXPECTED);
 
-        servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
+        servirtiumServer = new JettyServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
                 new SimpleInteractionManipulations("http://localhost:8080", "https://postman-echo.com")
                         .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding"), replayer);
@@ -168,7 +168,7 @@ public class SimplePostCentricTests {
                     new ServiceInteropViaOkHttp(),
                     interactionManipulations);
 
-            servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
+            servirtiumServer = new JettyServirtiumServer(new ServerMonitor.Console(),
                     8080, false,
                     interactionManipulations, recorder);
 
@@ -254,7 +254,7 @@ public class SimplePostCentricTests {
                     new ServiceInteropViaOkHttp(),
                     interactionManipulations);
 
-            servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
+            servirtiumServer = new JettyServirtiumServer(new ServerMonitor.Console(),
                     8080, false,
                     interactionManipulations, recorder);
 

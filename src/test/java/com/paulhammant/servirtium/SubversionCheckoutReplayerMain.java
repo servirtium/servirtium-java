@@ -53,7 +53,7 @@ public class SubversionCheckoutReplayerMain {
         createWorkDirAndDeleteCheckout(tempDir);
 
         MarkdownReplayer replayer = new MarkdownReplayer(new MarkdownReplayer.ReplayMonitor.Default());
-        ServirtiumServer servirtiumServer = new ServirtiumServer(
+        JettyServirtiumServer servirtiumServer = new JettyServirtiumServer(
                 new ServerMonitor.Console(),
                 8099, false,
                 new SubversionInteractionManipulations("", ""), replayer);

@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 import static com.paulhammant.servirtium.JsonAndXmlUtilities.prettifyDocOrNot;
 
-public class ServirtiumServer {
+public class JettyServirtiumServer {
 
     private Server jettyServer;
     private Interactor interactor;
@@ -26,12 +26,12 @@ public class ServirtiumServer {
 
     private String context = "no context";
 
-    private ServirtiumServer() {
+    private JettyServirtiumServer() {
     }
 
-    public ServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
-                            InteractionManipulations interactionManipulations,
-                            Interactor interactor) {
+    public JettyServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
+                                 InteractionManipulations interactionManipulations,
+                                 Interactor interactor) {
         this.interactor = interactor;
 
         jettyServer = new Server(port);
@@ -232,7 +232,7 @@ public class ServirtiumServer {
         return interactionManipulations.changeUrlForRequestToReal(url);
     }
 
-    public ServirtiumServer withPrettyPrintedTextBodies() {
+    public JettyServirtiumServer withPrettyPrintedTextBodies() {
         pretty = true;
         return this;
     }
@@ -247,7 +247,7 @@ public class ServirtiumServer {
                 contentType.startsWith("application/xhtml+xml");
     }
 
-    public ServirtiumServer startApp() throws Exception {
+    public JettyServirtiumServer startApp() throws Exception {
         jettyServer.start();
         return this;
     }
@@ -297,14 +297,14 @@ public class ServirtiumServer {
         interactor.finishedScript(getInteractionNum(), failed);
     }
 
-    public static class NullObject extends ServirtiumServer {
+    public static class NullObject extends JettyServirtiumServer {
         @Override
-        public ServirtiumServer withPrettyPrintedTextBodies() {
+        public JettyServirtiumServer withPrettyPrintedTextBodies() {
             return this;
         }
 
         @Override
-        public ServirtiumServer startApp() {
+        public JettyServirtiumServer startApp() {
             return this;
         }
 

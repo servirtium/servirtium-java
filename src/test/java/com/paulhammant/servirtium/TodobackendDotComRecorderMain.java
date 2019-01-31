@@ -30,7 +30,7 @@ public class TodobackendDotComRecorderMain {
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(), manipulations);
 
-        ServirtiumServer servirtiumServer = makeServirtiumServer(manipulations, recorder);
+        JettyServirtiumServer servirtiumServer = makeServirtiumServer(manipulations, recorder);
 
         recorder.setScriptFilename("src/test/resources/TodobackendDotComServiceRecording.md");
         servirtiumServer.startApp();
@@ -38,8 +38,8 @@ public class TodobackendDotComRecorderMain {
         Runtime.getRuntime().addShutdownHook(new Thread(servirtiumServer::stop));
     }
 
-    public static ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations manipulations, Interactor interactor) {
-        return new ServirtiumServer(new ServerMonitor.Console(), 8099, false,
+    public static JettyServirtiumServer makeServirtiumServer(SimpleInteractionManipulations manipulations, Interactor interactor) {
+        return new JettyServirtiumServer(new ServerMonitor.Console(), 8099, false,
                 manipulations, interactor)
                 .withPrettyPrintedTextBodies();
     }

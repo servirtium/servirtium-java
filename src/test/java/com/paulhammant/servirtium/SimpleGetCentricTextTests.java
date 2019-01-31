@@ -161,7 +161,7 @@ public class SimpleGetCentricTextTests {
             "  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q\\u003d0.9,*/*;q\\u003d0.8\"\n" +
             "}";
 
-    private ServirtiumServer servirtiumServer;
+    private JettyServirtiumServer servirtiumServer;
 
     @After
     public void tearDown() {
@@ -179,7 +179,7 @@ public class SimpleGetCentricTextTests {
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
                         .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding"));
 
-        servirtiumServer = new ServirtiumServer(serverMonitor,
+        servirtiumServer = new JettyServirtiumServer(serverMonitor,
                 8080, false,
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
                         .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding"), recorder);
@@ -210,7 +210,7 @@ public class SimpleGetCentricTextTests {
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
 
-        servirtiumServer = new ServirtiumServer(serverMonitor,
+        servirtiumServer = new JettyServirtiumServer(serverMonitor,
                 8080, false,
                 interactionManipulations, recorder);
 
@@ -326,7 +326,7 @@ public class SimpleGetCentricTextTests {
 
         replayer.setPlaybackConversation(expected);
 
-        servirtiumServer = new ServirtiumServer(serverMonitor,
+        servirtiumServer = new JettyServirtiumServer(serverMonitor,
                 8080, false,
                 interactionManipulations, replayer);
 
@@ -371,7 +371,7 @@ public class SimpleGetCentricTextTests {
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
-        servirtiumServer = new ServirtiumServer(serverMonitor,
+        servirtiumServer = new JettyServirtiumServer(serverMonitor,
                 8080, false,
                 interactionManipulations, recorder)
                 .withPrettyPrintedTextBodies();
@@ -448,7 +448,7 @@ public class SimpleGetCentricTextTests {
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
-        servirtiumServer = new ServirtiumServer(serverMonitor,
+        servirtiumServer = new JettyServirtiumServer(serverMonitor,
                 8080, false,
                 interactionManipulations, recorder)
                 .withPrettyPrintedTextBodies();
@@ -525,7 +525,7 @@ public class SimpleGetCentricTextTests {
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
-        servirtiumServer = new ServirtiumServer(serverMonitor,
+        servirtiumServer = new JettyServirtiumServer(serverMonitor,
                 8080, false,
                 interactionManipulations, recorder)
                 .withPrettyPrintedTextBodies();
@@ -606,7 +606,7 @@ public class SimpleGetCentricTextTests {
                 .withRedaction("ISO-\\d\\d\\d\\d-1", "ISO-NNNN-1")
                 .withRedaction("dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36", "XxXxXxXxX");
 
-        servirtiumServer = new ServirtiumServer(serverMonitor,
+        servirtiumServer = new JettyServirtiumServer(serverMonitor,
                 8080, false,
                 interactionManipulations, recorder)
                 .withPrettyPrintedTextBodies();
@@ -650,7 +650,7 @@ public class SimpleGetCentricTextTests {
                         .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
                         .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
 
-        servirtiumServer = new ServirtiumServer(serverMonitor,
+        servirtiumServer = new JettyServirtiumServer(serverMonitor,
                 8080, false,
                 interactionManipulations, replayer)
                 .withPrettyPrintedTextBodies();
@@ -684,7 +684,7 @@ public class SimpleGetCentricTextTests {
         MarkdownReplayer replayer = new MarkdownReplayer(new MarkdownReplayer.ReplayMonitor.Console());
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
 
-        servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
+        servirtiumServer = new JettyServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
                         .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding"), replayer);

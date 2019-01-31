@@ -39,7 +39,6 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Base64;
-import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
@@ -94,7 +93,7 @@ public class SimpleGetCentricBinaryTests {
             "\n";
 
 
-    private ServirtiumServer servirtiumServer;
+    private JettyServirtiumServer servirtiumServer;
     ;
 
     @After
@@ -114,7 +113,7 @@ public class SimpleGetCentricBinaryTests {
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
 
-        servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
+        servirtiumServer = new JettyServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
                 interactionManipulations, recorder);
 
@@ -141,7 +140,7 @@ public class SimpleGetCentricBinaryTests {
                 interactionManipulations
                 .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:"));
 
-        servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
+        servirtiumServer = new JettyServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
                 interactionManipulations, recorder);
 
@@ -221,7 +220,7 @@ public class SimpleGetCentricBinaryTests {
                 .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:")
         );
 
-        servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
+        servirtiumServer = new JettyServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
                 interactionManipulations, recorder);
 
@@ -310,7 +309,7 @@ public class SimpleGetCentricBinaryTests {
         MarkdownReplayer replayer = new MarkdownReplayer();
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
 
-        servirtiumServer = new ServirtiumServer(new ServerMonitor.Console(),
+        servirtiumServer = new JettyServirtiumServer(new ServerMonitor.Console(),
                 8080, false,
                 interactionManipulations, replayer);
 

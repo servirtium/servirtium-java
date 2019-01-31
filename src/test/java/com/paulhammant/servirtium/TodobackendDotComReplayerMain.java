@@ -1,7 +1,5 @@
 package com.paulhammant.servirtium;
 
-import java.util.Map;
-
 import static com.paulhammant.servirtium.TodobackendDotComRecorderMain.makeInteractionManipulations;
 import static com.paulhammant.servirtium.TodobackendDotComRecorderMain.makeServirtiumServer;
 
@@ -21,7 +19,7 @@ public class TodobackendDotComReplayerMain {
 
         MarkdownReplayer replayer = new MarkdownReplayer().withForgivingOrderOfClientRequestHeaders();
 
-        ServirtiumServer servirtiumServer = makeServirtiumServer(manipulations, replayer);
+        JettyServirtiumServer servirtiumServer = makeServirtiumServer(manipulations, replayer);
 
         replayer.setScriptFilename("src/test/resources/TodobackendDotComServiceRecording.md");
         servirtiumServer.startApp();

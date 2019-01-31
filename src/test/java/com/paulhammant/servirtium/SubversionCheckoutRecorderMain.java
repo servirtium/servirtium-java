@@ -62,7 +62,7 @@ public class SubversionCheckoutRecorderMain {
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 new SubversionInteractionManipulations("", ""));
-        ServirtiumServer servirtiumServer = new ServirtiumServer(serverMonitor,
+        JettyServirtiumServer servirtiumServer = new JettyServirtiumServer(serverMonitor,
                 8099, false,
                 new SubversionInteractionManipulations("", ""), recorder);
 

@@ -4,14 +4,14 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static com.paulhammant.servirtium.ServirtiumServer.classAndTestName;
+import static com.paulhammant.servirtium.JettyServirtiumServer.classAndTestName;
 import static org.junit.Assert.assertEquals;
 
 public class UtilityTests {
 
     @Test
     public void testNameCanBeCalculated() throws IOException {
-        assertEquals("com.paulhammant.servirtium.UtilityTests.testNameCanBeCalculated", ServirtiumServer.classAndTestName());
+        assertEquals("com.paulhammant.servirtium.UtilityTests.testNameCanBeCalculated", JettyServirtiumServer.classAndTestName());
     }
 
     @Test
