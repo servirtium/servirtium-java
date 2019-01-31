@@ -69,7 +69,7 @@ public class SubversionCheckoutRecorderMain {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         FileOutputStream fos = new FileOutputStream(CHECKOUT_RECORDER_TEST_MD);
         recorder.setOutputStream(CHECKOUT_RECORDER_TEST_MD, fos);
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         Runtime.getRuntime().addShutdownHook(new Thread(servirtiumServer::stop));
 

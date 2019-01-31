@@ -119,7 +119,7 @@ public class SimpleGetCentricBinaryTests {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured();
 
@@ -146,7 +146,7 @@ public class SimpleGetCentricBinaryTests {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         // https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png
 
@@ -226,7 +226,7 @@ public class SimpleGetCentricBinaryTests {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         // https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png
 
@@ -313,7 +313,7 @@ public class SimpleGetCentricBinaryTests {
                 8080, false,
                 interactionManipulations, replayer);
 
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured();
 

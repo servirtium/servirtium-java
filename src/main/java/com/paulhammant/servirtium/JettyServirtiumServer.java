@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 import static com.paulhammant.servirtium.JsonAndXmlUtilities.prettifyDocOrNot;
 
-public class JettyServirtiumServer {
+public class JettyServirtiumServer extends ServirtiumServer {
 
     private Server jettyServer;
     private Interactor interactor;
@@ -237,17 +237,7 @@ public class JettyServirtiumServer {
         return this;
     }
 
-    public static boolean isText(String contentType) {
-        return contentType.startsWith("text/") ||
-                contentType.startsWith("image/svg") ||
-                contentType.startsWith("multipart/form-data") ||
-                contentType.startsWith("application/json") ||
-                contentType.startsWith("application/xml") ||
-                (contentType.startsWith("application/") && contentType.contains("script")) ||
-                contentType.startsWith("application/xhtml+xml");
-    }
-
-    public JettyServirtiumServer startApp() throws Exception {
+    public ServirtiumServer start() throws Exception {
         jettyServer.start();
         return this;
     }
@@ -295,35 +285,6 @@ public class JettyServirtiumServer {
 
     public void finishedScript() {
         interactor.finishedScript(getInteractionNum(), failed);
-    }
-
-    public static class NullObject extends JettyServirtiumServer {
-        @Override
-        public JettyServirtiumServer withPrettyPrintedTextBodies() {
-            return this;
-        }
-
-        @Override
-        public JettyServirtiumServer startApp() {
-            return this;
-        }
-
-        @Override
-        protected int getInteractionNum() {
-            return -1;
-        }
-
-        @Override
-        protected void resetInteractionNumber() {
-        }
-
-        @Override
-        public void stop() {
-        }
-
-        @Override
-        public void finishedScript() {
-        }
     }
 
     public static void disableJettyLogging() {

@@ -120,7 +120,7 @@ public class SimplePostCentricTests {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         checkPostToPostmanEchoViaRestAssured();
 
@@ -142,7 +142,7 @@ public class SimplePostCentricTests {
                 new SimpleInteractionManipulations("http://localhost:8080", "https://postman-echo.com")
                         .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding"), replayer);
 
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         checkPostToPostmanEchoViaRestAssured();
 
@@ -174,7 +174,7 @@ public class SimplePostCentricTests {
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             recorder.setOutputStream("foo", out);
-            servirtiumServer.startApp();
+            servirtiumServer.start();
 
             final InputStream resourceAsStream = new FileInputStream("src/test/resources/png-transparent.png");
             byte[] pic = new byte[resourceAsStream.available()];
@@ -260,7 +260,7 @@ public class SimplePostCentricTests {
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             recorder.setOutputStream("foo", out);
-            servirtiumServer.startApp();
+            servirtiumServer.start();
 
             final InputStream resourceAsStream = new FileInputStream("src/test/resources/png-transparent.png");
             byte[] pic = new byte[resourceAsStream.available()];

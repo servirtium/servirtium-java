@@ -22,7 +22,7 @@ public class TodobackendDotComReplayerMain {
         JettyServirtiumServer servirtiumServer = makeServirtiumServer(manipulations, replayer);
 
         replayer.setScriptFilename("src/test/resources/TodobackendDotComServiceRecording.md");
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         Runtime.getRuntime().addShutdownHook(new Thread(servirtiumServer::stop));
 

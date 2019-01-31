@@ -33,7 +33,7 @@ public class TodobackendDotComRecorderMain {
         JettyServirtiumServer servirtiumServer = makeServirtiumServer(manipulations, recorder);
 
         recorder.setScriptFilename("src/test/resources/TodobackendDotComServiceRecording.md");
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         Runtime.getRuntime().addShutdownHook(new Thread(servirtiumServer::stop));
     }

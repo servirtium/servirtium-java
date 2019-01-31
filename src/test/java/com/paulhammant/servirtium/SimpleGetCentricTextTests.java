@@ -161,7 +161,7 @@ public class SimpleGetCentricTextTests {
             "  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q\\u003d0.9,*/*;q\\u003d0.8\"\n" +
             "}";
 
-    private JettyServirtiumServer servirtiumServer;
+    private ServirtiumServer servirtiumServer;
 
     @After
     public void tearDown() {
@@ -186,7 +186,7 @@ public class SimpleGetCentricTextTests {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         checkGetOfApacheNoticeFileOverHttpViaRestAssured();
 
@@ -295,7 +295,7 @@ public class SimpleGetCentricTextTests {
                 "```\n" +
                 "\n";
 
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         given()
                 .header("User-Agent", "RestAssured")
@@ -330,7 +330,7 @@ public class SimpleGetCentricTextTests {
                 8080, false,
                 interactionManipulations, replayer);
 
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
 //        given()
 //                .header("User-Agent", "RestAssured")
@@ -378,7 +378,7 @@ public class SimpleGetCentricTextTests {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         given()
                 .header("User-Agent", "RestAssured")
@@ -455,7 +455,7 @@ public class SimpleGetCentricTextTests {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         given()
                 .proxy("localhost", 8080)
@@ -532,7 +532,7 @@ public class SimpleGetCentricTextTests {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         given()
                 .proxy("localhost", 8080)
@@ -613,7 +613,7 @@ public class SimpleGetCentricTextTests {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         given()
                 .header("User-Agent", "RestAssured")
@@ -655,7 +655,7 @@ public class SimpleGetCentricTextTests {
                 interactionManipulations, replayer)
                 .withPrettyPrintedTextBodies();
 
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         given()
                 .header("User-Agent", "RestAssured")
@@ -689,7 +689,7 @@ public class SimpleGetCentricTextTests {
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
                         .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding"), replayer);
 
-        servirtiumServer.startApp();
+        servirtiumServer.start();
 
         checkGetOfApacheNoticeFileOverHttpViaRestAssured();
 
