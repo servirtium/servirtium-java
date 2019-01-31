@@ -186,20 +186,13 @@ public class MarkdownReplayer implements Interactor {
 
         // TODO remove trim()
         final String[] prevRecorded = this.reorderMaybe(headersReceived).split("\n");
-        final String[] current = reorderMaybe(replay.headers.trim()).split("\n");
-        try {
-            assertThat(current, arrayContainingInAnyOrder(prevRecorded));
-        } catch (AssertionError e) {
-            String msg = e.getMessage();
-            monitor.headersFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
-        }
+        final String[] currentHeaders = reorderMaybe(replay.headers.trim()).split("\n");
 
         String bodyReceived = getCodeBlock(replay);
 
         try {
             assertThat(replay.bodyToReal, equalTo(bodyReceived));
         } catch (AssertionError e) {
-            String msg = e.getMessage();
             monitor.bodyFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
         }
 
@@ -207,6 +200,12 @@ public class MarkdownReplayer implements Interactor {
             assertThat(replay.contentTypeToReal, equalTo(contentType));
         } catch (AssertionError e) {
             monitor.contentTypeFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
+        }
+
+        try {
+            assertThat(currentHeaders, arrayContainingInAnyOrder(prevRecorded));
+        } catch (AssertionError e) {
+            monitor.headersFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
         }
 
         final String RESULTING_HEADERS_BACK_FROM_REAL_SERVER = "### Resulting headers back from the real server";
