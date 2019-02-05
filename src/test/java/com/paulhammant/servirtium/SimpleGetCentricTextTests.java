@@ -55,10 +55,10 @@ public class SimpleGetCentricTextTests {
             "### Request headers sent to the real server:\n" +
             "\n" +
             "```\n" +
-            "Accept: */*\n" +
             "User-Agent: SVN/1.10.0 (x86_64-apple-darwin17.0.0) serf/1.3.9\n" +
             "Connection: keep-alive\n" +
             "Host: svn.apache.org\n" +
+            "Accept: */*\n" +
             "```\n" +
             "\n" +
             "### Body sent to the real server ():\n" +
@@ -114,10 +114,10 @@ public class SimpleGetCentricTextTests {
             "### Request headers sent to the real server:\n" +
             "\n" +
             "```\n" +
-            "Accept: */*\n" +
             "User-Agent: RestAssured\n" +
             "Connection: keep-alive\n" +
             "Host: raw.githubusercontent.com\n" +
+            "Accept: */*\n" +
             "```\n" +
             "\n" +
             "### Body sent to the real server ():\n" +
@@ -223,10 +223,10 @@ public class SimpleGetCentricTextTests {
                 "### Request headers sent to the real server:\n" +
                 "\n" +
                 "```\n" +
-                "Accept: */*\n" +
                 "User-Agent: RestAssured\n" +
                 "Connection: keep-alive\n" +
                 "Host: raw.githubusercontent.com\n" +
+                "Accept: */*\n" +
                 "```\n" +
                 "\n" +
                 "### Body sent to the real server ():\n" +
@@ -262,10 +262,10 @@ public class SimpleGetCentricTextTests {
                 "### Request headers sent to the real server:\n" +
                 "\n" +
                 "```\n" +
-                "Accept: */*\n" +
                 "User-Agent: RestAssured\n" +
                 "Connection: keep-alive\n" +
                 "Host: raw.githubusercontent.com\n" +
+                "Accept: */*\n" +
                 "```\n" +
                 "\n" +
                 "### Body sent to the real server ():\n" +
@@ -398,10 +398,10 @@ public class SimpleGetCentricTextTests {
                 "### Request headers sent to the real server:\n" +
                 "\n" +
                 "```\n" +
-                "Accept: */*\n" +
                 "User-Agent: RestAssured\n" +
                 "Connection: keep-alive\n" +
                 "Host: raw.githubusercontent.com\n" +
+                "Accept: */*\n" +
                 "```\n" +
                 "\n" +
                 "### Body sent to the real server ():\n" +
@@ -476,9 +476,9 @@ public class SimpleGetCentricTextTests {
                 "### Request headers sent to the real server:\n" +
                 "\n" +
                 "```\n" +
-                "Accept: */*\n" +
                 "User-Agent: RestAssured\n" +
                 "Host: raw.githubusercontent.com\n" +
+                "Accept: */*\n" +
                 "Proxy-Connection: Keep-Alive\n" +
                 "```\n" +
                 "\n" +

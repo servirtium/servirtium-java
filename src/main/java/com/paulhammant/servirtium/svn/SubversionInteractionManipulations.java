@@ -33,6 +33,7 @@ package com.paulhammant.servirtium.svn;
 
 import com.paulhammant.servirtium.SimpleInteractionManipulations;
 
+import java.util.List;
 import java.util.Map;
 
 public class SubversionInteractionManipulations extends SimpleInteractionManipulations {
@@ -42,15 +43,16 @@ public class SubversionInteractionManipulations extends SimpleInteractionManipul
     }
 
     @Override
-    public void changeSingleHeaderForRequestToReal(String method, String currentHeader, Map<String, String> allHeadersToReal) {
-        if (method.equals("OPTIONS") && currentHeader.equals("DAV")) {
-            // hack: Subversion has THREE 'DAV' headers. OkHttp uses a map - oops
-            // So let's pad the key with spaces to make unique keys ... annd that seems to work :)
-            allHeadersToReal.put("DAV ", "http://subversion.tigris.org/xmlns/dav/svn/mergeinfo");
-            allHeadersToReal.put("DAV  ", "http://subversion.tigris.org/xmlns/dav/svn/log-revprops");
-        }
-        if (currentHeader.equals("User-Agent")) {
-            allHeadersToReal.put("User-Agent", getUserAgentString());
+    public void changeSingleHeaderForRequestToReal(String method, String currentHeader, List<String> allHeadersToReal) {
+        if (currentHeader.startsWith("User-Agent:")) {
+            for (int i = 0; i < allHeadersToReal.size(); i++) {
+                String s = allHeadersToReal.get(i);
+                if (s.startsWith("User-Agent:")) {
+                    allHeadersToReal.remove(s);
+                    allHeadersToReal.add(i, "User-Agent: " + getUserAgentString());
+                    break;
+                }
+            }
         }
 
         super.changeSingleHeaderForRequestToReal(method, currentHeader, allHeadersToReal);

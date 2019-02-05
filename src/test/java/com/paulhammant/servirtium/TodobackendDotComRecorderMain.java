@@ -1,5 +1,6 @@
 package com.paulhammant.servirtium;
 
+import java.util.List;
 import java.util.Map;
 
 public class TodobackendDotComRecorderMain {
@@ -47,10 +48,20 @@ public class TodobackendDotComRecorderMain {
     public static SimpleInteractionManipulations makeInteractionManipulations() {
         return new SimpleInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
             @Override
-            public void changeAllHeadersForRequestToReal(Map<String, String> headersToReal) {
-                headersToReal.put("Cache-Control", "no-cache");
-                headersToReal.put("Pragma", "no-cache");
-                headersToReal.put("Referer", headersToReal.get("Referer").replace(super.fromUrl, super.toUrl));
+            public void changeAllHeadersForRequestToReal(List<String> headersToReal) {
+                String refer = "";
+                for (int i = 0; i < headersToReal.size(); i++) {
+                    String s = headersToReal.get(i);
+                    if (s.startsWith("Referer:")) {
+                        refer = s;
+                    }
+                    if (s.startsWith("Cache-Control:") || s.startsWith("Pragma:") || s.startsWith("Referer:")) {
+                        headersToReal.remove(s);
+                    }
+                }
+                headersToReal.add("Cache-Control: no-cache");
+                headersToReal.add("Pragma: no-cache");
+                headersToReal.add(refer.replace(super.fromUrl, super.toUrl));
             }
         };
     }

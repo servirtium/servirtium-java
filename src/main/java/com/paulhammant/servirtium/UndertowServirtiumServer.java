@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -52,7 +53,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
                                 : "http://" + exchange.getHostAndPort() + exchange.getRequestURI();
 
                         //String bodyToReal = "";
-                        Map<String, String> headersToReal = new HashMap<>();
+                        List<String> headersToReal = new ArrayList<>();
 
                         try {
 
@@ -181,7 +182,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         return realResponse;
     }
 
-    private String prepareHeadersAndBodyForReal(HttpServerExchange exchange, String method, String url, Map<String, String> headersToReal, Interactor.Interaction interaction, String contentType, InteractionManipulations interactionManipulations) throws IOException {
+    private String prepareHeadersAndBodyForReal(HttpServerExchange exchange, String method, String url, List<String> headersToReal, Interactor.Interaction interaction, String contentType, InteractionManipulations interactionManipulations) throws IOException {
 
         final HeaderMap requestHeaders = exchange.getRequestHeaders();
         Iterator<HttpString> hdrs = requestHeaders.getHeaderNames().iterator();
@@ -217,7 +218,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             String hdr = hdrs.next().toString();
             String hdrVal = requestHeaders.getFirst(hdr);
             hdrVal = interactionManipulations.headerReplacement(hdr, hdrVal);
-            headersToReal.put(hdr, hdrVal);
+            headersToReal.add(hdr + ": " + hdrVal);
             interactionManipulations.changeSingleHeaderForRequestToReal(method, hdr, headersToReal);
         }
 

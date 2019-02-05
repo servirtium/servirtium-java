@@ -121,18 +121,17 @@ public class MarkdownReplayer implements Interactor {
         }
 
         @Override
-        public void recordRequestHeaders(Map<String, String> headers) {
+        public void recordRequestHeaders(List<String> headers) {
             StringBuilder sb = new StringBuilder();
-            for (String k : headers.keySet()) {
-                String v = headers.get(k);
-                sb.append(k).append(": ").append(v).append("\n");
+            for (String h : headers) {
+                sb.append(h).append("\n");
             }
             this.headers = sb.toString();
         }
     }
 
     @Override
-    public ServiceResponse getServiceResponseForRequest(String method, String url, Map<String, String> headersToReal, Interaction interaction) throws IOException {
+    public ServiceResponse getServiceResponseForRequest(String method, String url,List<String> headersToReal, Interaction interaction) throws IOException {
 
         ReplayingInteraction replay = (ReplayingInteraction) interaction;
 

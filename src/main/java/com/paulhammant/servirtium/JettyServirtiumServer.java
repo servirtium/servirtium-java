@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -53,7 +54,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
                         : "http://" + request.getRemoteHost() + ":" + request.getRemotePort() + request.getRequestURI();
 
                 //String bodyToReal = "";
-                Map<String, String> headersToReal = new HashMap<>();
+                List<String> headersToReal = new ArrayList<>();
 
                 try {
 
@@ -178,7 +179,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
         return realResponse;
     }
 
-    private String prepareHeadersAndBodyForReal(HttpServletRequest request, String method, String url, Map<String, String> headersToReal, Interactor.Interaction interaction, String contentType, InteractionManipulations interactionManipulations) throws IOException {
+    private String prepareHeadersAndBodyForReal(HttpServletRequest request, String method, String url, List<String> headersToReal, Interactor.Interaction interaction, String contentType, InteractionManipulations interactionManipulations) throws IOException {
         Enumeration<String> hdrs = request.getHeaderNames();
 
         ServletInputStream is = request.getInputStream();
@@ -211,8 +212,9 @@ public class JettyServirtiumServer extends ServirtiumServer {
             String hdr = hdrs.nextElement();
             String hdrVal = request.getHeader(hdr);
             hdrVal = interactionManipulations.headerReplacement(hdr, hdrVal);
-            headersToReal.put(hdr, hdrVal);
-            interactionManipulations.changeSingleHeaderForRequestToReal(method, hdr, headersToReal);
+            final String fullHeader = hdr + ": " + hdrVal;
+            headersToReal.add(fullHeader);
+            interactionManipulations.changeSingleHeaderForRequestToReal(method, fullHeader, headersToReal);
         }
 
         interactionManipulations.changeAllHeadersForRequestToReal(headersToReal);

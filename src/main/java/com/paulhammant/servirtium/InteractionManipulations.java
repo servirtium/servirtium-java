@@ -32,11 +32,12 @@
 package com.paulhammant.servirtium;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public interface InteractionManipulations {
 
-    default void changeSingleHeaderForRequestToReal(String method, String currentHeader, Map<String, String> allHeadersToReal) {
+    default void changeSingleHeaderForRequestToReal(String method, String currentHeader, List<String> allHeadersToReal) {
     }
 
     default String headerReplacement(String hdrKey, String hdrVal) {
@@ -58,7 +59,7 @@ public interface InteractionManipulations {
         return body;
     }
 
-    default void changeAllHeadersForRequestToReal(Map<String, String> headersToReal) {
+    default void changeAllHeadersForRequestToReal(List<String> headersToReal) {
     }
 
     /** This may be Base84 encoded binary, but you're seldomn going to want to change that */

@@ -33,6 +33,7 @@ package com.paulhammant.servirtium;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 public interface Interactor {
@@ -42,7 +43,7 @@ public interface Interactor {
     void setScriptFilename(String filename) throws FileNotFoundException;
 
     ServiceResponse getServiceResponseForRequest(String method, String url,
-                                                 Map<String, String> headersToReal, Interaction interaction) throws IOException;
+                                                 List<String> headersToReal, Interaction interaction) throws IOException;
 
     Interaction newInteraction(String method, String path, int interactionNum, String url, String context);
 
@@ -60,7 +61,7 @@ public interface Interactor {
             this.context = context;
         }
 
-        abstract void recordRequestHeaders(Map<String, String> header);
+        abstract void recordRequestHeaders(List<String> header);
 
         void recordRequestBody(Object bodyToReal, String contentTypeToReal) {
             this.bodyToReal = bodyToReal;
@@ -83,7 +84,7 @@ public interface Interactor {
         }
 
         @Override
-        public ServiceResponse getServiceResponseForRequest(String method, String url, Map<String, String> headersToReal, Interaction interaction) throws IOException {
+        public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> headersToReal, Interaction interaction) throws IOException {
             return null;
         }
 

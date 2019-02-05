@@ -1,6 +1,7 @@
 package com.paulhammant.servirtium;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class SimpleInteractionManipulations implements InteractionManipulations {
@@ -38,14 +39,21 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
     }
 
     @Override
-    public void changeSingleHeaderForRequestToReal(String method, String currentHeader, Map<String, String> allHeadersToReal) {
+    public void changeSingleHeaderForRequestToReal(String method, String currentHeader, List<String> allHeadersToReal) {
         for (String pfx : headerPrefixesToRemoveFromRequest) {
             if (currentHeader.startsWith(pfx)) {
                 allHeadersToReal.remove(currentHeader);
             }
         }
-        if (currentHeader.equals("Host")) {
-            allHeadersToReal.put("Host", allHeadersToReal.get("Host").replace(fromHost, toHost));
+        if (currentHeader.startsWith("Host: ")) {
+            for (int i = 0; i < allHeadersToReal.size(); i++) {
+                String h = allHeadersToReal.get(i);
+                if (h.startsWith("Host: ")) {
+                    allHeadersToReal.remove(h);
+                    allHeadersToReal.add(i, h.replace(fromHost, toHost));
+                    break;
+                }
+            }
         }
     }
 

@@ -41,6 +41,7 @@ import okhttp3.ResponseBody;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static com.paulhammant.servirtium.JettyServirtiumServer.isText;
@@ -58,7 +59,7 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
     }
 
     @Override
-    public ServiceResponse invokeServiceEndpoint(String method, Object bodyToReal, String contentTypeToReal, String url, Map<String, String> headersToReal, InteractionManipulations interactionManipulations) throws InteractionException {
+    public ServiceResponse invokeServiceEndpoint(String method, Object bodyToReal, String contentTypeToReal, String url, List<String> headersToReal, InteractionManipulations interactionManipulations) throws InteractionException {
 
         RequestBody nonGetBody = null;
         if (!method.equals("GET")) {
@@ -75,16 +76,20 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
         Response response = null;
         try {
             Request.Builder reqBuilder = null;
+
+            Headers.Builder hb = new Headers.Builder();
+
+            final String[] strings = alternatingHeaderNamesAndValues(headersToReal);
+            for (String h : headersToReal) {
+                hb.add(h);
+            }
+
+            final Headers headerForOkHttp = hb.build();
+
             if (method.equalsIgnoreCase("POST")) {
-                reqBuilder = new Request.Builder().url(url).post(nonGetBody)
-                        .headers(Headers.of(headersToReal));
+                reqBuilder = new Request.Builder().url(url).post(nonGetBody).headers(headerForOkHttp);
             } else {
-                try {
-                    reqBuilder = new Request.Builder().url(url).method(method, nonGetBody)
-                            .headers(Headers.of(headersToReal));
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                }
+                reqBuilder = new Request.Builder().url(url).method(method, nonGetBody).headers(headerForOkHttp);
             }
             response = okHttpClient.newCall(reqBuilder.build()).execute();
 
@@ -121,5 +126,15 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
             throw new InteractionException(e);
         }
 
+    }
+    private String[] alternatingHeaderNamesAndValues(List<String> headers) {
+        String[] rv = new String[headers.size() * 2];
+        int x = 0;
+        for (String header : headers) {
+            String[] s = header.split(": ");
+            rv[x++] = s[0];
+            rv[x++] = s[1];
+        }
+        return rv;
     }
 }

@@ -38,6 +38,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MarkdownRecorder implements Interactor {
@@ -54,7 +55,7 @@ public class MarkdownRecorder implements Interactor {
         this.interactionManipulations = interactionManipulations;
     }
 
-    public ServiceResponse getServiceResponseForRequest(String method, String url, Map<String, String> headersToReal, Interaction interaction) throws IOException {
+    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> headersToReal, Interaction interaction) throws IOException {
         //headersToReal.remove("Accept-Encoding");
         return serviceInteroperation.invokeServiceEndpoint(method, interaction.bodyToReal, interaction.contentTypeToReal, url, headersToReal, interactionManipulations);
     }
@@ -73,18 +74,15 @@ public class MarkdownRecorder implements Interactor {
         }
 
         @Override
-        public void recordRequestHeaders(Map<String, String> headers) {
+        public void recordRequestHeaders(List<String> headers) {
             guardOut();
             this.recording.append("### Request headers sent to the real server:\n\n");
             this.recording.append("```\n");
-            for (String k : headers.keySet()) {
-                String v = headers.get(k);
-                String kv = k + ": " + v;
-                String kv2 = kv;
+            for (String h : headers) {
                 for (String redactionRegex : redactions.keySet()) {
-                    kv2 = kv.replaceAll(redactionRegex, redactions.get(redactionRegex));
+                    h = h.replaceAll(redactionRegex, redactions.get(redactionRegex));
                 }
-                this.recording.append(kv2).append("\n");
+                this.recording.append(h).append("\n");
             }
             this.recording.append("```\n\n");
         }
