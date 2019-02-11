@@ -25,8 +25,6 @@ public class JettyServirtiumServer extends ServirtiumServer {
     private boolean pretty = false;
     boolean failed = false;
 
-    private String context = "no context";
-
     private JettyServirtiumServer() {
     }
 
@@ -65,7 +63,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
                         return;
                     }
 
-                    Interactor.Interaction interaction = interactor.newInteraction(method, request.getRequestURI().toString(), interactionNum, url, context);
+                    Interactor.Interaction interaction = interactor.newInteraction(method, request.getRequestURI().toString(), interactionNum, url, getContext());
 
                     monitor.interactionStarted(interactionNum, interaction);
 
@@ -112,19 +110,19 @@ public class JettyServirtiumServer extends ServirtiumServer {
                         response.getOutputStream().write((byte[]) realResponse.body);
                     }
 
-                    monitor.interactionFinished(interactionNum, method, url, context);
+                    monitor.interactionFinished(interactionNum, method, url, getContext());
                 } catch (AssertionError assertionError) {
                     failed = true;
                     response.setStatus(500);
                     response.setContentType("text/plain");
                     response.getWriter().write("Servirtium Server AssertionError: " + assertionError.getMessage());
-                    monitor.interactionFailed(interactionNum, method, url, assertionError, context);
+                    monitor.interactionFailed(interactionNum, method, url, assertionError, getContext());
                 } catch (Throwable throwable) {
                     failed = true;
                     response.setStatus(500);
                     response.setContentType("text/plain");
                     response.getWriter().write("Servirtium Server unexpected Throwable: " + throwable.getMessage());
-                    monitor.unexpectedRequestError(throwable, context);
+                    monitor.unexpectedRequestError(throwable, getContext());
                     throw throwable; // stick your debugger here
                 } finally {
                     // Inform jetty that this request has now been handled
@@ -132,10 +130,6 @@ public class JettyServirtiumServer extends ServirtiumServer {
                 }
             }
         });
-    }
-
-    public void setContext(String context) {
-        this.context = context;
     }
 
     private ServiceResponse processHeadersAndBodyBackFromReal(Interactor.Interaction interaction, ServiceResponse realResponse, InteractionManipulations interactionManipulations) {
@@ -265,25 +259,6 @@ public class JettyServirtiumServer extends ServirtiumServer {
         }
     }
 
-    public static String classAndTestName() {
-        return classAndTestName(0);
-    }
-
-    public static String classAndTestName(int numRemovedFromCaller) {
-        StackTraceElement[] stes = Thread.currentThread().getStackTrace();
-        int ix = 0;
-        for (int j = 0; j < stes.length; j++) {
-            StackTraceElement ste = stes[j];
-            if (!ste.getClassName().startsWith("sun.")
-                    && !ste.getClassName().startsWith("java")
-                    && !ste.getMethodName().equals("classAndTestName")) {
-                if (ix++ == numRemovedFromCaller) {
-                    return ste.getClassName() + "." + ste.getMethodName();
-                }
-            }
-        }
-        throw new UnsupportedOperationException("could net get method name");
-    }
 
     public void finishedScript() {
         interactor.finishedScript(getInteractionNum(), failed);

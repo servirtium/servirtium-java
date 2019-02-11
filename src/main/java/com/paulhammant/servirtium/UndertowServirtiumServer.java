@@ -28,8 +28,6 @@ public class UndertowServirtiumServer extends ServirtiumServer {
     private boolean pretty = false;
     boolean failed = false;
 
-    private String context = "no context";
-
     private UndertowServirtiumServer() {
     }
 
@@ -64,7 +62,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
                                 return;
                             }
 
-                            Interactor.Interaction interaction = interactor.newInteraction(method, exchange.getRequestURI(), interactionNum, url, context);
+                            Interactor.Interaction interaction = interactor.newInteraction(method, exchange.getRequestURI(), interactionNum, url, getContext());
 
                             monitor.interactionStarted(interactionNum, interaction);
 
@@ -116,29 +114,25 @@ public class UndertowServirtiumServer extends ServirtiumServer {
                                 exchange.getOutputStream().write((byte[]) realResponse.body);
                             }
 
-                            monitor.interactionFinished(interactionNum, method, url, context);
+                            monitor.interactionFinished(interactionNum, method, url, getContext());
                         } catch (AssertionError assertionError) {
                             failed = true;
                             exchange.setStatusCode(500);
                             exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "text/plain");
                             exchange.getResponseSender().send("Servirtium Server AssertionError: " + assertionError.getMessage());
-                            monitor.interactionFailed(interactionNum, method, url, assertionError, context);
+                            monitor.interactionFailed(interactionNum, method, url, assertionError, getContext());
                         } catch (Throwable throwable) {
                             failed = true;
                             exchange.setStatusCode(500);
                             exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "text/plain");
                             exchange.getResponseSender().send("Servirtium Server unexpected Throwable: " + throwable.getMessage());
-                            monitor.unexpectedRequestError(throwable, context);
+                            monitor.unexpectedRequestError(throwable, getContext());
                             throw throwable; // stick your debugger here
                         } finally {
                         }
                     }
                 })).build();
 
-    }
-
-    public void setContext(String context) {
-        this.context = context;
     }
 
     private ServiceResponse processHeadersAndBodyBackFromReal(Interactor.Interaction interaction, ServiceResponse realResponse, InteractionManipulations interactionManipulations) {
@@ -264,26 +258,6 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         } finally {
             undertowServer.stop();
         }
-    }
-
-    public static String classAndTestName() {
-        return classAndTestName(0);
-    }
-
-    public static String classAndTestName(int numRemovedFromCaller) {
-        StackTraceElement[] stes = Thread.currentThread().getStackTrace();
-        int ix = 0;
-        for (int j = 0; j < stes.length; j++) {
-            StackTraceElement ste = stes[j];
-            if (!ste.getClassName().startsWith("sun.")
-                    && !ste.getClassName().startsWith("java")
-                    && !ste.getMethodName().equals("classAndTestName")) {
-                if (ix++ == numRemovedFromCaller) {
-                    return ste.getClassName() + "." + ste.getMethodName();
-                }
-            }
-        }
-        throw new UnsupportedOperationException("could net get method name");
     }
 
     public void finishedScript() {
