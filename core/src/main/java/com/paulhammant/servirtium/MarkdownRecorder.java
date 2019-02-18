@@ -36,6 +36,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +79,10 @@ public class MarkdownRecorder implements Interactor {
             guardOut();
             this.recording.append("### Request headers sent to the real server:\n\n");
             this.recording.append("```\n");
-            for (String h : headers) {
+            final String[] headersToRecord = headers.toArray(new String[0]);
+            // TODO - make sorting configurable
+            Arrays.sort(headersToRecord);
+            for (String h : headersToRecord) {
                 for (String redactionRegex : redactions.keySet()) {
                     h = h.replaceAll(redactionRegex, redactions.get(redactionRegex));
                 }

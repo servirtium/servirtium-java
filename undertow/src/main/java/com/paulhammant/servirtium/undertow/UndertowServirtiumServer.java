@@ -9,7 +9,6 @@ import io.undertow.Undertow;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.BlockingHandler;
-import io.undertow.util.HeaderMap;
 import io.undertow.util.HeaderValues;
 import io.undertow.util.Headers;
 import io.undertow.util.HttpString;
@@ -17,10 +16,7 @@ import io.undertow.util.HttpString;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import static com.paulhammant.servirtium.JsonAndXmlUtilities.prettifyDocOrNot;
@@ -182,9 +178,6 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
     private String prepareHeadersAndBodyForReal(HttpServerExchange exchange, String method, String url, List<String> headersToReal, Interactor.Interaction interaction, String contentType, InteractionManipulations interactionManipulations) throws IOException {
 
-        final HeaderMap requestHeaders = exchange.getRequestHeaders();
-        Iterator<HttpString> hdrs = requestHeaders.getHeaderNames().iterator();
-
         exchange.startBlocking();
         InputStream is = exchange.getInputStream();
 
@@ -212,13 +205,15 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             }
         }
 
-        while (hdrs.hasNext()) {
-            String hdr = hdrs.next().toString();
-            String hdrVal = requestHeaders.getFirst(hdr);
-            hdrVal = interactionManipulations.headerReplacement(hdr, hdrVal);
-            headersToReal.add(hdr + ": " + hdrVal);
-            interactionManipulations.changeSingleHeaderForRequestToReal(method, hdr, headersToReal);
-        }
+        exchange.getRequestHeaders().forEach(header -> {
+            String hdrName = header.getHeaderName().toString();
+            header.forEach(hdrVal -> {
+                hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
+                final String newHeader = hdrName + ": " + hdrVal;
+                headersToReal.add(newHeader);
+                interactionManipulations.changeSingleHeaderForRequestToReal(method, newHeader, headersToReal);
+            });
+        });
 
         interactionManipulations.changeAllHeadersForRequestToReal(headersToReal);
 

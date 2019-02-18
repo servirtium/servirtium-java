@@ -62,11 +62,11 @@ public abstract class SimplePostCentricTests {
             "\n" +
             "```\n" +
             "Accept: */*\n" +
-            "User-Agent: RestAssured\n" +
             "Connection: keep-alive\n" +
-            "Host: postman-echo.com\n" +
             "Content-Length: 19\n" +
             "Content-Type: text/plain; charset=ISO-8859-1\n" +
+            "Host: postman-echo.com\n" +
+            "User-Agent: RestAssured\n" +
             "```\n" +
             "\n" +
             "### Body sent to the real server (text/plain; charset=ISO-8859-1):\n" +
@@ -104,7 +104,8 @@ public abstract class SimplePostCentricTests {
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SimpleInteractionManipulations("http://localhost:8080", "https://postman-echo.com")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
+                        .withForcedLowerCaseHeaderValuesFor("Connection");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -134,7 +135,9 @@ public abstract class SimplePostCentricTests {
 
         servirtiumServer = makeServirtiumServer(
                 new SimpleInteractionManipulations("http://localhost:8080", "https://postman-echo.com")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding"), replayer);
+                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
+                        .withForcedLowerCaseHeaderValuesFor("Connection"),
+                replayer);
 
         servirtiumServer.start();
 
@@ -155,7 +158,8 @@ public abstract class SimplePostCentricTests {
         try {
             final SimpleInteractionManipulations interactionManipulations =
             new SimpleInteractionManipulations("http://localhost:8080", "http://localhost:8001")
-                    .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                    .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
+                    .withForcedLowerCaseHeaderValuesFor("Connection");
 
             MarkdownRecorder recorder = new MarkdownRecorder(
                     new ServiceInteropViaOkHttp(),
@@ -194,11 +198,11 @@ public abstract class SimplePostCentricTests {
             "\n" +
             "```\n" +
             "Accept: */*\n" +
-            "User-Agent: RestAssured\n" +
             "Connection: keep-alive\n" +
-            "Host: localhost:8001\n" +
             "Content-Length: 67\n" +
             "Content-Type: image/png; charset=ISO-8859-1\n" +
+            "Host: localhost:8001\n" +
+            "User-Agent: RestAssured\n" +
             "```\n" +
             "\n" +
             "### Body sent to the real server (image/png; charset=ISO-8859-1):\n" +
@@ -238,7 +242,8 @@ public abstract class SimplePostCentricTests {
         try {
             final SimpleInteractionManipulations interactionManipulations =
             new SimpleInteractionManipulations("http://localhost:8080", "http://localhost:8001")
-                    .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                    .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
+                    .withForcedLowerCaseHeaderValuesFor("Connection");
 
             MarkdownRecorder recorder = new MarkdownRecorder(
                     new ServiceInteropViaOkHttp(),
@@ -277,11 +282,11 @@ public abstract class SimplePostCentricTests {
             "\n" +
             "```\n" +
             "Accept: */*\n" +
-            "User-Agent: RestAssured\n" +
             "Connection: keep-alive\n" +
-            "Host: localhost:8001\n" +
             "Content-Length: 67\n" +
             "Content-Type: image/png; charset=ISO-8859-1\n" +
+            "Host: localhost:8001\n" +
+            "User-Agent: RestAssured\n" +
             "```\n" +
             "\n" +
             "### Body sent to the real server (image/png; charset=ISO-8859-1):\n" +

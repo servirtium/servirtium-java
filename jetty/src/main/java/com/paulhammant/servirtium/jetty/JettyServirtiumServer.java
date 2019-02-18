@@ -204,10 +204,11 @@ public class JettyServirtiumServer extends ServirtiumServer {
         }
 
         while (hdrs.hasMoreElements()) {
-            String hdr = hdrs.nextElement();
-            String hdrVal = request.getHeader(hdr);
-            hdrVal = interactionManipulations.headerReplacement(hdr, hdrVal);
-            final String fullHeader = hdr + ": " + hdrVal;
+            // TODO - make this cater for multiple lines with the same name
+            String hdrName = hdrs.nextElement();
+            String hdrVal = request.getHeader(hdrName);
+            hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
+            final String fullHeader = hdrName + ": " + hdrVal;
             headersToReal.add(fullHeader);
             interactionManipulations.changeSingleHeaderForRequestToReal(method, fullHeader, headersToReal);
         }

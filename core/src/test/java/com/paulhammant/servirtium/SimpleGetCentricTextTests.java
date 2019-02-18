@@ -52,10 +52,10 @@ public abstract class SimpleGetCentricTextTests {
             "### Request headers sent to the real server:\n" +
             "\n" +
             "```\n" +
-            "User-Agent: SVN/1.10.0 (x86_64-apple-darwin17.0.0) serf/1.3.9\n" +
+            "Accept: */*\n" +
             "Connection: keep-alive\n" +
             "Host: svn.apache.org\n" +
-            "Accept: */*\n" +
+            "User-Agent: SVN/1.10.0 (x86_64-apple-darwin17.0.0) serf/1.3.9\n" +
             "```\n" +
             "\n" +
             "### Body sent to the real server ():\n" +
@@ -106,15 +106,15 @@ public abstract class SimpleGetCentricTextTests {
             "```\n" +
             "\n";
 
-    public static final String REDACTED_CONVERSATION = "## Interaction 0: GET /paul-hammant/servirtium/master/src/test/resources/test.json\n" +
+    public static final String REDACTED_CONVERSATION = "## Interaction 0: GET /paul-hammant/servirtium/master/core/src/test/resources/test.json\n" +
             "\n" +
             "### Request headers sent to the real server:\n" +
             "\n" +
             "```\n" +
-            "User-Agent: RestAssured\n" +
+            "Accept: */*\n" +
             "Connection: keep-alive\n" +
             "Host: raw.githubusercontent.com\n" +
-            "Accept: */*\n" +
+            "User-Agent: RestAssured\n" +
             "```\n" +
             "\n" +
             "### Body sent to the real server ():\n" +
@@ -168,13 +168,16 @@ public abstract class SimpleGetCentricTextTests {
 
     public void canRecordASimpleGetFromApachesSubversionViaOkHttp() throws Exception {
 
+        final SimpleInteractionManipulations interactionManipulations = new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
+                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
+                .withForcedLowerCaseHeaderValuesFor("Connection");
+
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
-                new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding"));
+                interactionManipulations
+        );
 
-        servirtiumServer = makeServirtiumServer(new ServerMonitor.Console(), new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding"), recorder);
+        servirtiumServer = makeServirtiumServer(new ServerMonitor.Console(), interactionManipulations, recorder);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
@@ -194,7 +197,8 @@ public abstract class SimpleGetCentricTextTests {
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
                 .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
+                .withForcedLowerCaseHeaderValuesFor("Connection");
 
 
         MarkdownRecorder recorder = new MarkdownRecorder(
@@ -207,15 +211,15 @@ public abstract class SimpleGetCentricTextTests {
         recorder.setOutputStream("foo", out);
 
         // Order of headers is as originally sent
-        String expected = "## Interaction 0: GET /paul-hammant/servirtium/master/src/test/resources/test.json\n" +
+        String expected = "## Interaction 0: GET /paul-hammant/servirtium/master/core/src/test/resources/test.json\n" +
                 "\n" +
                 "### Request headers sent to the real server:\n" +
                 "\n" +
                 "```\n" +
-                "User-Agent: RestAssured\n" +
+                "Accept: */*\n" +
                 "Connection: keep-alive\n" +
                 "Host: raw.githubusercontent.com\n" +
-                "Accept: */*\n" +
+                "User-Agent: RestAssured\n" +
                 "```\n" +
                 "\n" +
                 "### Body sent to the real server ():\n" +
@@ -246,15 +250,15 @@ public abstract class SimpleGetCentricTextTests {
                 "{\"Accept-Language\": \"en-US,en;q=0.8\",  \"Host\": \"headers.jsontest.com\",  \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\" }\n\n" +
                 "```\n" +
                 "\n" +
-                "## Interaction 1: GET /paul-hammant/servirtium/master/src/test/resources/does-not-exist.json\n" +
+                "## Interaction 1: GET /paul-hammant/servirtium/master/core/src/test/resources/does-not-exist.json\n" +
                 "\n" +
                 "### Request headers sent to the real server:\n" +
                 "\n" +
                 "```\n" +
-                "User-Agent: RestAssured\n" +
+                "Accept: */*\n" +
                 "Connection: keep-alive\n" +
                 "Host: raw.githubusercontent.com\n" +
-                "Accept: */*\n" +
+                "User-Agent: RestAssured\n" +
                 "```\n" +
                 "\n" +
                 "### Body sent to the real server ():\n" +
@@ -289,7 +293,7 @@ public abstract class SimpleGetCentricTextTests {
         given()
                 .header("User-Agent", "RestAssured")
         .when()
-                .get("/paul-hammant/servirtium/master/src/test/resources/test.json")
+                .get("/paul-hammant/servirtium/master/core/src/test/resources/test.json")
         .then()
                 .assertThat()
                 .statusCode(200)
@@ -299,7 +303,7 @@ public abstract class SimpleGetCentricTextTests {
         given()
                 .header("User-Agent", "RestAssured")
         .when()
-                .get("/paul-hammant/servirtium/master/src/test/resources/does-not-exist.json")
+                .get("/paul-hammant/servirtium/master/core/src/test/resources/does-not-exist.json")
         .then()
                 .assertThat()
                 .statusCode(404);
@@ -323,7 +327,7 @@ public abstract class SimpleGetCentricTextTests {
 //        given()
 //                .header("User-Agent", "RestAssured")
 //                .when()
-//                .get("/paul-hammant/servirtium/master/src/test/resources/test.json")
+//                .get("/paul-hammant/servirtium/master/core/src/test/resources/test.json")
 //                .then()
 //                .assertThat()
 //                .statusCode(500)
@@ -353,7 +357,8 @@ public abstract class SimpleGetCentricTextTests {
 
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
                 .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
+                .withForcedLowerCaseHeaderValuesFor("Connection");
 
 
         MarkdownRecorder recorder = new MarkdownRecorder(
@@ -369,7 +374,7 @@ public abstract class SimpleGetCentricTextTests {
         given()
                 .header("User-Agent", "RestAssured")
         .when()
-                .get("/paul-hammant/servirtium/master/src/test/resources/test.json")
+                .get("/paul-hammant/servirtium/master/core/src/test/resources/test.json")
         .then()
                 .assertThat()
                 .statusCode(200)
@@ -379,15 +384,15 @@ public abstract class SimpleGetCentricTextTests {
         servirtiumServer.finishedScript();
 
         // Order of headers is as originally sent
-        assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/src/test/resources/test.json\n" +
+        assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/core/src/test/resources/test.json\n" +
                 "\n" +
                 "### Request headers sent to the real server:\n" +
                 "\n" +
                 "```\n" +
-                "User-Agent: RestAssured\n" +
+                "Accept: */*\n" +
                 "Connection: keep-alive\n" +
                 "Host: raw.githubusercontent.com\n" +
-                "Accept: */*\n" +
+                "User-Agent: RestAssured\n" +
                 "```\n" +
                 "\n" +
                 "### Body sent to the real server ():\n" +
@@ -428,7 +433,8 @@ public abstract class SimpleGetCentricTextTests {
 
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
                 .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
+                .withForcedLowerCaseHeaderValuesFor("Connection");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -444,7 +450,7 @@ public abstract class SimpleGetCentricTextTests {
                 .proxy("localhost", 8080)
                 .header("User-Agent", "RestAssured")
         .when()
-                .get("http://raw.githubusercontent.com/paul-hammant/servirtium/master/src/test/resources/test.json")
+                .get("http://raw.githubusercontent.com/paul-hammant/servirtium/master/core/src/test/resources/test.json")
         .then()
                 .assertThat()
                 .statusCode(200)
@@ -454,15 +460,15 @@ public abstract class SimpleGetCentricTextTests {
         servirtiumServer.finishedScript();
 
         // Order of headers is as originally sent
-        assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/src/test/resources/test.json\n" +
+        assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/core/src/test/resources/test.json\n" +
                 "\n" +
                 "### Request headers sent to the real server:\n" +
                 "\n" +
                 "```\n" +
-                "User-Agent: RestAssured\n" +
-                "Host: raw.githubusercontent.com\n" +
                 "Accept: */*\n" +
+                "Host: raw.githubusercontent.com\n" +
                 "Proxy-Connection: Keep-Alive\n" +
+                "User-Agent: RestAssured\n" +
                 "```\n" +
                 "\n" +
                 "### Body sent to the real server ():\n" +
@@ -502,7 +508,8 @@ public abstract class SimpleGetCentricTextTests {
 
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations()
                 .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
+                .withForcedLowerCaseHeaderValuesFor("Connection");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -518,7 +525,7 @@ public abstract class SimpleGetCentricTextTests {
                 .proxy("localhost", 8080)
                 .header("User-Agent", "RestAssured")
         .when()
-                .get("https://localhost:8080/paul-hammant/servirtium/master/src/test/resources/test.json")
+                .get("https://localhost:8080/paul-hammant/servirtium/master/core/src/test/resources/test.json")
         .then()
                 .assertThat()
                 .statusCode(200)
@@ -528,15 +535,15 @@ public abstract class SimpleGetCentricTextTests {
         servirtiumServer.finishedScript();
 
         // Order of headers is as originally sent
-        assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/src/test/resources/test.json\n" +
+        assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/core/src/test/resources/test.json\n" +
                 "\n" +
                 "### Request headers sent to the real server:\n" +
                 "\n" +
                 "```\n" +
                 "Accept: */*\n" +
-                "User-Agent: RestAssured\n" +
                 "Host: raw.githubusercontent.com\n" +
                 "Proxy-Connection: Keep-Alive\n" +
+                "User-Agent: RestAssured\n" +
                 "```\n" +
                 "\n" +
                 "### Body sent to the real server ():\n" +
@@ -577,7 +584,8 @@ public abstract class SimpleGetCentricTextTests {
         final SimpleInteractionManipulations interactionManipulations =
                 new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
                 .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
+                        .withForcedLowerCaseHeaderValuesFor("Connection");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -595,7 +603,7 @@ public abstract class SimpleGetCentricTextTests {
         given()
                 .header("User-Agent", "RestAssured")
         .when()
-                .get("/paul-hammant/servirtium/master/src/test/resources/test.json")
+                .get("/paul-hammant/servirtium/master/core/src/test/resources/test.json")
         .then()
                 .assertThat()
                 .statusCode(200)
@@ -624,7 +632,8 @@ public abstract class SimpleGetCentricTextTests {
         final SimpleInteractionManipulations interactionManipulations =
                 new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
                         .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
+                        .withForcedLowerCaseHeaderValuesFor("Connection");
 
         servirtiumServer = makeServirtiumServer(serverMonitor,
                 interactionManipulations, replayer)
@@ -635,7 +644,7 @@ public abstract class SimpleGetCentricTextTests {
         given()
                 .header("User-Agent", "RestAssured")
                 .when()
-                .get("/paul-hammant/servirtium/master/src/test/resources/test.json")
+                .get("/paul-hammant/servirtium/master/core/src/test/resources/test.json")
                 .then()
                 .assertThat()
                 .statusCode(200)
@@ -660,7 +669,9 @@ public abstract class SimpleGetCentricTextTests {
 
         servirtiumServer = makeServirtiumServer(new ServerMonitor.Console(),
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding"), replayer);
+                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
+                        .withForcedLowerCaseHeaderValuesFor("Connection")
+                , replayer);
 
         servirtiumServer.start();
 

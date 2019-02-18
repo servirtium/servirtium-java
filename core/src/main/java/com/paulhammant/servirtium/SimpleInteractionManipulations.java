@@ -1,6 +1,7 @@
 package com.paulhammant.servirtium;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
     protected final String toHost;
     private String[] headerPrefixesToRemoveFromRequest = new String[0];
     private String[] headerPrefixesToRemoveFromResponse = new String[0];
+    private String[] headerKeysForLowerCaseValues = new String[0];
 
     public SimpleInteractionManipulations() {
         this("xx8suf98su98sf98sjxjcvlkxjcv" , "s89s8798s7df98sdf98sdf98sdf9");
@@ -40,11 +42,28 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
 
     @Override
     public void changeSingleHeaderForRequestToReal(String method, String currentHeader, List<String> allHeadersToReal) {
+        String currentHeaderKey = currentHeader.substring(0, currentHeader.indexOf(": "));
+        String currentHeaderVal = currentHeader.substring(currentHeader.indexOf(": ") +2);
+
         for (String pfx : headerPrefixesToRemoveFromRequest) {
             if (currentHeader.startsWith(pfx)) {
                 allHeadersToReal.remove(currentHeader);
             }
         }
+
+        if (Arrays.stream(this.headerKeysForLowerCaseValues).anyMatch(currentHeaderKey::equals)) {
+            List<String> newHeaders = new ArrayList<>();
+            for (String hdr : allHeadersToReal) {
+                if (hdr.startsWith(currentHeaderKey + ": ")) {
+                    newHeaders.add(currentHeaderKey + ": " + currentHeaderVal.toLowerCase());
+                } else {
+                    newHeaders.add(hdr);
+                }
+            }
+            allHeadersToReal.clear();
+            allHeadersToReal.addAll(newHeaders);
+        }
+
         if (currentHeader.startsWith("Host: ")) {
             for (int i = 0; i < allHeadersToReal.size(); i++) {
                 String h = allHeadersToReal.get(i);
@@ -67,5 +86,10 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
                 }
             }
         }
+    }
+
+    public SimpleInteractionManipulations withForcedLowerCaseHeaderValuesFor(String... headerKeys) {
+        this.headerKeysForLowerCaseValues = headerKeys;
+        return this;
     }
 }

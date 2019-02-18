@@ -51,10 +51,10 @@ public abstract class SimpleGetCentricBinaryTests {
             "### Request headers sent to the real server:\n" +
             "\n" +
             "```\n" +
-            "Connection: keep-alive\n" +
-            "User-Agent: SVN/1.10.0 (x86_64-apple-darwin17.0.0) serf/1.3.9\n" +
-            "Host: svn.apache.org\n" +
             "Accept: */*\n" +
+            "Connection: keep-alive\n" +
+            "Host: svn.apache.org\n" +
+            "User-Agent: SVN/1.10.0 (x86_64-apple-darwin17.0.0) serf/1.3.9\n" +
             "```\n" +
             "\n" +
             "### Body sent to the real server ():\n" +
@@ -102,7 +102,8 @@ public abstract class SimpleGetCentricBinaryTests {
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
+                        .withForcedLowerCaseHeaderValuesFor("Connection");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -127,7 +128,8 @@ public abstract class SimpleGetCentricBinaryTests {
 
     public void canRecordAPngGetFromWikimedia() throws Exception {
 
-        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("localhost:8080", "upload.wikimedia.org");
+        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("localhost:8080", "upload.wikimedia.org")
+                .withForcedLowerCaseHeaderValuesFor("Connection");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -162,11 +164,11 @@ public abstract class SimpleGetCentricBinaryTests {
                 "### Request headers sent to the real server:\n" +
                 "\n" +
                 "```\n" +
-                "User-Agent: RestAssured\n" +
-                "Connection: keep-alive\n" +
-                "Host: upload.wikimedia.org\n" +
                 "Accept-Encoding: gzip,deflate\n" +
                 "Accept: */*\n" +
+                "Connection: keep-alive\n" +
+                "Host: upload.wikimedia.org\n" +
+                "User-Agent: RestAssured\n" +
                 "```\n" +
                 "\n" +
                 "### Body sent to the real server ():\n" +
@@ -209,6 +211,7 @@ public abstract class SimpleGetCentricBinaryTests {
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
                 .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:")
+                .withForcedLowerCaseHeaderValuesFor("Connection")
         );
 
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder);
@@ -238,11 +241,11 @@ public abstract class SimpleGetCentricBinaryTests {
                         "### Request headers sent to the real server:\n" +
                         "\n" +
                         "```\n" +
-                        "User-Agent: RestAssured\n" +
-                        "Connection: keep-alive\n" +
-                        "Host: upload.wikimedia.org\n" +
                         "Accept-Encoding: gzip,deflate\n" +
                         "Accept: */*\n" +
+                        "Connection: keep-alive\n" +
+                        "Host: upload.wikimedia.org\n" +
+                        "User-Agent: RestAssured\n" +
                         "```\n" +
                         "\n" +
                         "### Body sent to the real server ():\n" +
@@ -292,7 +295,8 @@ public abstract class SimpleGetCentricBinaryTests {
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
+                        .withForcedLowerCaseHeaderValuesFor("Connection");
 
         MarkdownReplayer replayer = new MarkdownReplayer();
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
