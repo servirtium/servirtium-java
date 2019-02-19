@@ -217,8 +217,6 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
         interactionManipulations.changeAllHeadersForRequestToReal(headersToReal);
 
-        interaction.recordRequestHeaders(headersToReal);
-
         if (bodyToReal instanceof String) {
             bodyToReal = interactionManipulations.changeBodyForRequestToReal((String) bodyToReal);
         }
@@ -227,7 +225,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             bodyToReal = "";
         }
 
-        interaction.recordRequestBody(bodyToReal, contentType);
+        interaction.recordRequestHeadersAndBody(headersToReal, bodyToReal, contentType);
 
         return interactionManipulations.changeUrlForRequestToReal(url);
     }

@@ -61,6 +61,12 @@ public interface Interactor {
             this.context = context;
         }
 
+        public void recordRequestHeadersAndBody(List<String> headers, Object bodyToReal, String contentTypeToReal) {
+            this.recordRequestHeaders(headers);
+            this.recordRequestBody(bodyToReal, contentTypeToReal);
+
+        }
+
         public abstract void recordRequestHeaders(List<String> header);
 
         public void recordRequestBody(Object bodyToReal, String contentTypeToReal) {
@@ -72,11 +78,6 @@ public interface Interactor {
 
         public void recordResponseBody(Object body, int statusCode, String contentType) {}
 
-        public void recordRequestHeadersAndBody(List<String> headers, Object bodyToReal, String contentTypeToReal) {
-            this.recordRequestHeaders(headers);
-            this.recordRequestBody(bodyToReal, contentTypeToReal);
-
-        }
     }
 
     public class NullObject implements Interactor {
