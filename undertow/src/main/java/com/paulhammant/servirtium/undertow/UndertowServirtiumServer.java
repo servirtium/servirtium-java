@@ -6,7 +6,6 @@ import com.paulhammant.servirtium.ServerMonitor;
 import com.paulhammant.servirtium.ServiceResponse;
 import com.paulhammant.servirtium.ServirtiumServer;
 import io.undertow.Undertow;
-import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.BlockingHandler;
 import io.undertow.util.HeaderValues;
@@ -23,13 +22,10 @@ import static com.paulhammant.servirtium.JsonAndXmlUtilities.prettifyDocOrNot;
 
 public class UndertowServirtiumServer extends ServirtiumServer {
 
-    Undertow undertowServer;
+    private Undertow undertowServer;
     private Interactor interactor;
     private int interactionNum = -1;
-    boolean failed = false;
-
-    private UndertowServirtiumServer() {
-    }
+    private boolean failed = false;
 
     public UndertowServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
                                     InteractionManipulations interactionManipulations,
@@ -38,43 +34,45 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
         undertowServer = Undertow.builder()
                 .addHttpListener(port, "localhost")
-                .setHandler(new BlockingHandler(new HttpHandler() {
-                    public void handleRequest(HttpServerExchange exchange)
-                            throws Exception {
+                .setHandler(new BlockingHandler(exchange ->
+                        UndertowServirtiumServer.this.handleExchange(exchange, monitor, interactionManipulations)))
+                .build();
+    }
 
-                        interactionNum++;
+    private void handleExchange(HttpServerExchange exchange, ServerMonitor monitor, InteractionManipulations interactionManipulations) throws IOException {
+        interactionNum++;
 
-                        String method = exchange.getRequestMethod().toString();
+        String method = exchange.getRequestMethod().toString();
 
-                        final String url = (exchange.getRequestURL().startsWith("http://") || exchange.getRequestURL().startsWith("https://"))
-                                ? exchange.getRequestURL()
-                                : "http://" + exchange.getHostAndPort() + exchange.getRequestURI();
+        final String url = (exchange.getRequestURL().startsWith("http://") || exchange.getRequestURL().startsWith("https://"))
+                ? exchange.getRequestURL()
+                : "http://" + exchange.getHostAndPort() + exchange.getRequestURI();
 
-                        //String bodyToReal = "";
-                        List<String> headersToReal = new ArrayList<>();
+        //String bodyToReal = "";
+        List<String> headersToReal = new ArrayList<>();
 
-                        try {
+        try {
 
-                            if (method.equals("CONNECT")) {
-                                exchange.getResponseSender().send("Servirtium does not support CONNECT yet");
-                                exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "text/plain");
-                                exchange.setStatusCode(500);
-                                return;
-                            }
+            if (method.equals("CONNECT")) {
+                exchange.getResponseSender().send("Servirtium does not support CONNECT yet");
+                exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "text/plain");
+                exchange.setStatusCode(500);
+                return;
+            }
 
-                            Interactor.Interaction interaction = interactor.newInteraction(method, exchange.getRequestURI(), interactionNum, url, getContext());
+            Interactor.Interaction interaction = interactor.newInteraction(method, exchange.getRequestURI(), interactionNum, url, getContext());
 
-                            monitor.interactionStarted(interactionNum, interaction);
+            monitor.interactionStarted(interactionNum, interaction);
 
-                            final HeaderValues headerValues = exchange.getRequestHeaders().get(Headers.CONTENT_TYPE_STRING);
-                            String contentType;
-                            if (headerValues == null) {
-                                contentType = "";
-                            } else {
-                                contentType = headerValues.getFirst();
-                                ;
+            final HeaderValues headerValues = exchange.getRequestHeaders().get(Headers.CONTENT_TYPE_STRING);
+            String contentType;
+            if (headerValues == null) {
+                contentType = "";
+            } else {
+                contentType = headerValues.getFirst();
+                ;
 
-                            }
+            }
 
 //                    if (isText(contentType)) {
 //                        BufferedReader reader = baseRequest.getReader();
@@ -86,53 +84,50 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 //                    }
 //
 
-                            final String requestUrl = prepareHeadersAndBodyForReal(exchange, method, url, headersToReal, interaction, contentType, interactionManipulations);
+            final String requestUrl = prepareHeadersAndBodyForReal(exchange, method, url, headersToReal, interaction, contentType, interactionManipulations);
 
-                            // INTERACTION
-                            ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, headersToReal, interaction);
+            // INTERACTION
+            ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, headersToReal, interaction);
 
-                            realResponse = processHeadersAndBodyBackFromReal(interaction, realResponse, interactionManipulations);
+            realResponse = processHeadersAndBodyBackFromReal(interaction, realResponse, interactionManipulations);
 
-                            interactor.addInteraction(interaction);
+            interactor.addInteraction(interaction);
 
-                            exchange.setStatusCode(realResponse.statusCode);
+            exchange.setStatusCode(realResponse.statusCode);
 
-                            for (String header : realResponse.headers) {
-                                int ix = header.indexOf(": ");
-                                String hdrKey = header.substring(0, ix);
-                                String hdrVal = header.substring(ix + 2);
-                                exchange.getResponseHeaders().add(new HttpString(hdrKey), hdrVal);
-                            }
+            for (String header : realResponse.headers) {
+                int ix = header.indexOf(": ");
+                String hdrKey = header.substring(0, ix);
+                String hdrVal = header.substring(ix + 2);
+                exchange.getResponseHeaders().add(new HttpString(hdrKey), hdrVal);
+            }
 
-                            if (realResponse.contentType != null) {
-                                exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, realResponse.contentType);
-                            }
+            if (realResponse.contentType != null) {
+                exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, realResponse.contentType);
+            }
 
-                            if (realResponse.body instanceof String) {
-                                exchange.getResponseSender().send((String) realResponse.body);
-                            } else {
-                                exchange.getOutputStream().write((byte[]) realResponse.body);
-                            }
+            if (realResponse.body instanceof String) {
+                exchange.getResponseSender().send((String) realResponse.body);
+            } else {
+                exchange.getOutputStream().write((byte[]) realResponse.body);
+            }
 
-                            monitor.interactionFinished(interactionNum, method, url, getContext());
-                        } catch (AssertionError assertionError) {
-                            failed = true;
-                            exchange.setStatusCode(500);
-                            exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "text/plain");
-                            exchange.getResponseSender().send("Servirtium Server AssertionError: " + assertionError.getMessage());
-                            monitor.interactionFailed(interactionNum, method, url, assertionError, getContext());
-                        } catch (Throwable throwable) {
-                            failed = true;
-                            exchange.setStatusCode(500);
-                            exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "text/plain");
-                            exchange.getResponseSender().send("Servirtium Server unexpected Throwable: " + throwable.getMessage());
-                            monitor.unexpectedRequestError(throwable, getContext());
-                            throw throwable; // stick your debugger here
-                        } finally {
-                        }
-                    }
-                })).build();
-
+            monitor.interactionFinished(interactionNum, method, url, getContext());
+        } catch (AssertionError assertionError) {
+            failed = true;
+            exchange.setStatusCode(500);
+            exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "text/plain");
+            exchange.getResponseSender().send("Servirtium Server AssertionError: " + assertionError.getMessage());
+            monitor.interactionFailed(interactionNum, method, url, assertionError, getContext());
+        } catch (Throwable throwable) {
+            failed = true;
+            exchange.setStatusCode(500);
+            exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "text/plain");
+            exchange.getResponseSender().send("Servirtium Server unexpected Throwable: " + throwable.getMessage());
+            monitor.unexpectedRequestError(throwable, getContext());
+            throw throwable; // stick your debugger here
+        } finally {
+        }
     }
 
     private ServiceResponse processHeadersAndBodyBackFromReal(Interactor.Interaction interaction, ServiceResponse realResponse, InteractionManipulations interactionManipulations) {
