@@ -4,6 +4,7 @@ public abstract class ServirtiumServer {
 
     private String context = "no context";
     private boolean pretty;
+    private int interactionNum = -1;
 
     public abstract ServirtiumServer start() throws Exception;
     public abstract void stop();
@@ -35,6 +36,19 @@ public abstract class ServirtiumServer {
     public boolean shouldHavePrettyPrintedTextBodies() {
         return pretty;
     }
+
+    protected void bumpInteractionNum() {
+        interactionNum++;
+    }
+
+    protected int getInteractionNum() {
+        return interactionNum;
+    }
+
+    protected void resetInteractionNumber() {
+        interactionNum = -1;
+    }
+
 
     public static class NullObject extends ServirtiumServer {
 

@@ -134,6 +134,8 @@ public class MarkdownRecorder implements Interactor {
             this.recording.append("\n");
         }
 
+
+
         @Override
         public void recordResponseBody(Object body, int statusCode, String contentType) {
             guardOut();

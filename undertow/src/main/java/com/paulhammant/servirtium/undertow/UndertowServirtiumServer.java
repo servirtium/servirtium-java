@@ -24,7 +24,6 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
     private Undertow undertowServer;
     private Interactor interactor;
-    private int interactionNum = -1;
     private boolean failed = false;
 
     public UndertowServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
@@ -40,7 +39,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
     }
 
     private void handleExchange(HttpServerExchange exchange, ServerMonitor monitor, InteractionManipulations interactionManipulations) throws IOException {
-        interactionNum++;
+        bumpInteractionNum();
 
         String method = exchange.getRequestMethod().toString();
 
@@ -66,9 +65,9 @@ public class UndertowServirtiumServer extends ServirtiumServer {
                 return;
             }
 
-            Interactor.Interaction interaction = interactor.newInteraction(method, uri, interactionNum, url, getContext());
+            Interactor.Interaction interaction = interactor.newInteraction(method, uri, getInteractionNum(), url, getContext());
 
-            monitor.interactionStarted(interactionNum, interaction);
+            monitor.interactionStarted(getInteractionNum(), interaction);
 
             final HeaderValues headerValues = exchange.getRequestHeaders().get(Headers.CONTENT_TYPE_STRING);
             String contentType;
@@ -118,13 +117,13 @@ public class UndertowServirtiumServer extends ServirtiumServer {
                 exchange.getOutputStream().write((byte[]) realResponse.body);
             }
 
-            monitor.interactionFinished(interactionNum, method, url, getContext());
+            monitor.interactionFinished(getInteractionNum(), method, url, getContext());
         } catch (AssertionError assertionError) {
             failed = true;
             exchange.setStatusCode(500);
             exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "text/plain");
             exchange.getResponseSender().send("Servirtium Server AssertionError: " + assertionError.getMessage());
-            monitor.interactionFailed(interactionNum, method, url, assertionError, getContext());
+            monitor.interactionFailed(getInteractionNum(), method, url, assertionError, getContext());
         } catch (Throwable throwable) {
             failed = true;
             exchange.setStatusCode(500);
@@ -236,14 +235,6 @@ public class UndertowServirtiumServer extends ServirtiumServer {
     public ServirtiumServer start() throws Exception {
         undertowServer.start();
         return this;
-    }
-
-    protected int getInteractionNum() {
-        return interactionNum;
-    }
-
-    protected void resetInteractionNumber() {
-        interactionNum = -1;
     }
 
     public void stop() {

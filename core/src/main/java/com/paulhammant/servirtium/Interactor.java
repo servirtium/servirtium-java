@@ -72,6 +72,11 @@ public interface Interactor {
 
         public void recordResponseBody(Object body, int statusCode, String contentType) {}
 
+        public void recordRequestHeadersAndBody(List<String> headers, Object bodyToReal, String contentTypeToReal) {
+            this.recordRequestHeaders(headers);
+            this.recordRequestBody(bodyToReal, contentTypeToReal);
+
+        }
     }
 
     public class NullObject implements Interactor {

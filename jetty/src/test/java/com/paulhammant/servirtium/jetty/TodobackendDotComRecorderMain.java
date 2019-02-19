@@ -40,7 +40,7 @@ public class TodobackendDotComRecorderMain {
 
         ServirtiumServer servirtiumServer = makeServirtiumServer(manipulations, recorder);
 
-        recorder.setScriptFilename("../core/src/test/resources/TodobackendDotComServiceRecording.md");
+        recorder.setScriptFilename("core/src/test/resources/TodobackendDotComServiceRecording.md");
         servirtiumServer.start();
 
         Runtime.getRuntime().addShutdownHook(new Thread(servirtiumServer::stop));

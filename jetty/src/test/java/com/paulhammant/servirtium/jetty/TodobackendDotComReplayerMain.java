@@ -25,7 +25,7 @@ public class TodobackendDotComReplayerMain {
 
         ServirtiumServer servirtiumServer = makeServirtiumServer(manipulations, replayer);
 
-        replayer.setScriptFilename("../core/src/test/resources/TodobackendDotComServiceRecording.md");
+        replayer.setScriptFilename("core/src/test/resources/TodobackendDotComServiceRecording.md");
         servirtiumServer.start();
 
         Runtime.getRuntime().addShutdownHook(new Thread(servirtiumServer::stop));
