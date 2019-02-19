@@ -131,6 +131,11 @@ public class MarkdownReplayer implements Interactor {
 
         }
 
+        @Override
+        public void noteResponseHeadersAndBody(String[] headers, Object body, int statusCode, String contentType) {
+            // Nothing to note, this is already the replay of a recording
+        }
+
     }
 
     @Override

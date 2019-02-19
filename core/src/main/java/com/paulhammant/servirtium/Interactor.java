@@ -68,10 +68,7 @@ public interface Interactor {
             this.contentTypeToReal = contentTypeToReal;
         }
 
-        public void recordResponseHeaders(String[] headers) {}
-
-        public void recordResponseBody(Object body, int statusCode, String contentType) {}
-
+        public abstract void noteResponseHeadersAndBody(String[] headers, Object body, int statusCode, String contentType);
     }
 
     public class NullObject implements Interactor {

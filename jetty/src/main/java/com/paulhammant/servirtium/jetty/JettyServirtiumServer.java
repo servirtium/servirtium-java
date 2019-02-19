@@ -172,9 +172,8 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
         realResponse = realResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
 
-        interaction.recordResponseHeaders(realResponse.headers);
+        interaction.noteResponseHeadersAndBody(realResponse.headers, realResponse.body, realResponse.statusCode, realResponse.contentType);
 
-        interaction.recordResponseBody(realResponse.body, realResponse.statusCode, realResponse.contentType);
         return realResponse;
     }
 

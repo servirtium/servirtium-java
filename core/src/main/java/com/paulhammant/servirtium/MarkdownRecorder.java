@@ -117,8 +117,7 @@ public class MarkdownRecorder implements Interactor {
 
         }
 
-        @Override
-        public void recordResponseHeaders(String[] headers) {
+        private void recordResponseHeaders(String[] headers) {
             guardOut();
             this.recording.append("### Resulting headers back from the real server:\n");
             this.recording.append("\n");
@@ -137,9 +136,13 @@ public class MarkdownRecorder implements Interactor {
         }
 
 
-
         @Override
-        public void recordResponseBody(Object body, int statusCode, String contentType) {
+        public void noteResponseHeadersAndBody(String[] headers, Object body, int statusCode, String contentType) {
+            this.recordResponseHeaders(headers);
+            this.recordResponseBody(body, statusCode, contentType);
+        }
+
+        private void recordResponseBody(Object body, int statusCode, String contentType) {
             guardOut();
             String xtra = "";
             if (body instanceof byte[]) {
