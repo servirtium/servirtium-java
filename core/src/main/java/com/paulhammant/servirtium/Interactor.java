@@ -61,15 +61,9 @@ public interface Interactor {
             this.context = context;
         }
 
-        public void recordRequestHeadersAndBody(List<String> headers, Object bodyToReal, String contentTypeToReal) {
-            this.recordRequestHeaders(headers);
-            this.recordRequestBody(bodyToReal, contentTypeToReal);
+        public abstract void noteRequestHeadersAndBody(List<String> headers, Object bodyToReal, String contentTypeToReal);
 
-        }
-
-        public abstract void recordRequestHeaders(List<String> header);
-
-        public void recordRequestBody(Object bodyToReal, String contentTypeToReal) {
+        protected void noteRequestBody(Object bodyToReal, String contentTypeToReal) {
             this.bodyToReal = bodyToReal;
             this.contentTypeToReal = contentTypeToReal;
         }

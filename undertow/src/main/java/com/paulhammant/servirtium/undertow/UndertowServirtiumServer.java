@@ -225,7 +225,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             bodyToReal = "";
         }
 
-        interaction.recordRequestHeadersAndBody(headersToReal, bodyToReal, contentType);
+        interaction.noteRequestHeadersAndBody(headersToReal, bodyToReal, contentType);
 
         return interactionManipulations.changeUrlForRequestToReal(url);
     }

@@ -36,13 +36,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
-import java.util.Map;
 
 import static java.nio.file.Files.readAllBytes;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.endsWith;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.IsEqual.equalTo;
 
@@ -121,13 +119,18 @@ public class MarkdownReplayer implements Interactor {
         }
 
         @Override
-        public void recordRequestHeaders(List<String> headers) {
+        public void noteRequestHeadersAndBody(List<String> headers, Object bodyToReal, String contentTypeToReal) {
             StringBuilder sb = new StringBuilder();
             for (String h : headers) {
                 sb.append(h).append("\n");
             }
             this.headers = sb.toString();
+
+            // Body
+            super.noteRequestBody(bodyToReal, contentTypeToReal);
+
         }
+
     }
 
     @Override

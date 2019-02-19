@@ -57,7 +57,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
         url = (url.startsWith("http://") || url.startsWith("https://"))
                 ? url : "http://" + request.getRemoteHost() + ":" + request.getRemotePort() + uri;
-        
+
         //String bodyToReal = "";
         List<String> headersToReal = new ArrayList<>();
 
@@ -226,7 +226,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
             bodyToReal = "";
         }
 
-        interaction.recordRequestHeadersAndBody(headersToReal, bodyToReal, contentType);
+        interaction.noteRequestHeadersAndBody(headersToReal, bodyToReal, contentType);
 
         return interactionManipulations.changeUrlForRequestToReal(url);
     }

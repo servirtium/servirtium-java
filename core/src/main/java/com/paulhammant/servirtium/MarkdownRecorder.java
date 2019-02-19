@@ -74,9 +74,10 @@ public class MarkdownRecorder implements Interactor {
             super(interactionNumber, context);
         }
 
-        @Override
-        public void recordRequestHeaders(List<String> headers) {
+        public void noteRequestHeadersAndBody(List<String> headers, Object bodyToReal, String contentTypeToReal) {
+
             guardOut();
+
             this.recording.append("### Request headers sent to the real server:\n\n");
             this.recording.append("```\n");
             final String[] headersToRecord = headers.toArray(new String[0]);
@@ -89,11 +90,11 @@ public class MarkdownRecorder implements Interactor {
                 this.recording.append(h).append("\n");
             }
             this.recording.append("```\n\n");
-        }
 
-        @Override
-        public void recordRequestBody(Object bodyToReal, String contentTypeToReal) {
-            super.recordRequestBody(bodyToReal, contentTypeToReal);
+            // Body
+
+            super.noteRequestBody(bodyToReal, contentTypeToReal);
+
             guardOut();
             this.recording.append("### Body sent to the real server (").append(contentTypeToReal).append("):\n");
             this.recording.append("\n");
@@ -113,6 +114,7 @@ public class MarkdownRecorder implements Interactor {
 
             this.recording.append("```\n");
             this.recording.append("\n");
+
         }
 
         @Override
