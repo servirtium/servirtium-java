@@ -78,8 +78,8 @@ public class MarkdownRecorder implements Interactor {
 
             guardOut();
 
-            this.recording.append("### Request headers sent to the real server:\n\n");
-            this.recording.append("```\n");
+            blockStart("Request headers sent to the real server");
+
             final String[] headersToRecord = headers.toArray(new String[0]);
             // TODO - make sorting configurable
             Arrays.sort(headersToRecord);
@@ -96,9 +96,7 @@ public class MarkdownRecorder implements Interactor {
             super.noteRequestBody(bodyToReal, contentTypeToReal);
 
             guardOut();
-            this.recording.append("### Body sent to the real server (").append(contentTypeToReal).append("):\n");
-            this.recording.append("\n");
-            this.recording.append("```\n");
+            blockStart("Body sent to the real server (" + contentTypeToReal + ")");
             String forRecording = null;
             if (bodyToReal == null) {
                 forRecording = "";
@@ -119,9 +117,7 @@ public class MarkdownRecorder implements Interactor {
 
         private void recordResponseHeaders(String[] headers) {
             guardOut();
-            this.recording.append("### Resulting headers back from the real server:\n");
-            this.recording.append("\n");
-            this.recording.append("```\n");
+            blockStart("Resulting headers back from the real server");
             for (String hdrLine : headers) {
                 int ix = hdrLine.indexOf(": ");
                 String hdrKey = hdrLine.substring(0, ix);
@@ -133,6 +129,12 @@ public class MarkdownRecorder implements Interactor {
             }
             this.recording.append("```\n");
             this.recording.append("\n");
+        }
+
+        private void blockStart(String s) {
+            this.recording.append("### " + s + ":\n");
+            this.recording.append("\n");
+            this.recording.append("```\n");
         }
 
 
@@ -148,9 +150,9 @@ public class MarkdownRecorder implements Interactor {
             if (body instanceof byte[]) {
                 xtra = " - Base64 below";
             }
-            this.recording.append("### Resulting body back from the real server (").append(statusCode).append(": ").append(contentType).append(xtra).append("):\n");
-            this.recording.append("\n");
-            this.recording.append("```\n");
+
+            blockStart("Resulting body back from the real server (" + statusCode + ": " + contentType + xtra + ")");
+
             if (body instanceof String) {
                 for (String next : redactions.keySet()) {
                     body = ((String) body).replaceAll(next, redactions.get(next));
