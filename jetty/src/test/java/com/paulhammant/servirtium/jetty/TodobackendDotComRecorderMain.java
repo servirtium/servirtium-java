@@ -70,6 +70,12 @@ public class TodobackendDotComRecorderMain {
                 headersToReal.add("Pragma: no-cache");
                 headersToReal.add(refer.replace(super.fromUrl, super.toUrl));
             }
+
+            @Override
+            public String changeBodyReturnedBackFromReal(String body) {
+                return body.replaceAll("todo-backend-sinatra\\.herokuapp\\.com",
+                        "localhost:8099");
+            }
         };
     }
 
