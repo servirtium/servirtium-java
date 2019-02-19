@@ -189,22 +189,45 @@ public class MarkdownReplayer implements Interactor {
 
         String bodyReceived = getCodeBlock(replay);
 
+        AssertionError error = null;
         try {
-            assertThat(replay.bodyToReal, equalTo(bodyReceived));
+            try {
+                assertThat(replay.bodyToReal, equalTo(bodyReceived));
+            } catch (AssertionError e) {
+                monitor.bodyFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
+            }
         } catch (AssertionError e) {
-            monitor.bodyFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
+            if (error == null) {
+                error = e;
+            }
         }
 
         try {
-            assertThat(replay.contentTypeToReal, equalTo(contentType));
+            try {
+                assertThat(replay.contentTypeToReal, equalTo(contentType));
+            } catch (AssertionError e) {
+                monitor.contentTypeFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
+            }
         } catch (AssertionError e) {
-            monitor.contentTypeFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
+            if (error == null) {
+                error = e;
+            }
         }
 
         try {
-            assertThat(currentHeaders, arrayContainingInAnyOrder(prevRecorded));
+            try {
+                assertThat(currentHeaders, arrayContainingInAnyOrder(prevRecorded));
+            } catch (AssertionError e) {
+                monitor.headersFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
+            }
         } catch (AssertionError e) {
-            monitor.headersFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
+            if (error == null) {
+                error = e;
+            }
+        }
+
+        if (error != null) {
+            throw error;
         }
 
         final String RESULTING_HEADERS_BACK_FROM_REAL_SERVER = "### Resulting headers back from the real server";
