@@ -143,19 +143,19 @@ public abstract class SimpleGetCentricTextTests {
             "\n" +
             "```\n" +
             "{\n" +
-            "  \"Accept-Language\": \"en-US,en;q\\u003d0.8\",\n" +
-            "  \"Host\": \"headers.jsontest.com\",\n" +
-            "  \"Accept-Charset\": \"ISO-NNNN-1,utf-8;q\\u003d0.7,*;q\\u003d0.3\",\n" +
-            "  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q\\u003d0.9,*/*;q\\u003d0.8\"\n" +
+            "   \"Accept-Language\": \"en-US,en;q=0.8\",\n" +
+            "   \"Host\": \"headers.jsontest.com\",\n" +
+            "   \"Accept-Charset\": \"ISO-NNNN-1,utf-8;q=0.7,*;q=0.3\",\n" +
+            "   \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\"\n" +
             "}\n" +
             "```\n" +
             "\n";
 
     final String sillyJSONdoc = "{\n" +
-            "  \"Accept-Language\": \"en-US,en;q\\u003d0.8\",\n" +
-            "  \"Host\": \"headers.jsontest.com\",\n" +
-            "  \"Accept-Charset\": \"ISO-8859-1,utf-8;q\\u003d0.7,*;q\\u003d0.3\",\n" +
-            "  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q\\u003d0.9,*/*;q\\u003d0.8\"\n" +
+            "   \"Accept-Language\": \"en-US,en;q=0.8\",\n" +
+            "   \"Host\": \"headers.jsontest.com\",\n" +
+            "   \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\n" +
+            "   \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\"\n" +
             "}";
 
     private ServirtiumServer servirtiumServer;
@@ -608,10 +608,10 @@ public abstract class SimpleGetCentricTextTests {
                 .assertThat()
                 .statusCode(200)
                 .body(equalTo("{\n" +
-                        "  \"Accept-Language\": \"en-US,en;q\\u003d0.8\",\n" +
-                        "  \"Host\": \"headers.jsontest.com\",\n" +
-                        "  \"Accept-Charset\": \"ISO-8859-1,utf-8;q\\u003d0.7,*;q\\u003d0.3\",\n" +
-                        "  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q\\u003d0.9,*/*;q\\u003d0.8\"\n" +
+                        "   \"Accept-Language\": \"en-US,en;q=0.8\",\n" +
+                        "   \"Host\": \"headers.jsontest.com\",\n" +
+                        "   \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\n" +
+                        "   \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\"\n" +
                         "}"))
                 .contentType("text/plain;charset=utf-8");
 
@@ -650,10 +650,10 @@ public abstract class SimpleGetCentricTextTests {
                 .statusCode(200)
                 .header("ETag", equalTo("\"XxXxXxXxX\""))
                 .body(equalTo("{\n" +
-                        "  \"Accept-Language\": \"en-US,en;q\\u003d0.8\",\n" +
-                        "  \"Host\": \"headers.jsontest.com\",\n" +
-                        "  \"Accept-Charset\": \"ISO-NNNN-1,utf-8;q\\u003d0.7,*;q\\u003d0.3\",\n" +
-                        "  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q\\u003d0.9,*/*;q\\u003d0.8\"\n" +
+                        "   \"Accept-Language\": \"en-US,en;q=0.8\",\n" +
+                        "   \"Host\": \"headers.jsontest.com\",\n" +
+                        "   \"Accept-Charset\": \"ISO-NNNN-1,utf-8;q=0.7,*;q=0.3\",\n" +
+                        "   \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\"\n" +
                         "}"))
                 .contentType("text/plain;charset=utf-8");
 
