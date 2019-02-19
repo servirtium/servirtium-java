@@ -5,6 +5,7 @@ import com.paulhammant.servirtium.Interactor;
 import com.paulhammant.servirtium.ServerMonitor;
 import com.paulhammant.servirtium.ServiceResponse;
 import com.paulhammant.servirtium.ServirtiumServer;
+import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.util.log.Logger;
@@ -27,9 +28,6 @@ public class JettyServirtiumServer extends ServirtiumServer {
     private int interactionNum = -1;
     boolean failed = false;
 
-    private JettyServirtiumServer() {
-    }
-
     public JettyServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
                                  InteractionManipulations interactionManipulations,
                                  Interactor interactor) {
@@ -44,35 +42,42 @@ public class JettyServirtiumServer extends ServirtiumServer {
             @Override
             public void handle(String target, org.eclipse.jetty.server.Request baseRequest,
                                HttpServletRequest request, HttpServletResponse response) throws IOException {
+                handleExchange(baseRequest, request, response, monitor, interactionManipulations);
+            }
+        });
+    }
 
-                interactionNum++;
+    private void handleExchange(Request baseRequest, HttpServletRequest request, HttpServletResponse response, ServerMonitor monitor, InteractionManipulations interactionManipulations) throws IOException {
+        interactionNum++;
 
-                String method = request.getMethod();
+        String method = request.getMethod();
 
-                final String url = (request.getRequestURL().toString().startsWith("http://") || request.getRequestURL().toString().startsWith("https://"))
-                        ? request.getRequestURL().toString()
-                        : "http://" + request.getRemoteHost() + ":" + request.getRemotePort() + request.getRequestURI();
+        String url = request.getRequestURL().toString();
+        final String uri = request.getRequestURI();
 
-                //String bodyToReal = "";
-                List<String> headersToReal = new ArrayList<>();
+        url = (url.startsWith("http://") || url.startsWith("https://"))
+                ? url : "http://" + request.getRemoteHost() + ":" + request.getRemotePort() + uri;
 
-                try {
+        //String bodyToReal = "";
+        List<String> headersToReal = new ArrayList<>();
 
-                    if (method.equals("CONNECT")) {
-                        response.getWriter().write("Servirtium does not support CONNECT yet");
-                        response.setContentType("text/plain");
-                        response.setStatus(500);
-                        return;
-                    }
+        try {
 
-                    Interactor.Interaction interaction = interactor.newInteraction(method, request.getRequestURI().toString(), interactionNum, url, getContext());
+            if (method.equals("CONNECT")) {
+                response.getWriter().write("Servirtium does not support CONNECT yet");
+                response.setContentType("text/plain");
+                response.setStatus(500);
+                return;
+            }
 
-                    monitor.interactionStarted(interactionNum, interaction);
+            Interactor.Interaction interaction = interactor.newInteraction(method, uri, interactionNum, url, getContext());
 
-                    String contentType = request.getContentType();
-                    if (contentType == null) {
-                        contentType = "";
-                    }
+            monitor.interactionStarted(interactionNum, interaction);
+
+            String contentType = request.getContentType();
+            if (contentType == null) {
+                contentType = "";
+            }
 
 //                    if (isText(contentType)) {
 //                        BufferedReader reader = baseRequest.getReader();
@@ -84,54 +89,52 @@ public class JettyServirtiumServer extends ServirtiumServer {
 //                    }
 //
 
-                    final String requestUrl = prepareHeadersAndBodyForReal(request, method, url, headersToReal, interaction, contentType, interactionManipulations);
+            final String requestUrl = prepareHeadersAndBodyForReal(request, method, url, headersToReal, interaction, contentType, interactionManipulations);
 
-                    // INTERACTION
-                    ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, headersToReal, interaction);
+            // INTERACTION
+            ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, headersToReal, interaction);
 
-                    realResponse = processHeadersAndBodyBackFromReal(interaction, realResponse, interactionManipulations);
+            realResponse = processHeadersAndBodyBackFromReal(interaction, realResponse, interactionManipulations);
 
-                    interactor.addInteraction(interaction);
+            interactor.addInteraction(interaction);
 
-                    response.setStatus(realResponse.statusCode);
+            response.setStatus(realResponse.statusCode);
 
-                    for (String header : realResponse.headers) {
-                        int ix = header.indexOf(": ");
-                        String hdrKey = header.substring(0, ix);
-                        String hdrVal = header.substring(ix + 2);
-                        response.setHeader(hdrKey, hdrVal);
-                    }
-
-                    if (realResponse.contentType != null) {
-                        response.setContentType(realResponse.contentType);
-                    }
-
-                    if (realResponse.body instanceof String) {
-                        response.getWriter().write((String) realResponse.body);
-                    } else {
-                        response.getOutputStream().write((byte[]) realResponse.body);
-                    }
-
-                    monitor.interactionFinished(interactionNum, method, url, getContext());
-                } catch (AssertionError assertionError) {
-                    failed = true;
-                    response.setStatus(500);
-                    response.setContentType("text/plain");
-                    response.getWriter().write("Servirtium Server AssertionError: " + assertionError.getMessage());
-                    monitor.interactionFailed(interactionNum, method, url, assertionError, getContext());
-                } catch (Throwable throwable) {
-                    failed = true;
-                    response.setStatus(500);
-                    response.setContentType("text/plain");
-                    response.getWriter().write("Servirtium Server unexpected Throwable: " + throwable.getMessage());
-                    monitor.unexpectedRequestError(throwable, getContext());
-                    throw throwable; // stick your debugger here
-                } finally {
-                    // Inform jetty that this request has now been handled
-                    baseRequest.setHandled(true);
-                }
+            for (String header : realResponse.headers) {
+                int ix = header.indexOf(": ");
+                String hdrKey = header.substring(0, ix);
+                String hdrVal = header.substring(ix + 2);
+                response.setHeader(hdrKey, hdrVal);
             }
-        });
+
+            if (realResponse.contentType != null) {
+                response.setContentType(realResponse.contentType);
+            }
+
+            if (realResponse.body instanceof String) {
+                response.getWriter().write((String) realResponse.body);
+            } else {
+                response.getOutputStream().write((byte[]) realResponse.body);
+            }
+
+            monitor.interactionFinished(interactionNum, method, url, getContext());
+        } catch (AssertionError assertionError) {
+            failed = true;
+            response.setStatus(500);
+            response.setContentType("text/plain");
+            response.getWriter().write("Servirtium Server AssertionError: " + assertionError.getMessage());
+            monitor.interactionFailed(interactionNum, method, url, assertionError, getContext());
+        } catch (Throwable throwable) {
+            failed = true;
+            response.setStatus(500);
+            response.setContentType("text/plain");
+            response.getWriter().write("Servirtium Server unexpected Throwable: " + throwable.getMessage());
+            monitor.unexpectedRequestError(throwable, getContext());
+            throw throwable; // stick your debugger here
+        } finally {
+            // Inform jetty that this request has now been handled
+            baseRequest.setHandled(true);
+        }
     }
 
     private ServiceResponse processHeadersAndBodyBackFromReal(Interactor.Interaction interaction, ServiceResponse realResponse, InteractionManipulations interactionManipulations) {

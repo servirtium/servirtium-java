@@ -44,9 +44,15 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
         String method = exchange.getRequestMethod().toString();
 
-        final String url = (exchange.getRequestURL().startsWith("http://") || exchange.getRequestURL().startsWith("https://"))
-                ? exchange.getRequestURL()
-                : "http://" + exchange.getHostAndPort() + exchange.getRequestURI();
+        String uri = exchange.getRequestURI();
+        String url = exchange.getRequestURL();
+
+        // Fixes for Proxy server case - Jetty and Undertow are different here.
+        if (uri.startsWith("https://") || uri.startsWith("http://")) {
+            uri = uri.substring(url.indexOf("/",7));
+        }
+
+        url = (url.startsWith("http://") || url.startsWith("https://")) ? url : "http://" + exchange.getHostAndPort() + uri;
 
         //String bodyToReal = "";
         List<String> headersToReal = new ArrayList<>();
@@ -60,7 +66,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
                 return;
             }
 
-            Interactor.Interaction interaction = interactor.newInteraction(method, exchange.getRequestURI(), interactionNum, url, getContext());
+            Interactor.Interaction interaction = interactor.newInteraction(method, uri, interactionNum, url, getContext());
 
             monitor.interactionStarted(interactionNum, interaction);
 
