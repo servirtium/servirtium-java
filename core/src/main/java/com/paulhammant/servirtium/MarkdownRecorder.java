@@ -89,7 +89,8 @@ public class MarkdownRecorder implements Interactor {
                 }
                 this.recording.append(h).append("\n");
             }
-            this.recording.append("```\n\n");
+
+            blockEnd();
 
             // Body
 
@@ -110,8 +111,7 @@ public class MarkdownRecorder implements Interactor {
             }
             this.recording.append(forRecording).append("\n");
 
-            this.recording.append("```\n");
-            this.recording.append("\n");
+            blockEnd();
 
         }
 
@@ -127,16 +127,21 @@ public class MarkdownRecorder implements Interactor {
                 }
                 this.recording.append(hdrKey).append(": ").append(interactionManipulations.headerReplacement(hdrKey, hdrVal)).append("\n");
             }
-            this.recording.append("```\n");
-            this.recording.append("\n");
+
+            blockEnd();
+
         }
 
         private void blockStart(String s) {
-            this.recording.append("### " + s + ":\n");
-            this.recording.append("\n");
-            this.recording.append("```\n");
+            this.recording.append("### ").append(s).append(":\n")
+                    .append("\n")
+                    .append("```\n");
         }
 
+        private void blockEnd() {
+            this.recording.append("```\n");
+            this.recording.append("\n");
+        }
 
         @Override
         public void noteResponseHeadersAndBody(String[] headers, Object body, int statusCode, String contentType) {
@@ -145,7 +150,9 @@ public class MarkdownRecorder implements Interactor {
         }
 
         private void recordResponseBody(Object body, int statusCode, String contentType) {
+
             guardOut();
+
             String xtra = "";
             if (body instanceof byte[]) {
                 xtra = " - Base64 below";
@@ -163,8 +170,8 @@ public class MarkdownRecorder implements Interactor {
             } else {
                 throw new UnsupportedOperationException();
             }
-            this.recording.append("```\n");
-            this.recording.append("\n");
+
+            blockEnd();
         }
 
     }
