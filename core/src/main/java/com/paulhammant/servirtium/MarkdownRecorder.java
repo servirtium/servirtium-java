@@ -61,8 +61,29 @@ public class MarkdownRecorder implements Interactor {
         return serviceInteroperation.invokeServiceEndpoint(method, interaction.bodyToReal, interaction.contentTypeToReal, url, headersToReal, interactionManipulations);
     }
 
-    public MarkdownRecorder withRedaction(String regex, String replacement) {
+    /**
+     * In the recording, some things that will be recorded differently to
+     * what was sent/received to/from the real.
+     * @param regex - something that may be in the read data sent to/from the real.
+     * @param replacement - something that will replace the above in the recording.
+     * @return this
+     */
+    public MarkdownRecorder withReplacementInRecording(String regex, String replacement) {
         redactions.put(regex, replacement);
+        return this;
+    }
+
+    /**
+     * In the recording, some things that will be recorded differently to
+     * what was sent/received to/from the real.
+     * @param terms - an even number of 'regex' and 'replacement' pairs.
+     * @return this
+     */
+    public MarkdownRecorder withReplacementsInRecording(String... terms) {
+        final int i = terms.length / 2;
+        for (int x = 0; x < i; x++) {
+            redactions.put(terms[x*2], terms[(x*2)+1]);
+        }
         return this;
     }
 

@@ -590,8 +590,8 @@ public abstract class SimpleGetCentricTextTests {
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations)
-                .withRedaction("ISO-\\d\\d\\d\\d-1", "ISO-NNNN-1")
-                .withRedaction("dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36", "XxXxXxXxX");
+                .withReplacementInRecording("ISO-\\d\\d\\d\\d-1", "ISO-NNNN-1")
+                .withReplacementInRecording("dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36", "XxXxXxXxX");
 
         servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder)
                 .withPrettyPrintedTextBodies();
