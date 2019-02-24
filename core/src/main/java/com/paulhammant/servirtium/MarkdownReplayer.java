@@ -50,7 +50,7 @@ public class MarkdownReplayer implements Interactor {
 
     private List<String> allMarkdownInteractions = new ArrayList<>();
     private String filename;
-    private boolean forgivingOrderOfClientRequestHeaders = false;
+    private boolean alphaSortHeaders = false;
 
     public static final String SERVIRTIUM_INTERACTION = "## Interaction ";
 
@@ -62,8 +62,8 @@ public class MarkdownReplayer implements Interactor {
         this.monitor = monitor;
     }
 
-    public MarkdownReplayer withForgivingOrderOfClientRequestHeaders() {
-        forgivingOrderOfClientRequestHeaders = true;
+    public MarkdownReplayer withAlphaSortingOfHeaders() {
+        alphaSortHeaders = true;
         return this;
     }
 
@@ -111,7 +111,7 @@ public class MarkdownReplayer implements Interactor {
     public class ReplayingInteraction extends Interaction {
         private final String interactionText;
         int ix;
-        private String headers;
+        private String clientRequestHeaders;
 
         ReplayingInteraction(String interactionText, int interactionNum, String context) {
             super(interactionNum, context);
@@ -119,15 +119,15 @@ public class MarkdownReplayer implements Interactor {
         }
 
         @Override
-        public void noteRequestHeadersAndBody(List<String> headers, Object bodyToReal, String contentTypeToReal) {
+        public void noteClientRequestHeadersAndBody(List<String> clientRequestHeaders, Object clientRequestBody, String clientRequestContentType) {
             StringBuilder sb = new StringBuilder();
-            for (String h : headers) {
+            for (String h : clientRequestHeaders) {
                 sb.append(h).append("\n");
             }
-            this.headers = sb.toString();
+            this.clientRequestHeaders = sb.toString();
 
             // Body
-            super.noteRequestBody(bodyToReal, contentTypeToReal);
+            super.noteClientRequestBody(clientRequestBody, clientRequestContentType);
 
         }
 
@@ -139,7 +139,7 @@ public class MarkdownReplayer implements Interactor {
     }
 
     @Override
-    public ServiceResponse getServiceResponseForRequest(String method, String url,List<String> headersToReal, Interaction interaction) throws IOException {
+    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> headersToReal, Interaction interaction, boolean lowerCaseHeaders) throws IOException {
 
         ReplayingInteraction replay = (ReplayingInteraction) interaction;
 
@@ -192,15 +192,15 @@ public class MarkdownReplayer implements Interactor {
         String contentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
 
         // TODO remove trim()
-        final String[] prevRecorded = this.reorderMaybe(headersReceived).split("\n");
-        final String[] currentHeaders = reorderMaybe(replay.headers.trim()).split("\n");
+        final String[] prevRecorded = reorderMaybe(headersReceived).split("\n");
+        final String[] currentHeaders = reorderMaybe(replay.clientRequestHeaders.trim()).split("\n");
 
         String bodyReceived = getCodeBlock(replay);
 
         AssertionError error = null;
         try {
             try {
-                assertThat(replay.bodyToReal, equalTo(bodyReceived));
+                assertThat(replay.clientRequestBody, equalTo(bodyReceived));
             } catch (AssertionError e) {
                 monitor.bodyFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
             }
@@ -212,7 +212,7 @@ public class MarkdownReplayer implements Interactor {
 
         try {
             try {
-                assertThat(replay.contentTypeToReal, equalTo(contentType));
+                assertThat(replay.clientRequestContentType, equalTo(contentType));
             } catch (AssertionError e) {
                 monitor.contentTypeFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
             }
@@ -273,10 +273,10 @@ public class MarkdownReplayer implements Interactor {
     }
 
     private String reorderMaybe(String headersReceived) {
-        if (forgivingOrderOfClientRequestHeaders) {
-            String[] foo = headersReceived.split("\n");
-            Arrays.sort(foo);
-            return String.join("\n", foo);
+        if (alphaSortHeaders) {
+            String[] headers = headersReceived.split("\n");
+            Arrays.sort(headers);
+            return String.join("\n", headers);
         }
         return headersReceived;
     }

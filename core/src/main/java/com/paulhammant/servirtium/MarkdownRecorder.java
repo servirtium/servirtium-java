@@ -49,6 +49,7 @@ public class MarkdownRecorder implements Interactor {
     private PrintStream out;
     private Map<Integer, String> interactions = new HashMap<>();
     private Map<String, String> redactions = new HashMap<>();
+    private boolean alphaSortHeaders;
 
     public MarkdownRecorder(ServiceInteroperation serviceInteroperation,
                             InteractionManipulations interactionManipulations) {
@@ -56,9 +57,14 @@ public class MarkdownRecorder implements Interactor {
         this.interactionManipulations = interactionManipulations;
     }
 
-    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> headersToReal, Interaction interaction) throws IOException {
+    public MarkdownRecorder withAlphaSortingOfHeaders() {
+        alphaSortHeaders = true;
+        return this;
+    }
+
+    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> headersToReal, Interaction interaction, boolean lowerCaseHeaders) throws IOException {
         //headersToReal.remove("Accept-Encoding");
-        return serviceInteroperation.invokeServiceEndpoint(method, interaction.bodyToReal, interaction.contentTypeToReal, url, headersToReal, interactionManipulations);
+        return serviceInteroperation.invokeServiceEndpoint(method, interaction.clientRequestBody, interaction.clientRequestContentType, url, headersToReal, interactionManipulations, lowerCaseHeaders);
     }
 
     /**
@@ -95,15 +101,16 @@ public class MarkdownRecorder implements Interactor {
             super(interactionNumber, context);
         }
 
-        public void noteRequestHeadersAndBody(List<String> headers, Object bodyToReal, String contentTypeToReal) {
+        public void noteClientRequestHeadersAndBody(List<String> clientRequestHeaders, Object clientRequestBody, String clientRequestContentType) {
 
             guardOut();
 
             blockStart("Request headers sent to the real server");
 
-            final String[] headersToRecord = headers.toArray(new String[0]);
-            // TODO - make sorting configurable
-            Arrays.sort(headersToRecord);
+            final String[] headersToRecord = clientRequestHeaders.toArray(new String[0]);
+            if (alphaSortHeaders) {
+                Arrays.sort(headersToRecord);
+            }
             for (String h : headersToRecord) {
                 for (String redactionRegex : redactions.keySet()) {
                     h = h.replaceAll(redactionRegex, redactions.get(redactionRegex));
@@ -115,20 +122,20 @@ public class MarkdownRecorder implements Interactor {
 
             // Body
 
-            super.noteRequestBody(bodyToReal, contentTypeToReal);
+            super.noteClientRequestBody(clientRequestBody, clientRequestContentType);
 
             guardOut();
-            blockStart("Body sent to the real server (" + contentTypeToReal + ")");
+            blockStart("Body sent to the real server (" + clientRequestContentType + ")");
             String forRecording = null;
-            if (bodyToReal == null) {
+            if (clientRequestBody == null) {
                 forRecording = "";
-            } else if (bodyToReal instanceof String) {
-                forRecording = (String) bodyToReal;
+            } else if (clientRequestBody instanceof String) {
+                forRecording = (String) clientRequestBody;
                 for (String redactionRegex : redactions.keySet()) {
                     forRecording = ((String) forRecording).replaceAll(redactionRegex, redactions.get(redactionRegex));
                 }
             } else {
-                forRecording = "//SERVIRTIUM+Base64: " + Base64.getEncoder().encodeToString((byte[]) bodyToReal).replaceAll("(.{60})", "$1\n");
+                forRecording = "//SERVIRTIUM+Base64: " + Base64.getEncoder().encodeToString((byte[]) clientRequestBody).replaceAll("(.{60})", "$1\n");
             }
             this.recording.append(forRecording).append("\n");
 
@@ -139,6 +146,9 @@ public class MarkdownRecorder implements Interactor {
         private void recordResponseHeaders(String[] headers) {
             guardOut();
             blockStart("Resulting headers back from the real server");
+            if (alphaSortHeaders) {
+                Arrays.sort(headers);
+            }
             for (String hdrLine : headers) {
                 int ix = hdrLine.indexOf(": ");
                 String hdrKey = hdrLine.substring(0, ix);

@@ -13,7 +13,6 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
     protected final String toHost;
     private String[] headerPrefixesToRemoveFromRequest = new String[0];
     private String[] headerPrefixesToRemoveFromResponse = new String[0];
-    private String[] headerKeysForLowerCaseValues = new String[0];
 
     public SimpleInteractionManipulations() {
         this("xx8suf98su98sf98sjxjcvlkxjcv" , "s89s8798s7df98sdf98sdf98sdf9");
@@ -42,8 +41,14 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
 
     @Override
     public void changeSingleHeaderForRequestToReal(String method, String currentHeader, List<String> allHeadersToReal) {
-        String currentHeaderKey = currentHeader.substring(0, currentHeader.indexOf(": "));
-        String currentHeaderVal = currentHeader.substring(currentHeader.indexOf(": ") +2);
+        String currentHeaderKey = null;
+        String currentHeaderVal = null;
+        try {
+            currentHeaderKey = currentHeader.substring(0, currentHeader.indexOf(": "));
+            currentHeaderVal = currentHeader.substring(currentHeader.indexOf(": ") +2);
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("CH: " + currentHeader + "<CH");
+        }
 
         for (String pfx : headerPrefixesToRemoveFromRequest) {
             if (currentHeader.startsWith(pfx)) {
@@ -51,25 +56,13 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
             }
         }
 
-        if (Arrays.stream(this.headerKeysForLowerCaseValues).anyMatch(currentHeaderKey::equals)) {
-            List<String> newHeaders = new ArrayList<>();
-            for (String hdr : allHeadersToReal) {
-                if (hdr.startsWith(currentHeaderKey + ": ")) {
-                    newHeaders.add(currentHeaderKey + ": " + currentHeaderVal.toLowerCase());
-                } else {
-                    newHeaders.add(hdr);
-                }
-            }
-            allHeadersToReal.clear();
-            allHeadersToReal.addAll(newHeaders);
-        }
-
-        if (currentHeader.startsWith("Host: ")) {
+        if (currentHeader.startsWith("Host: ") || currentHeader.startsWith("host: ")) {
             for (int i = 0; i < allHeadersToReal.size(); i++) {
                 String h = allHeadersToReal.get(i);
-                if (h.startsWith("Host: ")) {
+                if (h.startsWith("Host: ") || h.startsWith("host: ")) {
                     allHeadersToReal.remove(h);
-                    allHeadersToReal.add(i, h.replace(fromHost, toHost));
+                    final String replace = h.replace(fromHost, toHost);
+                    allHeadersToReal.add(i, replace);
                     break;
                 }
             }
@@ -88,8 +81,4 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
         }
     }
 
-    public SimpleInteractionManipulations withForcedLowerCaseHeaderValuesFor(String... headerKeys) {
-        this.headerKeysForLowerCaseValues = headerKeys;
-        return this;
-    }
 }

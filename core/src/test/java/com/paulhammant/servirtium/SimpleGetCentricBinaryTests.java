@@ -69,16 +69,17 @@ public abstract class SimpleGetCentricBinaryTests {
 
 
     private static final String EXPECTED_2a =
-            "Date: Thu, 08 Nov 2018 09:52:36 GMT\n" +
-            "Server: Apache/2.4.7 (Ubuntu)\n" +
-            "Last-Modified: Fri, 12 Oct 2007 05:56:23 GMT\n" +
-            "ETag: \"584057//synapse/tags/3.0.0/modules/distribution/src/main/bin/libwrapper-linux-x86-32.so-gzip\"\n" +
-            "Cache-Control: max-age=604800\n" +
             "Accept-Ranges: bytes\n" +
-            "Vary: Accept-Encoding\n" +
-            "Keep-Alive: timeout=15, max=1000\n" +
+            "Cache-Control: max-age=604800\n" +
             "Connection: Keep-Alive\n" +
-            "Content-Type: application/octet-stream\n";
+            "Content-Type: application/octet-stream\n" +
+            "Date: Thu, 08 Nov 2018 09:52:36 GMT\n" +
+            "ETag: \"584057//synapse/tags/3.0.0/modules/distribution/src/main/bin/libwrapper-linux-x86-32.so-gzip\"\n" +
+            "Keep-Alive: timeout=15, max=1000\n" +
+            "Last-Modified: Fri, 12 Oct 2007 05:56:23 GMT\n" +
+            "Server: Apache/2.4.7 (Ubuntu)\n" +
+            "Vary: Accept-Encoding\n";
+
 
     private static final String EXPECTED_3 =
             "```\n" +
@@ -102,12 +103,12 @@ public abstract class SimpleGetCentricBinaryTests {
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
-                        .withForcedLowerCaseHeaderValuesFor("Connection");
+                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
-                interactionManipulations);
+                interactionManipulations)
+                .withAlphaSortingOfHeaders();
 
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder);
 
@@ -128,15 +129,15 @@ public abstract class SimpleGetCentricBinaryTests {
 
     public void canRecordAPngGetFromWikimedia() throws Exception {
 
-        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("localhost:8080", "upload.wikimedia.org")
-                .withForcedLowerCaseHeaderValuesFor("Connection");
+        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("localhost:8080", "upload.wikimedia.org");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
-                .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:"));
+                .withHeaderPrefixesToRemoveFromRealResponse("age:", "x-", "server-timing:"))
+                .withAlphaSortingOfHeaders();
 
-        servirtiumServer = makeServirtiumServer(interactionManipulations, recorder);
+        servirtiumServer = makeServirtiumServer(interactionManipulations, recorder).withLowerCaseHeaders();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
@@ -145,7 +146,8 @@ public abstract class SimpleGetCentricBinaryTests {
         // https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png
 
         given()
-                .header("User-Agent", "RestAssured")
+                .header("user-agent", "RestAssured")
+                .header("connection", "keep-alive")
         .when()
                 .get("/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png\n")
         .then()
@@ -164,11 +166,11 @@ public abstract class SimpleGetCentricBinaryTests {
                 "### Request headers sent to the real server:\n" +
                 "\n" +
                 "```\n" +
-                "Accept-Encoding: gzip,deflate\n" +
-                "Accept: */*\n" +
-                "Connection: keep-alive\n" +
-                "Host: upload.wikimedia.org\n" +
-                "User-Agent: RestAssured\n" +
+                "accept-encoding: gzip,deflate\n" +
+                "accept: */*\n" +
+                "connection: keep-alive\n" +
+                "host: upload.wikimedia.org\n" +
+                "user-agent: RestAssured\n" +
                 "```\n" +
                 "\n" +
                 "### Body sent to the real server ():\n" +
@@ -180,18 +182,18 @@ public abstract class SimpleGetCentricBinaryTests {
                 "### Resulting headers back from the real server:\n" +
                 "\n" +
                 "```\n" +
-                "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "Content-Type: image/png\n" +
-                "Content-Length: 15384\n" +
-                "Connection: keep-alive\n" +
-                "Last-Modified: Sat, 09 Jun 2018 17:56:24 GMT\n" +
-                "Etag: 0a8a432cd4d057f31a443b55743e26db\n" +
-                "Via: 1.1 varnish (Varnish/5.1), 1.1 varnish (Varnish/5.1), 1.1 varnish (Varnish/5.1)\n" +
-                "Strict-Transport-Security: max-age=106384710; includeSubDomains; preload\n" +
-                "Access-Control-Allow-Origin: *\n" +
-                "Access-Control-Expose-Headers: Age, Date, Content-Length, Content-Range, X-Content-Duration, X-Cache, X-Varnish\n" +
-                "Timing-Allow-Origin: *\n" +
-                "Accept-Ranges: bytes\n" +
+                "accept-ranges: bytes\n" +
+                "access-control-allow-origin: *\n" +
+                "access-control-expose-headers: Age, Date, Content-Length, Content-Range, X-Content-Duration, X-Cache, X-Varnish\n" +
+                "connection: keep-alive\n" +
+                "content-length: 15384\n" +
+                "content-type: image/png\n" +
+                "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+                "etag: 0a8a432cd4d057f31a443b55743e26db\n" +
+                "last-modified: Sat, 09 Jun 2018 17:56:24 GMT\n" +
+                "strict-transport-security: max-age=106384710; includeSubDomains; preload\n" +
+                "timing-allow-origin: *\n" +
+                "via: 1.1 varnish (Varnish/5.1), 1.1 varnish (Varnish/5.1), 1.1 varnish (Varnish/5.1)\n" +
                 "```\n" +
                 "\n" +
                 "### Resulting body back from the real server (200: image/png - Base64 below):\n" +
@@ -210,11 +212,10 @@ public abstract class SimpleGetCentricBinaryTests {
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
-                .withHeaderPrefixesToRemoveFromRealResponse("Age:", "X-", "Server-Timing:")
-                .withForcedLowerCaseHeaderValuesFor("Connection")
-        );
+                .withHeaderPrefixesToRemoveFromRealResponse("age:", "x-", "server-timing:")
+        ).withAlphaSortingOfHeaders();
 
-        servirtiumServer = makeServirtiumServer(interactionManipulations, recorder);
+        servirtiumServer = makeServirtiumServer(interactionManipulations, recorder).withLowerCaseHeaders();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
@@ -224,6 +225,7 @@ public abstract class SimpleGetCentricBinaryTests {
 
         given()
                 .header("User-Agent", "RestAssured")
+                .header("connection", "keep-alive")
         .when()
                 .get("/wikipedia/commons/7/72/Smallest_nonmodular_lattice_1.svg")
         .then()
@@ -241,11 +243,11 @@ public abstract class SimpleGetCentricBinaryTests {
                         "### Request headers sent to the real server:\n" +
                         "\n" +
                         "```\n" +
-                        "Accept-Encoding: gzip,deflate\n" +
-                        "Accept: */*\n" +
-                        "Connection: keep-alive\n" +
-                        "Host: upload.wikimedia.org\n" +
-                        "User-Agent: RestAssured\n" +
+                        "accept-encoding: gzip,deflate\n" +
+                        "accept: */*\n" +
+                        "connection: keep-alive\n" +
+                        "host: upload.wikimedia.org\n" +
+                        "user-agent: RestAssured\n" +
                         "```\n" +
                         "\n" +
                         "### Body sent to the real server ():\n" +
@@ -257,18 +259,18 @@ public abstract class SimpleGetCentricBinaryTests {
                         "### Resulting headers back from the real server:\n" +
                         "\n" +
                         "```\n" +
-                        "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                        "Content-Type: image/svg+xml\n" +
-                        "Content-Length: 788\n" +
-                        "Connection: keep-alive\n" +
-                        "Last-Modified: Sat, 05 Oct 2013 15:01:03 GMT\n" +
-                        "Etag: 5ab7d580ce21b2d63a0ce66aea8e71ce\n" +
-                        "Via: 1.1 varnish (Varnish/5.1), 1.1 varnish (Varnish/5.1), 1.1 varnish (Varnish/5.1)\n" +
-                        "Strict-Transport-Security: max-age=106384710; includeSubDomains; preload\n" +
-                        "Access-Control-Allow-Origin: *\n" +
-                        "Access-Control-Expose-Headers: Age, Date, Content-Length, Content-Range, X-Content-Duration, X-Cache, X-Varnish\n" +
-                        "Timing-Allow-Origin: *\n" +
-                        "Accept-Ranges: bytes\n" +
+                        "accept-ranges: bytes\n" +
+                        "access-control-allow-origin: *\n" +
+                        "access-control-expose-headers: Age, Date, Content-Length, Content-Range, X-Content-Duration, X-Cache, X-Varnish\n" +
+                        "connection: keep-alive\n" +
+                        "content-length: 788\n" +
+                        "content-type: image/svg+xml\n" +
+                        "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+                        "etag: 5ab7d580ce21b2d63a0ce66aea8e71ce\n" +
+                        "last-modified: Sat, 05 Oct 2013 15:01:03 GMT\n" +
+                        "strict-transport-security: max-age=106384710; includeSubDomains; preload\n" +
+                        "timing-allow-origin: *\n" +
+                        "via: 1.1 varnish (Varnish/5.1), 1.1 varnish (Varnish/5.1), 1.1 varnish (Varnish/5.1)\n" +
                         "```\n" +
                         "\n" +
                         "### Resulting body back from the real server (200: image/svg+xml):\n" +
@@ -295,8 +297,7 @@ public abstract class SimpleGetCentricBinaryTests {
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
-                        .withForcedLowerCaseHeaderValuesFor("Connection");
+                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
 
         MarkdownReplayer replayer = new MarkdownReplayer();
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
@@ -312,6 +313,8 @@ public abstract class SimpleGetCentricBinaryTests {
     }
 
     private void checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured() {
+        given()
+                .header("Connection", "keep-alive").
         when()
                 .get("/repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/bin/libwrapper-linux-x86-32.so")
         .then()
@@ -322,9 +325,11 @@ public abstract class SimpleGetCentricBinaryTests {
     }
 
     private String simplifyForEqualsTesting(String expected) {
-        return expected
+        final String s = expected
                 .replaceAll("Date: .* GMT", "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT")
+                .replaceAll("date: .* GMT", "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT")
                 .replaceAll("\r", "");
+        return s;
     }
 
     private static class IsThatLinuxElfBinary extends BaseMatcher {

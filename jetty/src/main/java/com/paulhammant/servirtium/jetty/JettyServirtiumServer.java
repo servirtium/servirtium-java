@@ -92,7 +92,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
             final String requestUrl = prepareHeadersAndBodyForReal(request, method, url, headersToReal, interaction, contentType, interactionManipulations);
 
             // INTERACTION
-            ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, headersToReal, interaction);
+            ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, headersToReal, interaction, getLowerCaseHeaders());
 
             realResponse = processHeadersAndBodyBackFromReal(interaction, realResponse, interactionManipulations);
 
@@ -210,7 +210,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
             String hdrName = hdrs.nextElement();
             String hdrVal = request.getHeader(hdrName);
             hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
-            final String fullHeader = hdrName + ": " + hdrVal;
+            final String fullHeader = (getLowerCaseHeaders() ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
             headersToReal.add(fullHeader);
             interactionManipulations.changeSingleHeaderForRequestToReal(method, fullHeader, headersToReal);
         }
@@ -225,7 +225,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
             bodyToReal = "";
         }
 
-        interaction.noteRequestHeadersAndBody(headersToReal, bodyToReal, contentType);
+        interaction.noteClientRequestHeadersAndBody(headersToReal, bodyToReal, contentType);
 
         return interactionManipulations.changeUrlForRequestToReal(url);
     }

@@ -21,7 +21,7 @@ public class TodobackendDotComReplayerMain {
 
         final SimpleInteractionManipulations manipulations = makeInteractionManipulations();
 
-        MarkdownReplayer replayer = new MarkdownReplayer().withForgivingOrderOfClientRequestHeaders();
+        MarkdownReplayer replayer = new MarkdownReplayer().withAlphaSortingOfHeaders();
 
         ServirtiumServer servirtiumServer = makeServirtiumServer(manipulations, replayer);
 

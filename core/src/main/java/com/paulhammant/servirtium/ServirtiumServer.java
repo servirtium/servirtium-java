@@ -5,6 +5,7 @@ public abstract class ServirtiumServer {
     private String context = "no context";
     private boolean pretty;
     private int interactionNum = -1;
+    private boolean lowerCaseHeaders;
 
     public abstract ServirtiumServer start() throws Exception;
     public abstract void stop();
@@ -28,9 +29,18 @@ public abstract class ServirtiumServer {
         return context;
     }
 
-    public ServirtiumServer withPrettyPrintedTextBodies() {
+    public final ServirtiumServer withPrettyPrintedTextBodies() {
         pretty = true;
         return this;
+    }
+
+    public final ServirtiumServer withLowerCaseHeaders() {
+        lowerCaseHeaders = true;
+        return this;
+    }
+
+    protected boolean getLowerCaseHeaders() {
+        return lowerCaseHeaders;
     }
 
     public boolean shouldHavePrettyPrintedTextBodies() {

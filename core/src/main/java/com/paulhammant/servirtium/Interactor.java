@@ -34,7 +34,6 @@ package com.paulhammant.servirtium;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 public interface Interactor {
 
@@ -43,7 +42,7 @@ public interface Interactor {
     void setScriptFilename(String filename) throws FileNotFoundException;
 
     ServiceResponse getServiceResponseForRequest(String method, String url,
-                                                 List<String> headersToReal, Interaction interaction) throws IOException;
+                                                 List<String> headersToReal, Interaction interaction, boolean lowerCaseHeaders) throws IOException;
 
     Interaction newInteraction(String method, String path, int interactionNum, String url, String context);
 
@@ -53,19 +52,19 @@ public interface Interactor {
 
         final int interactionNum;
         public final String context;
-        Object bodyToReal;
-        String contentTypeToReal;
+        Object clientRequestBody;
+        String clientRequestContentType;
 
         Interaction(int interactionNum, String context) {
             this.interactionNum = interactionNum;
             this.context = context;
         }
 
-        public abstract void noteRequestHeadersAndBody(List<String> headers, Object bodyToReal, String contentTypeToReal);
+        public abstract void noteClientRequestHeadersAndBody(List<String> headers, Object bodyToReal, String contentTypeToReal);
 
-        protected void noteRequestBody(Object bodyToReal, String contentTypeToReal) {
-            this.bodyToReal = bodyToReal;
-            this.contentTypeToReal = contentTypeToReal;
+        protected void noteClientRequestBody(Object clientRequestBody, String clientRequestContentType) {
+            this.clientRequestBody = clientRequestBody;
+            this.clientRequestContentType = clientRequestContentType;
         }
 
         public abstract void noteResponseHeadersAndBody(String[] headers, Object body, int statusCode, String contentType);
@@ -81,7 +80,7 @@ public interface Interactor {
         }
 
         @Override
-        public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> headersToReal, Interaction interaction) throws IOException {
+        public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> headersToReal, Interaction interaction, boolean lowerCaseHeaders) throws IOException {
             return null;
         }
 

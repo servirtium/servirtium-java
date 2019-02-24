@@ -78,13 +78,13 @@ public abstract class SimplePostCentricTests {
             "### Resulting headers back from the real server:\n" +
             "\n" +
             "```\n" +
+            "Connection: keep-alive\n" +
             "Content-Type: application/json; charset=utf-8\n" +
             "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
             "ETag: W/\"153-InEEm1mVJgfG705oGbxXxiguOuU\"\n" +
             "Server: nginx\n" +
-            "set-cookie: sails.sid=s%3AQpYXn4PNOGmzId3jttU03ZketH2aY6Zz.dj6l8lpXUtFJTCoRxWRPPx4fISmmCKzgOAlIxT2DSxM; Path=/; HttpOnly\n" +
             "Vary: Accept-Encoding\n" +
-            "Connection: keep-alive\n" +
+            "set-cookie: sails.sid=s%3AQpYXn4PNOGmzId3jttU03ZketH2aY6Zz.dj6l8lpXUtFJTCoRxWRPPx4fISmmCKzgOAlIxT2DSxM; Path=/; HttpOnly\n" +
             "```\n" +
             "\n" +
             "### Resulting body back from the real server (200: application/json; charset=utf-8):\n" +
@@ -104,12 +104,12 @@ public abstract class SimplePostCentricTests {
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SimpleInteractionManipulations("http://localhost:8080", "https://postman-echo.com")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
-                        .withForcedLowerCaseHeaderValuesFor("Connection");
+                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
-                interactionManipulations);
+                interactionManipulations)
+                .withAlphaSortingOfHeaders();
 
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder);
 
@@ -135,8 +135,7 @@ public abstract class SimplePostCentricTests {
 
         servirtiumServer = makeServirtiumServer(
                 new SimpleInteractionManipulations("http://localhost:8080", "https://postman-echo.com")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
-                        .withForcedLowerCaseHeaderValuesFor("Connection"),
+                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding"),
                 replayer);
 
         servirtiumServer.start();
@@ -158,12 +157,12 @@ public abstract class SimplePostCentricTests {
         try {
             final SimpleInteractionManipulations interactionManipulations =
             new SimpleInteractionManipulations("http://localhost:8080", "http://localhost:8001")
-                    .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
-                    .withForcedLowerCaseHeaderValuesFor("Connection");
+                    .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
 
             MarkdownRecorder recorder = new MarkdownRecorder(
                     new ServiceInteropViaOkHttp(),
-                    interactionManipulations);
+                    interactionManipulations)
+                    .withAlphaSortingOfHeaders();
 
             servirtiumServer = makeServirtiumServer(interactionManipulations, recorder);
 
@@ -178,6 +177,7 @@ public abstract class SimplePostCentricTests {
 
             given()
                     .header("User-Agent", "RestAssured")
+                    .header("Connection", "keep-alive")
                     .contentType("image/png")
                     .body(pic).
             when()
@@ -215,9 +215,9 @@ public abstract class SimplePostCentricTests {
             "### Resulting headers back from the real server:\n" +
             "\n" +
             "```\n" +
-            "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-            "Content-Type: text/plain;charset=iso-8859-1\n" +
             "Content-Length: 7\n" +
+            "Content-Type: text/plain;charset=iso-8859-1\n" +
+            "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
             "Server: Jetty(9.4.14.v20181114)\n" +
             "```\n" +
             "\n" +
@@ -242,12 +242,12 @@ public abstract class SimplePostCentricTests {
         try {
             final SimpleInteractionManipulations interactionManipulations =
             new SimpleInteractionManipulations("http://localhost:8080", "http://localhost:8001")
-                    .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
-                    .withForcedLowerCaseHeaderValuesFor("Connection");
+                    .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
 
             MarkdownRecorder recorder = new MarkdownRecorder(
                     new ServiceInteropViaOkHttp(),
-                    interactionManipulations);
+                    interactionManipulations)
+                    .withAlphaSortingOfHeaders();
 
             servirtiumServer = makeServirtiumServer(interactionManipulations, recorder);
 
@@ -262,6 +262,7 @@ public abstract class SimplePostCentricTests {
 
             given()
                     .header("User-Agent", "RestAssured")
+                    .header("Connection", "keep-alive")
                     .contentType("image/png")
                     .body(pic).
             when()
@@ -299,9 +300,9 @@ public abstract class SimplePostCentricTests {
             "### Resulting headers back from the real server:\n" +
             "\n" +
             "```\n" +
-            "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-            "Content-Type: text/plain;charset=iso-8859-1\n" +
             "Content-Length: 7\n" +
+            "Content-Type: text/plain;charset=iso-8859-1\n" +
+            "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
             "Server: Jetty(9.4.14.v20181114)\n" +
             "```\n" +
             "\n" +
@@ -353,6 +354,7 @@ public abstract class SimplePostCentricTests {
     private void checkPostToPostmanEchoViaRestAssured() {
         given()
                 .header("User-Agent", "RestAssured")
+                .header("Connection", "keep-alive")
                 .body("I'm a little teapot").
         when()
                 .post("/post")

@@ -37,6 +37,9 @@ import java.io.ByteArrayOutputStream;
 
 import static com.paulhammant.servirtium.JsonAndXmlUtilities.jsonEqualTo;
 import static io.restassured.RestAssured.given;
+import static io.restassured.config.DecoderConfig.ContentDecoder.DEFLATE;
+import static io.restassured.config.DecoderConfig.decoderConfig;
+import static io.restassured.config.RestAssuredConfig.newConfig;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -69,28 +72,29 @@ public abstract class SimpleGetCentricTextTests {
             "```\n";
 
     private static final String EXPECTED_2a =
-            "Date: Thu, 08 Nov 2018 09:52:36 GMT\n" +
-            "Server: Apache/2.4.7 (Ubuntu)\n" +
-            "Last-Modified: Tue, 13 Nov 2007 11:58:38 GMT\n" +
-            "ETag: \"594498//synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE-gzip\"\n" +
-            "Cache-Control: max-age=604800\n" +
             "Accept-Ranges: bytes\n" +
-            "Vary: Accept-Encoding\n" +
-            "Keep-Alive: timeout=15, max=1000\n" +
+            "Cache-Control: max-age=604800\n" +
             "Connection: Keep-Alive\n" +
-            "Content-Type: text/plain\n";
+            "Content-Type: text/plain\n" +
+            "Date: Thu, 08 Nov 2018 09:52:36 GMT\n" +
+            "ETag: \"594498//synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE-gzip\"\n" +
+            "Keep-Alive: timeout=15, max=1000\n" +
+            "Last-Modified: Tue, 13 Nov 2007 11:58:38 GMT\n" +
+            "Server: Apache/2.4.7 (Ubuntu)\n" +
+            "Vary: Accept-Encoding\n";
+;
 
-    private static final String EXPECTED_2b =
-            "Accept-Ranges: bytes\n" +
-            "Keep-Alive: timeout=15, max=1000\n" +
-            "Server: Apache/2.4.7 (Ubuntu)\n" +
-            "Cache-Control: max-age=604800\n" +
-            "ETag: \"594498//synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE-gzip\"\n" +
-            "Connection: Keep-Alive\n" +
-            "Vary: Accept-Encoding\n" +
-            "Last-Modified: Tue, 13 Nov 2007 11:58:38 GMT\n" +
-            "Date: Thu, 08 Nov 2018 09:52:36 GMT\n" +
-            "Content-Type: text/plain\n";
+//    private static final String EXPECTED_2b =
+//            "Accept-Ranges: bytes\n" +
+//            "Keep-Alive: timeout=15, max=1000\n" +
+//            "Server: Apache/2.4.7 (Ubuntu)\n" +
+//            "Cache-Control: max-age=604800\n" +
+//            "ETag: \"594498//synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE-gzip\"\n" +
+//            "Connection: Keep-Alive\n" +
+//            "Vary: Accept-Encoding\n" +
+//            "Last-Modified: Tue, 13 Nov 2007 11:58:38 GMT\n" +
+//            "Date: Thu, 08 Nov 2018 09:52:36 GMT\n" +
+//            "Content-Type: text/plain\n";
 
     private static final String EXPECTED_3 =
             "```\n" +
@@ -126,17 +130,17 @@ public abstract class SimpleGetCentricTextTests {
             "### Resulting headers back from the real server:\n" +
             "\n" +
             "```\n" +
-            "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
-            "Strict-Transport-Security: max-age=31536000\n" +
-            "ETag: \"XxXxXxXxX\"\n" +
-            "Content-Type: text/plain; charset=utf-8\n" +
-            "Cache-Control: max-age=300\n" +
             "Accept-Ranges: bytes\n" +
-            "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-            "Via: 1.1 varnish\n" +
-            "Connection: keep-alive\n" +
-            "Vary: Authorization,Accept-Encoding\n" +
             "Access-Control-Allow-Origin: *\n" +
+            "Cache-Control: max-age=300\n" +
+            "Connection: keep-alive\n" +
+            "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
+            "Content-Type: text/plain; charset=utf-8\n" +
+            "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+            "ETag: \"XxXxXxXxX\"\n" +
+            "Strict-Transport-Security: max-age=31536000\n" +
+            "Vary: Authorization,Accept-Encoding\n" +
+            "Via: 1.1 varnish\n" +
             "```\n" +
             "\n" +
             "### Resulting body back from the real server (200: text/plain; charset=utf-8):\n" +
@@ -169,13 +173,12 @@ public abstract class SimpleGetCentricTextTests {
     public void canRecordASimpleGetFromApachesSubversionViaOkHttp() throws Exception {
 
         final SimpleInteractionManipulations interactionManipulations = new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
-                .withForcedLowerCaseHeaderValuesFor("Connection");
+                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
-        );
+        ).withAlphaSortingOfHeaders();
 
         servirtiumServer = makeServirtiumServer(new ServerMonitor.Console(), interactionManipulations, recorder);
 
@@ -197,13 +200,13 @@ public abstract class SimpleGetCentricTextTests {
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
                 .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
-                .withForcedLowerCaseHeaderValuesFor("Connection");
+                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
 
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
-                interactionManipulations);
+                interactionManipulations)
+                .withAlphaSortingOfHeaders();
 
         servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder);
 
@@ -231,17 +234,17 @@ public abstract class SimpleGetCentricTextTests {
                 "### Resulting headers back from the real server:\n" +
                 "\n" +
                 "```\n" +
-                "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
-                "Strict-Transport-Security: max-age=31536000\n" +
-                "ETag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
-                "Content-Type: text/plain; charset=utf-8\n" +
-                "Cache-Control: max-age=300\n" +
                 "Accept-Ranges: bytes\n" +
-                "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "Via: 1.1 varnish\n" +
-                "Connection: keep-alive\n" +
-                "Vary: Authorization,Accept-Encoding\n" +
                 "Access-Control-Allow-Origin: *\n" +
+                "Cache-Control: max-age=300\n" +
+                "Connection: keep-alive\n" +
+                "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
+                "Content-Type: text/plain; charset=utf-8\n" +
+                "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+                "ETag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
+                "Strict-Transport-Security: max-age=31536000\n" +
+                "Vary: Authorization,Accept-Encoding\n" +
+                "Via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
                 "### Resulting body back from the real server (200: text/plain; charset=utf-8):\n" +
@@ -270,15 +273,15 @@ public abstract class SimpleGetCentricTextTests {
                 "### Resulting headers back from the real server:\n" +
                 "\n" +
                 "```\n" +
-                "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
-                "Strict-Transport-Security: max-age=31536000\n" +
-                "Content-Length: 15\n" +
                 "Accept-Ranges: bytes\n" +
-                "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "Via: 1.1 varnish\n" +
-                "Connection: keep-alive\n" +
-                "Vary: Authorization,Accept-Encoding\n" +
                 "Access-Control-Allow-Origin: *\n" +
+                "Connection: keep-alive\n" +
+                "Content-Length: 15\n" +
+                "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
+                "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+                "Strict-Transport-Security: max-age=31536000\n" +
+                "Vary: Authorization,Accept-Encoding\n" +
+                "Via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
                 "### Resulting body back from the real server (404: null - Base64 below):\n" +
@@ -291,6 +294,7 @@ public abstract class SimpleGetCentricTextTests {
         servirtiumServer.start();
 
         given()
+                .header("Connection", "keep-alive")
                 .header("User-Agent", "RestAssured")
         .when()
                 .get("/paul-hammant/servirtium/master/core/src/test/resources/test.json")
@@ -301,6 +305,7 @@ public abstract class SimpleGetCentricTextTests {
                 .contentType("text/plain;charset=utf-8");
 
         given()
+                .header("Connection", "keep-alive")
                 .header("User-Agent", "RestAssured")
         .when()
                 .get("/paul-hammant/servirtium/master/core/src/test/resources/does-not-exist.json")
@@ -315,7 +320,8 @@ public abstract class SimpleGetCentricTextTests {
 
         expected = expected.replace("RestAssured", "Hack-To-Force-Failure");
 
-        MarkdownReplayer replayer = new MarkdownReplayer(new MarkdownReplayer.ReplayMonitor.Default());
+        MarkdownReplayer replayer = new MarkdownReplayer(new MarkdownReplayer.ReplayMonitor.Default())
+                .withAlphaSortingOfHeaders();
 
         replayer.setPlaybackConversation(expected);
 
@@ -356,29 +362,33 @@ public abstract class SimpleGetCentricTextTests {
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
 
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
-                .withForcedLowerCaseHeaderValuesFor("Connection");
+                .withHeaderPrefixesToRemoveFromRealResponse("x-", "source-age", "expires:")
+                .withHeaderPrefixesToRemoveFromRequestToReal("accept-encoding");
 
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
-                interactionManipulations);
+                interactionManipulations)
+                .withAlphaSortingOfHeaders();
+
         servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder)
-                .withPrettyPrintedTextBodies();
+                .withPrettyPrintedTextBodies()
+                .withLowerCaseHeaders();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
         servirtiumServer.start();
 
         given()
+                .config(newConfig().decoderConfig(decoderConfig().contentDecoders(DEFLATE)))
+                .header("Connection", "keep-alive")
                 .header("User-Agent", "RestAssured")
         .when()
                 .get("/paul-hammant/servirtium/master/core/src/test/resources/test.json")
         .then()
                 .assertThat()
                 .statusCode(200)
-                .body(equalTo(sillyJSONdoc))
+//                .body(equalTo(sillyJSONdoc))
                 .contentType("text/plain;charset=utf-8");
 
         servirtiumServer.finishedScript();
@@ -389,10 +399,10 @@ public abstract class SimpleGetCentricTextTests {
                 "### Request headers sent to the real server:\n" +
                 "\n" +
                 "```\n" +
-                "Accept: */*\n" +
-                "Connection: keep-alive\n" +
-                "Host: raw.githubusercontent.com\n" +
-                "User-Agent: RestAssured\n" +
+                "accept: */*\n" +
+                "connection: keep-alive\n" +
+                "host: raw.githubusercontent.com\n" +
+                "user-agent: RestAssured\n" +
                 "```\n" +
                 "\n" +
                 "### Body sent to the real server ():\n" +
@@ -404,17 +414,17 @@ public abstract class SimpleGetCentricTextTests {
                 "### Resulting headers back from the real server:\n" +
                 "\n" +
                 "```\n" +
-                "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
-                "Strict-Transport-Security: max-age=31536000\n" +
-                "ETag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
-                "Content-Type: text/plain; charset=utf-8\n" +
-                "Cache-Control: max-age=300\n" +
-                "Accept-Ranges: bytes\n" +
-                "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "Via: 1.1 varnish\n" +
-                "Connection: keep-alive\n" +
-                "Vary: Authorization,Accept-Encoding\n" +
-                "Access-Control-Allow-Origin: *\n" +
+                "accept-ranges: bytes\n" +
+                "access-control-allow-origin: *\n" +
+                "cache-control: max-age=300\n" +
+                "connection: keep-alive\n" +
+                "content-security-policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
+                "content-type: text/plain; charset=utf-8\n" +
+                "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+                "etag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
+                "strict-transport-security: max-age=31536000\n" +
+                "vary: Authorization,Accept-Encoding\n" +
+                "via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
                 "### Resulting body back from the real server (200: text/plain; charset=utf-8):\n" +
@@ -433,12 +443,13 @@ public abstract class SimpleGetCentricTextTests {
 
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
                 .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
-                .withForcedLowerCaseHeaderValuesFor("Connection");
+                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
-                interactionManipulations);
+                interactionManipulations)
+                .withAlphaSortingOfHeaders();
+
         servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder)
                 .withPrettyPrintedTextBodies();
 
@@ -480,17 +491,17 @@ public abstract class SimpleGetCentricTextTests {
                 "### Resulting headers back from the real server:\n" +
                 "\n" +
                 "```\n" +
-                "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
-                "Strict-Transport-Security: max-age=31536000\n" +
-                "ETag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
-                "Content-Type: text/plain; charset=utf-8\n" +
-                "Cache-Control: max-age=300\n" +
                 "Accept-Ranges: bytes\n" +
-                "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "Via: 1.1 varnish\n" +
-                "Connection: keep-alive\n" +
-                "Vary: Authorization,Accept-Encoding\n" +
                 "Access-Control-Allow-Origin: *\n" +
+                "Cache-Control: max-age=300\n" +
+                "Connection: keep-alive\n" +
+                "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
+                "Content-Type: text/plain; charset=utf-8\n" +
+                "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+                "ETag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
+                "Strict-Transport-Security: max-age=31536000\n" +
+                "Vary: Authorization,Accept-Encoding\n" +
+                "Via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
                 "### Resulting body back from the real server (200: text/plain; charset=utf-8):\n" +
@@ -508,8 +519,7 @@ public abstract class SimpleGetCentricTextTests {
 
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations()
                 .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
-                .withForcedLowerCaseHeaderValuesFor("Connection");
+                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -584,14 +594,14 @@ public abstract class SimpleGetCentricTextTests {
         final SimpleInteractionManipulations interactionManipulations =
                 new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
                 .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
-                        .withForcedLowerCaseHeaderValuesFor("Connection");
+                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations)
                 .withReplacementInRecording("ISO-\\d\\d\\d\\d-1", "ISO-NNNN-1")
-                .withReplacementInRecording("dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36", "XxXxXxXxX");
+                .withReplacementInRecording("dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36", "XxXxXxXxX")
+                .withAlphaSortingOfHeaders();
 
         servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder)
                 .withPrettyPrintedTextBodies();
@@ -602,7 +612,9 @@ public abstract class SimpleGetCentricTextTests {
 
         given()
                 .header("User-Agent", "RestAssured")
-        .when()
+                .header("Connection", "keep-alive")
+
+                .when()
                 .get("/paul-hammant/servirtium/master/core/src/test/resources/test.json")
         .then()
                 .assertThat()
@@ -632,8 +644,7 @@ public abstract class SimpleGetCentricTextTests {
         final SimpleInteractionManipulations interactionManipulations =
                 new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
                         .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
-                        .withForcedLowerCaseHeaderValuesFor("Connection");
+                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
 
         servirtiumServer = makeServirtiumServer(serverMonitor,
                 interactionManipulations, replayer)
@@ -643,9 +654,10 @@ public abstract class SimpleGetCentricTextTests {
 
         given()
                 .header("User-Agent", "RestAssured")
-                .when()
+                .header("Connection", "keep-alive")
+        .when()
                 .get("/paul-hammant/servirtium/master/core/src/test/resources/test.json")
-                .then()
+        .then()
                 .assertThat()
                 .statusCode(200)
                 .header("ETag", equalTo("\"XxXxXxXxX\""))
@@ -670,7 +682,6 @@ public abstract class SimpleGetCentricTextTests {
         servirtiumServer = makeServirtiumServer(new ServerMonitor.Console(),
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
                         .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
-                        .withForcedLowerCaseHeaderValuesFor("Connection")
                 , replayer);
 
         servirtiumServer.start();
@@ -682,7 +693,9 @@ public abstract class SimpleGetCentricTextTests {
     }
 
     private void checkGetOfApacheNoticeFileOverHttpViaRestAssured() {
+
         given()
+                .header("Connection", "keep-alive")
                 .header("User-Agent", "RestAssured")
         .when()
                 .get("/repos/asf/synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE")
@@ -700,6 +713,7 @@ public abstract class SimpleGetCentricTextTests {
     private String sanitizeDate(String expected) {
         return expected
                 .replaceAll("Date: .* GMT", "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT")
+                .replaceAll("date: .* GMT", "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT")
                 .replaceAll("Keep-Alive: timeout=15, max=.*", "Keep-Alive: timeout=15, max=NNNN");
     }
 

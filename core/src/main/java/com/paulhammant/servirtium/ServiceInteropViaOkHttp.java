@@ -42,7 +42,6 @@ import okhttp3.ResponseBody;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static com.paulhammant.servirtium.ServirtiumServer.isText;
 
@@ -59,7 +58,7 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
     }
 
     @Override
-    public ServiceResponse invokeServiceEndpoint(String method, Object bodyToReal, String contentTypeToReal, String url, List<String> headersToReal, InteractionManipulations interactionManipulations) throws InteractionException {
+    public ServiceResponse invokeServiceEndpoint(String method, Object bodyToReal, String contentTypeToReal, String url, List<String> headersToReal, InteractionManipulations interactionManipulations, boolean lowerCaseHeaders) throws InteractionException {
 
         RequestBody nonGetBody = null;
         if (!method.equals("GET")) {
@@ -79,7 +78,6 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
 
             Headers.Builder hb = new Headers.Builder();
 
-            final String[] strings = alternatingHeaderNamesAndValues(headersToReal);
             for (String h : headersToReal) {
                 hb.add(h);
             }
@@ -91,6 +89,7 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
             } else {
                 reqBuilder = new Request.Builder().url(url).method(method, nonGetBody).headers(headerForOkHttp);
             }
+
             response = okHttpClient.newCall(reqBuilder.build()).execute();
 
             ResponseBody body = response.body();
@@ -116,17 +115,19 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
             ArrayList<String> responseHeaders2 = new ArrayList<>();
             for (String hdrLine : responseHeaders) {
                 int ix = hdrLine.indexOf(": ");
-                String hdrKey = hdrLine.substring(0, ix);
+                String hdrName = hdrLine.substring(0, ix);
                 String hdrVal = hdrLine.substring(ix + 2);
+                String hdrKey = lowerCaseHeaders ? hdrName.toLowerCase() : hdrName; // HTTP 2.0 says lower-case header keys.
                 responseHeaders2.add(hdrKey + ": " + interactionManipulations.headerReplacement(hdrKey, hdrVal));
             }
-            return new ServiceResponse(responseBody, responseContentType, statusCode, responseHeaders2.toArray(new String[responseHeaders.length]));
+            final String[] headers = responseHeaders2.toArray(new String[responseHeaders.length]);
+            return new ServiceResponse(responseBody, responseContentType, statusCode, headers);
 
         } catch (IOException e) {
             throw new InteractionException(e);
         }
-
     }
+
     private String[] alternatingHeaderNamesAndValues(List<String> headers) {
         String[] rv = new String[headers.size() * 2];
         int x = 0;
