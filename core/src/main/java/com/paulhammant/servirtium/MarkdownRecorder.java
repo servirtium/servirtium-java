@@ -62,9 +62,9 @@ public class MarkdownRecorder implements Interactor {
         return this;
     }
 
-    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRquestHeaders, Interaction interaction, boolean lowerCaseHeaders) throws IOException {
-        //clientRquestHeaders.remove("Accept-Encoding");
-        return serviceInteroperation.invokeServiceEndpoint(method, interaction.clientRequestBody, interaction.clientRequestContentType, url, clientRquestHeaders, interactionManipulations, lowerCaseHeaders);
+    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRequestHeaders, Interaction interaction, boolean lowerCaseHeaders) throws IOException {
+        //clientRequestHeaders.remove("Accept-Encoding");
+        return serviceInteroperation.invokeServiceEndpoint(method, interaction.clientRequestBody, interaction.clientRequestContentType, url, clientRequestHeaders, interactionManipulations, lowerCaseHeaders);
     }
 
     /**
@@ -175,9 +175,9 @@ public class MarkdownRecorder implements Interactor {
         }
 
         @Override
-        public void noteResponseHeadersAndBody(String[] headers, Object body, int statusCode, String contentType) {
+        public void noteResponseHeadersAndBody(String[] headers, Object serverResponseBody, int statusCode, String serverResponseContentType) {
             this.recordResponseHeaders(headers);
-            this.recordResponseBody(body, statusCode, contentType);
+            this.recordResponseBody(serverResponseBody, statusCode, serverResponseContentType);
         }
 
         private void recordResponseBody(Object body, int statusCode, String contentType) {

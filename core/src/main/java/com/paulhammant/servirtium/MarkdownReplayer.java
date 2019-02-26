@@ -139,7 +139,7 @@ public class MarkdownReplayer implements Interactor {
     }
 
     @Override
-    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRquestHeaders, Interaction interaction, boolean lowerCaseHeaders) throws IOException {
+    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRequestHeaders, Interaction interaction, boolean lowerCaseHeaders) throws IOException {
 
         ReplayingInteraction replay = (ReplayingInteraction) interaction;
 
@@ -189,7 +189,7 @@ public class MarkdownReplayer implements Interactor {
         }
         lineEnd = replay.interactionText.indexOf("\n", replay.ix);
         line = replay.interactionText.substring(replay.ix +4, lineEnd);
-        String contentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
+        String serverResponseContentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
 
         // TODO remove trim()
         final String[] prevRecorded = reorderMaybe(headersReceived).split("\n");
@@ -212,7 +212,7 @@ public class MarkdownReplayer implements Interactor {
 
         try {
             try {
-                assertThat(replay.clientRequestContentType, equalTo(contentType));
+                assertThat(replay.clientRequestContentType, equalTo(serverResponseContentType));
             } catch (AssertionError e) {
                 monitor.contentTypeFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
             }
@@ -245,7 +245,7 @@ public class MarkdownReplayer implements Interactor {
         } catch (AssertionError e) {
             monitor.markdownSectionHeadingMissing(replay.interactionNum, RESULTING_HEADERS_BACK_FROM_REAL_SERVER, filename, replay.context, e);
         }
-        String[] headersToReturn = getCodeBlock(replay).split("\n");
+        String[] serverResponseHeaders = getCodeBlock(replay).split("\n");
         final String RESULTING_BODY_BACK_FROM_REAL_SERVER = "### Resulting body back from the real server";
         replay.ix = replay.interactionText.indexOf(RESULTING_BODY_BACK_FROM_REAL_SERVER, replay.ix);
 
@@ -259,15 +259,15 @@ public class MarkdownReplayer implements Interactor {
         String statusContent = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
         parts = statusContent.split(": ");
         int statusCode = Integer.parseInt(parts[0]);
-        contentType = parts[1];
-        Object bodyToReturn;
-        if (contentType.endsWith("- Base64 below")) {
-            contentType = contentType.substring(0, contentType.indexOf(" "));
-            bodyToReturn = Base64.getDecoder().decode(getCodeBlock(replay));
+        serverResponseContentType = parts[1];
+        Object serverResponseBody;
+        if (serverResponseContentType.endsWith("- Base64 below")) {
+            serverResponseContentType = serverResponseContentType.substring(0, serverResponseContentType.indexOf(" "));
+            serverResponseBody = Base64.getDecoder().decode(getCodeBlock(replay));
         } else {
-            bodyToReturn = getCodeBlock(replay);
+            serverResponseBody = getCodeBlock(replay);
         }
-        return new ServiceResponse(bodyToReturn, contentType, statusCode, headersToReturn);
+        return new ServiceResponse(serverResponseBody, serverResponseContentType, statusCode, serverResponseHeaders);
 
 
     }

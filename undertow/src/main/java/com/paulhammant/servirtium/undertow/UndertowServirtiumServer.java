@@ -54,7 +54,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         url = (url.startsWith("http://") || url.startsWith("https://")) ? url : "http://" + exchange.getHostAndPort() + uri;
 
         //String clientRequestBody = "";
-        List<String> clientRquestHeaders = new ArrayList<>();
+        List<String> clientRequestHeaders = new ArrayList<>();
 
         try {
 
@@ -70,11 +70,11 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             monitor.interactionStarted(getInteractionNum(), interaction);
 
             final HeaderValues headerValues = exchange.getRequestHeaders().get(Headers.CONTENT_TYPE_STRING);
-            String contentType;
+            String clientRequestContentType;
             if (headerValues == null) {
-                contentType = "";
+                clientRequestContentType = "";
             } else {
-                contentType = headerValues.getFirst();
+                clientRequestContentType = headerValues.getFirst();
                 ;
 
             }
@@ -89,10 +89,10 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 //                    }
 //
 
-            final String requestUrl = prepareHeadersAndBodyForReal(exchange, method, url, clientRquestHeaders, interaction, contentType, interactionManipulations);
+            final String requestUrl = prepareHeadersAndBodyForReal(exchange, method, url, clientRequestHeaders, interaction, clientRequestContentType, interactionManipulations);
 
             // INTERACTION
-            ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, clientRquestHeaders, interaction, getLowerCaseHeaders());
+            ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, clientRequestHeaders, interaction, getLowerCaseHeaders());
 
             realResponse = processHeadersAndBodyBackFromReal(interaction, realResponse, interactionManipulations);
 
@@ -175,7 +175,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         return realResponse;
     }
 
-    private String prepareHeadersAndBodyForReal(HttpServerExchange exchange, String method, String url, List<String> clientRquestHeaders, Interactor.Interaction interaction, String contentType, InteractionManipulations interactionManipulations) throws IOException {
+    private String prepareHeadersAndBodyForReal(HttpServerExchange exchange, String method, String url, List<String> clientRequestHeaders, Interactor.Interaction interaction, String clientRequestContentType, InteractionManipulations interactionManipulations) throws IOException {
 
         exchange.startBlocking();
         InputStream is = exchange.getInputStream();
@@ -184,7 +184,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
         if (is.available() > 0) {
 
-            if (isText(contentType)) {
+            if (isText(clientRequestContentType)) {
                 clientRequestBody = null;
                 String characterEncoding = exchange.getRequestCharset();
                 if (characterEncoding == null) {
@@ -209,12 +209,12 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             header.forEach(hdrVal -> {
                 hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
                 final String newHeader = (getLowerCaseHeaders() ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
-                clientRquestHeaders.add(newHeader);
-                interactionManipulations.changeSingleHeaderForRequestToReal(method, newHeader, clientRquestHeaders);
+                clientRequestHeaders.add(newHeader);
+                interactionManipulations.changeSingleHeaderForRequestToReal(method, newHeader, clientRequestHeaders);
             });
         });
 
-        interactionManipulations.changeAllHeadersForRequestToReal(clientRquestHeaders);
+        interactionManipulations.changeAllHeadersForRequestToReal(clientRequestHeaders);
 
         if (clientRequestBody instanceof String) {
             clientRequestBody = interactionManipulations.changeBodyForRequestToReal((String) clientRequestBody);
@@ -224,7 +224,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             clientRequestBody = "";
         }
 
-        interaction.noteClientRequestHeadersAndBody(clientRquestHeaders, clientRequestBody, contentType);
+        interaction.noteClientRequestHeadersAndBody(clientRequestHeaders, clientRequestBody, clientRequestContentType);
 
         return interactionManipulations.changeUrlForRequestToReal(url);
     }
