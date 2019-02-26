@@ -35,12 +35,12 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
     }
 
     @Override
-    public String changeUrlForRequestToReal(String url) {
+    public String changeUrlForRequestToServer(String url) {
         return url.replace(fromUrl, toUrl);
     }
 
     @Override
-    public void changeSingleHeaderForRequestToReal(String method, String currentHeader, List<String> allHeadersToReal) {
+    public void changeSingleHeaderForRequestToServer(String method, String currentHeader, List<String> clientRequestHeaders) {
         String currentHeaderKey = null;
         String currentHeaderVal = null;
         try {
@@ -52,17 +52,17 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
 
         for (String pfx : headerPrefixesToRemoveFromRequest) {
             if (currentHeader.startsWith(pfx)) {
-                allHeadersToReal.remove(currentHeader);
+                clientRequestHeaders.remove(currentHeader);
             }
         }
 
         if (currentHeader.startsWith("Host: ") || currentHeader.startsWith("host: ")) {
-            for (int i = 0; i < allHeadersToReal.size(); i++) {
-                String h = allHeadersToReal.get(i);
+            for (int i = 0; i < clientRequestHeaders.size(); i++) {
+                String h = clientRequestHeaders.get(i);
                 if (h.startsWith("Host: ") || h.startsWith("host: ")) {
-                    allHeadersToReal.remove(h);
+                    clientRequestHeaders.remove(h);
                     final String replace = h.replace(fromHost, toHost);
-                    allHeadersToReal.add(i, replace);
+                    clientRequestHeaders.add(i, replace);
                     break;
                 }
             }
@@ -70,7 +70,7 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
     }
 
     @Override
-    public void changeAllHeadersReturnedBackFromReal(ArrayList<String> headers) {
+    public void changeAllHeadersReturnedBackFromServer(ArrayList<String> headers) {
         String[] hdrs = headers.toArray(new String[0]);
         for (String hdr : hdrs) {
             for (String pfx : headerPrefixesToRemoveFromResponse) {

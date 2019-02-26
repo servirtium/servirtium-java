@@ -37,33 +37,33 @@ import java.util.Map;
 
 public interface InteractionManipulations {
 
-    default void changeSingleHeaderForRequestToReal(String method, String currentHeader, List<String> allHeadersToReal) {
+    default void changeSingleHeaderForRequestToServer(String method, String currentHeader, List<String> clientRequestHeaders) {
     }
 
     default String headerReplacement(String hdrKey, String hdrVal) {
         return hdrVal;
     }
 
-    default String changeUrlForRequestToReal(String url) {
+    default String changeUrlForRequestToServer(String url) {
         return url;
     }
 
-    default String changeSingleHeaderReturnedBackFromReal(int ix, String headerBackFromReal) {
-        return headerBackFromReal;
+    default String changeSingleHeaderReturnedBackFromServer(int ix, String headerBackFromServer) {
+        return headerBackFromServer;
     }
 
-    default void changeAllHeadersReturnedBackFromReal(ArrayList<String> headers) {
+    default void changeAllHeadersReturnedBackFromServer(ArrayList<String> headers) {
     }
 
-    default String changeBodyReturnedBackFromReal(String body) {
+    default String changeBodyReturnedBackFromServer(String body) {
         return body;
     }
 
-    default void changeAllHeadersForRequestToReal(List<String> clientRequestHeaders) {
+    default void changeAllHeadersForRequestToServer(List<String> clientRequestHeaders) {
     }
 
     /** This may be Base84 encoded binary, but you're seldomn going to want to change that */
-    default String changeBodyForRequestToReal(String body) {
+    default String changeBodyForRequestToServer(String body) {
         return body;
     }
 

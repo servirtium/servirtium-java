@@ -141,15 +141,15 @@ public class JettyServirtiumServer extends ServirtiumServer {
         ArrayList<String > newHeaders = new ArrayList<>();
         for (int i = 0; i < realResponse.headers.length; i++) {
             String headerBackFromReal = realResponse.headers[i];
-            String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderReturnedBackFromReal(i, headerBackFromReal);
+            String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderReturnedBackFromServer(i, headerBackFromReal);
             if (potentiallyChangedHeader != null) {
                 newHeaders.add(potentiallyChangedHeader);
             }
         }
-        interactionManipulations.changeAllHeadersReturnedBackFromReal(newHeaders);
+        interactionManipulations.changeAllHeadersReturnedBackFromServer(newHeaders);
 
         if (realResponse.body instanceof String) {
-            realResponse = realResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromReal((String) realResponse.body));
+            realResponse = realResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServer((String) realResponse.body));
             // recreate response
 
             if (shouldHavePrettyPrintedTextBodies()) {
@@ -212,13 +212,13 @@ public class JettyServirtiumServer extends ServirtiumServer {
             hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
             final String fullHeader = (getLowerCaseHeaders() ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
             clientRequestHeaders.add(fullHeader);
-            interactionManipulations.changeSingleHeaderForRequestToReal(method, fullHeader, clientRequestHeaders);
+            interactionManipulations.changeSingleHeaderForRequestToServer(method, fullHeader, clientRequestHeaders);
         }
 
-        interactionManipulations.changeAllHeadersForRequestToReal(clientRequestHeaders);
+        interactionManipulations.changeAllHeadersForRequestToServer(clientRequestHeaders);
 
         if (clientRequestBody instanceof String) {
-            clientRequestBody = interactionManipulations.changeBodyForRequestToReal((String) clientRequestBody);
+            clientRequestBody = interactionManipulations.changeBodyForRequestToServer((String) clientRequestBody);
         }
 
         if (clientRequestBody == null) {
@@ -227,7 +227,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
         interaction.noteClientRequestHeadersAndBody(clientRequestHeaders, clientRequestBody, clientRequestContentType);
 
-        return interactionManipulations.changeUrlForRequestToReal(url);
+        return interactionManipulations.changeUrlForRequestToServer(url);
     }
 
     public ServirtiumServer start() throws Exception {

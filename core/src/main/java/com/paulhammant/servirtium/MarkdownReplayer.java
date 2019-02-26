@@ -159,7 +159,7 @@ public class MarkdownReplayer implements Interactor {
         try {
             assertThat(method, equalTo(mdMethod));
         } catch (AssertionError e) {
-            monitor.methodNotAsExpected(replay.interactionNum, filename, mdMethod, method, replay.context, e);
+            monitor.unexpectedClientRequestMethod(replay.interactionNum, filename, mdMethod, method, replay.context, e);
         }
 
         String mdUrl = parts[2];
@@ -167,7 +167,7 @@ public class MarkdownReplayer implements Interactor {
         try {
             assertThat(url, endsWith(mdUrl));
         } catch (AssertionError e) {
-            monitor.urlNotAsExpected(url, replay, mdMethod, mdUrl, filename, replay.context, e);
+            monitor.unexpectedClientRequestUrl(url, replay, mdMethod, mdUrl, filename, replay.context, e);
         }
 
         final String REQUEST_HEADERS_SENT_TO_REAL_SERVER = "### Request headers sent to the real server";
@@ -202,7 +202,7 @@ public class MarkdownReplayer implements Interactor {
             try {
                 assertThat(replay.clientRequestBody, equalTo(bodyReceived));
             } catch (AssertionError e) {
-                monitor.bodyFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
+                monitor.unexpectedClientRequestBody(replay.interactionNum, mdMethod, filename, replay.context, e);
             }
         } catch (AssertionError e) {
             if (error == null) {
@@ -214,7 +214,7 @@ public class MarkdownReplayer implements Interactor {
             try {
                 assertThat(replay.clientRequestContentType, equalTo(serverResponseContentType));
             } catch (AssertionError e) {
-                monitor.contentTypeFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
+                monitor.unexpectedClientRequestContentType(replay.interactionNum, mdMethod, filename, replay.context, e);
             }
         } catch (AssertionError e) {
             if (error == null) {
@@ -226,7 +226,7 @@ public class MarkdownReplayer implements Interactor {
             try {
                 assertThat(currentHeaders, arrayContainingInAnyOrder(prevRecorded));
             } catch (AssertionError e) {
-                monitor.headersFromClientToRealNotAsExpected(replay.interactionNum, mdMethod, filename, replay.context, e);
+                monitor.unexpectedClientRequestHeaders(replay.interactionNum, mdMethod, filename, replay.context, e);
             }
         } catch (AssertionError e) {
             if (error == null) {
@@ -306,17 +306,17 @@ public class MarkdownReplayer implements Interactor {
 
         void couldNotFindInteraction(int interaction, String filename, String context, AssertionError e);
 
-        void methodNotAsExpected(int interaction, String filename, String mdMethod, String method, String context, AssertionError e);
+        void unexpectedClientRequestMethod(int interaction, String filename, String expectedMethod, String method, String context, AssertionError e);
 
-        void urlNotAsExpected(String url, ReplayingInteraction rc, String mdMethod, String mdUrl, String filename, String context, AssertionError e);
+        void unexpectedClientRequestUrl(String url, ReplayingInteraction rc, String method, String mdUrl, String filename, String context, AssertionError e);
 
         void markdownSectionHeadingMissing(int interaction, String HEADERS_SENT_TO_REAL_SERVER, String filename, String context, AssertionError e);
 
-        void headersFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String context, AssertionError e);
+        void unexpectedClientRequestHeaders(int interaction, String method, String filename, String context, AssertionError e);
 
-        void bodyFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String context, AssertionError e);
+        void unexpectedClientRequestBody(int interaction, String method, String filename, String context, AssertionError e);
 
-        void contentTypeFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String context, AssertionError e);
+        void unexpectedClientRequestContentType(int interaction, String method, String filename, String context, AssertionError e);
 
         AssertionError unexpectedInteractionRequest(int interactionNum, String filename, IndexOutOfBoundsException e);
 
@@ -330,29 +330,29 @@ public class MarkdownReplayer implements Interactor {
                 throw makeAssertionError("Could not find interactions #" + interaction + " in file '" + filename + "'", e);
             }
 
-            public void methodNotAsExpected(int interaction, String filename, String mdMethod, String method, String context, AssertionError e) {
-                throw makeAssertionError(methodFileAndContextPrefix(interaction, mdMethod, filename, context) + ", method from the client that should be sent to real server are not the same as expected: " + method, e);
+            public void unexpectedClientRequestMethod(int interaction, String filename, String expectedMethod, String method, String context, AssertionError e) {
+                throw makeAssertionError(methodFileAndContextPrefix(interaction, expectedMethod, filename, context) + ", method from the client that should be sent to real server are not the same as expected: " + method, e);
             }
 
-            public void urlNotAsExpected(String url, ReplayingInteraction interaction, String mdMethod, String mdUrl, String filename, String context, AssertionError e) {
-                throw makeAssertionError("Method " + interaction.interactionNum + " (" + mdMethod + ") in " + filename + ": " + url + " does not end in previously recorded " + mdUrl, e);
+            public void unexpectedClientRequestUrl(String url, ReplayingInteraction interaction, String method, String mdUrl, String filename, String context, AssertionError e) {
+                throw makeAssertionError("Method " + interaction.interactionNum + " (" + method + ") in " + filename + ": " + url + " does not end in previously recorded " + mdUrl, e);
             }
 
             public void markdownSectionHeadingMissing(int interaction, String HEADERS_SENT_TO_REAL_SERVER, String filename, String context, AssertionError e) {
                 throw makeAssertionError("Expected '" + HEADERS_SENT_TO_REAL_SERVER + "' for interaction #" + interaction + " in " + filename + ", but it was not there", e);
             }
 
-            public void headersFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String context, AssertionError e) {
-                throw makeAssertionError(methodFileAndContextPrefix(interaction, mdMethod, filename, context)
+            public void unexpectedClientRequestHeaders(int interaction, String method, String filename, String context, AssertionError e) {
+                throw makeAssertionError(methodFileAndContextPrefix(interaction, method, filename, context)
                         + ", headers from the client that should be sent to real server are not the same as those previously recorded", e);
             }
 
-            public void bodyFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String context, AssertionError e) {
-                throw makeAssertionError(methodFileAndContextPrefix(interaction, mdMethod, filename, context) + ", body from the client that should be sent to real server are not the same those previously recorded", e);
+            public void unexpectedClientRequestBody(int interaction, String method, String filename, String context, AssertionError e) {
+                throw makeAssertionError(methodFileAndContextPrefix(interaction, method, filename, context) + ", body from the client that should be sent to real server are not the same those previously recorded", e);
             }
 
-            public void contentTypeFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String context, AssertionError e) {
-                throw makeAssertionError(methodFileAndContextPrefix(interaction, mdMethod, filename, context) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded", e);
+            public void unexpectedClientRequestContentType(int interaction, String method, String filename, String context, AssertionError e) {
+                throw makeAssertionError(methodFileAndContextPrefix(interaction, method, filename, context) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded", e);
             }
 
             public AssertionError unexpectedInteractionRequest(int interactionNum, String filename, IndexOutOfBoundsException e) {
@@ -395,18 +395,18 @@ public class MarkdownReplayer implements Interactor {
             }
 
             @Override
-            public void methodNotAsExpected(int interaction, String filename, String mdMethod, String method, String context, AssertionError e) {
+            public void unexpectedClientRequestMethod(int interaction, String filename, String expectedMethod, String method, String context, AssertionError e) {
                 try {
-                    super.methodNotAsExpected(interaction, filename, mdMethod, method, context, e);
+                    super.unexpectedClientRequestMethod(interaction, filename, expectedMethod, method, context, e);
                 } catch (AssertionError e1) {
                     throw printAndRethrow(e, e1);
                 }
             }
 
             @Override
-            public void urlNotAsExpected(String url, ReplayingInteraction interaction, String mdMethod, String mdUrl, String filename, String context, AssertionError e) {
+            public void unexpectedClientRequestUrl(String url, ReplayingInteraction interaction, String method, String mdUrl, String filename, String context, AssertionError e) {
                 try {
-                    super.urlNotAsExpected(url, interaction, mdMethod, mdUrl, filename, context, e);
+                    super.unexpectedClientRequestUrl(url, interaction, method, mdUrl, filename, context, e);
                 } catch (AssertionError e1) {
                     throw printAndRethrow(e, e1);
                 }
@@ -422,27 +422,27 @@ public class MarkdownReplayer implements Interactor {
             }
 
             @Override
-            public void headersFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String context, AssertionError e) {
+            public void unexpectedClientRequestHeaders(int interaction, String method, String filename, String context, AssertionError e) {
                 try {
-                    super.headersFromClientToRealNotAsExpected(interaction, mdMethod, filename, context, e);
+                    super.unexpectedClientRequestHeaders(interaction, method, filename, context, e);
                 } catch (AssertionError e1) {
                     throw printAndRethrow(e, e1);
                 }
             }
 
             @Override
-            public void bodyFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String context, AssertionError e) {
+            public void unexpectedClientRequestBody(int interaction, String method, String filename, String context, AssertionError e) {
                 try {
-                    super.bodyFromClientToRealNotAsExpected(interaction, mdMethod, filename, context, e);
+                    super.unexpectedClientRequestBody(interaction, method, filename, context, e);
                 } catch (AssertionError e1) {
                     throw printAndRethrow(e, e1);
                 }
             }
 
             @Override
-            public void contentTypeFromClientToRealNotAsExpected(int interaction, String mdMethod, String filename, String context, AssertionError e) {
+            public void unexpectedClientRequestContentType(int interaction, String method, String filename, String context, AssertionError e) {
                 try {
-                    super.contentTypeFromClientToRealNotAsExpected(interaction, mdMethod, filename, context, e);
+                    super.unexpectedClientRequestContentType(interaction, method, filename, context, e);
                 } catch (AssertionError e1) {
                     throw printAndRethrow(e, e1);
                 }

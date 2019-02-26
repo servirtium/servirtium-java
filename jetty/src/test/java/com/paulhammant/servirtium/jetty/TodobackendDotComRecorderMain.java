@@ -55,7 +55,7 @@ public class TodobackendDotComRecorderMain {
     public static SimpleInteractionManipulations makeInteractionManipulations() {
         return new SimpleInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
             @Override
-            public void changeAllHeadersForRequestToReal(List<String> clientRequestHeaders) {
+            public void changeAllHeadersForRequestToServer(List<String> clientRequestHeaders) {
                 String refer = "";
                 for (int i = 0; i < clientRequestHeaders.size(); i++) {
                     String s = clientRequestHeaders.get(i);
@@ -72,7 +72,7 @@ public class TodobackendDotComRecorderMain {
             }
 
             @Override
-            public String changeBodyReturnedBackFromReal(String body) {
+            public String changeBodyReturnedBackFromServer(String body) {
                 return body.replaceAll("todo-backend-sinatra\\.herokuapp\\.com",
                         "localhost:8099");
             }

@@ -34,7 +34,6 @@ package com.paulhammant.servirtium.svn;
 import com.paulhammant.servirtium.SimpleInteractionManipulations;
 
 import java.util.List;
-import java.util.Map;
 
 public class SubversionInteractionManipulations extends SimpleInteractionManipulations {
 
@@ -43,19 +42,19 @@ public class SubversionInteractionManipulations extends SimpleInteractionManipul
     }
 
     @Override
-    public void changeSingleHeaderForRequestToReal(String method, String currentHeader, List<String> allHeadersToReal) {
+    public void changeSingleHeaderForRequestToServer(String method, String currentHeader, List<String> clientRequestHeaders) {
         if (currentHeader.startsWith("User-Agent:")) {
-            for (int i = 0; i < allHeadersToReal.size(); i++) {
-                String s = allHeadersToReal.get(i);
+            for (int i = 0; i < clientRequestHeaders.size(); i++) {
+                String s = clientRequestHeaders.get(i);
                 if (s.startsWith("User-Agent:")) {
-                    allHeadersToReal.remove(s);
-                    allHeadersToReal.add(i, "User-Agent: " + getUserAgentString());
+                    clientRequestHeaders.remove(s);
+                    clientRequestHeaders.add(i, "User-Agent: " + getUserAgentString());
                     break;
                 }
             }
         }
 
-        super.changeSingleHeaderForRequestToReal(method, currentHeader, allHeadersToReal);
+        super.changeSingleHeaderForRequestToServer(method, currentHeader, clientRequestHeaders);
     }
 
     protected String getUserAgentString() {
@@ -71,11 +70,11 @@ public class SubversionInteractionManipulations extends SimpleInteractionManipul
     }
 
     @Override
-    public String changeSingleHeaderReturnedBackFromReal(int ix, String headerBackFromReal) {
-        if (headerBackFromReal.startsWith("DAV:")) {
-            headerBackFromReal = "DAV:" + spaces(ix) + headerBackFromReal.substring(4);
+    public String changeSingleHeaderReturnedBackFromServer(int ix, String headerBackFromServer) {
+        if (headerBackFromServer.startsWith("DAV:")) {
+            headerBackFromServer = "DAV:" + spaces(ix) + headerBackFromServer.substring(4);
         }
-        return headerBackFromReal;
+        return headerBackFromServer;
     }
 
     static String spaces(int i) {
