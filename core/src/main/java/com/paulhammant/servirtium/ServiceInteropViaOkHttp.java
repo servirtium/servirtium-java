@@ -58,7 +58,7 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
     }
 
     @Override
-    public ServiceResponse invokeServiceEndpoint(String method, Object bodyToReal, String contentTypeToReal, String url, List<String> headersToReal, InteractionManipulations interactionManipulations, boolean lowerCaseHeaders) throws InteractionException {
+    public ServiceResponse invokeServiceEndpoint(String method, Object bodyToReal, String contentTypeToReal, String url, List<String> clientRquestHeaders, InteractionManipulations interactionManipulations, boolean lowerCaseHeaders) throws InteractionException {
 
         RequestBody nonGetBody = null;
         if (!method.equals("GET")) {
@@ -78,7 +78,7 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
 
             Headers.Builder hb = new Headers.Builder();
 
-            for (String h : headersToReal) {
+            for (String h : clientRquestHeaders) {
                 hb.add(h);
             }
 

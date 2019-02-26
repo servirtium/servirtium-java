@@ -62,9 +62,9 @@ public class MarkdownRecorder implements Interactor {
         return this;
     }
 
-    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> headersToReal, Interaction interaction, boolean lowerCaseHeaders) throws IOException {
-        //headersToReal.remove("Accept-Encoding");
-        return serviceInteroperation.invokeServiceEndpoint(method, interaction.clientRequestBody, interaction.clientRequestContentType, url, headersToReal, interactionManipulations, lowerCaseHeaders);
+    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRquestHeaders, Interaction interaction, boolean lowerCaseHeaders) throws IOException {
+        //clientRquestHeaders.remove("Accept-Encoding");
+        return serviceInteroperation.invokeServiceEndpoint(method, interaction.clientRequestBody, interaction.clientRequestContentType, url, clientRquestHeaders, interactionManipulations, lowerCaseHeaders);
     }
 
     /**

@@ -59,7 +59,7 @@ public interface InteractionManipulations {
         return body;
     }
 
-    default void changeAllHeadersForRequestToReal(List<String> headersToReal) {
+    default void changeAllHeadersForRequestToReal(List<String> clientRquestHeaders) {
     }
 
     /** This may be Base84 encoded binary, but you're seldomn going to want to change that */

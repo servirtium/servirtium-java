@@ -54,7 +54,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         url = (url.startsWith("http://") || url.startsWith("https://")) ? url : "http://" + exchange.getHostAndPort() + uri;
 
         //String bodyToReal = "";
-        List<String> headersToReal = new ArrayList<>();
+        List<String> clientRquestHeaders = new ArrayList<>();
 
         try {
 
@@ -89,10 +89,10 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 //                    }
 //
 
-            final String requestUrl = prepareHeadersAndBodyForReal(exchange, method, url, headersToReal, interaction, contentType, interactionManipulations);
+            final String requestUrl = prepareHeadersAndBodyForReal(exchange, method, url, clientRquestHeaders, interaction, contentType, interactionManipulations);
 
             // INTERACTION
-            ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, headersToReal, interaction, getLowerCaseHeaders());
+            ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, clientRquestHeaders, interaction, getLowerCaseHeaders());
 
             realResponse = processHeadersAndBodyBackFromReal(interaction, realResponse, interactionManipulations);
 
@@ -175,7 +175,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         return realResponse;
     }
 
-    private String prepareHeadersAndBodyForReal(HttpServerExchange exchange, String method, String url, List<String> headersToReal, Interactor.Interaction interaction, String contentType, InteractionManipulations interactionManipulations) throws IOException {
+    private String prepareHeadersAndBodyForReal(HttpServerExchange exchange, String method, String url, List<String> clientRquestHeaders, Interactor.Interaction interaction, String contentType, InteractionManipulations interactionManipulations) throws IOException {
 
         exchange.startBlocking();
         InputStream is = exchange.getInputStream();
@@ -209,12 +209,12 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             header.forEach(hdrVal -> {
                 hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
                 final String newHeader = (getLowerCaseHeaders() ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
-                headersToReal.add(newHeader);
-                interactionManipulations.changeSingleHeaderForRequestToReal(method, newHeader, headersToReal);
+                clientRquestHeaders.add(newHeader);
+                interactionManipulations.changeSingleHeaderForRequestToReal(method, newHeader, clientRquestHeaders);
             });
         });
 
-        interactionManipulations.changeAllHeadersForRequestToReal(headersToReal);
+        interactionManipulations.changeAllHeadersForRequestToReal(clientRquestHeaders);
 
         if (bodyToReal instanceof String) {
             bodyToReal = interactionManipulations.changeBodyForRequestToReal((String) bodyToReal);
@@ -224,7 +224,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             bodyToReal = "";
         }
 
-        interaction.noteClientRequestHeadersAndBody(headersToReal, bodyToReal, contentType);
+        interaction.noteClientRequestHeadersAndBody(clientRquestHeaders, bodyToReal, contentType);
 
         return interactionManipulations.changeUrlForRequestToReal(url);
     }

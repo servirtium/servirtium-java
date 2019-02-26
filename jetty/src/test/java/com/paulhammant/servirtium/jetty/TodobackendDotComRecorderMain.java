@@ -55,20 +55,20 @@ public class TodobackendDotComRecorderMain {
     public static SimpleInteractionManipulations makeInteractionManipulations() {
         return new SimpleInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
             @Override
-            public void changeAllHeadersForRequestToReal(List<String> headersToReal) {
+            public void changeAllHeadersForRequestToReal(List<String> clientRquestHeaders) {
                 String refer = "";
-                for (int i = 0; i < headersToReal.size(); i++) {
-                    String s = headersToReal.get(i);
+                for (int i = 0; i < clientRquestHeaders.size(); i++) {
+                    String s = clientRquestHeaders.get(i);
                     if (s.startsWith("Referer:")) {
                         refer = s;
                     }
                     if (s.startsWith("Cache-Control:") || s.startsWith("Pragma:") || s.startsWith("Referer:")) {
-                        headersToReal.remove(s);
+                        clientRquestHeaders.remove(s);
                     }
                 }
-                headersToReal.add("Cache-Control: no-cache");
-                headersToReal.add("Pragma: no-cache");
-                headersToReal.add(refer.replace(super.fromUrl, super.toUrl));
+                clientRquestHeaders.add("Cache-Control: no-cache");
+                clientRquestHeaders.add("Pragma: no-cache");
+                clientRquestHeaders.add(refer.replace(super.fromUrl, super.toUrl));
             }
 
             @Override

@@ -139,7 +139,7 @@ public class MarkdownReplayer implements Interactor {
     }
 
     @Override
-    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> headersToReal, Interaction interaction, boolean lowerCaseHeaders) throws IOException {
+    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRquestHeaders, Interaction interaction, boolean lowerCaseHeaders) throws IOException {
 
         ReplayingInteraction replay = (ReplayingInteraction) interaction;
 
