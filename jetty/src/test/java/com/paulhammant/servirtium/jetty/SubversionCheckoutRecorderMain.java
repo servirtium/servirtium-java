@@ -68,7 +68,7 @@ public class SubversionCheckoutRecorderMain {
                 new ServiceInteropViaOkHttp(),
                 new SubversionInteractionManipulations("", ""));
         ServirtiumServer servirtiumServer = new JettyServirtiumServer(serverMonitor,
-                8099, false,
+                8099,
                 new SubversionInteractionManipulations("", ""), recorder);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -83,7 +83,7 @@ public class SubversionCheckoutRecorderMain {
 
     public static ServirtiumServer makeServirtiumServer(ServerMonitor.Console serverMonitor, Interactor interactor) {
         return new JettyServirtiumServer(serverMonitor,
-                8099, false,
+                8099,
                 new SubversionInteractionManipulations("", ""), interactor);
     }
 

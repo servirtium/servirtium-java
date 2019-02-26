@@ -62,8 +62,8 @@ public class SubversionInteractionManipulations extends SimpleInteractionManipul
     }
 
     @Override
-    public String headerReplacement(String hdrKey, String aHeadersBackFromReal) {
-        return aHeadersBackFromReal
+    public String headerReplacement(String hdrKey, String serverResponseHeaders) {
+        return serverResponseHeaders
                 //.replace(from, to)
                 .replaceAll("SVN-Repository-UUID: ([a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12})", "SVN-Repository-UUID: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee")
                 .replaceAll("Date: ((Mon|Tue|Wed|Thu|Fri|Sat|Sun), [0-9]{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT)", "Date: Tue, 01 Jan 2018 01:02:03 GMT");

@@ -24,12 +24,12 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
         this.toHost = toUrl.replaceAll("https://","").replaceAll("http://","");
     }
 
-    public SimpleInteractionManipulations withHeaderPrefixesToRemoveFromRealResponse(String... headerPrefixesToRemove) {
+    public SimpleInteractionManipulations withHeaderPrefixesToRemoveFromServerResponse(String... headerPrefixesToRemove) {
         this.headerPrefixesToRemoveFromResponse = headerPrefixesToRemove;
         return this;
     }
 
-    public SimpleInteractionManipulations withHeaderPrefixesToRemoveFromRequestToReal(String... headerPrefixesToRemove) {
+    public SimpleInteractionManipulations withHeaderPrefixesToRemoveFromClientRequest(String... headerPrefixesToRemove) {
         this.headerPrefixesToRemoveFromRequest = headerPrefixesToRemove;
         return this;
     }

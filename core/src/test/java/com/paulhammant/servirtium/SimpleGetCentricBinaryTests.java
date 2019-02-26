@@ -39,7 +39,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.Base64;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 
@@ -103,7 +102,7 @@ public abstract class SimpleGetCentricBinaryTests {
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                        .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -134,7 +133,7 @@ public abstract class SimpleGetCentricBinaryTests {
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
-                .withHeaderPrefixesToRemoveFromRealResponse("age:", "x-", "server-timing:"))
+                .withHeaderPrefixesToRemoveFromServerResponse("age:", "x-", "server-timing:"))
                 .withAlphaSortingOfHeaders();
 
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder).withLowerCaseHeaders();
@@ -212,7 +211,7 @@ public abstract class SimpleGetCentricBinaryTests {
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
-                .withHeaderPrefixesToRemoveFromRealResponse("age:", "x-", "server-timing:")
+                .withHeaderPrefixesToRemoveFromServerResponse("age:", "x-", "server-timing:")
         ).withAlphaSortingOfHeaders();
 
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder).withLowerCaseHeaders();
@@ -297,7 +296,7 @@ public abstract class SimpleGetCentricBinaryTests {
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                        .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         MarkdownReplayer replayer = new MarkdownReplayer();
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);

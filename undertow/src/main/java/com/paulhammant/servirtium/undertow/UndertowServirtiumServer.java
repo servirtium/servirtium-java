@@ -26,7 +26,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
     private Interactor interactor;
     private boolean failed = false;
 
-    public UndertowServirtiumServer(ServerMonitor monitor, int port, boolean ssl,
+    public UndertowServirtiumServer(ServerMonitor monitor, int port,
                                     InteractionManipulations interactionManipulations,
                                     Interactor interactor) {
         this.interactor = interactor;
@@ -89,32 +89,32 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 //                    }
 //
 
-            final String requestUrl = prepareHeadersAndBodyForReal(exchange, method, url, clientRequestHeaders, interaction, clientRequestContentType, interactionManipulations);
+            final String requestUrl = prepareHeadersAndBodyForServer(exchange, method, url, clientRequestHeaders, interaction, clientRequestContentType, interactionManipulations);
 
             // INTERACTION
-            ServiceResponse realResponse = interactor.getServiceResponseForRequest(method, requestUrl, clientRequestHeaders, interaction, getLowerCaseHeaders());
+            ServiceResponse serviceResponse = interactor.getServiceResponseForRequest(method, requestUrl, clientRequestHeaders, interaction, getLowerCaseHeaders());
 
-            realResponse = processHeadersAndBodyBackFromReal(interaction, realResponse, interactionManipulations);
+            serviceResponse = processHeadersAndBodyBackFromServer(interaction, serviceResponse, interactionManipulations);
 
             interactor.addInteraction(interaction);
 
-            exchange.setStatusCode(realResponse.statusCode);
+            exchange.setStatusCode(serviceResponse.statusCode);
 
-            for (String header : realResponse.headers) {
+            for (String header : serviceResponse.headers) {
                 int ix = header.indexOf(": ");
                 String hdrKey = header.substring(0, ix);
                 String hdrVal = header.substring(ix + 2);
                 exchange.getResponseHeaders().add(new HttpString(hdrKey), hdrVal);
             }
 
-            if (realResponse.contentType != null) {
-                exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, realResponse.contentType);
+            if (serviceResponse.contentType != null) {
+                exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, serviceResponse.contentType);
             }
 
-            if (realResponse.body instanceof String) {
-                exchange.getResponseSender().send((String) realResponse.body);
+            if (serviceResponse.body instanceof String) {
+                exchange.getResponseSender().send((String) serviceResponse.body);
             } else {
-                exchange.getOutputStream().write((byte[]) realResponse.body);
+                exchange.getOutputStream().write((byte[]) serviceResponse.body);
             }
 
             monitor.interactionFinished(getInteractionNum(), method, url, getContext());
@@ -135,26 +135,26 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         }
     }
 
-    private ServiceResponse processHeadersAndBodyBackFromReal(Interactor.Interaction interaction, ServiceResponse realResponse, InteractionManipulations interactionManipulations) {
+    private ServiceResponse processHeadersAndBodyBackFromServer(Interactor.Interaction interaction, ServiceResponse serviceResponse, InteractionManipulations interactionManipulations) {
         ArrayList<String > newHeaders = new ArrayList<>();
-        for (int i = 0; i < realResponse.headers.length; i++) {
-            String headerBackFromReal = realResponse.headers[i];
-            String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderReturnedBackFromServer(i, headerBackFromReal);
+        for (int i = 0; i < serviceResponse.headers.length; i++) {
+            String headerBackFromServer = serviceResponse.headers[i];
+            String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderReturnedBackFromServer(i, headerBackFromServer);
             if (potentiallyChangedHeader != null) {
                 newHeaders.add(potentiallyChangedHeader);
             }
         }
         interactionManipulations.changeAllHeadersReturnedBackFromServer(newHeaders);
 
-        if (realResponse.body instanceof String) {
-            realResponse = realResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServer((String) realResponse.body));
+        if (serviceResponse.body instanceof String) {
+            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServer((String) serviceResponse.body));
             // recreate response
 
             if (shouldHavePrettyPrintedTextBodies()) {
-                String body = prettifyDocOrNot((String) realResponse.body);
-                if (!body.equals(realResponse.body)) {
+                String body = prettifyDocOrNot((String) serviceResponse.body);
+                if (!body.equals(serviceResponse.body)) {
 //                                realResponse.headers
-                    realResponse = realResponse.withRevisedBody(body);
+                    serviceResponse = serviceResponse.withRevisedBody(body);
                     ArrayList<String> tmp = new ArrayList<>();
                     for (String header : newHeaders) {
                         if (header.startsWith("Content-Length")) {
@@ -168,14 +168,14 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             }
         }
 
-        realResponse = realResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
+        serviceResponse = serviceResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
 
-        interaction.noteResponseHeadersAndBody(realResponse.headers, realResponse.body, realResponse.statusCode, realResponse.contentType);
+        interaction.noteResponseHeadersAndBody(serviceResponse.headers, serviceResponse.body, serviceResponse.statusCode, serviceResponse.contentType);
 
-        return realResponse;
+        return serviceResponse;
     }
 
-    private String prepareHeadersAndBodyForReal(HttpServerExchange exchange, String method, String url, List<String> clientRequestHeaders, Interactor.Interaction interaction, String clientRequestContentType, InteractionManipulations interactionManipulations) throws IOException {
+    private String prepareHeadersAndBodyForServer(HttpServerExchange exchange, String method, String url, List<String> clientRequestHeaders, Interactor.Interaction interaction, String clientRequestContentType, InteractionManipulations interactionManipulations) throws IOException {
 
         exchange.startBlocking();
         InputStream is = exchange.getInputStream();

@@ -8,7 +8,6 @@ import com.paulhammant.servirtium.ServirtiumServer;
 import com.paulhammant.servirtium.SimpleInteractionManipulations;
 
 import java.util.List;
-import java.util.Map;
 
 public class TodobackendDotComRecorderMain {
 
@@ -47,7 +46,7 @@ public class TodobackendDotComRecorderMain {
     }
 
     public static ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations manipulations, Interactor interactor) {
-        return new JettyServirtiumServer(new ServerMonitor.Console(), 8099, false,
+        return new JettyServirtiumServer(new ServerMonitor.Console(), 8099,
                 manipulations, interactor)
                 .withPrettyPrintedTextBodies();
     }

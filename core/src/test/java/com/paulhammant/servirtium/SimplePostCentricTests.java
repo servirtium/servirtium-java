@@ -104,7 +104,7 @@ public abstract class SimplePostCentricTests {
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SimpleInteractionManipulations("http://localhost:8080", "https://postman-echo.com")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                        .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -135,7 +135,7 @@ public abstract class SimplePostCentricTests {
 
         servirtiumServer = makeServirtiumServer(
                 new SimpleInteractionManipulations("http://localhost:8080", "https://postman-echo.com")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding"),
+                        .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding"),
                 replayer);
 
         servirtiumServer.start();
@@ -157,7 +157,7 @@ public abstract class SimplePostCentricTests {
         try {
             final SimpleInteractionManipulations interactionManipulations =
             new SimpleInteractionManipulations("http://localhost:8080", "http://localhost:8001")
-                    .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                    .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
             MarkdownRecorder recorder = new MarkdownRecorder(
                     new ServiceInteropViaOkHttp(),
@@ -242,7 +242,7 @@ public abstract class SimplePostCentricTests {
         try {
             final SimpleInteractionManipulations interactionManipulations =
             new SimpleInteractionManipulations("http://localhost:8080", "http://localhost:8001")
-                    .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                    .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
             MarkdownRecorder recorder = new MarkdownRecorder(
                     new ServiceInteropViaOkHttp(),

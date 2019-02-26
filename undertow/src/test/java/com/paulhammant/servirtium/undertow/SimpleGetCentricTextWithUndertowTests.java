@@ -13,7 +13,7 @@ public class SimpleGetCentricTextWithUndertowTests extends SimpleGetCentricTextT
 
     public ServirtiumServer makeServirtiumServer(ServerMonitor.Console serverMonitor, SimpleInteractionManipulations interactionManipulations, Interactor interactor) {
         return new UndertowServirtiumServer(serverMonitor,
-                8080, false, interactionManipulations, interactor);
+                8080, interactionManipulations, interactor);
     }
 
     @After

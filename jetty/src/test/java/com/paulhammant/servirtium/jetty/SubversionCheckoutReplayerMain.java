@@ -57,7 +57,7 @@ public class SubversionCheckoutReplayerMain {
         MarkdownReplayer replayer = new MarkdownReplayer(new MarkdownReplayer.ReplayMonitor.Default());
         JettyServirtiumServer servirtiumServer = new JettyServirtiumServer(
                 new ServerMonitor.Console(),
-                8099, false,
+                8099,
                 new SubversionInteractionManipulations("", ""), replayer);
         replayer.setScriptFilename(CHECKOUT_RECORDER_TEST_MD);
         servirtiumServer.start();

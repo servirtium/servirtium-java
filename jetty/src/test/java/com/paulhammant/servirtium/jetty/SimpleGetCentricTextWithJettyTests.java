@@ -1,7 +1,6 @@
 package com.paulhammant.servirtium.jetty;
 
 import com.paulhammant.servirtium.Interactor;
-import com.paulhammant.servirtium.MarkdownRecorder;
 import com.paulhammant.servirtium.ServerMonitor;
 import com.paulhammant.servirtium.ServirtiumServer;
 import com.paulhammant.servirtium.SimpleGetCentricTextTests;
@@ -14,7 +13,7 @@ public class SimpleGetCentricTextWithJettyTests extends SimpleGetCentricTextTest
 
     public ServirtiumServer makeServirtiumServer(ServerMonitor.Console serverMonitor, SimpleInteractionManipulations interactionManipulations, Interactor interactor) {
         return new JettyServirtiumServer(serverMonitor,
-                8080, false, interactionManipulations, interactor);
+                8080, interactionManipulations, interactor);
     }
 
     @After

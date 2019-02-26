@@ -6,14 +6,13 @@ import com.paulhammant.servirtium.ServirtiumServer;
 import com.paulhammant.servirtium.SimpleInteractionManipulations;
 import com.paulhammant.servirtium.SimplePostCentricTests;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class SimplePostCentricWithUndertowTests extends SimplePostCentricTests {
 
     public ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations interactionManipulations, Interactor interactor) {
         return new UndertowServirtiumServer(new ServerMonitor.Console(),
-                8080, false, interactionManipulations, interactor);
+                8080, interactionManipulations, interactor);
     }
 
     @Override @After

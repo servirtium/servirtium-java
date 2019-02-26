@@ -173,7 +173,7 @@ public abstract class SimpleGetCentricTextTests {
     public void canRecordASimpleGetFromApachesSubversionViaOkHttp() throws Exception {
 
         final SimpleInteractionManipulations interactionManipulations = new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -199,8 +199,8 @@ public abstract class SimpleGetCentricTextTests {
 
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                .withHeaderPrefixesToRemoveFromServerResponse("X-", "Source-Age", "Expires:")
+                .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
 
         MarkdownRecorder recorder = new MarkdownRecorder(
@@ -362,8 +362,8 @@ public abstract class SimpleGetCentricTextTests {
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
 
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromRealResponse("x-", "source-age", "expires:")
-                .withHeaderPrefixesToRemoveFromRequestToReal("accept-encoding");
+                .withHeaderPrefixesToRemoveFromServerResponse("x-", "source-age", "expires:")
+                .withHeaderPrefixesToRemoveFromClientRequest("accept-encoding");
 
 
         MarkdownRecorder recorder = new MarkdownRecorder(
@@ -442,8 +442,8 @@ public abstract class SimpleGetCentricTextTests {
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
 
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                .withHeaderPrefixesToRemoveFromServerResponse("X-", "Source-Age", "Expires:")
+                .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -518,8 +518,8 @@ public abstract class SimpleGetCentricTextTests {
         final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
 
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations()
-                .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                .withHeaderPrefixesToRemoveFromServerResponse("X-", "Source-Age", "Expires:")
+                .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -593,8 +593,8 @@ public abstract class SimpleGetCentricTextTests {
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                .withHeaderPrefixesToRemoveFromServerResponse("X-", "Source-Age", "Expires:")
+                .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -643,8 +643,8 @@ public abstract class SimpleGetCentricTextTests {
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                        .withHeaderPrefixesToRemoveFromRealResponse("X-", "Source-Age", "Expires:")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding");
+                        .withHeaderPrefixesToRemoveFromServerResponse("X-", "Source-Age", "Expires:")
+                        .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         servirtiumServer = makeServirtiumServer(serverMonitor,
                 interactionManipulations, replayer)
@@ -681,7 +681,7 @@ public abstract class SimpleGetCentricTextTests {
 
         servirtiumServer = makeServirtiumServer(new ServerMonitor.Console(),
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
-                        .withHeaderPrefixesToRemoveFromRequestToReal("Accept-Encoding")
+                        .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding")
                 , replayer);
 
         servirtiumServer.start();

@@ -58,11 +58,11 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
     }
 
     @Override
-    public ServiceResponse invokeServiceEndpoint(String method, Object clientRequestBody, String contentTypeToReal, String url, List<String> clientRequestHeaders, InteractionManipulations interactionManipulations, boolean lowerCaseHeaders) throws InteractionException {
+    public ServiceResponse invokeServiceEndpoint(String method, Object clientRequestBody, String clientRequestContentType, String url, List<String> clientRequestHeaders, InteractionManipulations interactionManipulations, boolean lowerCaseHeaders) throws InteractionException {
 
         RequestBody nonGetBody = null;
         if (!method.equals("GET")) {
-            MediaType mediaType = MediaType.parse(contentTypeToReal);
+            MediaType mediaType = MediaType.parse(clientRequestContentType);
             if (clientRequestBody != null) {
                 if (clientRequestBody instanceof String) {
                     nonGetBody = RequestBody.create(mediaType, (String) clientRequestBody);

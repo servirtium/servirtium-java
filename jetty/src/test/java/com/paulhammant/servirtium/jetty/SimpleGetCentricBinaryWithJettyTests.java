@@ -12,7 +12,7 @@ public class SimpleGetCentricBinaryWithJettyTests extends SimpleGetCentricBinary
 
     protected ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations interactionManipulations, Interactor interactor) {
         return new JettyServirtiumServer(new ServerMonitor.Console(),
-                8080, false, interactionManipulations, interactor);
+                8080, interactionManipulations, interactor);
     }
 
     @Override @After
