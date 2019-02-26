@@ -53,7 +53,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
         url = (url.startsWith("http://") || url.startsWith("https://")) ? url : "http://" + exchange.getHostAndPort() + uri;
 
-        //String bodyToReal = "";
+        //String clientRequestBody = "";
         List<String> clientRquestHeaders = new ArrayList<>();
 
         try {
@@ -81,10 +81,10 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
 //                    if (isText(contentType)) {
 //                        BufferedReader reader = baseRequest.getReader();
-//                        bodyToReal = reader.lines().collect(Collectors.joining("\n"));
+//                        clientRequestBody = reader.lines().collect(Collectors.joining("\n"));
 //                    } else {
 //                        ServletInputStream is = baseRequest.getInputStream();
-//                        bodyToReal = new byte[is.available()];
+//                        clientRequestBody = new byte[is.available()];
 //
 //                    }
 //
@@ -180,26 +180,26 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         exchange.startBlocking();
         InputStream is = exchange.getInputStream();
 
-        Object bodyToReal = null;
+        Object clientRequestBody = null;
 
         if (is.available() > 0) {
 
             if (isText(contentType)) {
-                bodyToReal = null;
+                clientRequestBody = null;
                 String characterEncoding = exchange.getRequestCharset();
                 if (characterEncoding == null) {
                     characterEncoding = "utf-8";
                 }
                 try (Scanner scanner = new Scanner(is, characterEncoding)) {
-                    bodyToReal = scanner.useDelimiter("\\A").next();
+                    clientRequestBody = scanner.useDelimiter("\\A").next();
                 }
-                if (shouldHavePrettyPrintedTextBodies() && bodyToReal != null) {
-                    bodyToReal = prettifyDocOrNot((String) bodyToReal);
+                if (shouldHavePrettyPrintedTextBodies() && clientRequestBody != null) {
+                    clientRequestBody = prettifyDocOrNot((String) clientRequestBody);
                 }
             } else {
                 byte[] targetArray = new byte[is.available()];
                 is.read(targetArray);
-                bodyToReal = targetArray;
+                clientRequestBody = targetArray;
                 ;
             }
         }
@@ -216,15 +216,15 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
         interactionManipulations.changeAllHeadersForRequestToReal(clientRquestHeaders);
 
-        if (bodyToReal instanceof String) {
-            bodyToReal = interactionManipulations.changeBodyForRequestToReal((String) bodyToReal);
+        if (clientRequestBody instanceof String) {
+            clientRequestBody = interactionManipulations.changeBodyForRequestToReal((String) clientRequestBody);
         }
 
-        if (bodyToReal == null) {
-            bodyToReal = "";
+        if (clientRequestBody == null) {
+            clientRequestBody = "";
         }
 
-        interaction.noteClientRequestHeadersAndBody(clientRquestHeaders, bodyToReal, contentType);
+        interaction.noteClientRequestHeadersAndBody(clientRquestHeaders, clientRequestBody, contentType);
 
         return interactionManipulations.changeUrlForRequestToReal(url);
     }
