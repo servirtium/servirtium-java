@@ -4,18 +4,18 @@
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
 Access-Control-Request-Headers: content-type
 Access-Control-Request-Method: GET
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server ():
@@ -27,17 +27,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:33 GMT
-Connection: close
-Content-Type: text/html;charset=utf-8
-Access-Control-Allow-Origin: *
 Access-Control-Allow-Headers: content-type
 Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:04 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -52,16 +52,17 @@ Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-contro
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -73,16 +74,16 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:33 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
+Connection: keep-alive
 Content-Length: 885
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:04 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -90,49 +91,98 @@ Via: 1.1 vegur
 ```
 [
    {
-      "uid": "f89541ff-7226-4623-857a-3845a558d128",
+      "uid": "11f52acd-0d73-4a01-84ea-7701e07b0c7f",
       "title": "blah",
       "order": 523,
       "completed": false,
-      "href": "http://localhost:8099/todos/f89541ff-7226-4623-857a-3845a558d128",
-      "url": "http://localhost:8099/todos/f89541ff-7226-4623-857a-3845a558d128"
+      "href": "http://localhost:8099/todos/11f52acd-0d73-4a01-84ea-7701e07b0c7f",
+      "url": "http://localhost:8099/todos/11f52acd-0d73-4a01-84ea-7701e07b0c7f"
    },
    {
-      "uid": "0f51b651-310f-409b-b025-ca790995b1c6",
+      "uid": "2801305b-a131-4491-8ad4-0963d638f2a3",
       "title": "blah",
       "order": 95,
       "completed": false,
-      "href": "http://localhost:8099/todos/0f51b651-310f-409b-b025-ca790995b1c6",
-      "url": "http://localhost:8099/todos/0f51b651-310f-409b-b025-ca790995b1c6"
+      "href": "http://localhost:8099/todos/2801305b-a131-4491-8ad4-0963d638f2a3",
+      "url": "http://localhost:8099/todos/2801305b-a131-4491-8ad4-0963d638f2a3"
    },
    {
-      "uid": "ad690393-91a4-4450-aafb-7824a37753bf",
+      "uid": "cd47f523-85a3-481f-9c34-44e408892f62",
       "title": "blah",
       "order": 95,
       "completed": false,
-      "href": "http://localhost:8099/todos/ad690393-91a4-4450-aafb-7824a37753bf",
-      "url": "http://localhost:8099/todos/ad690393-91a4-4450-aafb-7824a37753bf"
+      "href": "http://localhost:8099/todos/cd47f523-85a3-481f-9c34-44e408892f62",
+      "url": "http://localhost:8099/todos/cd47f523-85a3-481f-9c34-44e408892f62"
    }
 ]
 ```
 
-## Interaction 2: POST /todos
+## Interaction 2: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:04 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 3: POST /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 18
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -146,17 +196,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:33 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/426bb4e1-0b34-4037-8a01-4ba207da165c
+Connection: keep-alive
 Content-Length: 254
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:04 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/975a9825-3964-41a8-8f3c-a20b57097875
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (201: text/html;charset=utf-8):
@@ -164,33 +214,34 @@ Via: 1.1 vegur
 ```
 {
    "title": "a todo",
-   "uid": "426bb4e1-0b34-4037-8a01-4ba207da165c",
+   "uid": "975a9825-3964-41a8-8f3c-a20b57097875",
    "completed": false,
-   "href": "http://localhost:8099/todos/426bb4e1-0b34-4037-8a01-4ba207da165c",
-   "url": "http://localhost:8099/todos/426bb4e1-0b34-4037-8a01-4ba207da165c"
+   "href": "http://localhost:8099/todos/975a9825-3964-41a8-8f3c-a20b57097875",
+   "url": "http://localhost:8099/todos/975a9825-3964-41a8-8f3c-a20b57097875"
 }
 ```
 
-## Interaction 3: DELETE /todos
+## Interaction 4: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: DELETE
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
-Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
-### Body sent to the real server (application/json):
+### Body sent to the real server ():
 
 ```
 
@@ -199,101 +250,245 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:33 GMT
-Content-Length: 0
-Connection: keep-alive
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
 Access-Control-Allow-Origin: *
-X-Content-Type-Options: nosniff
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-```
-
-### Resulting body back from the real server (204: null - Base64 below):
-
-```
-
-```
-
-## Interaction 4: DELETE /todos
-
-### Request headers sent to the real server:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Length: 0
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Body sent to the real server (application/json):
-
-```
-
-```
-
-### Resulting headers back from the real server:
-
-```
-Date: Tue, 19 Feb 2019 10:17:33 GMT
-Content-Length: 0
-Connection: keep-alive
-Access-Control-Allow-Origin: *
-X-Content-Type-Options: nosniff
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-```
-
-### Resulting body back from the real server (204: null - Base64 below):
-
-```
-
-```
-
-## Interaction 5: GET /todos
-
-### Request headers sent to the real server:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Body sent to the real server (application/json):
-
-```
-
-```
-
-### Resulting headers back from the real server:
-
-```
-Date: Tue, 19 Feb 2019 10:17:33 GMT
-Connection: keep-alive
+Connection: close
 Content-Type: text/html;charset=utf-8
-Access-Control-Allow-Origin: *
-Content-Length: 3
-X-Xss-Protection: 1; mode=block
+Date: Tue, 26 Feb 2019 07:27:04 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 5: DELETE /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server (application/json):
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 0
+Date: Tue, 26 Feb 2019 07:27:04 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+```
+
+### Resulting body back from the real server (204: null - Base64 below):
+
+```
+
+```
+
+## Interaction 6: OPTIONS /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: DELETE
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:04 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 7: DELETE /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server (application/json):
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 0
+Date: Tue, 26 Feb 2019 07:27:04 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+```
+
+### Resulting body back from the real server (204: null - Base64 below):
+
+```
+
+```
+
+## Interaction 8: OPTIONS /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: GET
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:05 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 9: GET /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server (application/json):
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 3
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:05 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -303,23 +498,71 @@ Via: 1.1 vegur
 ]
 ```
 
-## Interaction 6: DELETE /todos
+## Interaction 10: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: DELETE
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
-Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:05 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 11: DELETE /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -331,13 +574,13 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:34 GMT
-Content-Length: 0
-Connection: keep-alive
 Access-Control-Allow-Origin: *
-X-Content-Type-Options: nosniff
+Connection: keep-alive
+Content-Length: 0
+Date: Tue, 26 Feb 2019 07:27:06 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
 ```
 
 ### Resulting body back from the real server (204: null - Base64 below):
@@ -346,23 +589,72 @@ Via: 1.1 vegur
 
 ```
 
-## Interaction 7: POST /todos
+## Interaction 12: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:06 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 13: POST /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 24
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -376,17 +668,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:34 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/1aafc9ca-ec3e-4972-ac3f-e6f654cc9f07
+Connection: keep-alive
 Content-Length: 260
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:06 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/8c089f24-a8d6-428e-9874-803269b86ecd
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (201: text/html;charset=utf-8):
@@ -394,29 +686,78 @@ Via: 1.1 vegur
 ```
 {
    "title": "walk the dog",
-   "uid": "1aafc9ca-ec3e-4972-ac3f-e6f654cc9f07",
+   "uid": "8c089f24-a8d6-428e-9874-803269b86ecd",
    "completed": false,
-   "href": "http://localhost:8099/todos/1aafc9ca-ec3e-4972-ac3f-e6f654cc9f07",
-   "url": "http://localhost:8099/todos/1aafc9ca-ec3e-4972-ac3f-e6f654cc9f07"
+   "href": "http://localhost:8099/todos/8c089f24-a8d6-428e-9874-803269b86ecd",
+   "url": "http://localhost:8099/todos/8c089f24-a8d6-428e-9874-803269b86ecd"
 }
 ```
 
-## Interaction 8: GET /todos
+## Interaction 14: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: GET
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:06 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 15: GET /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -428,16 +769,16 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:34 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
+Connection: keep-alive
 Content-Length: 303
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:06 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -445,33 +786,81 @@ Via: 1.1 vegur
 ```
 [
    {
-      "uid": "1aafc9ca-ec3e-4972-ac3f-e6f654cc9f07",
+      "uid": "8c089f24-a8d6-428e-9874-803269b86ecd",
       "title": "walk the dog",
       "order": 0,
       "completed": false,
-      "href": "http://localhost:8099/todos/1aafc9ca-ec3e-4972-ac3f-e6f654cc9f07",
-      "url": "http://localhost:8099/todos/1aafc9ca-ec3e-4972-ac3f-e6f654cc9f07"
+      "href": "http://localhost:8099/todos/8c089f24-a8d6-428e-9874-803269b86ecd",
+      "url": "http://localhost:8099/todos/8c089f24-a8d6-428e-9874-803269b86ecd"
    }
 ]
 ```
 
-## Interaction 9: DELETE /todos
+## Interaction 16: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: DELETE
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
-Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:06 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 17: DELETE /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -483,13 +872,13 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:34 GMT
-Content-Length: 0
-Connection: keep-alive
 Access-Control-Allow-Origin: *
-X-Content-Type-Options: nosniff
+Connection: keep-alive
+Content-Length: 0
+Date: Tue, 26 Feb 2019 07:27:07 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
 ```
 
 ### Resulting body back from the real server (204: null - Base64 below):
@@ -498,23 +887,72 @@ Via: 1.1 vegur
 
 ```
 
-## Interaction 10: POST /todos
+## Interaction 18: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:07 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 19: POST /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -528,17 +966,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:34 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/f091ee63-3679-4930-97bb-51283f0beb25
+Connection: keep-alive
 Content-Length: 252
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:07 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/45993214-df5c-4f60-b884-90ae78abe1e4
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (201: text/html;charset=utf-8):
@@ -546,29 +984,78 @@ Via: 1.1 vegur
 ```
 {
    "title": "blah",
-   "uid": "f091ee63-3679-4930-97bb-51283f0beb25",
+   "uid": "45993214-df5c-4f60-b884-90ae78abe1e4",
    "completed": false,
-   "href": "http://localhost:8099/todos/f091ee63-3679-4930-97bb-51283f0beb25",
-   "url": "http://localhost:8099/todos/f091ee63-3679-4930-97bb-51283f0beb25"
+   "href": "http://localhost:8099/todos/45993214-df5c-4f60-b884-90ae78abe1e4",
+   "url": "http://localhost:8099/todos/45993214-df5c-4f60-b884-90ae78abe1e4"
 }
 ```
 
-## Interaction 11: GET /todos
+## Interaction 20: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: GET
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:07 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 21: GET /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -580,16 +1067,16 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:34 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
+Connection: keep-alive
 Content-Length: 295
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:07 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -597,33 +1084,81 @@ Via: 1.1 vegur
 ```
 [
    {
-      "uid": "f091ee63-3679-4930-97bb-51283f0beb25",
+      "uid": "45993214-df5c-4f60-b884-90ae78abe1e4",
       "title": "blah",
       "order": 0,
       "completed": false,
-      "href": "http://localhost:8099/todos/f091ee63-3679-4930-97bb-51283f0beb25",
-      "url": "http://localhost:8099/todos/f091ee63-3679-4930-97bb-51283f0beb25"
+      "href": "http://localhost:8099/todos/45993214-df5c-4f60-b884-90ae78abe1e4",
+      "url": "http://localhost:8099/todos/45993214-df5c-4f60-b884-90ae78abe1e4"
    }
 ]
 ```
 
-## Interaction 12: DELETE /todos
+## Interaction 22: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: DELETE
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
-Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:07 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 23: DELETE /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -635,13 +1170,13 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:34 GMT
-Content-Length: 0
-Connection: keep-alive
 Access-Control-Allow-Origin: *
-X-Content-Type-Options: nosniff
+Connection: keep-alive
+Content-Length: 0
+Date: Tue, 26 Feb 2019 07:27:08 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
 ```
 
 ### Resulting body back from the real server (204: null - Base64 below):
@@ -650,23 +1185,72 @@ Via: 1.1 vegur
 
 ```
 
-## Interaction 13: POST /todos
+## Interaction 24: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:08 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 25: POST /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -680,17 +1264,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:35 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/05492e43-059c-416a-a4a4-94c6251466b6
+Connection: keep-alive
 Content-Length: 252
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:08 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/c14c05e3-716a-4bd6-a789-e1b333a9247c
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (201: text/html;charset=utf-8):
@@ -698,29 +1282,78 @@ Via: 1.1 vegur
 ```
 {
    "title": "blah",
-   "uid": "05492e43-059c-416a-a4a4-94c6251466b6",
+   "uid": "c14c05e3-716a-4bd6-a789-e1b333a9247c",
    "completed": false,
-   "href": "http://localhost:8099/todos/05492e43-059c-416a-a4a4-94c6251466b6",
-   "url": "http://localhost:8099/todos/05492e43-059c-416a-a4a4-94c6251466b6"
+   "href": "http://localhost:8099/todos/c14c05e3-716a-4bd6-a789-e1b333a9247c",
+   "url": "http://localhost:8099/todos/c14c05e3-716a-4bd6-a789-e1b333a9247c"
 }
 ```
 
-## Interaction 14: GET /todos
+## Interaction 26: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: GET
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:08 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 27: GET /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -732,16 +1365,16 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:35 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
+Connection: keep-alive
 Content-Length: 295
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:09 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -749,33 +1382,81 @@ Via: 1.1 vegur
 ```
 [
    {
-      "uid": "05492e43-059c-416a-a4a4-94c6251466b6",
+      "uid": "c14c05e3-716a-4bd6-a789-e1b333a9247c",
       "title": "blah",
       "order": 0,
       "completed": false,
-      "href": "http://localhost:8099/todos/05492e43-059c-416a-a4a4-94c6251466b6",
-      "url": "http://localhost:8099/todos/05492e43-059c-416a-a4a4-94c6251466b6"
+      "href": "http://localhost:8099/todos/c14c05e3-716a-4bd6-a789-e1b333a9247c",
+      "url": "http://localhost:8099/todos/c14c05e3-716a-4bd6-a789-e1b333a9247c"
    }
 ]
 ```
 
-## Interaction 15: DELETE /todos
+## Interaction 28: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: DELETE
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
-Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:09 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 29: DELETE /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -787,13 +1468,13 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:35 GMT
-Content-Length: 0
-Connection: keep-alive
 Access-Control-Allow-Origin: *
-X-Content-Type-Options: nosniff
+Connection: keep-alive
+Content-Length: 0
+Date: Tue, 26 Feb 2019 07:27:08 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
 ```
 
 ### Resulting body back from the real server (204: null - Base64 below):
@@ -802,23 +1483,72 @@ Via: 1.1 vegur
 
 ```
 
-## Interaction 16: POST /todos
+## Interaction 30: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:08 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 31: POST /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 19
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -832,17 +1562,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:35 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/9aba189a-b736-4189-89b3-46510d2f6f32
+Connection: keep-alive
 Content-Length: 255
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:09 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/69826e6d-b183-4082-9e54-b46092661955
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (201: text/html;charset=utf-8):
@@ -850,31 +1580,31 @@ Via: 1.1 vegur
 ```
 {
    "title": "my todo",
-   "uid": "9aba189a-b736-4189-89b3-46510d2f6f32",
+   "uid": "69826e6d-b183-4082-9e54-b46092661955",
    "completed": false,
-   "href": "http://localhost:8099/todos/9aba189a-b736-4189-89b3-46510d2f6f32",
-   "url": "http://localhost:8099/todos/9aba189a-b736-4189-89b3-46510d2f6f32"
+   "href": "http://localhost:8099/todos/69826e6d-b183-4082-9e54-b46092661955",
+   "url": "http://localhost:8099/todos/69826e6d-b183-4082-9e54-b46092661955"
 }
 ```
 
-## Interaction 17: OPTIONS /todos/9aba189a-b736-4189-89b3-46510d2f6f32
+## Interaction 32: OPTIONS /todos/69826e6d-b183-4082-9e54-b46092661955
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
 Access-Control-Request-Headers: content-type
 Access-Control-Request-Method: GET
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server ():
@@ -886,17 +1616,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:35 GMT
-Connection: close
-Content-Type: text/html;charset=utf-8
-Access-Control-Allow-Origin: *
 Access-Control-Allow-Headers: content-type
 Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:09 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -905,22 +1635,23 @@ Via: 1.1 vegur
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 18: GET /todos/9aba189a-b736-4189-89b3-46510d2f6f32
+## Interaction 33: GET /todos/69826e6d-b183-4082-9e54-b46092661955
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -932,48 +1663,96 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:36 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
+Connection: keep-alive
 Content-Length: 270
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:09 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
 
 ```
 {
-   "uid": "9aba189a-b736-4189-89b3-46510d2f6f32",
+   "uid": "69826e6d-b183-4082-9e54-b46092661955",
    "title": "my todo",
    "order": 0,
    "completed": false,
-   "href": "http://localhost:8099/todos/9aba189a-b736-4189-89b3-46510d2f6f32",
-   "url": "http://localhost:8099/todos/9aba189a-b736-4189-89b3-46510d2f6f32"
+   "href": "http://localhost:8099/todos/69826e6d-b183-4082-9e54-b46092661955",
+   "url": "http://localhost:8099/todos/69826e6d-b183-4082-9e54-b46092661955"
 }
 ```
 
-## Interaction 19: DELETE /todos
+## Interaction 34: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: DELETE
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
-Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:09 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 35: DELETE /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -985,13 +1764,13 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:36 GMT
-Content-Length: 0
-Connection: keep-alive
 Access-Control-Allow-Origin: *
-X-Content-Type-Options: nosniff
+Connection: keep-alive
+Content-Length: 0
+Date: Tue, 26 Feb 2019 07:27:09 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
 ```
 
 ### Resulting body back from the real server (204: null - Base64 below):
@@ -1000,23 +1779,120 @@ Via: 1.1 vegur
 
 ```
 
-## Interaction 20: POST /todos
+## Interaction 36: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:09 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 37: OPTIONS /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:09 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 38: POST /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 26
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -1030,17 +1906,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:36 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/ea759a56-5c51-4e95-bb79-8b322b938dab
+Connection: keep-alive
 Content-Length: 262
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:10 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/cc136a6f-3a21-4fbb-85ec-2d7c590277bd
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (201: text/html;charset=utf-8):
@@ -1048,30 +1924,31 @@ Via: 1.1 vegur
 ```
 {
    "title": "todo the first",
-   "uid": "ea759a56-5c51-4e95-bb79-8b322b938dab",
+   "uid": "cc136a6f-3a21-4fbb-85ec-2d7c590277bd",
    "completed": false,
-   "href": "http://localhost:8099/todos/ea759a56-5c51-4e95-bb79-8b322b938dab",
-   "url": "http://localhost:8099/todos/ea759a56-5c51-4e95-bb79-8b322b938dab"
+   "href": "http://localhost:8099/todos/cc136a6f-3a21-4fbb-85ec-2d7c590277bd",
+   "url": "http://localhost:8099/todos/cc136a6f-3a21-4fbb-85ec-2d7c590277bd"
 }
 ```
 
-## Interaction 21: POST /todos
+## Interaction 39: POST /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 27
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -1085,17 +1962,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:36 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/b75845d8-b9a9-41a1-9a09-6f346b042fcb
+Connection: keep-alive
 Content-Length: 263
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:10 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/86e7bd1c-9e0e-4c37-a861-b7e35ca09a27
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (201: text/html;charset=utf-8):
@@ -1103,93 +1980,31 @@ Via: 1.1 vegur
 ```
 {
    "title": "todo the second",
-   "uid": "b75845d8-b9a9-41a1-9a09-6f346b042fcb",
+   "uid": "86e7bd1c-9e0e-4c37-a861-b7e35ca09a27",
    "completed": false,
-   "href": "http://localhost:8099/todos/b75845d8-b9a9-41a1-9a09-6f346b042fcb",
-   "url": "http://localhost:8099/todos/b75845d8-b9a9-41a1-9a09-6f346b042fcb"
+   "href": "http://localhost:8099/todos/86e7bd1c-9e0e-4c37-a861-b7e35ca09a27",
+   "url": "http://localhost:8099/todos/86e7bd1c-9e0e-4c37-a861-b7e35ca09a27"
 }
 ```
 
-## Interaction 22: GET /todos
+## Interaction 40: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Body sent to the real server (application/json):
-
-```
-
-```
-
-### Resulting headers back from the real server:
-
-```
-Date: Tue, 19 Feb 2019 10:17:36 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
-Access-Control-Allow-Origin: *
-Content-Length: 609
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-```
-
-### Resulting body back from the real server (200: text/html;charset=utf-8):
-
-```
-[
-   {
-      "uid": "ea759a56-5c51-4e95-bb79-8b322b938dab",
-      "title": "todo the first",
-      "order": 0,
-      "completed": false,
-      "href": "http://localhost:8099/todos/ea759a56-5c51-4e95-bb79-8b322b938dab",
-      "url": "http://localhost:8099/todos/ea759a56-5c51-4e95-bb79-8b322b938dab"
-   },
-   {
-      "uid": "b75845d8-b9a9-41a1-9a09-6f346b042fcb",
-      "title": "todo the second",
-      "order": 0,
-      "completed": false,
-      "href": "http://localhost:8099/todos/b75845d8-b9a9-41a1-9a09-6f346b042fcb",
-      "url": "http://localhost:8099/todos/b75845d8-b9a9-41a1-9a09-6f346b042fcb"
-   }
-]
-```
-
-## Interaction 23: OPTIONS /todos/ea759a56-5c51-4e95-bb79-8b322b938dab
-
-### Request headers sent to the real server:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
 Access-Control-Request-Headers: content-type
 Access-Control-Request-Method: GET
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server ():
@@ -1201,17 +2016,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:36 GMT
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
 Connection: close
 Content-Type: text/html;charset=utf-8
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Headers: content-type
-Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Date: Tue, 26 Feb 2019 07:27:10 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -1220,22 +2035,23 @@ Via: 1.1 vegur
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 24: GET /todos/ea759a56-5c51-4e95-bb79-8b322b938dab
+## Interaction 41: GET /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -1247,48 +2063,207 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:37 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Content-Length: 277
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Connection: keep-alive
+Content-Length: 609
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:11 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+[
+   {
+      "uid": "cc136a6f-3a21-4fbb-85ec-2d7c590277bd",
+      "title": "todo the first",
+      "order": 0,
+      "completed": false,
+      "href": "http://localhost:8099/todos/cc136a6f-3a21-4fbb-85ec-2d7c590277bd",
+      "url": "http://localhost:8099/todos/cc136a6f-3a21-4fbb-85ec-2d7c590277bd"
+   },
+   {
+      "uid": "86e7bd1c-9e0e-4c37-a861-b7e35ca09a27",
+      "title": "todo the second",
+      "order": 0,
+      "completed": false,
+      "href": "http://localhost:8099/todos/86e7bd1c-9e0e-4c37-a861-b7e35ca09a27",
+      "url": "http://localhost:8099/todos/86e7bd1c-9e0e-4c37-a861-b7e35ca09a27"
+   }
+]
+```
+
+## Interaction 42: OPTIONS /todos/cc136a6f-3a21-4fbb-85ec-2d7c590277bd
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: GET
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:11 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 43: GET /todos/cc136a6f-3a21-4fbb-85ec-2d7c590277bd
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server (application/json):
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 277
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:10 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
 
 ```
 {
-   "uid": "ea759a56-5c51-4e95-bb79-8b322b938dab",
+   "uid": "cc136a6f-3a21-4fbb-85ec-2d7c590277bd",
    "title": "todo the first",
    "order": 0,
    "completed": false,
-   "href": "http://localhost:8099/todos/ea759a56-5c51-4e95-bb79-8b322b938dab",
-   "url": "http://localhost:8099/todos/ea759a56-5c51-4e95-bb79-8b322b938dab"
+   "href": "http://localhost:8099/todos/cc136a6f-3a21-4fbb-85ec-2d7c590277bd",
+   "url": "http://localhost:8099/todos/cc136a6f-3a21-4fbb-85ec-2d7c590277bd"
 }
 ```
 
-## Interaction 25: DELETE /todos
+## Interaction 44: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: DELETE
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
-Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:11 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 45: DELETE /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -1300,13 +2275,13 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:37 GMT
-Content-Length: 0
-Connection: keep-alive
 Access-Control-Allow-Origin: *
-X-Content-Type-Options: nosniff
+Connection: keep-alive
+Content-Length: 0
+Date: Tue, 26 Feb 2019 07:27:11 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
 ```
 
 ### Resulting body back from the real server (204: null - Base64 below):
@@ -1315,23 +2290,72 @@ Via: 1.1 vegur
 
 ```
 
-## Interaction 26: POST /todos
+## Interaction 46: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:11 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 47: POST /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 25
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -1345,17 +2369,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:37 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/6146768b-70b1-4548-a54c-07eacb58c9b9
+Connection: keep-alive
 Content-Length: 261
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:11 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/6ad68605-24c5-4417-b62a-c7a033a95c8e
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (201: text/html;charset=utf-8):
@@ -1363,31 +2387,31 @@ Via: 1.1 vegur
 ```
 {
    "title": "initial title",
-   "uid": "6146768b-70b1-4548-a54c-07eacb58c9b9",
+   "uid": "6ad68605-24c5-4417-b62a-c7a033a95c8e",
    "completed": false,
-   "href": "http://localhost:8099/todos/6146768b-70b1-4548-a54c-07eacb58c9b9",
-   "url": "http://localhost:8099/todos/6146768b-70b1-4548-a54c-07eacb58c9b9"
+   "href": "http://localhost:8099/todos/6ad68605-24c5-4417-b62a-c7a033a95c8e",
+   "url": "http://localhost:8099/todos/6ad68605-24c5-4417-b62a-c7a033a95c8e"
 }
 ```
 
-## Interaction 27: OPTIONS /todos/6146768b-70b1-4548-a54c-07eacb58c9b9
+## Interaction 48: OPTIONS /todos/6ad68605-24c5-4417-b62a-c7a033a95c8e
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
 Access-Control-Request-Headers: content-type
 Access-Control-Request-Method: PATCH
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server ():
@@ -1399,17 +2423,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:37 GMT
-Connection: close
-Content-Type: text/html;charset=utf-8
-Access-Control-Allow-Origin: *
 Access-Control-Allow-Headers: content-type
 Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:11 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -1418,23 +2442,24 @@ Via: 1.1 vegur
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 28: PATCH /todos/6146768b-70b1-4548-a54c-07eacb58c9b9
+## Interaction 49: PATCH /todos/6ad68605-24c5-4417-b62a-c7a033a95c8e
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 25
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -1448,48 +2473,96 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:37 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
+Connection: keep-alive
 Content-Length: 276
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:12 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
 
 ```
 {
-   "uid": "6146768b-70b1-4548-a54c-07eacb58c9b9",
+   "uid": "6ad68605-24c5-4417-b62a-c7a033a95c8e",
    "title": "bathe the cat",
    "order": 0,
    "completed": false,
-   "href": "http://localhost:8099/todos/6146768b-70b1-4548-a54c-07eacb58c9b9",
-   "url": "http://localhost:8099/todos/6146768b-70b1-4548-a54c-07eacb58c9b9"
+   "href": "http://localhost:8099/todos/6ad68605-24c5-4417-b62a-c7a033a95c8e",
+   "url": "http://localhost:8099/todos/6ad68605-24c5-4417-b62a-c7a033a95c8e"
 }
 ```
 
-## Interaction 29: DELETE /todos
+## Interaction 50: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: DELETE
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
-Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:12 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 51: DELETE /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -1501,13 +2574,13 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:37 GMT
-Content-Length: 0
-Connection: keep-alive
 Access-Control-Allow-Origin: *
-X-Content-Type-Options: nosniff
+Connection: keep-alive
+Content-Length: 0
+Date: Tue, 26 Feb 2019 07:27:11 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
 ```
 
 ### Resulting body back from the real server (204: null - Base64 below):
@@ -1516,23 +2589,72 @@ Via: 1.1 vegur
 
 ```
 
-## Interaction 30: POST /todos
+## Interaction 52: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:12 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 53: POST /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -1546,17 +2668,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:37 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/8aff8097-af1e-499c-94cb-f241a937113b
+Connection: keep-alive
 Content-Length: 252
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:12 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/045d8aee-b209-4793-beb6-f5f1256970b7
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (201: text/html;charset=utf-8):
@@ -1564,31 +2686,31 @@ Via: 1.1 vegur
 ```
 {
    "title": "blah",
-   "uid": "8aff8097-af1e-499c-94cb-f241a937113b",
+   "uid": "045d8aee-b209-4793-beb6-f5f1256970b7",
    "completed": false,
-   "href": "http://localhost:8099/todos/8aff8097-af1e-499c-94cb-f241a937113b",
-   "url": "http://localhost:8099/todos/8aff8097-af1e-499c-94cb-f241a937113b"
+   "href": "http://localhost:8099/todos/045d8aee-b209-4793-beb6-f5f1256970b7",
+   "url": "http://localhost:8099/todos/045d8aee-b209-4793-beb6-f5f1256970b7"
 }
 ```
 
-## Interaction 31: OPTIONS /todos/8aff8097-af1e-499c-94cb-f241a937113b
+## Interaction 54: OPTIONS /todos/045d8aee-b209-4793-beb6-f5f1256970b7
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
 Access-Control-Request-Headers: content-type
 Access-Control-Request-Method: PATCH
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server ():
@@ -1600,17 +2722,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:37 GMT
-Connection: close
-Content-Type: text/html;charset=utf-8
-Access-Control-Allow-Origin: *
 Access-Control-Allow-Headers: content-type
 Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:12 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -1619,23 +2741,24 @@ Via: 1.1 vegur
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 32: PATCH /todos/8aff8097-af1e-499c-94cb-f241a937113b
+## Interaction 55: PATCH /todos/045d8aee-b209-4793-beb6-f5f1256970b7
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 18
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -1649,92 +2772,49 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:38 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
+Connection: keep-alive
 Content-Length: 266
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:12 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
 
 ```
 {
-   "uid": "8aff8097-af1e-499c-94cb-f241a937113b",
+   "uid": "045d8aee-b209-4793-beb6-f5f1256970b7",
    "title": "blah",
    "order": 0,
    "completed": true,
-   "href": "http://localhost:8099/todos/8aff8097-af1e-499c-94cb-f241a937113b",
-   "url": "http://localhost:8099/todos/8aff8097-af1e-499c-94cb-f241a937113b"
+   "href": "http://localhost:8099/todos/045d8aee-b209-4793-beb6-f5f1256970b7",
+   "url": "http://localhost:8099/todos/045d8aee-b209-4793-beb6-f5f1256970b7"
 }
 ```
 
-## Interaction 33: DELETE /todos
+## Interaction 56: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Length: 0
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Body sent to the real server (application/json):
-
-```
-
-```
-
-### Resulting headers back from the real server:
-
-```
-Date: Tue, 19 Feb 2019 10:17:38 GMT
-Content-Length: 0
-Connection: keep-alive
-Access-Control-Allow-Origin: *
-X-Content-Type-Options: nosniff
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-```
-
-### Resulting body back from the real server (204: null - Base64 below):
-
-```
-
-```
-
-## Interaction 34: OPTIONS /todos
-
-### Request headers sent to the real server:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
 Access-Control-Request-Headers: content-type
-Access-Control-Request-Method: POST
+Access-Control-Request-Method: DELETE
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server ():
@@ -1746,17 +2826,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:38 GMT
-Connection: close
-Content-Type: text/html;charset=utf-8
-Access-Control-Allow-Origin: *
 Access-Control-Allow-Headers: content-type
 Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:12 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -1765,23 +2845,115 @@ Via: 1.1 vegur
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 35: POST /todos
+## Interaction 57: DELETE /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server (application/json):
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 0
+Date: Tue, 26 Feb 2019 07:27:13 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+```
+
+### Resulting body back from the real server (204: null - Base64 below):
+
+```
+
+```
+
+## Interaction 58: OPTIONS /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:13 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 59: POST /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -1795,17 +2967,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:39 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/dea27b1c-1fc0-46eb-88b8-e31b80760959
+Connection: keep-alive
 Content-Length: 252
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:13 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/e864307f-378e-44e9-b791-27fe513f52ec
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (201: text/html;charset=utf-8):
@@ -1813,31 +2985,31 @@ Via: 1.1 vegur
 ```
 {
    "title": "blah",
-   "uid": "dea27b1c-1fc0-46eb-88b8-e31b80760959",
+   "uid": "e864307f-378e-44e9-b791-27fe513f52ec",
    "completed": false,
-   "href": "http://localhost:8099/todos/dea27b1c-1fc0-46eb-88b8-e31b80760959",
-   "url": "http://localhost:8099/todos/dea27b1c-1fc0-46eb-88b8-e31b80760959"
+   "href": "http://localhost:8099/todos/e864307f-378e-44e9-b791-27fe513f52ec",
+   "url": "http://localhost:8099/todos/e864307f-378e-44e9-b791-27fe513f52ec"
 }
 ```
 
-## Interaction 36: OPTIONS /todos/dea27b1c-1fc0-46eb-88b8-e31b80760959
+## Interaction 60: OPTIONS /todos/e864307f-378e-44e9-b791-27fe513f52ec
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
 Access-Control-Request-Headers: content-type
 Access-Control-Request-Method: PATCH
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server ():
@@ -1849,17 +3021,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:39 GMT
-Connection: close
-Content-Type: text/html;charset=utf-8
-Access-Control-Allow-Origin: *
 Access-Control-Allow-Headers: content-type
 Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:13 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -1868,23 +3040,24 @@ Via: 1.1 vegur
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 37: PATCH /todos/dea27b1c-1fc0-46eb-88b8-e31b80760959
+## Interaction 61: PATCH /todos/e864307f-378e-44e9-b791-27fe513f52ec
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 42
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -1899,47 +3072,144 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:39 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
+Connection: keep-alive
 Content-Length: 275
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:13 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
 
 ```
 {
-   "uid": "dea27b1c-1fc0-46eb-88b8-e31b80760959",
+   "uid": "e864307f-378e-44e9-b791-27fe513f52ec",
    "title": "changed title",
    "order": 0,
    "completed": true,
-   "href": "http://localhost:8099/todos/dea27b1c-1fc0-46eb-88b8-e31b80760959",
-   "url": "http://localhost:8099/todos/dea27b1c-1fc0-46eb-88b8-e31b80760959"
+   "href": "http://localhost:8099/todos/e864307f-378e-44e9-b791-27fe513f52ec",
+   "url": "http://localhost:8099/todos/e864307f-378e-44e9-b791-27fe513f52ec"
 }
 ```
 
-## Interaction 38: GET /todos/dea27b1c-1fc0-46eb-88b8-e31b80760959
+## Interaction 62: OPTIONS /todos/e864307f-378e-44e9-b791-27fe513f52ec
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: GET
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:13 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 63: OPTIONS /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: GET
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:14 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 64: GET /todos/e864307f-378e-44e9-b791-27fe513f52ec
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -1951,47 +3221,48 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:39 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
+Connection: keep-alive
 Content-Length: 275
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:14 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
 
 ```
 {
-   "uid": "dea27b1c-1fc0-46eb-88b8-e31b80760959",
+   "uid": "e864307f-378e-44e9-b791-27fe513f52ec",
    "title": "changed title",
    "order": 0,
    "completed": true,
-   "href": "http://localhost:8099/todos/dea27b1c-1fc0-46eb-88b8-e31b80760959",
-   "url": "http://localhost:8099/todos/dea27b1c-1fc0-46eb-88b8-e31b80760959"
+   "href": "http://localhost:8099/todos/e864307f-378e-44e9-b791-27fe513f52ec",
+   "url": "http://localhost:8099/todos/e864307f-378e-44e9-b791-27fe513f52ec"
 }
 ```
 
-## Interaction 39: GET /todos
+## Interaction 65: GET /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -2003,16 +3274,16 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:39 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
+Connection: keep-alive
 Content-Length: 303
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:14 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -2020,33 +3291,81 @@ Via: 1.1 vegur
 ```
 [
    {
-      "uid": "dea27b1c-1fc0-46eb-88b8-e31b80760959",
+      "uid": "e864307f-378e-44e9-b791-27fe513f52ec",
       "title": "changed title",
       "order": 0,
       "completed": true,
-      "href": "http://localhost:8099/todos/dea27b1c-1fc0-46eb-88b8-e31b80760959",
-      "url": "http://localhost:8099/todos/dea27b1c-1fc0-46eb-88b8-e31b80760959"
+      "href": "http://localhost:8099/todos/e864307f-378e-44e9-b791-27fe513f52ec",
+      "url": "http://localhost:8099/todos/e864307f-378e-44e9-b791-27fe513f52ec"
    }
 ]
 ```
 
-## Interaction 40: DELETE /todos
+## Interaction 66: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: DELETE
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
-Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:14 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 67: DELETE /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -2058,13 +3377,13 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:39 GMT
-Content-Length: 0
-Connection: keep-alive
 Access-Control-Allow-Origin: *
-X-Content-Type-Options: nosniff
+Connection: keep-alive
+Content-Length: 0
+Date: Tue, 26 Feb 2019 07:27:14 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
 ```
 
 ### Resulting body back from the real server (204: null - Base64 below):
@@ -2073,23 +3392,72 @@ Via: 1.1 vegur
 
 ```
 
-## Interaction 41: POST /todos
+## Interaction 68: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:15 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 69: POST /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -2103,17 +3471,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:39 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/358223b5-4ea6-4473-ba0e-c258afefdb68
+Connection: keep-alive
 Content-Length: 252
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:14 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/51a5c78f-3bed-408b-9f5f-54134672bdff
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (201: text/html;charset=utf-8):
@@ -2121,31 +3489,31 @@ Via: 1.1 vegur
 ```
 {
    "title": "blah",
-   "uid": "358223b5-4ea6-4473-ba0e-c258afefdb68",
+   "uid": "51a5c78f-3bed-408b-9f5f-54134672bdff",
    "completed": false,
-   "href": "http://localhost:8099/todos/358223b5-4ea6-4473-ba0e-c258afefdb68",
-   "url": "http://localhost:8099/todos/358223b5-4ea6-4473-ba0e-c258afefdb68"
+   "href": "http://localhost:8099/todos/51a5c78f-3bed-408b-9f5f-54134672bdff",
+   "url": "http://localhost:8099/todos/51a5c78f-3bed-408b-9f5f-54134672bdff"
 }
 ```
 
-## Interaction 42: OPTIONS /todos/358223b5-4ea6-4473-ba0e-c258afefdb68
+## Interaction 70: OPTIONS /todos/51a5c78f-3bed-408b-9f5f-54134672bdff
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
 Access-Control-Request-Headers: content-type
 Access-Control-Request-Method: DELETE
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server ():
@@ -2157,17 +3525,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:39 GMT
-Connection: close
-Content-Type: text/html;charset=utf-8
-Access-Control-Allow-Origin: *
 Access-Control-Allow-Headers: content-type
 Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:15 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -2176,23 +3544,23 @@ Via: 1.1 vegur
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 43: DELETE /todos/358223b5-4ea6-4473-ba0e-c258afefdb68
+## Interaction 71: DELETE /todos/51a5c78f-3bed-408b-9f5f-54134672bdff
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -2204,13 +3572,13 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:39 GMT
-Content-Length: 0
-Connection: keep-alive
 Access-Control-Allow-Origin: *
-X-Content-Type-Options: nosniff
+Connection: keep-alive
+Content-Length: 0
+Date: Tue, 26 Feb 2019 07:27:15 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
 ```
 
 ### Resulting body back from the real server (204: null - Base64 below):
@@ -2219,22 +3587,71 @@ Via: 1.1 vegur
 
 ```
 
-## Interaction 44: GET /todos
+## Interaction 72: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: GET
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:15 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 73: GET /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -2246,16 +3663,16 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:40 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
+Connection: keep-alive
 Content-Length: 3
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:15 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -2265,23 +3682,72 @@ Via: 1.1 vegur
 ]
 ```
 
-## Interaction 45: POST /todos
+## Interaction 74: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:15 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 75: POST /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 28
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -2296,17 +3762,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:40 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/3ca11410-2e8c-490b-aa61-eadf0105ab51
+Connection: keep-alive
 Content-Length: 269
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:16 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/ce78a108-be80-4248-8ab0-5e03670a65ca
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (201: text/html;charset=utf-8):
@@ -2315,30 +3781,79 @@ Via: 1.1 vegur
 {
    "title": "blah",
    "order": 523,
-   "uid": "3ca11410-2e8c-490b-aa61-eadf0105ab51",
+   "uid": "ce78a108-be80-4248-8ab0-5e03670a65ca",
    "completed": false,
-   "href": "http://localhost:8099/todos/3ca11410-2e8c-490b-aa61-eadf0105ab51",
-   "url": "http://localhost:8099/todos/3ca11410-2e8c-490b-aa61-eadf0105ab51"
+   "href": "http://localhost:8099/todos/ce78a108-be80-4248-8ab0-5e03670a65ca",
+   "url": "http://localhost:8099/todos/ce78a108-be80-4248-8ab0-5e03670a65ca"
 }
 ```
 
-## Interaction 46: POST /todos
+## Interaction 76: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:16 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 77: POST /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 27
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -2353,17 +3868,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:40 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/42095086-d204-4467-9da8-f3468e3a37d8
+Connection: keep-alive
 Content-Length: 268
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:17 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/fa95c8c9-b2c2-4574-a11d-1370ec45a599
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (201: text/html;charset=utf-8):
@@ -2372,31 +3887,31 @@ Via: 1.1 vegur
 {
    "order": 10,
    "title": "blah",
-   "uid": "42095086-d204-4467-9da8-f3468e3a37d8",
+   "uid": "fa95c8c9-b2c2-4574-a11d-1370ec45a599",
    "completed": false,
-   "href": "http://localhost:8099/todos/42095086-d204-4467-9da8-f3468e3a37d8",
-   "url": "http://localhost:8099/todos/42095086-d204-4467-9da8-f3468e3a37d8"
+   "href": "http://localhost:8099/todos/fa95c8c9-b2c2-4574-a11d-1370ec45a599",
+   "url": "http://localhost:8099/todos/fa95c8c9-b2c2-4574-a11d-1370ec45a599"
 }
 ```
 
-## Interaction 47: OPTIONS /todos/42095086-d204-4467-9da8-f3468e3a37d8
+## Interaction 78: OPTIONS /todos/fa95c8c9-b2c2-4574-a11d-1370ec45a599
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
 Access-Control-Request-Headers: content-type
 Access-Control-Request-Method: PATCH
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server ():
@@ -2408,17 +3923,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:40 GMT
-Connection: close
-Content-Type: text/html;charset=utf-8
-Access-Control-Allow-Origin: *
 Access-Control-Allow-Headers: content-type
 Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:17 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -2427,23 +3942,24 @@ Via: 1.1 vegur
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 48: PATCH /todos/42095086-d204-4467-9da8-f3468e3a37d8
+## Interaction 79: PATCH /todos/fa95c8c9-b2c2-4574-a11d-1370ec45a599
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 12
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -2457,48 +3973,97 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:41 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
+Connection: keep-alive
 Content-Length: 268
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:16 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
 
 ```
 {
-   "uid": "42095086-d204-4467-9da8-f3468e3a37d8",
+   "uid": "fa95c8c9-b2c2-4574-a11d-1370ec45a599",
    "title": "blah",
    "order": 95,
    "completed": false,
-   "href": "http://localhost:8099/todos/42095086-d204-4467-9da8-f3468e3a37d8",
-   "url": "http://localhost:8099/todos/42095086-d204-4467-9da8-f3468e3a37d8"
+   "href": "http://localhost:8099/todos/fa95c8c9-b2c2-4574-a11d-1370ec45a599",
+   "url": "http://localhost:8099/todos/fa95c8c9-b2c2-4574-a11d-1370ec45a599"
 }
 ```
 
-## Interaction 49: POST /todos
+## Interaction 80: OPTIONS /todos
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Connection: keep-alive
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:17 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 81: POST /todos
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 27
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -2513,17 +4078,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:41 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
-Location: http://todo-backend-sinatra.herokuapp.com/todos/092d0567-07a0-4625-9817-f80447d42592
+Connection: keep-alive
 Content-Length: 268
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:16 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/d2d44b84-ea3c-4964-8ab7-2fb17a118d61
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (201: text/html;charset=utf-8):
@@ -2532,31 +4097,31 @@ Via: 1.1 vegur
 {
    "order": 10,
    "title": "blah",
-   "uid": "092d0567-07a0-4625-9817-f80447d42592",
+   "uid": "d2d44b84-ea3c-4964-8ab7-2fb17a118d61",
    "completed": false,
-   "href": "http://localhost:8099/todos/092d0567-07a0-4625-9817-f80447d42592",
-   "url": "http://localhost:8099/todos/092d0567-07a0-4625-9817-f80447d42592"
+   "href": "http://localhost:8099/todos/d2d44b84-ea3c-4964-8ab7-2fb17a118d61",
+   "url": "http://localhost:8099/todos/d2d44b84-ea3c-4964-8ab7-2fb17a118d61"
 }
 ```
 
-## Interaction 50: OPTIONS /todos/092d0567-07a0-4625-9817-f80447d42592
+## Interaction 82: OPTIONS /todos/d2d44b84-ea3c-4964-8ab7-2fb17a118d61
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
 Access-Control-Request-Headers: content-type
 Access-Control-Request-Method: PATCH
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server ():
@@ -2568,17 +4133,17 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:41 GMT
-Connection: close
-Content-Type: text/html;charset=utf-8
-Access-Control-Allow-Origin: *
 Access-Control-Allow-Headers: content-type
 Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:17 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
@@ -2587,23 +4152,24 @@ Via: 1.1 vegur
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 51: PATCH /todos/092d0567-07a0-4625-9817-f80447d42592
+## Interaction 83: PATCH /todos/d2d44b84-ea3c-4964-8ab7-2fb17a118d61
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Accept-Language: en-US,en;q=0.5
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 12
 Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -2617,47 +4183,96 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:41 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
+Connection: keep-alive
 Content-Length: 268
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:17 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
 
 ```
 {
-   "uid": "092d0567-07a0-4625-9817-f80447d42592",
+   "uid": "d2d44b84-ea3c-4964-8ab7-2fb17a118d61",
    "title": "blah",
    "order": 95,
    "completed": false,
-   "href": "http://localhost:8099/todos/092d0567-07a0-4625-9817-f80447d42592",
-   "url": "http://localhost:8099/todos/092d0567-07a0-4625-9817-f80447d42592"
+   "href": "http://localhost:8099/todos/d2d44b84-ea3c-4964-8ab7-2fb17a118d61",
+   "url": "http://localhost:8099/todos/d2d44b84-ea3c-4964-8ab7-2fb17a118d61"
 }
 ```
 
-## Interaction 52: GET /todos/092d0567-07a0-4625-9817-f80447d42592
+## Interaction 84: OPTIONS /todos/d2d44b84-ea3c-4964-8ab7-2fb17a118d61
 
 ### Request headers sent to the real server:
 
 ```
 Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: GET
 Cache-Control: no-cache
 Connection: keep-alive
-Content-Type: application/json
+DNT: 1
 Host: todo-backend-sinatra.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
+```
+
+### Body sent to the real server ():
+
+```
+
+```
+
+### Resulting headers back from the real server:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:17 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Resulting body back from the real server (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 85: GET /todos/d2d44b84-ea3c-4964-8ab7-2fb17a118d61
+
+### Request headers sent to the real server:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.5
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+DNT: 1
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:65.0) Gecko/20100101 Firefox/65.0
 ```
 
 ### Body sent to the real server (application/json):
@@ -2669,28 +4284,28 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ### Resulting headers back from the real server:
 
 ```
-Date: Tue, 19 Feb 2019 10:17:41 GMT
-Connection: keep-alive
-Content-Type: text/html;charset=utf-8
 Access-Control-Allow-Origin: *
+Connection: keep-alive
 Content-Length: 268
-X-Xss-Protection: 1; mode=block
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
+Content-Type: text/html;charset=utf-8
+Date: Tue, 26 Feb 2019 07:27:18 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
 ```
 
 ### Resulting body back from the real server (200: text/html;charset=utf-8):
 
 ```
 {
-   "uid": "092d0567-07a0-4625-9817-f80447d42592",
+   "uid": "d2d44b84-ea3c-4964-8ab7-2fb17a118d61",
    "title": "blah",
    "order": 95,
    "completed": false,
-   "href": "http://localhost:8099/todos/092d0567-07a0-4625-9817-f80447d42592",
-   "url": "http://localhost:8099/todos/092d0567-07a0-4625-9817-f80447d42592"
+   "href": "http://localhost:8099/todos/d2d44b84-ea3c-4964-8ab7-2fb17a118d61",
+   "url": "http://localhost:8099/todos/d2d44b84-ea3c-4964-8ab7-2fb17a118d61"
 }
 ```
 

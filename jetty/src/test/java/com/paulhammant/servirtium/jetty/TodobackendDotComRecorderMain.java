@@ -35,7 +35,8 @@ public class TodobackendDotComRecorderMain {
         final SimpleInteractionManipulations manipulations = makeInteractionManipulations();
 
         MarkdownRecorder recorder = new MarkdownRecorder(
-                new ServiceInteropViaOkHttp(), manipulations);
+                new ServiceInteropViaOkHttp(), manipulations)
+                .withAlphaSortingOfHeaders();
 
         ServirtiumServer servirtiumServer = makeServirtiumServer(manipulations, recorder);
 
