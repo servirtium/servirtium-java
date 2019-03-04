@@ -2,7 +2,7 @@ package com.paulhammant.servirtium.jetty;
 
 import com.paulhammant.servirtium.Interactor;
 import com.paulhammant.servirtium.MarkdownRecorder;
-import com.paulhammant.servirtium.ServerMonitor;
+import com.paulhammant.servirtium.ServiceMonitor;
 import com.paulhammant.servirtium.ServiceInteropViaOkHttp;
 import com.paulhammant.servirtium.ServirtiumServer;
 import com.paulhammant.servirtium.SimpleInteractionManipulations;
@@ -47,7 +47,7 @@ public class TodobackendDotComRecorderMain {
     }
 
     public static ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations manipulations, Interactor interactor) {
-        return new JettyServirtiumServer(new ServerMonitor.Console(), 8099,
+        return new JettyServirtiumServer(new ServiceMonitor.Console(), 8099,
                 manipulations, interactor)
                 .withPrettyPrintedTextBodies();
     }
@@ -55,7 +55,7 @@ public class TodobackendDotComRecorderMain {
     public static SimpleInteractionManipulations makeInteractionManipulations() {
         return new SimpleInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
             @Override
-            public void changeAllHeadersForRequestToServer(List<String> clientRequestHeaders) {
+            public void changeAllHeadersForRequestToService(List<String> clientRequestHeaders) {
                 String refer = "";
                 for (int i = 0; i < clientRequestHeaders.size(); i++) {
                     String s = clientRequestHeaders.get(i);
@@ -72,7 +72,7 @@ public class TodobackendDotComRecorderMain {
             }
 
             @Override
-            public String changeBodyReturnedBackFromServerForClient(String body) {
+            public String changeBodyReturnedBackFromServiceForClient(String body) {
                 return body.replaceAll("todo-backend-sinatra\\.herokuapp\\.com",
                         "localhost:8099");
             }

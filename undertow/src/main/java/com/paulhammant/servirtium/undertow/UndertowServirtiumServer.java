@@ -2,7 +2,7 @@ package com.paulhammant.servirtium.undertow;
 
 import com.paulhammant.servirtium.InteractionManipulations;
 import com.paulhammant.servirtium.Interactor;
-import com.paulhammant.servirtium.ServerMonitor;
+import com.paulhammant.servirtium.ServiceMonitor;
 import com.paulhammant.servirtium.ServiceResponse;
 import com.paulhammant.servirtium.ServirtiumServer;
 import io.undertow.Undertow;
@@ -26,7 +26,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
     private Interactor interactor;
     private boolean failed = false;
 
-    public UndertowServirtiumServer(ServerMonitor monitor, int port,
+    public UndertowServirtiumServer(ServiceMonitor monitor, int port,
                                     InteractionManipulations interactionManipulations,
                                     Interactor interactor) {
         this.interactor = interactor;
@@ -38,7 +38,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
                 .build();
     }
 
-    private void handleExchange(HttpServerExchange exchange, ServerMonitor monitor, InteractionManipulations interactionManipulations) throws IOException {
+    private void handleExchange(HttpServerExchange exchange, ServiceMonitor monitor, InteractionManipulations interactionManipulations) throws IOException {
         bumpInteractionNum();
 
         String method = exchange.getRequestMethod().toString();
@@ -89,12 +89,12 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 //                    }
 //
 
-            final String requestUrl = prepareHeadersAndBodyForServer(exchange, method, url, clientRequestHeaders, interaction, clientRequestContentType, interactionManipulations);
+            final String requestUrl = prepareHeadersAndBodyForService(exchange, method, url, clientRequestHeaders, interaction, clientRequestContentType, interactionManipulations);
 
             // INTERACTION
             ServiceResponse serviceResponse = interactor.getServiceResponseForRequest(method, requestUrl, clientRequestHeaders, interaction, getLowerCaseHeaders());
 
-            serviceResponse = processHeadersAndBodyBackFromServer(interaction, serviceResponse, interactionManipulations);
+            serviceResponse = processHeadersAndBodyBackFromService(interaction, serviceResponse, interactionManipulations);
 
             interactor.addInteraction(interaction);
 
@@ -122,32 +122,32 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             failed = true;
             exchange.setStatusCode(500);
             exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "text/plain");
-            exchange.getResponseSender().send("Servirtium Server AssertionError: " + assertionError.getMessage());
+            exchange.getResponseSender().send("UndertowServirtiumServer AssertionError: " + assertionError.getMessage());
             monitor.interactionFailed(getInteractionNum(), method, url, assertionError, getContext());
         } catch (Throwable throwable) {
             failed = true;
             exchange.setStatusCode(500);
             exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "text/plain");
-            exchange.getResponseSender().send("Servirtium Server unexpected Throwable: " + throwable.getMessage());
+            exchange.getResponseSender().send("UndertowServirtiumServer unexpected Throwable: " + throwable.getMessage());
             monitor.unexpectedRequestError(throwable, getContext());
             throw throwable; // stick your debugger here
         } finally {
         }
     }
 
-    private ServiceResponse processHeadersAndBodyBackFromServer(Interactor.Interaction interaction, ServiceResponse serviceResponse, InteractionManipulations interactionManipulations) {
+    private ServiceResponse processHeadersAndBodyBackFromService(Interactor.Interaction interaction, ServiceResponse serviceResponse, InteractionManipulations interactionManipulations) {
         ArrayList<String > newHeaders = new ArrayList<>();
         for (int i = 0; i < serviceResponse.headers.length; i++) {
-            String headerBackFromServer = serviceResponse.headers[i];
-            String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderReturnedBackFromServer(i, headerBackFromServer);
+            String headerBackFromService = serviceResponse.headers[i];
+            String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderReturnedBackFromService(i, headerBackFromService);
             if (potentiallyChangedHeader != null) {
                 newHeaders.add(potentiallyChangedHeader);
             }
         }
-        interactionManipulations.changeAllHeadersReturnedBackFromServer(newHeaders);
+        interactionManipulations.changeAllHeadersReturnedBackFromService(newHeaders);
 
         if (serviceResponse.body instanceof String) {
-            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServerForRecording((String) serviceResponse.body));
+            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServiceForRecording((String) serviceResponse.body));
             // recreate response
 
             if (shouldHavePrettyPrintedTextBodies()) {
@@ -173,13 +173,13 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         interaction.noteResponseHeadersAndBody(serviceResponse.headers, serviceResponse.body, serviceResponse.statusCode, serviceResponse.contentType);
 
         if (serviceResponse.body instanceof String) {
-            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServerForClient((String) serviceResponse.body));
+            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServiceForClient((String) serviceResponse.body));
         }
 
         return serviceResponse;
     }
 
-    private String prepareHeadersAndBodyForServer(HttpServerExchange exchange, String method, String url, List<String> clientRequestHeaders, Interactor.Interaction interaction, String clientRequestContentType, InteractionManipulations interactionManipulations) throws IOException {
+    private String prepareHeadersAndBodyForService(HttpServerExchange exchange, String method, String url, List<String> clientRequestHeaders, Interactor.Interaction interaction, String clientRequestContentType, InteractionManipulations interactionManipulations) throws IOException {
 
         exchange.startBlocking();
         InputStream is = exchange.getInputStream();
@@ -214,14 +214,14 @@ public class UndertowServirtiumServer extends ServirtiumServer {
                 hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
                 final String newHeader = (getLowerCaseHeaders() ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
                 clientRequestHeaders.add(newHeader);
-                interactionManipulations.changeSingleHeaderForRequestToServer(method, newHeader, clientRequestHeaders);
+                interactionManipulations.changeSingleHeaderForRequestToService(method, newHeader, clientRequestHeaders);
             });
         });
 
-        interactionManipulations.changeAllHeadersForRequestToServer(clientRequestHeaders);
+        interactionManipulations.changeAllHeadersForRequestToService(clientRequestHeaders);
 
         if (clientRequestBody instanceof String) {
-            clientRequestBody = interactionManipulations.changeBodyForRequestToServer((String) clientRequestBody);
+            clientRequestBody = interactionManipulations.changeBodyForRequestToService((String) clientRequestBody);
         }
 
         if (clientRequestBody == null) {
@@ -230,7 +230,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
         interaction.noteClientRequestHeadersAndBody(clientRequestHeaders, clientRequestBody, clientRequestContentType);
 
-        return interactionManipulations.changeUrlForRequestToServer(url);
+        return interactionManipulations.changeUrlForRequestToService(url);
     }
 
     public ServirtiumServer start() throws Exception {

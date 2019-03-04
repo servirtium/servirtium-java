@@ -37,22 +37,22 @@ import java.util.Map;
 
 public interface InteractionManipulations {
 
-    default void changeSingleHeaderForRequestToServer(String method, String currentHeader, List<String> clientRequestHeaders) {
+    default void changeSingleHeaderForRequestToService(String method, String currentHeader, List<String> clientRequestHeaders) {
     }
 
     default String headerReplacement(String hdrKey, String hdrVal) {
         return hdrVal;
     }
 
-    default String changeUrlForRequestToServer(String url) {
+    default String changeUrlForRequestToService(String url) {
         return url;
     }
 
-    default String changeSingleHeaderReturnedBackFromServer(int ix, String headerBackFromServer) {
-        return headerBackFromServer;
+    default String changeSingleHeaderReturnedBackFromService(int ix, String headerBackFromService) {
+        return headerBackFromService;
     }
 
-    default void changeAllHeadersReturnedBackFromServer(ArrayList<String> serverResponseHeaders) {
+    default void changeAllHeadersReturnedBackFromService(ArrayList<String> serverResponseHeaders) {
     }
 
     /**
@@ -61,30 +61,30 @@ public interface InteractionManipulations {
      * potentially double changing going on here, but you could view that as harmless.  This is called before any
      * pretty printing happens.
      *
-     * @param bodyFromServer the string representation of the body returned from the server
+     * @param bodyFromService the string representation of the body returned from the server
      * @return the modified (or not) string representation of the body returned from the server
      */
-    default String changeBodyReturnedBackFromServerForRecording(String bodyFromServer) {
-        return bodyFromServer;
+    default String changeBodyReturnedBackFromServiceForRecording(String bodyFromService) {
+        return bodyFromService;
     }
 
     /**
      * Change things in the body returned from the server as it was recorded (and potentially changed
-     * in changeBodyReturnedBackFromServerForRecording() but before responding to the client.
+     * in changeBodyReturnedBackFromServiceForRecording() but before responding to the client.
      * This is called after any pretty printing happened (because that's in the recording too).
      *
      * @param bodyAsRecorded the string representation of the body as recorded.
      * @return the modified (or not) string representation of the body as recorded
      */
-    default String changeBodyReturnedBackFromServerForClient(String bodyAsRecorded) {
+    default String changeBodyReturnedBackFromServiceForClient(String bodyAsRecorded) {
         return bodyAsRecorded;
     }
 
-    default void changeAllHeadersForRequestToServer(List<String> clientRequestHeaders) {
+    default void changeAllHeadersForRequestToService(List<String> clientRequestHeaders) {
     }
 
     /** This may be Base84 encoded binary, but you're seldom going to want to change that */
-    default String changeBodyForRequestToServer(String body) {
+    default String changeBodyForRequestToService(String body) {
         return body;
     }
 

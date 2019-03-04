@@ -1,7 +1,7 @@
 package com.paulhammant.servirtium.undertow;
 
 import com.paulhammant.servirtium.Interactor;
-import com.paulhammant.servirtium.ServerMonitor;
+import com.paulhammant.servirtium.ServiceMonitor;
 import com.paulhammant.servirtium.ServirtiumServer;
 import com.paulhammant.servirtium.SimpleGetCentricTextTests;
 import com.paulhammant.servirtium.SimpleInteractionManipulations;
@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class SimpleGetCentricTextWithUndertowTests extends SimpleGetCentricTextTests {
 
-    public ServirtiumServer makeServirtiumServer(ServerMonitor.Console serverMonitor, SimpleInteractionManipulations interactionManipulations, Interactor interactor) {
+    public ServirtiumServer makeServirtiumServer(ServiceMonitor.Console serverMonitor, SimpleInteractionManipulations interactionManipulations, Interactor interactor) {
         return new UndertowServirtiumServer(serverMonitor,
                 8080, interactionManipulations, interactor);
     }

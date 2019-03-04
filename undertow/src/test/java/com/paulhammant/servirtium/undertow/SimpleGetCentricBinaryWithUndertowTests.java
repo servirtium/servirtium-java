@@ -1,7 +1,7 @@
 package com.paulhammant.servirtium.undertow;
 
 import com.paulhammant.servirtium.Interactor;
-import com.paulhammant.servirtium.ServerMonitor;
+import com.paulhammant.servirtium.ServiceMonitor;
 import com.paulhammant.servirtium.ServirtiumServer;
 import com.paulhammant.servirtium.SimpleGetCentricBinaryTests;
 import com.paulhammant.servirtium.SimpleInteractionManipulations;
@@ -11,7 +11,7 @@ import org.junit.Test;
 public class SimpleGetCentricBinaryWithUndertowTests extends SimpleGetCentricBinaryTests {
 
     protected ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations interactionManipulations, Interactor interactor) {
-        return new UndertowServirtiumServer(new ServerMonitor.Console(),
+        return new UndertowServirtiumServer(new ServiceMonitor.Console(),
                 8080, interactionManipulations, interactor);
     }
 

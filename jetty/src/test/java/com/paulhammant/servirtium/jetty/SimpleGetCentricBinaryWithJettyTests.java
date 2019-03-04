@@ -1,7 +1,7 @@
 package com.paulhammant.servirtium.jetty;
 
 import com.paulhammant.servirtium.Interactor;
-import com.paulhammant.servirtium.ServerMonitor;
+import com.paulhammant.servirtium.ServiceMonitor;
 import com.paulhammant.servirtium.ServirtiumServer;
 import com.paulhammant.servirtium.SimpleGetCentricBinaryTests;
 import com.paulhammant.servirtium.SimpleInteractionManipulations;
@@ -11,7 +11,7 @@ import org.junit.Test;
 public class SimpleGetCentricBinaryWithJettyTests extends SimpleGetCentricBinaryTests {
 
     protected ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations interactionManipulations, Interactor interactor) {
-        return new JettyServirtiumServer(new ServerMonitor.Console(),
+        return new JettyServirtiumServer(new ServiceMonitor.Console(),
                 8080, interactionManipulations, interactor);
     }
 

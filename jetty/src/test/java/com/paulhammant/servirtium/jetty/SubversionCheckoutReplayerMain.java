@@ -32,7 +32,7 @@
 package com.paulhammant.servirtium.jetty;
 
 import com.paulhammant.servirtium.MarkdownReplayer;
-import com.paulhammant.servirtium.ServerMonitor;
+import com.paulhammant.servirtium.ServiceMonitor;
 import com.paulhammant.servirtium.svn.SubversionInteractionManipulations;
 
 import java.io.File;
@@ -56,7 +56,7 @@ public class SubversionCheckoutReplayerMain {
 
         MarkdownReplayer replayer = new MarkdownReplayer(new MarkdownReplayer.ReplayMonitor.Default());
         JettyServirtiumServer servirtiumServer = new JettyServirtiumServer(
-                new ServerMonitor.Console(),
+                new ServiceMonitor.Console(),
                 8099,
                 new SubversionInteractionManipulations("", ""), replayer);
         replayer.setScriptFilename(CHECKOUT_RECORDER_TEST_MD);

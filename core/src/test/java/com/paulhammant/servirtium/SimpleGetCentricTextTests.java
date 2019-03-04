@@ -180,7 +180,7 @@ public abstract class SimpleGetCentricTextTests {
                 interactionManipulations
         ).withAlphaSortingOfHeaders();
 
-        servirtiumServer = makeServirtiumServer(new ServerMonitor.Console(), interactionManipulations, recorder);
+        servirtiumServer = makeServirtiumServer(new ServiceMonitor.Console(), interactionManipulations, recorder);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("foo", out);
@@ -197,9 +197,9 @@ public abstract class SimpleGetCentricTextTests {
 
     public void canRecordASequenceThenBarfInPlaybackWithClearMessagingIfUnplayedInteractions() throws Exception {
 
-        final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
+        final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromServerResponse("X-", "Source-Age", "Expires:")
+                .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:")
                 .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
 
@@ -355,14 +355,14 @@ public abstract class SimpleGetCentricTextTests {
 
     }
 
-    public abstract ServirtiumServer makeServirtiumServer(ServerMonitor.Console serverMonitor, SimpleInteractionManipulations interactionManipulations, Interactor interactor);
+    public abstract ServirtiumServer makeServirtiumServer(ServiceMonitor.Console serverMonitor, SimpleInteractionManipulations interactionManipulations, Interactor interactor);
 
     public void canRecordASimpleGetOfARedditJsonDocumentAndPrettify() throws Exception {
 
-        final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
+        final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
 
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromServerResponse("x-", "source-age", "expires:")
+                .withHeaderPrefixesToRemoveFromServiceResponse("x-", "source-age", "expires:")
                 .withHeaderPrefixesToRemoveFromClientRequest("accept-encoding");
 
 
@@ -439,10 +439,10 @@ public abstract class SimpleGetCentricTextTests {
 
     public void worksThroughAproxyServer() throws Exception {
 
-        final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
+        final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
 
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromServerResponse("X-", "Source-Age", "Expires:")
+                .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:")
                 .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
@@ -515,10 +515,10 @@ public abstract class SimpleGetCentricTextTests {
 
     public void worksThroughAproxyServer2() throws Exception {
 
-        final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
+        final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
 
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations()
-                .withHeaderPrefixesToRemoveFromServerResponse("X-", "Source-Age", "Expires:")
+                .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:")
                 .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
@@ -589,11 +589,11 @@ public abstract class SimpleGetCentricTextTests {
 
     public void canRecordASimpleGetOfARedditJsonDocumentAndPrettifyAndRedactPartOfTheRecordingOnly() throws Exception {
 
-        final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
+        final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromServerResponse("X-", "Source-Age", "Expires:")
+                .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:")
                 .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
@@ -636,14 +636,14 @@ public abstract class SimpleGetCentricTextTests {
 
     public void canReplayASimpleGetOfARedditJsonDocumentAndPrettifyAndRedactPartOfTheRecordingOnly() throws Exception {
 
-        final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
+        final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
 
         MarkdownReplayer replayer = new MarkdownReplayer();
         replayer.setPlaybackConversation(REDACTED_CONVERSATION);
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                        .withHeaderPrefixesToRemoveFromServerResponse("X-", "Source-Age", "Expires:")
+                        .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:")
                         .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         servirtiumServer = makeServirtiumServer(serverMonitor,
@@ -679,7 +679,7 @@ public abstract class SimpleGetCentricTextTests {
         MarkdownReplayer replayer = new MarkdownReplayer(new MarkdownReplayer.ReplayMonitor.Console());
         replayer.setPlaybackConversation(EXPECTED_1 + EXPECTED_2a + EXPECTED_3);
 
-        servirtiumServer = makeServirtiumServer(new ServerMonitor.Console(),
+        servirtiumServer = makeServirtiumServer(new ServiceMonitor.Console(),
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
                         .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding")
                 , replayer);

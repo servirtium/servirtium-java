@@ -24,7 +24,7 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
         this.toHost = toUrl.replaceAll("https://","").replaceAll("http://","");
     }
 
-    public SimpleInteractionManipulations withHeaderPrefixesToRemoveFromServerResponse(String... headerPrefixesToRemove) {
+    public SimpleInteractionManipulations withHeaderPrefixesToRemoveFromServiceResponse(String... headerPrefixesToRemove) {
         this.headerPrefixesToRemoveFromResponse = headerPrefixesToRemove;
         return this;
     }
@@ -35,12 +35,12 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
     }
 
     @Override
-    public String changeUrlForRequestToServer(String url) {
+    public String changeUrlForRequestToService(String url) {
         return url.replace(fromUrl, toUrl);
     }
 
     @Override
-    public void changeSingleHeaderForRequestToServer(String method, String currentHeader, List<String> clientRequestHeaders) {
+    public void changeSingleHeaderForRequestToService(String method, String currentHeader, List<String> clientRequestHeaders) {
         String currentHeaderKey = null;
         String currentHeaderVal = null;
         try {
@@ -70,7 +70,7 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
     }
 
     @Override
-    public void changeAllHeadersReturnedBackFromServer(ArrayList<String> serverResponseHeaders) {
+    public void changeAllHeadersReturnedBackFromService(ArrayList<String> serverResponseHeaders) {
         String[] hdrs = serverResponseHeaders.toArray(new String[0]);
         for (String hdr : hdrs) {
             for (String pfx : headerPrefixesToRemoveFromResponse) {

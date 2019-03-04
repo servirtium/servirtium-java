@@ -1,11 +1,10 @@
 package com.paulhammant.servirtium.logging;
 
-import com.paulhammant.servirtium.MarkdownReplayer;
-import com.paulhammant.servirtium.ServerMonitor;
+import com.paulhammant.servirtium.ServiceMonitor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Log4JServerMonitor implements ServerMonitor {
+public class Log4JServiceMonitor implements ServiceMonitor {
 
     private static final Logger log = LogManager.getLogger();
 

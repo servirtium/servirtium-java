@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
-public interface ServerMonitor {
+public interface ServiceMonitor {
 
     default void interactionStarted(int interactionNum, Interactor.Interaction interactionl){}
 
@@ -14,10 +14,10 @@ public interface ServerMonitor {
 
     default void unexpectedRequestError(Throwable throwable, String context) {}
 
-    class Default implements ServerMonitor {
+    class Default implements ServiceMonitor {
     }
 
-    class Console implements ServerMonitor {
+    class Console implements ServiceMonitor {
 
         @Override
         public void unexpectedRequestError(Throwable throwable, String context) {

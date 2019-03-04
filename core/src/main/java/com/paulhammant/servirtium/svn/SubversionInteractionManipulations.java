@@ -42,7 +42,7 @@ public class SubversionInteractionManipulations extends SimpleInteractionManipul
     }
 
     @Override
-    public void changeSingleHeaderForRequestToServer(String method, String currentHeader, List<String> clientRequestHeaders) {
+    public void changeSingleHeaderForRequestToService(String method, String currentHeader, List<String> clientRequestHeaders) {
         if (currentHeader.startsWith("User-Agent:")) {
             for (int i = 0; i < clientRequestHeaders.size(); i++) {
                 String s = clientRequestHeaders.get(i);
@@ -54,7 +54,7 @@ public class SubversionInteractionManipulations extends SimpleInteractionManipul
             }
         }
 
-        super.changeSingleHeaderForRequestToServer(method, currentHeader, clientRequestHeaders);
+        super.changeSingleHeaderForRequestToService(method, currentHeader, clientRequestHeaders);
     }
 
     protected String getUserAgentString() {
@@ -70,11 +70,11 @@ public class SubversionInteractionManipulations extends SimpleInteractionManipul
     }
 
     @Override
-    public String changeSingleHeaderReturnedBackFromServer(int ix, String headerBackFromServer) {
-        if (headerBackFromServer.startsWith("DAV:")) {
-            headerBackFromServer = "DAV:" + spaces(ix) + headerBackFromServer.substring(4);
+    public String changeSingleHeaderReturnedBackFromService(int ix, String headerBackFromService) {
+        if (headerBackFromService.startsWith("DAV:")) {
+            headerBackFromService = "DAV:" + spaces(ix) + headerBackFromService.substring(4);
         }
-        return headerBackFromServer;
+        return headerBackFromService;
     }
 
     static String spaces(int i) {

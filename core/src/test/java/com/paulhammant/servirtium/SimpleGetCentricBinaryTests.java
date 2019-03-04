@@ -133,7 +133,7 @@ public abstract class SimpleGetCentricBinaryTests {
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
-                .withHeaderPrefixesToRemoveFromServerResponse("age:", "x-", "server-timing:"))
+                .withHeaderPrefixesToRemoveFromServiceResponse("age:", "x-", "server-timing:"))
                 .withAlphaSortingOfHeaders();
 
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder).withLowerCaseHeaders();
@@ -211,7 +211,7 @@ public abstract class SimpleGetCentricBinaryTests {
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
-                .withHeaderPrefixesToRemoveFromServerResponse("age:", "x-", "server-timing:")
+                .withHeaderPrefixesToRemoveFromServiceResponse("age:", "x-", "server-timing:")
         ).withAlphaSortingOfHeaders();
 
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder).withLowerCaseHeaders();

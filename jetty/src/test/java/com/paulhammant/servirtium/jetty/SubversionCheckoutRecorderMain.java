@@ -33,7 +33,7 @@ package com.paulhammant.servirtium.jetty;
 
 import com.paulhammant.servirtium.Interactor;
 import com.paulhammant.servirtium.MarkdownRecorder;
-import com.paulhammant.servirtium.ServerMonitor;
+import com.paulhammant.servirtium.ServiceMonitor;
 import com.paulhammant.servirtium.ServiceInteropViaOkHttp;
 import com.paulhammant.servirtium.ServirtiumServer;
 import com.paulhammant.servirtium.svn.SubversionInteractionManipulations;
@@ -63,7 +63,7 @@ public class SubversionCheckoutRecorderMain {
         String tempDir = new File(".").getAbsolutePath() + "/.servirtium_tmp/";
         createWorkDirAndDeleteCheckout(tempDir);
 
-        final ServerMonitor.Console serverMonitor = new ServerMonitor.Console();
+        final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 new SubversionInteractionManipulations("", ""));
@@ -81,7 +81,7 @@ public class SubversionCheckoutRecorderMain {
 
     }
 
-    public static ServirtiumServer makeServirtiumServer(ServerMonitor.Console serverMonitor, Interactor interactor) {
+    public static ServirtiumServer makeServirtiumServer(ServiceMonitor.Console serverMonitor, Interactor interactor) {
         return new JettyServirtiumServer(serverMonitor,
                 8099,
                 new SubversionInteractionManipulations("", ""), interactor);

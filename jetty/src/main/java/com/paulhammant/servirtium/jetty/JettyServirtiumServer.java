@@ -2,7 +2,7 @@ package com.paulhammant.servirtium.jetty;
 
 import com.paulhammant.servirtium.InteractionManipulations;
 import com.paulhammant.servirtium.Interactor;
-import com.paulhammant.servirtium.ServerMonitor;
+import com.paulhammant.servirtium.ServiceMonitor;
 import com.paulhammant.servirtium.ServiceResponse;
 import com.paulhammant.servirtium.ServirtiumServer;
 import org.eclipse.jetty.server.Request;
@@ -27,7 +27,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
     private Interactor interactor;
     boolean failed = false;
 
-    public JettyServirtiumServer(ServerMonitor monitor, int port,
+    public JettyServirtiumServer(ServiceMonitor monitor, int port,
                                  InteractionManipulations interactionManipulations,
                                  Interactor interactor) {
         this.interactor = interactor;
@@ -46,7 +46,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
         });
     }
 
-    private void handleExchange(Request baseRequest, HttpServletRequest request, HttpServletResponse response, ServerMonitor monitor, InteractionManipulations interactionManipulations) throws IOException {
+    private void handleExchange(Request baseRequest, HttpServletRequest request, HttpServletResponse response, ServiceMonitor monitor, InteractionManipulations interactionManipulations) throws IOException {
 
         bumpInteractionNum();
 
@@ -89,12 +89,12 @@ public class JettyServirtiumServer extends ServirtiumServer {
 //                    }
 //
 
-            final String requestUrl = prepareHeadersAndBodyForServer(request, method, url, clientRequestHeaders, interaction, clientRequestContentType, interactionManipulations);
+            final String requestUrl = prepareHeadersAndBodyForService(request, method, url, clientRequestHeaders, interaction, clientRequestContentType, interactionManipulations);
 
             // INTERACTION
             ServiceResponse serverResponse = interactor.getServiceResponseForRequest(method, requestUrl, clientRequestHeaders, interaction, getLowerCaseHeaders());
 
-            serverResponse = processHeadersAndBodyBackFromServer(interaction, serverResponse, interactionManipulations);
+            serverResponse = processHeadersAndBodyBackFromService(interaction, serverResponse, interactionManipulations);
 
             interactor.addInteraction(interaction);
 
@@ -122,13 +122,13 @@ public class JettyServirtiumServer extends ServirtiumServer {
             failed = true;
             response.setStatus(500);
             response.setContentType("text/plain");
-            response.getWriter().write("Servirtium Server AssertionError: " + assertionError.getMessage());
+            response.getWriter().write("JettyServirtiumServer AssertionError: " + assertionError.getMessage());
             monitor.interactionFailed(getInteractionNum(), method, url, assertionError, getContext());
         } catch (Throwable throwable) {
             failed = true;
             response.setStatus(500);
             response.setContentType("text/plain");
-            response.getWriter().write("Servirtium Server unexpected Throwable: " + throwable.getMessage());
+            response.getWriter().write("JettyServirtiumServer unexpected Throwable: " + throwable.getMessage());
             monitor.unexpectedRequestError(throwable, getContext());
             throw throwable; // stick your debugger here
         } finally {
@@ -137,19 +137,19 @@ public class JettyServirtiumServer extends ServirtiumServer {
         }
     }
 
-    private ServiceResponse processHeadersAndBodyBackFromServer(Interactor.Interaction interaction, ServiceResponse serviceResponse, InteractionManipulations interactionManipulations) {
+    private ServiceResponse processHeadersAndBodyBackFromService(Interactor.Interaction interaction, ServiceResponse serviceResponse, InteractionManipulations interactionManipulations) {
         ArrayList<String > newHeaders = new ArrayList<>();
         for (int i = 0; i < serviceResponse.headers.length; i++) {
-            String headerBackFromServer = serviceResponse.headers[i];
-            String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderReturnedBackFromServer(i, headerBackFromServer);
+            String headerBackFromService = serviceResponse.headers[i];
+            String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderReturnedBackFromService(i, headerBackFromService);
             if (potentiallyChangedHeader != null) {
                 newHeaders.add(potentiallyChangedHeader);
             }
         }
-        interactionManipulations.changeAllHeadersReturnedBackFromServer(newHeaders);
+        interactionManipulations.changeAllHeadersReturnedBackFromService(newHeaders);
 
         if (serviceResponse.body instanceof String) {
-            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServerForRecording((String) serviceResponse.body));
+            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServiceForRecording((String) serviceResponse.body));
             // recreate response
 
             if (shouldHavePrettyPrintedTextBodies()) {
@@ -175,13 +175,13 @@ public class JettyServirtiumServer extends ServirtiumServer {
         interaction.noteResponseHeadersAndBody(serviceResponse.headers, serviceResponse.body, serviceResponse.statusCode, serviceResponse.contentType);
 
         if (serviceResponse.body instanceof String) {
-            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServerForClient((String) serviceResponse.body));
+            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServiceForClient((String) serviceResponse.body));
         }
 
         return serviceResponse;
     }
 
-    private String prepareHeadersAndBodyForServer(HttpServletRequest request, String method, String url, List<String> clientRequestHeaders, Interactor.Interaction interaction, String clientRequestContentType, InteractionManipulations interactionManipulations) throws IOException {
+    private String prepareHeadersAndBodyForService(HttpServletRequest request, String method, String url, List<String> clientRequestHeaders, Interactor.Interaction interaction, String clientRequestContentType, InteractionManipulations interactionManipulations) throws IOException {
         Enumeration<String> hdrs = request.getHeaderNames();
 
         ServletInputStream is = request.getInputStream();
@@ -216,13 +216,13 @@ public class JettyServirtiumServer extends ServirtiumServer {
             hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
             final String fullHeader = (getLowerCaseHeaders() ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
             clientRequestHeaders.add(fullHeader);
-            interactionManipulations.changeSingleHeaderForRequestToServer(method, fullHeader, clientRequestHeaders);
+            interactionManipulations.changeSingleHeaderForRequestToService(method, fullHeader, clientRequestHeaders);
         }
 
-        interactionManipulations.changeAllHeadersForRequestToServer(clientRequestHeaders);
+        interactionManipulations.changeAllHeadersForRequestToService(clientRequestHeaders);
 
         if (clientRequestBody instanceof String) {
-            clientRequestBody = interactionManipulations.changeBodyForRequestToServer((String) clientRequestBody);
+            clientRequestBody = interactionManipulations.changeBodyForRequestToService((String) clientRequestBody);
         }
 
         if (clientRequestBody == null) {
@@ -231,7 +231,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
         interaction.noteClientRequestHeadersAndBody(clientRequestHeaders, clientRequestBody, clientRequestContentType);
 
-        return interactionManipulations.changeUrlForRequestToServer(url);
+        return interactionManipulations.changeUrlForRequestToService(url);
     }
 
     public ServirtiumServer start() throws Exception {
