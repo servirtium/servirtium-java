@@ -147,7 +147,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         interactionManipulations.changeAllHeadersReturnedBackFromServer(newHeaders);
 
         if (serviceResponse.body instanceof String) {
-            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServer((String) serviceResponse.body));
+            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServerForRecording((String) serviceResponse.body));
             // recreate response
 
             if (shouldHavePrettyPrintedTextBodies()) {
@@ -171,6 +171,10 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         serviceResponse = serviceResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
 
         interaction.noteResponseHeadersAndBody(serviceResponse.headers, serviceResponse.body, serviceResponse.statusCode, serviceResponse.contentType);
+
+        if (serviceResponse.body instanceof String) {
+            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServerForClient((String) serviceResponse.body));
+        }
 
         return serviceResponse;
     }

@@ -52,17 +52,38 @@ public interface InteractionManipulations {
         return headerBackFromServer;
     }
 
-    default void changeAllHeadersReturnedBackFromServer(ArrayList<String> headers) {
+    default void changeAllHeadersReturnedBackFromServer(ArrayList<String> serverResponseHeaders) {
     }
 
-    default String changeBodyReturnedBackFromServer(String body) {
-        return body;
+    /**
+     * Change things in the body returned from the server before: a) making a recording, and b) playing back a recording.
+     * If you're using the same InteractionManipulations instance for record and playback, there could be some
+     * potentially double changing going on here, but you could view that as harmless.  This is called before any
+     * pretty printing happens.
+     *
+     * @param bodyFromServer the string representation of the body returned from the server
+     * @return the modified (or not) string representation of the body returned from the server
+     */
+    default String changeBodyReturnedBackFromServerForRecording(String bodyFromServer) {
+        return bodyFromServer;
+    }
+
+    /**
+     * Change things in the body returned from the server as it was recorded (and potentially changed
+     * in changeBodyReturnedBackFromServerForRecording() but before responding to the client.
+     * This is called after any pretty printing happened (because that's in the recording too).
+     *
+     * @param bodyAsRecorded the string representation of the body as recorded.
+     * @return the modified (or not) string representation of the body as recorded
+     */
+    default String changeBodyReturnedBackFromServerForClient(String bodyAsRecorded) {
+        return bodyAsRecorded;
     }
 
     default void changeAllHeadersForRequestToServer(List<String> clientRequestHeaders) {
     }
 
-    /** This may be Base84 encoded binary, but you're seldomn going to want to change that */
+    /** This may be Base84 encoded binary, but you're seldom going to want to change that */
     default String changeBodyForRequestToServer(String body) {
         return body;
     }
