@@ -88,7 +88,7 @@ public interface InteractionManipulations {
         return body;
     }
 
-    class Noop implements InteractionManipulations {
+    class NullObject implements InteractionManipulations {
 
     }
 

@@ -24,14 +24,12 @@ import static com.paulhammant.servirtium.JsonAndXmlUtilities.prettifyDocOrNot;
 public class JettyServirtiumServer extends ServirtiumServer {
 
     private Server jettyServer;
-    private Interactor interactor;
     boolean failed = false;
 
     public JettyServirtiumServer(ServiceMonitor monitor, int port,
                                  InteractionManipulations interactionManipulations,
                                  Interactor interactor) {
-        super(interactionManipulations);
-        this.interactor = interactor;
+        super(interactionManipulations, interactor);
 
         jettyServer = new Server(port);
         // How the f*** do you turn off Embedded Jetty's logging???

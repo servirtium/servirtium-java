@@ -23,14 +23,11 @@ import static com.paulhammant.servirtium.JsonAndXmlUtilities.prettifyDocOrNot;
 public class UndertowServirtiumServer extends ServirtiumServer {
 
     private Undertow undertowServer;
-    private Interactor interactor;
     private boolean failed = false;
 
     public UndertowServirtiumServer(ServiceMonitor monitor, int port,
-                                    InteractionManipulations interactionManipulations,
-                                    Interactor interactor) {
-        super(interactionManipulations);
-        this.interactor = interactor;
+                                    InteractionManipulations interactionManipulations, Interactor interactor) {
+        super(interactionManipulations, interactor);
 
         undertowServer = Undertow.builder()
                 .addHttpListener(port, "localhost")
