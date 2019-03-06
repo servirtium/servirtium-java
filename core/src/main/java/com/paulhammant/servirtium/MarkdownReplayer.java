@@ -119,7 +119,8 @@ public class MarkdownReplayer implements Interactor {
         }
 
         @Override
-        public void noteClientRequestHeadersAndBody(List<String> clientRequestHeaders, Object clientRequestBody, String clientRequestContentType) {
+        public void noteClientRequestHeadersAndBody(List<String> clientRequestHeaders, Object clientRequestBody,
+                                                    String clientRequestContentType) {
             StringBuilder sb = new StringBuilder();
             for (String h : clientRequestHeaders) {
                 sb.append(h).append("\n");
@@ -139,7 +140,8 @@ public class MarkdownReplayer implements Interactor {
     }
 
     @Override
-    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRequestHeaders, Interaction interaction, boolean lowerCaseHeaders) throws IOException {
+    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRequestHeaders,
+                                                        Interaction interaction, boolean lowerCaseHeaders) {
 
         ReplayingInteraction replay = (ReplayingInteraction) interaction;
 
@@ -175,7 +177,8 @@ public class MarkdownReplayer implements Interactor {
         try {
             assertThat(replay.ix, not(equalTo(-1)));
         } catch (AssertionError e) {
-            monitor.markdownSectionHeadingMissing(replay.interactionNum, REQUEST_HEADERS_SENT_TO_REAL_SERVER, filename, replay.context, e);
+            monitor.markdownSectionHeadingMissing(replay.interactionNum, REQUEST_HEADERS_SENT_TO_REAL_SERVER, filename,
+                    replay.context, e);
         }
 
         String headersReceived = getCodeBlock(replay);
@@ -185,7 +188,8 @@ public class MarkdownReplayer implements Interactor {
         try {
             assertThat(replay.ix, not(equalTo(-1)));
         } catch (AssertionError e) {
-            monitor.markdownSectionHeadingMissing(replay.interactionNum, BODY_SENT_TO_REAL_SERVER, filename, replay.context, e);
+            monitor.markdownSectionHeadingMissing(replay.interactionNum, BODY_SENT_TO_REAL_SERVER, filename,
+                    replay.context, e);
         }
         lineEnd = replay.interactionText.indexOf("\n", replay.ix);
         line = replay.interactionText.substring(replay.ix +4, lineEnd);
@@ -243,7 +247,8 @@ public class MarkdownReplayer implements Interactor {
         try {
             assertThat(replay.ix, not(equalTo(-1)));
         } catch (AssertionError e) {
-            monitor.markdownSectionHeadingMissing(replay.interactionNum, RESULTING_HEADERS_BACK_FROM_REAL_SERVER, filename, replay.context, e);
+            monitor.markdownSectionHeadingMissing(replay.interactionNum, RESULTING_HEADERS_BACK_FROM_REAL_SERVER,
+                    filename, replay.context, e);
         }
         String[] serverResponseHeaders = getCodeBlock(replay).split("\n");
         final String RESULTING_BODY_BACK_FROM_REAL_SERVER = "### Resulting body back from the real server";
@@ -252,7 +257,8 @@ public class MarkdownReplayer implements Interactor {
         try {
             assertThat(replay.ix, not(equalTo(-1)));
         } catch (AssertionError e) {
-            monitor.markdownSectionHeadingMissing(replay.interactionNum, RESULTING_BODY_BACK_FROM_REAL_SERVER, filename, replay.context, e);
+            monitor.markdownSectionHeadingMissing(replay.interactionNum, RESULTING_BODY_BACK_FROM_REAL_SERVER,
+                    filename, replay.context, e);
         }
         lineEnd = replay.interactionText.indexOf("\n", replay.ix);
         line = replay.interactionText.substring(replay.ix +4, lineEnd);
@@ -323,23 +329,31 @@ public class MarkdownReplayer implements Interactor {
         class Default implements ReplayMonitor {
 
             public void finishedButMoreInteractionsYetToDo(int interaction, String filename, AssertionError e) {
-                throw makeAssertionError("There are more recorded interactions after last replayed interaction: #" + interaction + " in " + filename + ", yet invocation of .finishedScript() possibly via .stop() implies there should be no more. Fail!!", e);
+                throw makeAssertionError("There are more recorded interactions after last replayed interaction: #"
+                        + interaction + " in " + filename
+                        + ", yet invocation of .finishedScript() possibly via .stop() implies there should be no more. Fail!!", e);
             }
 
             public void couldNotFindInteraction(int interaction, String filename, String context, AssertionError e) {
                 throw makeAssertionError("Could not find interactions #" + interaction + " in file '" + filename + "'", e);
             }
 
-            public void unexpectedClientRequestMethod(int interaction, String filename, String expectedMethod, String method, String context, AssertionError e) {
-                throw makeAssertionError(methodFileAndContextPrefix(interaction, expectedMethod, filename, context) + ", method from the client that should be sent to real server are not the same as expected: " + method, e);
+            public void unexpectedClientRequestMethod(int interaction, String filename, String expectedMethod, String method,
+                                                      String context, AssertionError e) {
+                throw makeAssertionError(methodFileAndContextPrefix(interaction, expectedMethod, filename, context)
+                        + ", method from the client that should be sent to real server are not the same as expected: " + method, e);
             }
 
-            public void unexpectedClientRequestUrl(String url, ReplayingInteraction interaction, String method, String mdUrl, String filename, String context, AssertionError e) {
-                throw makeAssertionError("Method " + interaction.interactionNum + " (" + method + ") in " + filename + ": " + url + " does not end in previously recorded " + mdUrl, e);
+            public void unexpectedClientRequestUrl(String url, ReplayingInteraction interaction, String method,
+                                                   String mdUrl, String filename, String context, AssertionError e) {
+                throw makeAssertionError("Method " + interaction.interactionNum + " (" + method + ") in "
+                        + filename + ": " + url + " does not end in previously recorded " + mdUrl, e);
             }
 
-            public void markdownSectionHeadingMissing(int interaction, String HEADERS_SENT_TO_REAL_SERVER, String filename, String context, AssertionError e) {
-                throw makeAssertionError("Expected '" + HEADERS_SENT_TO_REAL_SERVER + "' for interaction #" + interaction + " in " + filename + ", but it was not there", e);
+            public void markdownSectionHeadingMissing(int interaction, String HEADERS_SENT_TO_REAL_SERVER, String filename,
+                                                      String context, AssertionError e) {
+                throw makeAssertionError("Expected '" + HEADERS_SENT_TO_REAL_SERVER + "' for interaction #"
+                        + interaction + " in " + filename + ", but it was not there", e);
             }
 
             public void unexpectedClientRequestHeaders(int interaction, String method, String filename, String context, AssertionError e) {
@@ -348,15 +362,18 @@ public class MarkdownReplayer implements Interactor {
             }
 
             public void unexpectedClientRequestBody(int interaction, String method, String filename, String context, AssertionError e) {
-                throw makeAssertionError(methodFileAndContextPrefix(interaction, method, filename, context) + ", body from the client that should be sent to real server are not the same those previously recorded", e);
+                throw makeAssertionError(methodFileAndContextPrefix(interaction, method, filename, context)
+                        + ", body from the client that should be sent to real server are not the same those previously recorded", e);
             }
 
             public void unexpectedClientRequestContentType(int interaction, String method, String filename, String context, AssertionError e) {
-                throw makeAssertionError(methodFileAndContextPrefix(interaction, method, filename, context) + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded", e);
+                throw makeAssertionError(methodFileAndContextPrefix(interaction, method, filename, context)
+                        + ", content-Type of body from the client that should be sent to real server are not the same those previously recorded", e);
             }
 
             public AssertionError unexpectedInteractionRequest(int interactionNum, String filename, IndexOutOfBoundsException e) {
-                return makeAssertionError("Replay of script '" + filename + "' hit a problem when interaction " + interactionNum + " sought, but there were no more after " + (interactionNum - 1), e);
+                return makeAssertionError("Replay of script '" + filename + "' hit a problem when interaction "
+                        + interactionNum + " sought, but there were no more after " + (interactionNum - 1), e);
             }
 
             private String methodFileAndContextPrefix(int interactionNum, String mdMethod, String filename, String context) {
@@ -395,7 +412,8 @@ public class MarkdownReplayer implements Interactor {
             }
 
             @Override
-            public void unexpectedClientRequestMethod(int interaction, String filename, String expectedMethod, String method, String context, AssertionError e) {
+            public void unexpectedClientRequestMethod(int interaction, String filename, String expectedMethod,
+                                                      String method, String context, AssertionError e) {
                 try {
                     super.unexpectedClientRequestMethod(interaction, filename, expectedMethod, method, context, e);
                 } catch (AssertionError e1) {
@@ -404,7 +422,8 @@ public class MarkdownReplayer implements Interactor {
             }
 
             @Override
-            public void unexpectedClientRequestUrl(String url, ReplayingInteraction interaction, String method, String mdUrl, String filename, String context, AssertionError e) {
+            public void unexpectedClientRequestUrl(String url, ReplayingInteraction interaction, String method,
+                                                   String mdUrl, String filename, String context, AssertionError e) {
                 try {
                     super.unexpectedClientRequestUrl(url, interaction, method, mdUrl, filename, context, e);
                 } catch (AssertionError e1) {
@@ -413,7 +432,8 @@ public class MarkdownReplayer implements Interactor {
             }
 
             @Override
-            public void markdownSectionHeadingMissing(int interaction, String HEADERS_SENT_TO_REAL_SERVER, String filename, String context, AssertionError e) {
+            public void markdownSectionHeadingMissing(int interaction, String HEADERS_SENT_TO_REAL_SERVER,
+                                                      String filename, String context, AssertionError e) {
                 try {
                     super.markdownSectionHeadingMissing(interaction, HEADERS_SENT_TO_REAL_SERVER, filename, context, e);
                 } catch (AssertionError e1) {

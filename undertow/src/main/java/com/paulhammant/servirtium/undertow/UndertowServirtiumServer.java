@@ -87,10 +87,12 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 //                    }
 //
 
-            final String requestUrl = prepareHeadersAndBodyForService(exchange, method, url, clientRequestHeaders, interaction, clientRequestContentType, interactionManipulations);
+            final String requestUrl = prepareHeadersAndBodyForService(exchange, method, url, clientRequestHeaders,
+                    interaction, clientRequestContentType, interactionManipulations);
 
             // INTERACTION
-            ServiceResponse serviceResponse = interactor.getServiceResponseForRequest(method, requestUrl, clientRequestHeaders, interaction, getLowerCaseHeaders());
+            ServiceResponse serviceResponse = interactor.getServiceResponseForRequest(method, requestUrl, clientRequestHeaders,
+                    interaction, getLowerCaseHeaders());
 
             serviceResponse = processHeadersAndBodyBackFromService(interaction, serviceResponse, interactionManipulations);
 
@@ -133,7 +135,9 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         }
     }
 
-    private ServiceResponse processHeadersAndBodyBackFromService(Interactor.Interaction interaction, ServiceResponse serviceResponse, InteractionManipulations interactionManipulations) {
+    private ServiceResponse processHeadersAndBodyBackFromService(Interactor.Interaction interaction,
+                                                                 ServiceResponse serviceResponse,
+                                                                 InteractionManipulations interactionManipulations) {
         ArrayList<String > newHeaders = new ArrayList<>();
         for (int i = 0; i < serviceResponse.headers.length; i++) {
             String headerBackFromService = serviceResponse.headers[i];
@@ -145,7 +149,8 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         interactionManipulations.changeAnyHeadersReturnedBackFromService(newHeaders);
 
         if (serviceResponse.body instanceof String) {
-            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServiceForRecording((String) serviceResponse.body));
+            serviceResponse = serviceResponse.withRevisedBody(
+                    interactionManipulations.changeBodyReturnedBackFromServiceForRecording((String) serviceResponse.body));
             // recreate response
 
             if (shouldHavePrettyPrintedTextBodies()) {
@@ -168,16 +173,21 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
         serviceResponse = serviceResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
 
-        interaction.noteResponseHeadersAndBody(serviceResponse.headers, serviceResponse.body, serviceResponse.statusCode, serviceResponse.contentType);
+        interaction.noteResponseHeadersAndBody(serviceResponse.headers, serviceResponse.body, serviceResponse.statusCode,
+                serviceResponse.contentType);
 
         if (serviceResponse.body instanceof String) {
-            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServiceForClient((String) serviceResponse.body));
+            serviceResponse = serviceResponse.withRevisedBody(
+                    interactionManipulations.changeBodyReturnedBackFromServiceForClient((String) serviceResponse.body));
         }
 
         return serviceResponse;
     }
 
-    private String prepareHeadersAndBodyForService(HttpServerExchange exchange, String method, String url, List<String> clientRequestHeaders, Interactor.Interaction interaction, String clientRequestContentType, InteractionManipulations interactionManipulations) throws IOException {
+    private String prepareHeadersAndBodyForService(HttpServerExchange exchange, String method, String url,
+                                                   List<String> clientRequestHeaders, Interactor.Interaction interaction,
+                                                   String clientRequestContentType,
+                                                   InteractionManipulations interactionManipulations) throws IOException {
 
         exchange.startBlocking();
         InputStream is = exchange.getInputStream();

@@ -45,7 +45,8 @@ public class JettyServirtiumServer extends ServirtiumServer {
         });
     }
 
-    private void handleExchange(Request baseRequest, HttpServletRequest request, HttpServletResponse response, ServiceMonitor monitor) throws IOException {
+    private void handleExchange(Request baseRequest, HttpServletRequest request, HttpServletResponse response,
+                                ServiceMonitor monitor) throws IOException {
 
         bumpInteractionNum();
 
@@ -88,10 +89,12 @@ public class JettyServirtiumServer extends ServirtiumServer {
 //                    }
 //
 
-            final String requestUrl = prepareHeadersAndBodyForService(request, method, url, clientRequestHeaders, interaction, clientRequestContentType, interactionManipulations);
+            final String requestUrl = prepareHeadersAndBodyForService(request, method, url, clientRequestHeaders,
+                    interaction, clientRequestContentType, interactionManipulations);
 
             // INTERACTION
-            ServiceResponse serverResponse = interactor.getServiceResponseForRequest(method, requestUrl, clientRequestHeaders, interaction, getLowerCaseHeaders());
+            ServiceResponse serverResponse = interactor.getServiceResponseForRequest(method, requestUrl, clientRequestHeaders,
+                    interaction, getLowerCaseHeaders());
 
             serverResponse = processHeadersAndBodyBackFromService(interaction, serverResponse, interactionManipulations);
 
@@ -136,7 +139,9 @@ public class JettyServirtiumServer extends ServirtiumServer {
         }
     }
 
-    private ServiceResponse processHeadersAndBodyBackFromService(Interactor.Interaction interaction, ServiceResponse serviceResponse, InteractionManipulations interactionManipulations) {
+    private ServiceResponse processHeadersAndBodyBackFromService(Interactor.Interaction interaction,
+                                                                 ServiceResponse serviceResponse,
+                                                                 InteractionManipulations interactionManipulations) {
         ArrayList<String > newHeaders = new ArrayList<>();
         for (int i = 0; i < serviceResponse.headers.length; i++) {
             String headerBackFromService = serviceResponse.headers[i];
@@ -148,7 +153,8 @@ public class JettyServirtiumServer extends ServirtiumServer {
         interactionManipulations.changeAnyHeadersReturnedBackFromService(newHeaders);
 
         if (serviceResponse.body instanceof String) {
-            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServiceForRecording((String) serviceResponse.body));
+            serviceResponse = serviceResponse.withRevisedBody(
+                    interactionManipulations.changeBodyReturnedBackFromServiceForRecording((String) serviceResponse.body));
             // recreate response
 
             if (shouldHavePrettyPrintedTextBodies()) {
@@ -171,16 +177,21 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
         serviceResponse = serviceResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
 
-        interaction.noteResponseHeadersAndBody(serviceResponse.headers, serviceResponse.body, serviceResponse.statusCode, serviceResponse.contentType);
+        interaction.noteResponseHeadersAndBody(serviceResponse.headers, serviceResponse.body, serviceResponse.statusCode,
+                serviceResponse.contentType);
 
         if (serviceResponse.body instanceof String) {
-            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServiceForClient((String) serviceResponse.body));
+            serviceResponse = serviceResponse.withRevisedBody(
+                    interactionManipulations.changeBodyReturnedBackFromServiceForClient((String) serviceResponse.body));
         }
 
         return serviceResponse;
     }
 
-    private String prepareHeadersAndBodyForService(HttpServletRequest request, String method, String url, List<String> clientRequestHeaders, Interactor.Interaction interaction, String clientRequestContentType, InteractionManipulations interactionManipulations) throws IOException {
+    private String prepareHeadersAndBodyForService(HttpServletRequest request, String method, String url,
+                                                   List<String> clientRequestHeaders, Interactor.Interaction interaction,
+                                                   String clientRequestContentType,
+                                                   InteractionManipulations interactionManipulations) throws IOException {
         Enumeration<String> hdrs = request.getHeaderNames();
 
         ServletInputStream is = request.getInputStream();

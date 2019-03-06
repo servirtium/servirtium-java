@@ -62,9 +62,11 @@ public class MarkdownRecorder implements Interactor {
         return this;
     }
 
-    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRequestHeaders, Interaction interaction, boolean lowerCaseHeaders) throws IOException {
+    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRequestHeaders,
+                                                        Interaction interaction, boolean lowerCaseHeaders) {
         //clientRequestHeaders.remove("Accept-Encoding");
-        return serviceInteroperation.invokeServiceEndpoint(method, interaction.clientRequestBody, interaction.clientRequestContentType, url, clientRequestHeaders, interactionManipulations, lowerCaseHeaders);
+        return serviceInteroperation.invokeServiceEndpoint(method, interaction.clientRequestBody,
+                interaction.clientRequestContentType, url, clientRequestHeaders, interactionManipulations, lowerCaseHeaders);
     }
 
     /**
@@ -101,7 +103,8 @@ public class MarkdownRecorder implements Interactor {
             super(interactionNumber, context);
         }
 
-        public void noteClientRequestHeadersAndBody(List<String> clientRequestHeaders, Object clientRequestBody, String clientRequestContentType) {
+        public void noteClientRequestHeadersAndBody(List<String> clientRequestHeaders, Object clientRequestBody,
+                                                    String clientRequestContentType) {
 
             guardOut();
 
@@ -135,7 +138,8 @@ public class MarkdownRecorder implements Interactor {
                     forRecording = ((String) forRecording).replaceAll(redactionRegex, redactions.get(redactionRegex));
                 }
             } else {
-                forRecording = "//SERVIRTIUM+Base64: " + Base64.getEncoder().encodeToString((byte[]) clientRequestBody).replaceAll("(.{60})", "$1\n");
+                forRecording = "//SERVIRTIUM+Base64: " + Base64.getEncoder()
+                        .encodeToString((byte[]) clientRequestBody).replaceAll("(.{60})", "$1\n");
             }
             this.recording.append(forRecording).append("\n");
 
@@ -156,7 +160,8 @@ public class MarkdownRecorder implements Interactor {
                 for (String next : redactions.keySet()) {
                     hdrVal = hdrVal.replaceAll(next, redactions.get(next));
                 }
-                this.recording.append(hdrKey).append(": ").append(interactionManipulations.headerReplacement(hdrKey, hdrVal)).append("\n");
+                this.recording.append(hdrKey).append(": ").append(
+                        interactionManipulations.headerReplacement(hdrKey, hdrVal)).append("\n");
             }
 
             blockEnd();
@@ -175,7 +180,8 @@ public class MarkdownRecorder implements Interactor {
         }
 
         @Override
-        public void noteResponseHeadersAndBody(String[] headers, Object serverResponseBody, int statusCode, String serverResponseContentType) {
+        public void noteResponseHeadersAndBody(String[] headers, Object serverResponseBody, int statusCode,
+                                               String serverResponseContentType) {
             this.recordResponseHeaders(headers);
             this.recordResponseBody(serverResponseBody, statusCode, serverResponseContentType);
         }
@@ -217,13 +223,15 @@ public class MarkdownRecorder implements Interactor {
         guardOut();
         RecordingInteraction rc = new RecordingInteraction(interactionNum, context);
 
-        rc.recording.append("## Interaction ").append(interactionNum).append(": ").append(method).append(" ").append(path).append("\n\n");
+        rc.recording.append("## Interaction ").append(interactionNum).append(": ").append(method)
+                .append(" ").append(path).append("\n\n");
         return rc;
     }
 
     private void guardOut() {
         if (out == null) {
-            throw new AssertionError("Recording in progress, but previous recording was finishedScript() and/or no new setScriptFilename(..) started");
+            throw new AssertionError("Recording in progress, but previous recording was " +
+                    "finishedScript() and/or no new setScriptFilename(..) started");
         }
     }
 
