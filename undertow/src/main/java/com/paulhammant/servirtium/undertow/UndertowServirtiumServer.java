@@ -29,16 +29,17 @@ public class UndertowServirtiumServer extends ServirtiumServer {
     public UndertowServirtiumServer(ServiceMonitor monitor, int port,
                                     InteractionManipulations interactionManipulations,
                                     Interactor interactor) {
+        super(interactionManipulations);
         this.interactor = interactor;
 
         undertowServer = Undertow.builder()
                 .addHttpListener(port, "localhost")
                 .setHandler(new BlockingHandler(exchange ->
-                        UndertowServirtiumServer.this.handleExchange(exchange, monitor, interactionManipulations)))
+                        UndertowServirtiumServer.this.handleExchange(exchange, monitor)))
                 .build();
     }
 
-    private void handleExchange(HttpServerExchange exchange, ServiceMonitor monitor, InteractionManipulations interactionManipulations) throws IOException {
+    private void handleExchange(HttpServerExchange exchange, ServiceMonitor monitor) throws IOException {
         bumpInteractionNum();
 
         String method = exchange.getRequestMethod().toString();

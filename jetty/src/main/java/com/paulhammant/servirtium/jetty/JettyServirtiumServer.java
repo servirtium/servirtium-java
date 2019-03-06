@@ -30,6 +30,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
     public JettyServirtiumServer(ServiceMonitor monitor, int port,
                                  InteractionManipulations interactionManipulations,
                                  Interactor interactor) {
+        super(interactionManipulations);
         this.interactor = interactor;
 
         jettyServer = new Server(port);
@@ -41,12 +42,12 @@ public class JettyServirtiumServer extends ServirtiumServer {
             @Override
             public void handle(String target, org.eclipse.jetty.server.Request baseRequest,
                                HttpServletRequest request, HttpServletResponse response) throws IOException {
-                handleExchange(baseRequest, request, response, monitor, interactionManipulations);
+                handleExchange(baseRequest, request, response, monitor);
             }
         });
     }
 
-    private void handleExchange(Request baseRequest, HttpServletRequest request, HttpServletResponse response, ServiceMonitor monitor, InteractionManipulations interactionManipulations) throws IOException {
+    private void handleExchange(Request baseRequest, HttpServletRequest request, HttpServletResponse response, ServiceMonitor monitor) throws IOException {
 
         bumpInteractionNum();
 

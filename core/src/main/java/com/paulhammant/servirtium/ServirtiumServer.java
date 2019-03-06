@@ -2,10 +2,16 @@ package com.paulhammant.servirtium;
 
 public abstract class ServirtiumServer {
 
+    protected final InteractionManipulations interactionManipulations;
     private String context = "no context";
     private boolean pretty;
     private int interactionNum = -1;
     private boolean lowerCaseHeaders;
+
+    public ServirtiumServer(InteractionManipulations interactionManipulations) {
+
+        this.interactionManipulations = interactionManipulations;
+    }
 
     public abstract ServirtiumServer start() throws Exception;
     public abstract void stop();
@@ -61,6 +67,11 @@ public abstract class ServirtiumServer {
 
 
     public static class NullObject extends ServirtiumServer {
+
+
+        public NullObject() {
+            super(new InteractionManipulations.Noop());
+        }
 
         @Override
         public ServirtiumServer start() {
