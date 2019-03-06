@@ -52,7 +52,7 @@ public interface InteractionManipulations {
         return headerBackFromService;
     }
 
-    default void changeAllHeadersReturnedBackFromService(ArrayList<String> serverResponseHeaders) {
+    default void changeAnyHeadersReturnedBackFromService(ArrayList<String> serverResponseHeaders) {
     }
 
     /**
@@ -80,7 +80,7 @@ public interface InteractionManipulations {
         return bodyAsRecorded;
     }
 
-    default void changeAllHeadersForRequestToService(List<String> clientRequestHeaders) {
+    default void changeAnyHeadersForRequestToService(List<String> clientRequestHeaders) {
     }
 
     /** This may be Base84 encoded binary, but you're seldom going to want to change that */

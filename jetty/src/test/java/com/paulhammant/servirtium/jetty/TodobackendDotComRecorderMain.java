@@ -55,7 +55,7 @@ public class TodobackendDotComRecorderMain {
     public static SimpleInteractionManipulations makeInteractionManipulations() {
         return new SimpleInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
             @Override
-            public void changeAllHeadersForRequestToService(List<String> clientRequestHeaders) {
+            public void changeAnyHeadersForRequestToService(List<String> clientRequestHeaders) {
                 String refer = "";
                 for (int i = 0; i < clientRequestHeaders.size(); i++) {
                     String s = clientRequestHeaders.get(i);

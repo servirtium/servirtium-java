@@ -70,7 +70,7 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
     }
 
     @Override
-    public void changeAllHeadersReturnedBackFromService(ArrayList<String> serverResponseHeaders) {
+    public void changeAnyHeadersReturnedBackFromService(ArrayList<String> serverResponseHeaders) {
         String[] hdrs = serverResponseHeaders.toArray(new String[0]);
         for (String hdr : hdrs) {
             for (String pfx : headerPrefixesToRemoveFromResponse) {

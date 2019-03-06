@@ -146,7 +146,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
                 newHeaders.add(potentiallyChangedHeader);
             }
         }
-        interactionManipulations.changeAllHeadersReturnedBackFromService(newHeaders);
+        interactionManipulations.changeAnyHeadersReturnedBackFromService(newHeaders);
 
         if (serviceResponse.body instanceof String) {
             serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyReturnedBackFromServiceForRecording((String) serviceResponse.body));
@@ -219,7 +219,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
             interactionManipulations.changeSingleHeaderForRequestToService(method, fullHeader, clientRequestHeaders);
         }
 
-        interactionManipulations.changeAllHeadersForRequestToService(clientRequestHeaders);
+        interactionManipulations.changeAnyHeadersForRequestToService(clientRequestHeaders);
 
         if (clientRequestBody instanceof String) {
             clientRequestBody = interactionManipulations.changeBodyForRequestToService((String) clientRequestBody);
