@@ -76,7 +76,7 @@ public interface InteractionManipulations {
      * @param bodyAsRecorded the string representation of the body as recorded.
      * @return the modified (or not) string representation of the body as recorded
      */
-    default String changeBodyReturnedBackFromServiceForClient(String bodyAsRecorded) {
+    default String changeServiceResponseBodyForClientPostRecording(String bodyAsRecorded) {
         return bodyAsRecorded;
     }
 

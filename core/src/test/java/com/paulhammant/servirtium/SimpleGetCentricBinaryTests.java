@@ -112,7 +112,7 @@ public abstract class SimpleGetCentricBinaryTests {
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        recorder.setOutputStream("foo", out);
+        recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
         servirtiumServer.start();
 
         checkGetOfLinuxBinaryLibFileOverHttpViaRestAssured();
@@ -139,7 +139,7 @@ public abstract class SimpleGetCentricBinaryTests {
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder).withLowerCaseHeaders();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        recorder.setOutputStream("foo", out);
+        recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
         servirtiumServer.start();
 
         // https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png
@@ -217,7 +217,7 @@ public abstract class SimpleGetCentricBinaryTests {
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder).withLowerCaseHeaders();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        recorder.setOutputStream("foo", out);
+        recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
         servirtiumServer.start();
 
         // https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png

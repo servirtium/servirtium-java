@@ -35,7 +35,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
@@ -122,18 +121,7 @@ public class MarkdownRecorder implements Interactor {
                 blockEnd();
             }
 
-            List<String> clientRequestHeaders2 = new ArrayList<>();
-
-            for (int i = 0; i < clientRequestHeaders.size(); i++) {
-                String s = clientRequestHeaders.get(i);
-                String hdrName = s.split(": ")[0];
-                String hdrVal = s.split(": ")[1];
-                hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
-                final String fullHeader = (lowerCaseHeaders ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
-                clientRequestHeaders2.add(fullHeader);
-                interactionManipulations.changeSingleHeaderForRequestToService(method, fullHeader, clientRequestHeaders2);
-
-            }
+            List<String> clientRequestHeaders2 = changeRequestHeadersIfNeeded(interactionManipulations, clientRequestHeaders, method, lowerCaseHeaders);
 
             interactionManipulations.changeAnyHeadersForRequestToService(clientRequestHeaders2);
 
@@ -195,9 +183,36 @@ public class MarkdownRecorder implements Interactor {
             return clientRequestHeaders2;
         }
 
-        private void recordResponseHeaders(String[] headers) {
+        private void blockStart(String s) {
+            this.recording.append("### ").append(s).append(":\n")
+                    .append("\n")
+                    .append("```\n");
+        }
+
+        private void blockEnd() {
+            this.recording.append("```\n");
+            this.recording.append("\n");
+        }
+
+        @Override
+        public void debugRawServiceResponse(String[] headers, Object serverResponseBody, int statusCode, String serverResponseContentType) {
+            if (extraDebugOutput) {
+                doRawServiceResponse(headers, serverResponseBody, statusCode, serverResponseContentType, "DEBUG RAW ");
+            }
+        }
+
+        @Override
+        public void noteServiceResponse(String[] headers, Object serverResponseBody, int statusCode,
+                                        String serverResponseContentType) {
+
+            doRawServiceResponse(headers, serverResponseBody, statusCode, serverResponseContentType, "");
+        }
+
+        private void doRawServiceResponse(String[] headers, Object serverResponseBody, int statusCode, String serverResponseContentType, String preable) {
             guardOut();
-            blockStart("Resulting headers back from the real server");
+
+            blockStart(preable + "Resulting headers back from the real server");
+
             if (alphaSortHeaders) {
                 Arrays.sort(headers);
             }
@@ -214,44 +229,22 @@ public class MarkdownRecorder implements Interactor {
 
             blockEnd();
 
-        }
-
-        private void blockStart(String s) {
-            this.recording.append("### ").append(s).append(":\n")
-                    .append("\n")
-                    .append("```\n");
-        }
-
-        private void blockEnd() {
-            this.recording.append("```\n");
-            this.recording.append("\n");
-        }
-
-        @Override
-        public void noteResponseHeadersAndBody(String[] headers, Object serverResponseBody, int statusCode,
-                                               String serverResponseContentType) {
-            this.recordResponseHeaders(headers);
-            this.recordResponseBody(serverResponseBody, statusCode, serverResponseContentType);
-        }
-
-        private void recordResponseBody(Object body, int statusCode, String contentType) {
-
             guardOut();
 
             String xtra = "";
-            if (body instanceof byte[]) {
+            if (serverResponseBody instanceof byte[]) {
                 xtra = " - Base64 below";
             }
 
-            blockStart("Resulting body back from the real server (" + statusCode + ": " + contentType + xtra + ")");
+            blockStart("Resulting body back from the real server (" + statusCode + ": " + serverResponseContentType + xtra + ")");
 
-            if (body instanceof String) {
+            if (serverResponseBody instanceof String) {
                 for (String next : redactions.keySet()) {
-                    body = ((String) body).replaceAll(next, redactions.get(next));
+                    serverResponseBody = ((String) serverResponseBody).replaceAll(next, redactions.get(next));
                 }
-                this.recording.append(body).append("\n");
-            } else if (body instanceof byte[]) {
-                this.recording.append(Base64.getEncoder().encodeToString((byte[]) body)).append("\n");
+                this.recording.append(serverResponseBody).append("\n");
+            } else if (serverResponseBody instanceof byte[]) {
+                this.recording.append(Base64.getEncoder().encodeToString((byte[]) serverResponseBody)).append("\n");
             } else {
                 throw new UnsupportedOperationException();
             }

@@ -183,7 +183,7 @@ public abstract class SimpleGetCentricTextTests {
         servirtiumServer = makeServirtiumServer(new ServiceMonitor.Console(), interactionManipulations, recorder);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        recorder.setOutputStream("foo", out);
+        recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
         servirtiumServer.start();
 
         checkGetOfApacheNoticeFileOverHttpViaRestAssured();
@@ -211,7 +211,7 @@ public abstract class SimpleGetCentricTextTests {
         servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        recorder.setOutputStream("foo", out);
+        recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
 
         // Order of headers is as originally sent
         String expected = "## Interaction 0: GET /paul-hammant/servirtium/master/core/src/test/resources/test.json\n" +
@@ -376,7 +376,7 @@ public abstract class SimpleGetCentricTextTests {
                 .withLowerCaseHeaders();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        recorder.setOutputStream("foo", out);
+        recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
         servirtiumServer.start();
 
         given()
@@ -454,7 +454,7 @@ public abstract class SimpleGetCentricTextTests {
                 .withPrettyPrintedTextBodies();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        recorder.setOutputStream("foo", out);
+        recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
         servirtiumServer.start();
 
         given()
@@ -528,7 +528,7 @@ public abstract class SimpleGetCentricTextTests {
                 .withPrettyPrintedTextBodies();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        recorder.setOutputStream("foo", out);
+        recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
         servirtiumServer.start();
 
         given()
@@ -607,7 +607,7 @@ public abstract class SimpleGetCentricTextTests {
                 .withPrettyPrintedTextBodies();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        recorder.setOutputStream("foo", out);
+        recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
         servirtiumServer.start();
 
         given()

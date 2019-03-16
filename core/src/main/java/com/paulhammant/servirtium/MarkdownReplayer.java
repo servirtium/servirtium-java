@@ -122,18 +122,7 @@ public class MarkdownReplayer implements Interactor {
         public List<String> noteClientRequestHeadersAndBody(InteractionManipulations interactionManipulations, List<String> clientRequestHeaders, Object clientRequestBody,
                                                             String clientRequestContentType, String method, boolean lowerCaseHeaders) {
 
-            List<String> clientRequestHeaders2 = new ArrayList<>();
-
-            for (int i = 0; i < clientRequestHeaders.size(); i++) {
-                String s = clientRequestHeaders.get(i);
-                String hdrName = s.split(": ")[0];
-                String hdrVal = s.split(": ")[1];
-                hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
-                final String fullHeader = (lowerCaseHeaders ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
-                clientRequestHeaders2.add(fullHeader);
-                interactionManipulations.changeSingleHeaderForRequestToService(method, fullHeader, clientRequestHeaders2);
-
-            }
+            List<String> clientRequestHeaders2 = changeRequestHeadersIfNeeded(interactionManipulations, clientRequestHeaders, method, lowerCaseHeaders);
 
             interactionManipulations.changeAnyHeadersForRequestToService(clientRequestHeaders2);
 
@@ -158,7 +147,12 @@ public class MarkdownReplayer implements Interactor {
         }
 
         @Override
-        public void noteResponseHeadersAndBody(String[] headers, Object body, int statusCode, String contentType) {
+        public void debugRawServiceResponse(String[] headers, Object body, int statusCode, String contentType) {
+            // Nothing to note, this is already the replay of a recording
+        }
+
+        @Override
+        public void noteServiceResponse(String[] headers, Object body, int statusCode, String contentType) {
             // Nothing to note, this is already the replay of a recording
         }
 

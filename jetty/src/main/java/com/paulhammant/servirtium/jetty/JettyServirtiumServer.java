@@ -96,7 +96,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
             ServiceResponse serverResponse = interactor.getServiceResponseForRequest(method, urlAndHeaders.url, urlAndHeaders.clientRequestHeaders,
                     interaction, getLowerCaseHeaders());
 
-            serverResponse = processHeadersAndBodyBackFromService(interaction, serverResponse, interactionManipulations);
+            serverResponse = processHeadersAndBodyBackFromService(interaction, serverResponse);
 
             interactor.addInteraction(interaction);
 
@@ -140,8 +140,11 @@ public class JettyServirtiumServer extends ServirtiumServer {
     }
 
     private ServiceResponse processHeadersAndBodyBackFromService(Interactor.Interaction interaction,
-                                                                 ServiceResponse serviceResponse,
-                                                                 InteractionManipulations interactionManipulations) {
+                                                                 ServiceResponse serviceResponse) {
+
+        interaction.debugRawServiceResponse(serviceResponse.headers, serviceResponse.body, serviceResponse.statusCode,
+                serviceResponse.contentType);
+
         List<String> newHeaders = new ArrayList<>();
         Collections.addAll(newHeaders, serviceResponse.headers);
 
@@ -185,12 +188,12 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
         serviceResponse = serviceResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
 
-        interaction.noteResponseHeadersAndBody(serviceResponse.headers, serviceResponse.body, serviceResponse.statusCode,
+        interaction.noteServiceResponse(serviceResponse.headers, serviceResponse.body, serviceResponse.statusCode,
                 serviceResponse.contentType);
 
         if (serviceResponse.body instanceof String) {
             serviceResponse = serviceResponse.withRevisedBody(
-                    interactionManipulations.changeBodyReturnedBackFromServiceForClient((String) serviceResponse.body));
+                    interactionManipulations.changeServiceResponseBodyForClientPostRecording((String) serviceResponse.body));
         }
 
         return serviceResponse;

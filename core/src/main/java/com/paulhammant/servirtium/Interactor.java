@@ -33,6 +33,7 @@ package com.paulhammant.servirtium;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface Interactor {
@@ -67,7 +68,21 @@ public interface Interactor {
             this.clientRequestContentType = clientRequestContentType;
         }
 
-        public abstract void noteResponseHeadersAndBody(String[] headers, Object body, int statusCode, String contentType);
+        protected List<String> changeRequestHeadersIfNeeded(InteractionManipulations interactionManipulations, List<String> clientRequestHeaders, String method, boolean lowerCaseHeaders) {
+            List<String> clientRequestHeaders2 = new ArrayList<>();
+            for (String s : clientRequestHeaders) {
+                String hdrName = s.split(": ")[0];
+                String hdrVal = s.split(": ")[1];
+                hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
+                final String fullHeader = (lowerCaseHeaders ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
+                clientRequestHeaders2.add(fullHeader);
+                interactionManipulations.changeSingleHeaderForRequestToService(method, fullHeader, clientRequestHeaders2);
+            }
+            return clientRequestHeaders2;
+        }
+
+        public abstract void debugRawServiceResponse(String[] headers, Object body, int statusCode, String contentType);
+        public abstract void noteServiceResponse(String[] headers, Object body, int statusCode, String contentType);
     }
 
     public class NullObject implements Interactor {

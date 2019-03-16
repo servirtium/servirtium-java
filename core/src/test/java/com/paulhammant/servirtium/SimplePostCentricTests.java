@@ -114,7 +114,7 @@ public abstract class SimplePostCentricTests {
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        recorder.setOutputStream("foo", out);
+        recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
         servirtiumServer.start();
 
         checkPostToPostmanEchoViaRestAssured();
@@ -167,7 +167,7 @@ public abstract class SimplePostCentricTests {
             servirtiumServer = makeServirtiumServer(interactionManipulations, recorder);
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
-            recorder.setOutputStream("foo", out);
+            recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
             servirtiumServer.start();
 
             final InputStream resourceAsStream = new FileInputStream("../core/src/test/resources/png-transparent.png");
@@ -252,7 +252,7 @@ public abstract class SimplePostCentricTests {
             servirtiumServer = makeServirtiumServer(interactionManipulations, recorder);
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
-            recorder.setOutputStream("foo", out);
+            recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
             servirtiumServer.start();
 
             final InputStream resourceAsStream = new FileInputStream("../core/src/test/resources/png-transparent.png");

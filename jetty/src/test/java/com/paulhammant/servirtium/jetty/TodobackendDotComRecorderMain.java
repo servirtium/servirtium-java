@@ -72,7 +72,7 @@ public class TodobackendDotComRecorderMain {
             }
 
             @Override
-            public String changeBodyReturnedBackFromServiceForClient(String body) {
+            public String changeServiceResponseBodyForClientPostRecording(String body) {
                 return body.replaceAll("todo-backend-sinatra\\.herokuapp\\.com",
                         "localhost:8099");
             }
