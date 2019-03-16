@@ -59,8 +59,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
         url = (url.startsWith("http://") || url.startsWith("https://"))
                 ? url : "http://" + request.getRemoteHost() + ":" + request.getRemotePort() + uri;
 
-        //String clientRequestBody = "";
-        List<String> clientRequestHeaders = new ArrayList<>();
+//        List<String> clientRequestHeaders = new ArrayList<>();
 
         try {
 
@@ -90,11 +89,11 @@ public class JettyServirtiumServer extends ServirtiumServer {
 //                    }
 //
 
-            final String requestUrl = prepareHeadersAndBodyForService(request, method, url, clientRequestHeaders,
+            final UrlAndHeaders urlAndHeaders = prepareHeadersAndBodyForService(request, method, url,
                     interaction, clientRequestContentType, interactionManipulations);
 
             // INTERACTION
-            ServiceResponse serverResponse = interactor.getServiceResponseForRequest(method, requestUrl, clientRequestHeaders,
+            ServiceResponse serverResponse = interactor.getServiceResponseForRequest(method, urlAndHeaders.url, urlAndHeaders.clientRequestHeaders,
                     interaction, getLowerCaseHeaders());
 
             serverResponse = processHeadersAndBodyBackFromService(interaction, serverResponse, interactionManipulations);
@@ -197,8 +196,18 @@ public class JettyServirtiumServer extends ServirtiumServer {
         return serviceResponse;
     }
 
-    private String prepareHeadersAndBodyForService(HttpServletRequest request, String method, String url,
-                                                   List<String> clientRequestHeaders, Interactor.Interaction interaction,
+    private class UrlAndHeaders {
+        String url;
+        List<String> clientRequestHeaders;
+
+        public UrlAndHeaders(String url, List<String> clientRequestHeaders) {
+            this.url = url;
+            this.clientRequestHeaders = clientRequestHeaders;
+        }
+    }
+
+    private UrlAndHeaders prepareHeadersAndBodyForService(HttpServletRequest request, String method, String url,
+                                                   Interactor.Interaction interaction,
                                                    String clientRequestContentType,
                                                    InteractionManipulations interactionManipulations) throws IOException {
         Enumeration<String> hdrs = request.getHeaderNames();
@@ -228,19 +237,19 @@ public class JettyServirtiumServer extends ServirtiumServer {
             }
         }
 
-        while (hdrs.hasMoreElements()) {
-            // TODO - make this cater for multiple lines with the same name
+        List<String> clientRequestHeaders = new ArrayList<>();
+         while (hdrs.hasMoreElements()) {
             String hdrName = hdrs.nextElement();
-            String hdrVal = request.getHeader(hdrName);
-            hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
-            final String fullHeader = (getLowerCaseHeaders() ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
-            clientRequestHeaders.add(fullHeader);
-            interactionManipulations.changeSingleHeaderForRequestToService(method, fullHeader, clientRequestHeaders);
+            Enumeration<String> hdrVals = request.getHeaders(hdrName);
+            while (hdrVals.hasMoreElements()) {
+                String s = hdrVals.nextElement();
+                clientRequestHeaders.add(hdrName + ": " + s);
+            }
         }
 
-        interaction.noteClientRequestHeadersAndBody(interactionManipulations, clientRequestHeaders, clientRequestBody, clientRequestContentType);
+        List<String> clientRequestHeaders2 = interaction.noteClientRequestHeadersAndBody(interactionManipulations, clientRequestHeaders, clientRequestBody, clientRequestContentType, method, getLowerCaseHeaders());
 
-        return interactionManipulations.changeUrlForRequestToService(url);
+        return new UrlAndHeaders(interactionManipulations.changeUrlForRequestToService(url), clientRequestHeaders2);
     }
 
     public ServirtiumServer start() throws Exception {

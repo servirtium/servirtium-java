@@ -35,6 +35,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
@@ -107,8 +108,9 @@ public class MarkdownRecorder implements Interactor {
             super(interactionNumber, context);
         }
 
-        public void noteClientRequestHeadersAndBody(InteractionManipulations interactionManipulations, List<String> clientRequestHeaders, Object clientRequestBody,
-                                                    String clientRequestContentType) {
+        public List<String> noteClientRequestHeadersAndBody(InteractionManipulations interactionManipulations,
+                                                            List<String> clientRequestHeaders, Object clientRequestBody,
+                                                            String clientRequestContentType, String method, boolean lowerCaseHeaders) {
 
             guardOut();
 
@@ -120,9 +122,22 @@ public class MarkdownRecorder implements Interactor {
                 blockEnd();
             }
 
-            interactionManipulations.changeAnyHeadersForRequestToService(clientRequestHeaders);
+            List<String> clientRequestHeaders2 = new ArrayList<>();
 
-            final String[] headersToRecord = clientRequestHeaders.toArray(new String[0]);
+            for (int i = 0; i < clientRequestHeaders.size(); i++) {
+                String s = clientRequestHeaders.get(i);
+                String hdrName = s.split(": ")[0];
+                String hdrVal = s.split(": ")[1];
+                hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
+                final String fullHeader = (lowerCaseHeaders ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
+                clientRequestHeaders2.add(fullHeader);
+                interactionManipulations.changeSingleHeaderForRequestToService(method, fullHeader, clientRequestHeaders2);
+
+            }
+
+            interactionManipulations.changeAnyHeadersForRequestToService(clientRequestHeaders2);
+
+            final String[] headersToRecord = clientRequestHeaders2.toArray(new String[0]);
 
             if (alphaSortHeaders) {
                 Arrays.sort(headersToRecord);
@@ -156,9 +171,7 @@ public class MarkdownRecorder implements Interactor {
 
             if (extraDebugOutput) {
                 blockStart("DEBUG: Body sent to the real server (" + clientRequestContentType + "), " + " WITHOUT REDACTIONS, ETC");
-                for (String s : clientRequestHeaders) {
-                    this.recording.append(s).append("\n");
-                }
+                this.recording.append(clientRequestBody).append("\n");
                 blockEnd();
             }
 
@@ -179,6 +192,7 @@ public class MarkdownRecorder implements Interactor {
             this.recording.append(forRecording).append("\n");
             blockEnd();
 
+            return clientRequestHeaders2;
         }
 
         private void recordResponseHeaders(String[] headers) {

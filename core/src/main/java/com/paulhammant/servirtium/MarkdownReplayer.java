@@ -119,13 +119,26 @@ public class MarkdownReplayer implements Interactor {
         }
 
         @Override
-        public void noteClientRequestHeadersAndBody(InteractionManipulations interactionManipulations, List<String> clientRequestHeaders, Object clientRequestBody,
-                                                    String clientRequestContentType) {
+        public List<String> noteClientRequestHeadersAndBody(InteractionManipulations interactionManipulations, List<String> clientRequestHeaders, Object clientRequestBody,
+                                                            String clientRequestContentType, String method, boolean lowerCaseHeaders) {
 
-            interactionManipulations.changeAnyHeadersForRequestToService(clientRequestHeaders);
+            List<String> clientRequestHeaders2 = new ArrayList<>();
+
+            for (int i = 0; i < clientRequestHeaders.size(); i++) {
+                String s = clientRequestHeaders.get(i);
+                String hdrName = s.split(": ")[0];
+                String hdrVal = s.split(": ")[1];
+                hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
+                final String fullHeader = (lowerCaseHeaders ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
+                clientRequestHeaders2.add(fullHeader);
+                interactionManipulations.changeSingleHeaderForRequestToService(method, fullHeader, clientRequestHeaders2);
+
+            }
+
+            interactionManipulations.changeAnyHeadersForRequestToService(clientRequestHeaders2);
 
             StringBuilder sb = new StringBuilder();
-            for (String h : clientRequestHeaders) {
+            for (String h : clientRequestHeaders2) {
                 sb.append(h).append("\n");
             }
             this.clientRequestHeaders = sb.toString();
@@ -141,6 +154,7 @@ public class MarkdownReplayer implements Interactor {
 
             super.setClientRequestBodyAndContentType(clientRequestBody, clientRequestContentType);
 
+            return clientRequestHeaders2;
         }
 
         @Override

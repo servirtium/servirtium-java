@@ -60,7 +60,7 @@ public interface Interactor {
             this.context = context;
         }
 
-        public abstract void noteClientRequestHeadersAndBody(InteractionManipulations interactionManipulations, List<String> clientRequestHeaders, Object clientRequestBody, String clientRequestContentType);
+        public abstract List<String> noteClientRequestHeadersAndBody(InteractionManipulations interactionManipulations, List<String> clientRequestHeaders, Object clientRequestBody, String clientRequestContentType, String method, boolean lowerCaseHeaders);
 
         protected void setClientRequestBodyAndContentType(Object clientRequestBody, String clientRequestContentType) {
             this.clientRequestBody = clientRequestBody;

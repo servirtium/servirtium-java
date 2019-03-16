@@ -243,7 +243,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             clientRequestBody = "";
         }
 
-        interaction.noteClientRequestHeadersAndBody(interactionManipulations, clientRequestHeaders, clientRequestBody, clientRequestContentType);
+        interaction.noteClientRequestHeadersAndBody(interactionManipulations, clientRequestHeaders, clientRequestBody, clientRequestContentType, method, getLowerCaseHeaders());
 
         return interactionManipulations.changeUrlForRequestToService(url);
     }
