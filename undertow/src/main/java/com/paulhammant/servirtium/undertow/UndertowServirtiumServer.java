@@ -234,7 +234,6 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             });
         });
 
-        interactionManipulations.changeAnyHeadersForRequestToService(clientRequestHeaders);
 
         if (clientRequestBody instanceof String) {
             clientRequestBody = interactionManipulations.changeBodyForRequestToService((String) clientRequestBody);
@@ -244,7 +243,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             clientRequestBody = "";
         }
 
-        interaction.noteClientRequestHeadersAndBody(clientRequestHeaders, clientRequestBody, clientRequestContentType);
+        interaction.noteClientRequestHeadersAndBody(interactionManipulations, clientRequestHeaders, clientRequestBody, clientRequestContentType);
 
         return interactionManipulations.changeUrlForRequestToService(url);
     }

@@ -119,8 +119,11 @@ public class MarkdownReplayer implements Interactor {
         }
 
         @Override
-        public void noteClientRequestHeadersAndBody(List<String> clientRequestHeaders, Object clientRequestBody,
+        public void noteClientRequestHeadersAndBody(InteractionManipulations interactionManipulations, List<String> clientRequestHeaders, Object clientRequestBody,
                                                     String clientRequestContentType) {
+
+            interactionManipulations.changeAnyHeadersForRequestToService(clientRequestHeaders);
+
             StringBuilder sb = new StringBuilder();
             for (String h : clientRequestHeaders) {
                 sb.append(h).append("\n");

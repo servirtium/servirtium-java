@@ -33,7 +33,6 @@ package com.paulhammant.servirtium;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
@@ -50,15 +49,20 @@ public class MarkdownRecorder implements Interactor {
     private Map<Integer, String> interactions = new HashMap<>();
     private Map<String, String> redactions = new HashMap<>();
     private boolean alphaSortHeaders;
+    private boolean extraDebugOutput;
 
-    public MarkdownRecorder(ServiceInteroperation serviceInteroperation,
-                            InteractionManipulations interactionManipulations) {
+    public MarkdownRecorder(ServiceInteroperation serviceInteroperation, InteractionManipulations interactionManipulations) {
         this.serviceInteroperation = serviceInteroperation;
         this.interactionManipulations = interactionManipulations;
     }
 
     public MarkdownRecorder withAlphaSortingOfHeaders() {
         alphaSortHeaders = true;
+        return this;
+    }
+
+    public MarkdownRecorder withExtraDebugOutput() {
+        extraDebugOutput = true;
         return this;
     }
 
@@ -103,24 +107,39 @@ public class MarkdownRecorder implements Interactor {
             super(interactionNumber, context);
         }
 
-        public void noteClientRequestHeadersAndBody(List<String> clientRequestHeaders, Object clientRequestBody,
+        public void noteClientRequestHeadersAndBody(InteractionManipulations interactionManipulations, List<String> clientRequestHeaders, Object clientRequestBody,
                                                     String clientRequestContentType) {
+
+            interactionManipulations.changeAnyHeadersForRequestToService(clientRequestHeaders);
 
             guardOut();
 
-            blockStart("Request headers sent to the real server");
+            if (extraDebugOutput) {
+                blockStart("DEBUG: Request headers sent to the real server WITHOUT ALPHA SORT OR REDACTIONS");
+                for (String s : clientRequestHeaders) {
+                    this.recording.append(s).append("\n");
+                }
+                blockEnd();
+            }
 
             final String[] headersToRecord = clientRequestHeaders.toArray(new String[0]);
+
             if (alphaSortHeaders) {
                 Arrays.sort(headersToRecord);
             }
+            final String[] headersToRecord2 = new String[headersToRecord.length];
+            int ix = 0;
             for (String h : headersToRecord) {
                 for (String redactionRegex : redactions.keySet()) {
                     h = h.replaceAll(redactionRegex, redactions.get(redactionRegex));
                 }
-                this.recording.append(h).append("\n");
+                headersToRecord2[ix++ ] = h;
             }
 
+            blockStart("Request headers sent to the real server");
+            for (String s : headersToRecord2) {
+                this.recording.append(s).append("\n");
+            }
             blockEnd();
 
             // Body
