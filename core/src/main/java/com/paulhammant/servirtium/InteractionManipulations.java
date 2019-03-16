@@ -52,7 +52,7 @@ public interface InteractionManipulations {
         return headerBackFromService;
     }
 
-    default void changeAnyHeadersReturnedBackFromService(ArrayList<String> serverResponseHeaders) {
+    default void changeAnyHeadersReturnedBackFromService(List<String> serverResponseHeaders) {
     }
 
     /**

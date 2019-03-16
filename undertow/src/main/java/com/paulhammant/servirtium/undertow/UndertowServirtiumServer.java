@@ -15,6 +15,7 @@ import io.undertow.util.HttpString;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -138,14 +139,21 @@ public class UndertowServirtiumServer extends ServirtiumServer {
     private ServiceResponse processHeadersAndBodyBackFromService(Interactor.Interaction interaction,
                                                                  ServiceResponse serviceResponse,
                                                                  InteractionManipulations interactionManipulations) {
-        ArrayList<String > newHeaders = new ArrayList<>();
-        for (int i = 0; i < serviceResponse.headers.length; i++) {
-            String headerBackFromService = serviceResponse.headers[i];
+        List<String> newHeaders = new ArrayList<>();
+        Collections.addAll(newHeaders, serviceResponse.headers);
+
+        // Change of headers back from service
+
+        ArrayList<String> newHeadersTmp = new ArrayList<>();
+        for (int i = 0; i < newHeaders.size(); i++) {
+            String headerBackFromService = newHeaders.get(i);
             String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderReturnedBackFromService(i, headerBackFromService);
             if (potentiallyChangedHeader != null) {
-                newHeaders.add(potentiallyChangedHeader);
+                newHeadersTmp.add(potentiallyChangedHeader);
             }
         }
+
+        newHeaders = newHeadersTmp;
         interactionManipulations.changeAnyHeadersReturnedBackFromService(newHeaders);
 
         if (serviceResponse.body instanceof String) {
