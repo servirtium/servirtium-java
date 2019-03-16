@@ -110,17 +110,17 @@ public class MarkdownRecorder implements Interactor {
         public void noteClientRequestHeadersAndBody(InteractionManipulations interactionManipulations, List<String> clientRequestHeaders, Object clientRequestBody,
                                                     String clientRequestContentType) {
 
-            interactionManipulations.changeAnyHeadersForRequestToService(clientRequestHeaders);
-
             guardOut();
 
             if (extraDebugOutput) {
-                blockStart("DEBUG: Request headers sent to the real server WITHOUT ALPHA SORT OR REDACTIONS");
+                blockStart("DEBUG: Request headers sent to the real server WITHOUT ALPHA-SORT, REDACTIONS, ETC");
                 for (String s : clientRequestHeaders) {
                     this.recording.append(s).append("\n");
                 }
                 blockEnd();
             }
+
+            interactionManipulations.changeAnyHeadersForRequestToService(clientRequestHeaders);
 
             final String[] headersToRecord = clientRequestHeaders.toArray(new String[0]);
 
