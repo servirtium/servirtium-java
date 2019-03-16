@@ -144,6 +144,15 @@ public class MarkdownRecorder implements Interactor {
 
             // Body
 
+            if (clientRequestBody instanceof String) {
+                clientRequestBody = interactionManipulations.changeBodyForRequestToService((String) clientRequestBody);
+            }
+
+            if (clientRequestBody == null) {
+                clientRequestBody = "";
+            }
+
+
             super.noteClientRequestBody(clientRequestBody, clientRequestContentType);
 
             guardOut();

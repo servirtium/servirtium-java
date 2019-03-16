@@ -238,14 +238,6 @@ public class JettyServirtiumServer extends ServirtiumServer {
             interactionManipulations.changeSingleHeaderForRequestToService(method, fullHeader, clientRequestHeaders);
         }
 
-        if (clientRequestBody instanceof String) {
-            clientRequestBody = interactionManipulations.changeBodyForRequestToService((String) clientRequestBody);
-        }
-
-        if (clientRequestBody == null) {
-            clientRequestBody = "";
-        }
-
         interaction.noteClientRequestHeadersAndBody(interactionManipulations, clientRequestHeaders, clientRequestBody, clientRequestContentType);
 
         return interactionManipulations.changeUrlForRequestToService(url);
