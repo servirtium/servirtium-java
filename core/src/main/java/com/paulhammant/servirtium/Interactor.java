@@ -62,7 +62,7 @@ public interface Interactor {
 
         public abstract void noteClientRequestHeadersAndBody(InteractionManipulations interactionManipulations, List<String> clientRequestHeaders, Object clientRequestBody, String clientRequestContentType);
 
-        protected void noteClientRequestBody(Object clientRequestBody, String clientRequestContentType) {
+        protected void setClientRequestBodyAndContentType(Object clientRequestBody, String clientRequestContentType) {
             this.clientRequestBody = clientRequestBody;
             this.clientRequestContentType = clientRequestContentType;
         }

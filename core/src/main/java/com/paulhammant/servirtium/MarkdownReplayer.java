@@ -132,15 +132,14 @@ public class MarkdownReplayer implements Interactor {
 
             // Body
 
+            if (clientRequestBody == null) {
+                clientRequestBody = "";
+            }
             if (clientRequestBody instanceof String) {
                 clientRequestBody = interactionManipulations.changeBodyForRequestToService((String) clientRequestBody);
             }
 
-            if (clientRequestBody == null) {
-                clientRequestBody = "";
-            }
-
-            super.noteClientRequestBody(clientRequestBody, clientRequestContentType);
+            super.setClientRequestBodyAndContentType(clientRequestBody, clientRequestContentType);
 
         }
 

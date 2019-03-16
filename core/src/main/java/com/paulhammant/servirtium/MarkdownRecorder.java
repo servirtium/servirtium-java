@@ -144,33 +144,39 @@ public class MarkdownRecorder implements Interactor {
 
             // Body
 
-            if (clientRequestBody instanceof String) {
-                clientRequestBody = interactionManipulations.changeBodyForRequestToService((String) clientRequestBody);
-            }
-
             if (clientRequestBody == null) {
                 clientRequestBody = "";
             }
 
+            if (clientRequestBody instanceof String) {
+                clientRequestBody = interactionManipulations.changeBodyForRequestToService((String) clientRequestBody);
+            }
 
-            super.noteClientRequestBody(clientRequestBody, clientRequestContentType);
+            super.setClientRequestBodyAndContentType(clientRequestBody, clientRequestContentType);
 
-            guardOut();
-            blockStart("Body sent to the real server (" + clientRequestContentType + ")");
+            if (extraDebugOutput) {
+                blockStart("DEBUG: Body sent to the real server (" + clientRequestContentType + "), " + " WITHOUT REDACTIONS, ETC");
+                for (String s : clientRequestHeaders) {
+                    this.recording.append(s).append("\n");
+                }
+                blockEnd();
+            }
+
             String forRecording = null;
             if (clientRequestBody == null) {
                 forRecording = "";
             } else if (clientRequestBody instanceof String) {
                 forRecording = (String) clientRequestBody;
                 for (String redactionRegex : redactions.keySet()) {
-                    forRecording = ((String) forRecording).replaceAll(redactionRegex, redactions.get(redactionRegex));
+                    forRecording = forRecording.replaceAll(redactionRegex, redactions.get(redactionRegex));
                 }
             } else {
                 forRecording = "//SERVIRTIUM+Base64: " + Base64.getEncoder()
                         .encodeToString((byte[]) clientRequestBody).replaceAll("(.{60})", "$1\n");
             }
-            this.recording.append(forRecording).append("\n");
 
+            blockStart("Body sent to the real server (" + clientRequestContentType + ")");
+            this.recording.append(forRecording).append("\n");
             blockEnd();
 
         }
