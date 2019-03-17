@@ -49,6 +49,17 @@ public class ServiceResponse {
         return new ServiceResponse(this.body, this.contentType, this.statusCode, headers);
     }
     public ServiceResponse withRevisedBody(String body) {
+        for (int i = 0; i < headers.length; i++) {
+            String header = headers[i];
+            if (header.startsWith("Content-Length")) {
+                headers[i] = "Content-Length: " + body.length();
+                break;
+            }
+            if (header.startsWith("content-length")) {
+                headers[i] = "content-length: " + body.length();
+                break;
+            }
+        }
         return new ServiceResponse(body, this.contentType, this.statusCode, this.headers);
     }
 }
