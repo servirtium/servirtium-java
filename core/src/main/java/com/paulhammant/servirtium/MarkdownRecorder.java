@@ -236,7 +236,7 @@ public class MarkdownRecorder implements Interactor {
                 xtra = " - Base64 below";
             }
 
-            blockStart("Resulting body back from the real server (" + statusCode + ": " + serverResponseContentType + xtra + ")");
+            blockStart(preable + "Resulting body back from the real server (" + statusCode + ": " + serverResponseContentType + xtra + ")");
 
             if (serverResponseBody instanceof String) {
                 for (String next : redactions.keySet()) {

@@ -39,6 +39,9 @@ public class JsonAndXmlUtilities extends BaseMatcher<String> {
     }
 
     public static String prettifyDocOrNot(String doc) {
+        if (doc == null | "".equals(doc)) {
+            return doc;
+        }
         char firstNonBlankChar = doc.trim().charAt(0);
         if (firstNonBlankChar == '{' || firstNonBlankChar == '[') {
             try {
