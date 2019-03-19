@@ -111,15 +111,25 @@ public class MarkdownRecorder implements Interactor {
                                                             List<String> clientRequestHeaders, Object clientRequestBody,
                                                             String clientRequestContentType, String method, boolean lowerCaseHeaders) {
 
+            if (clientRequestBody == null) {
+                clientRequestBody = "";
+            }
+
             guardOut();
 
+
             if (extraDebugOutput) {
-                blockStart("DEBUG: Request headers sent to the real server WITHOUT ALPHA-SORT, REDACTIONS, ETC");
+
+                // Debug / Raw headers
+
+                blockStart("DEBUG: Request headers as received from client WITHOUT ALPHA-SORT, REDACTIONS, ETC");
                 for (String s : clientRequestHeaders) {
                     this.recording.append(s).append("\n");
                 }
                 blockEnd();
             }
+
+            // Headers for playback
 
             List<String> clientRequestHeaders2 = changeRequestHeadersIfNeeded(interactionManipulations, clientRequestHeaders, method, lowerCaseHeaders);
 
@@ -139,7 +149,7 @@ public class MarkdownRecorder implements Interactor {
                 headersToRecord2[ix++ ] = h;
             }
 
-            blockStart("Request headers sent to the real server");
+            blockStart("Request headers for playback");
             for (String s : headersToRecord2) {
                 this.recording.append(s).append("\n");
             }
@@ -147,9 +157,6 @@ public class MarkdownRecorder implements Interactor {
 
             // Body
 
-            if (clientRequestBody == null) {
-                clientRequestBody = "";
-            }
 
             if (clientRequestBody instanceof String) {
                 clientRequestBody = interactionManipulations.changeBodyForRequestToService((String) clientRequestBody);
@@ -158,7 +165,7 @@ public class MarkdownRecorder implements Interactor {
             super.setClientRequestBodyAndContentType(clientRequestBody, clientRequestContentType);
 
             if (extraDebugOutput) {
-                blockStart("DEBUG: Body sent to the real server (" + clientRequestContentType + "), " + " WITHOUT REDACTIONS, ETC");
+                blockStart("DEBUG: Request body as received from client (" + clientRequestContentType + "), WITHOUT REDACTIONS, ETC");
                 this.recording.append(clientRequestBody).append("\n");
                 blockEnd();
             }
@@ -176,7 +183,7 @@ public class MarkdownRecorder implements Interactor {
                         .encodeToString((byte[]) clientRequestBody).replaceAll("(.{60})", "$1\n");
             }
 
-            blockStart("Body sent to the real server (" + clientRequestContentType + ")");
+            blockStart("Request body for playback (" + clientRequestContentType + ")");
             this.recording.append(forRecording).append("\n");
             blockEnd();
 
@@ -197,7 +204,8 @@ public class MarkdownRecorder implements Interactor {
         @Override
         public void debugRawServiceResponse(String[] headers, Object serverResponseBody, int statusCode, String serverResponseContentType) {
             if (extraDebugOutput) {
-                doRawServiceResponse(headers, serverResponseBody, statusCode, serverResponseContentType, "DEBUG RAW ");
+                doServiceResponseHeaders(headers, "DEBUG: Response headers from real service, unchanged");
+                doServiceResponseBody(serverResponseBody, statusCode, serverResponseContentType, "DEBUG: Response body from real service, unchanged");
             }
         }
 
@@ -205,13 +213,16 @@ public class MarkdownRecorder implements Interactor {
         public void noteServiceResponse(String[] headers, Object serverResponseBody, int statusCode,
                                         String serverResponseContentType) {
 
-            doRawServiceResponse(headers, serverResponseBody, statusCode, serverResponseContentType, "");
+            doServiceResponseHeaders(headers, "Response headers for playback");
+
+            doServiceResponseBody(serverResponseBody, statusCode, serverResponseContentType, "Response body for playback");
         }
 
-        private void doRawServiceResponse(String[] headers, Object serverResponseBody, int statusCode, String serverResponseContentType, String preable) {
+        private void doServiceResponseHeaders(String[] headers, String title) {
+
             guardOut();
 
-            blockStart(preable + "Resulting headers back from the real server");
+            blockStart(title);
 
             if (alphaSortHeaders) {
                 Arrays.sort(headers);
@@ -229,6 +240,10 @@ public class MarkdownRecorder implements Interactor {
 
             blockEnd();
 
+        }
+
+        private void doServiceResponseBody(Object serverResponseBody, int statusCode, String serverResponseContentType, String title) {
+
             guardOut();
 
             String xtra = "";
@@ -236,7 +251,7 @@ public class MarkdownRecorder implements Interactor {
                 xtra = " - Base64 below";
             }
 
-            blockStart(preable + "Resulting body back from the real server (" + statusCode + ": " + serverResponseContentType + xtra + ")");
+            blockStart(title + " (" + statusCode + ": " + serverResponseContentType + xtra + ")");
 
             if (serverResponseBody instanceof String) {
                 for (String next : redactions.keySet()) {

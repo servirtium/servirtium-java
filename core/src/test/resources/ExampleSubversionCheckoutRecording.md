@@ -1,6 +1,6 @@
 ## Interaction 0: OPTIONS /repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/conf
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 DAV  : http://subversion.tigris.org/xmlns/dav/svn/log-revprops
@@ -14,13 +14,13 @@ Content-Length: 131
 Content-Type: text/xml
 ```
 
-### Body sent to the real server (text/xml):
+### Request body for playback (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><D:options xmlns:D="DAV:"><D:activity-collection-set></D:activity-collection-set></D:options>
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:36 GMT
@@ -61,7 +61,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting body back from the real server (200: text/xml; charset="utf-8"):
+### Response body for playback (200: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -72,7 +72,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## Interaction 1: OPTIONS /repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/conf
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 Transfer-Encoding: chunked
@@ -84,13 +84,13 @@ Host: svn.apache.org
 Accept-Encoding: gzip
 ```
 
-### Body sent to the real server ():
+### Request body for playback ():
 
 ```
 <?xml version="1.0" encoding="utf-8"?><D:options xmlns:D="DAV:" />
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:36 GMT
@@ -115,7 +115,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting body back from the real server (200: text/xml; charset="utf-8"):
+### Response body for playback (200: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -126,7 +126,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## Interaction 2: OPTIONS /repos/asf/synapse/tags/3.0.0/modules/distribution/src/main/conf
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 Transfer-Encoding: chunked
@@ -139,13 +139,13 @@ Accept-Encoding: gzip
 Content-Type: text/xml
 ```
 
-### Body sent to the real server (text/xml):
+### Request body for playback (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><D:options xmlns:D="DAV:"><D:activity-collection-set></D:activity-collection-set></D:options>
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:36 GMT
@@ -186,7 +186,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting body back from the real server (200: text/xml; charset="utf-8"):
+### Response body for playback (200: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -197,7 +197,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## Interaction 3: PROPFIND /repos/asf/!svn/rvr/1850471/synapse/tags/3.0.0/modules/distribution/src/main/conf
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 Transfer-Encoding: chunked
@@ -208,13 +208,13 @@ Depth: 0
 Content-Type: text/xml
 ```
 
-### Body sent to the real server (text/xml):
+### Request body for playback (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><prop><resourcetype xmlns="DAV:"/></prop></propfind>
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:37 GMT
@@ -225,7 +225,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting body back from the real server (207: text/xml; charset="utf-8"):
+### Response body for playback (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -245,7 +245,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## Interaction 4: PROPFIND /repos/asf/!svn/rvr/1850471/synapse/tags/3.0.0/modules/distribution/src/main
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 Transfer-Encoding: chunked
@@ -256,13 +256,13 @@ Depth: 0
 Content-Type: text/xml
 ```
 
-### Body sent to the real server (text/xml):
+### Request body for playback (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:37 GMT
@@ -273,7 +273,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting body back from the real server (207: text/xml; charset="utf-8"):
+### Response body for playback (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -305,7 +305,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## Interaction 5: PROPFIND /repos/asf/!svn/rvr/1850471/synapse/tags/3.0.0/modules/distribution/src
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 Transfer-Encoding: chunked
@@ -316,13 +316,13 @@ Depth: 0
 Content-Type: text/xml
 ```
 
-### Body sent to the real server (text/xml):
+### Request body for playback (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:37 GMT
@@ -333,7 +333,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting body back from the real server (207: text/xml; charset="utf-8"):
+### Response body for playback (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -365,7 +365,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## Interaction 6: PROPFIND /repos/asf/!svn/rvr/1850471/synapse/tags/3.0.0/modules/distribution
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 Transfer-Encoding: chunked
@@ -376,13 +376,13 @@ Depth: 0
 Content-Type: text/xml
 ```
 
-### Body sent to the real server (text/xml):
+### Request body for playback (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:37 GMT
@@ -393,7 +393,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting body back from the real server (207: text/xml; charset="utf-8"):
+### Response body for playback (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -435,7 +435,7 @@ target
 
 ## Interaction 7: PROPFIND /repos/asf/!svn/rvr/1850471/synapse/tags/3.0.0/modules
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 Transfer-Encoding: chunked
@@ -446,13 +446,13 @@ Depth: 0
 Content-Type: text/xml
 ```
 
-### Body sent to the real server (text/xml):
+### Request body for playback (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:37 GMT
@@ -463,7 +463,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting body back from the real server (207: text/xml; charset="utf-8"):
+### Response body for playback (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -495,7 +495,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## Interaction 8: PROPFIND /repos/asf/!svn/rvr/1850471/synapse/tags/3.0.0
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 Transfer-Encoding: chunked
@@ -506,13 +506,13 @@ Depth: 0
 Content-Type: text/xml
 ```
 
-### Body sent to the real server (text/xml):
+### Request body for playback (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:37 GMT
@@ -523,7 +523,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting body back from the real server (207: text/xml; charset="utf-8"):
+### Response body for playback (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -571,7 +571,7 @@ projectFilesBackup
 
 ## Interaction 9: PROPFIND /repos/asf/!svn/rvr/1850471/synapse/tags
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 Transfer-Encoding: chunked
@@ -582,13 +582,13 @@ Depth: 0
 Content-Type: text/xml
 ```
 
-### Body sent to the real server (text/xml):
+### Request body for playback (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:38 GMT
@@ -599,7 +599,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting body back from the real server (207: text/xml; charset="utf-8"):
+### Response body for playback (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -631,7 +631,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## Interaction 10: PROPFIND /repos/asf/!svn/rvr/1850471/synapse
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 Transfer-Encoding: chunked
@@ -642,13 +642,13 @@ Depth: 0
 Content-Type: text/xml
 ```
 
-### Body sent to the real server (text/xml):
+### Request body for playback (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:38 GMT
@@ -659,7 +659,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting body back from the real server (207: text/xml; charset="utf-8"):
+### Response body for playback (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -691,7 +691,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## Interaction 11: PROPFIND /repos/asf/!svn/rvr/1850471
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 Transfer-Encoding: chunked
@@ -702,13 +702,13 @@ Depth: 0
 Content-Type: text/xml
 ```
 
-### Body sent to the real server (text/xml):
+### Request body for playback (text/xml):
 
 ```
 <?xml version="1.0" encoding="utf-8"?><propfind xmlns="DAV:"><allprop xmlns="DAV:"/></propfind>
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:38 GMT
@@ -719,7 +719,7 @@ Connection: Keep-Alive
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting body back from the real server (207: text/xml; charset="utf-8"):
+### Response body for playback (207: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -751,7 +751,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## Interaction 12: REPORT /repos/asf/!svn/me
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 Transfer-Encoding: chunked
@@ -762,7 +762,7 @@ Accept-Encoding: gzip,svndiff1;q=0.9,svndiff2;q=0.8,svndiff;q=0.7
 Content-Type: text/xml
 ```
 
-### Body sent to the real server (text/xml):
+### Request body for playback (text/xml):
 
 ```
 <S:update-report
@@ -779,7 +779,7 @@ Content-Type: text/xml
 
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:38 GMT
@@ -791,7 +791,7 @@ Transfer-Encoding: chunked
 Content-Type: text/xml; charset="utf-8"
 ```
 
-### Resulting body back from the real server (200: text/xml; charset="utf-8"):
+### Response body for playback (200: text/xml; charset="utf-8"):
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -841,7 +841,7 @@ Content-Type: text/xml; charset="utf-8"
 
 ## Interaction 13: GET /repos/asf/!svn/rvr/1776723/synapse/tags/3.0.0/modules/distribution/src/main/conf/providers.xml
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 User-Agent: SVN/1.10.0 (x86_64-apple-darwin17.0.0) serf/1.3.9
@@ -849,13 +849,13 @@ Host: svn.apache.org
 Accept-Encoding: gzip
 ```
 
-### Body sent to the real server ():
+### Request body for playback ():
 
 ```
 
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:38 GMT
@@ -870,7 +870,7 @@ Connection: Keep-Alive
 Content-Type: text/plain
 ```
 
-### Resulting body back from the real server (200: text/plain):
+### Response body for playback (200: text/plain):
 
 ```
 <!--
@@ -1014,7 +1014,7 @@ Content-Type: text/plain
 
 ## Interaction 14: GET /repos/asf/!svn/rvr/1776723/synapse/tags/3.0.0/modules/distribution/src/main/conf/identity.jks
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 User-Agent: SVN/1.10.0 (x86_64-apple-darwin17.0.0) serf/1.3.9
@@ -1022,13 +1022,13 @@ Host: svn.apache.org
 Accept-Encoding: gzip
 ```
 
-### Body sent to the real server ():
+### Request body for playback ():
 
 ```
 
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:39 GMT
@@ -1043,7 +1043,7 @@ Connection: Keep-Alive
 Content-Type: application/octet-stream
 ```
 
-### Resulting body back from the real server (200: application/octet-stream - Base64 below):
+### Response body for playback (200: application/octet-stream - Base64 below):
 
 ```
 /u3+7QAAAAIAAAABAAAAAQAHc3luYXBzZQAAARJ290XhAAACujCCArYwDgYKKwYBBAEqAhEBAQUABIICouqelhojratvB8zp/2DloBTeWValCbJGEYAy8fAMe0ZsLRIeN4mikUrwXF2OKqOUEJnbYDdZzmtOVL0Gq/A+klZbn5v24CjiYSXV6G2gqOXO/8Vbf+ckCNFWgeDqt/NPy50bmNFuNR5M2FCsDjJxo0ksZpEzkFDGoV7ACONle2eb85HSIeQtWtqDuZbH3Lh5w2oJyvSaP7AKDFXL+RGBVlD2KSn1RlNoSr4Vrw9ui4VbUz+Cp4QkFUPD5xVqAcDIGKqoD02HPhLPBLd4DeMZ6AMyje3DGG9ptnPLeJyaM/3b1sN+EsAwdWIFfx2JWcvY2b9TkxT8PfFTqpAhAVivPq0Nwi0TWNQwcOoO00uNZzvSx/htsvtjppkYmfut0xe0JS4gz7vK4p6w89IyVE5kHtPkfpEwq2uEPLIoEBXzhKiHdWl8ypK4HfjL41eioOHfH+M0BEbLTTjhgQTFtCMPzc52RjpM22dhMzXo/76qKtOMAqHTl3ZHcyklnUQdpIS13TqiFY4w123g3ziFEyHb33BRxVMsnfYihLUFED+U3g2tCpu2F43j8ydUtbJHMZyXvOARWhdoLngxp/uE1ZQXVDvIXEjHVrmGhiew0BKCdV8HWA22z2QyccQYPHKB8VWuXX+2RQf+G4kJi4FKzGOSCenPRXPeLiahsuABl6aNqw9+s+HI95NPGvWzoz4KZ5JVTQSORBJwHc0SNvq2yFe//U1K5UAg7TNc7rZGCqCiv1rWotyZUyioZ/eDv99pdV3LtD2nXN2ruXnNU9C6WxY+e2f2w59v2FVLTIn0aVol1RvSi1cDnHIsTJOEIP+fJyNwYTsyNmcc09nXGyKPPkPjibt5jYqfhukWpf2MH+6pY/A0vRd8+ju69TtrWNevUONEQkKcAAAAAQAFWC41MDkAAAJqMIICZjCCAc8CBEZDUbswDQYJKoZIhvcNAQEEBQAwejEoMCYGCSqGSIb3DQEJARYZc3luYXBzZS1kZXZAd3MuYXBhY2hlLm9yZzELMAkGA1UEBhMCVVMxFzAVBgNVBAoTDkFwYWNoZSBTeW5hcHNlMRQwEgYDVQQLEwtTeW5hcHNlIERldjESMBAGA1UEAxMJbG9jYWxob3N0MB4XDTA3MDUxMDE3MDkxNVoXDTEyMDUwODE3MDkxNVowejEoMCYGCSqGSIb3DQEJARYZc3luYXBzZS1kZXZAd3MuYXBhY2hlLm9yZzELMAkGA1UEBhMCVVMxFzAVBgNVBAoTDkFwYWNoZSBTeW5hcHNlMRQwEgYDVQQLEwtTeW5hcHNlIERldjESMBAGA1UEAxMJbG9jYWxob3N0MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCWXNkaVs57quYVijcRhVKuSaqKK4qqa+SYz6ovYXe5anOg0ssK5o2kzO5kK7olCrU82rfq4b/lvry+3e+1TZmHeSzP8U9PB4mN98DEGLliN2PRJ7zLB0IkFcT6WSB+uc1sMVSiJgBPtWBx4dL84vgoiOalfNDezEQ75YJFpwQ86wIDAQABMA0GCSqGSIb3DQEBBAUAA4GBAI7U5RTyvXzSlZYaX1r3ds+Tutyt16Z9+qFLFevSQE393yH+rX0y/t8ZSh9QT9rWI+5wU1msRG0PDkfIgEldRBwcwSHsNr0RBs/uvMkKV7tpU2UwQG5ZvjMyepnnQSi9kii4G4XzA5NDwEgNPAx8uiLSztBWJtcMQzRRd2lDSbjj4gnWEYixoHBt957RLL6cHk7EM9E=
@@ -1051,7 +1051,7 @@ Content-Type: application/octet-stream
 
 ## Interaction 15: GET /repos/asf/!svn/rvr/1776723/synapse/tags/3.0.0/modules/distribution/src/main/conf/trust.jks
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 User-Agent: SVN/1.10.0 (x86_64-apple-darwin17.0.0) serf/1.3.9
@@ -1059,13 +1059,13 @@ Host: svn.apache.org
 Accept-Encoding: gzip
 ```
 
-### Body sent to the real server ():
+### Request body for playback ():
 
 ```
 
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:39 GMT
@@ -1080,7 +1080,7 @@ Connection: Keep-Alive
 Content-Type: application/octet-stream
 ```
 
-### Resulting body back from the real server (200: application/octet-stream - Base64 below):
+### Response body for playback (200: application/octet-stream - Base64 below):
 
 ```
 /u3+7QAAAAIAAAABAAAAAgAHc3luYXBzZQAAARJ2+EgBAAVYLjUwOQAAAmowggJmMIIBzwIERkNRuzANBgkqhkiG9w0BAQQFADB6MSgwJgYJKoZIhvcNAQkBFhlzeW5hcHNlLWRldkB3cy5hcGFjaGUub3JnMQswCQYDVQQGEwJVUzEXMBUGA1UEChMOQXBhY2hlIFN5bmFwc2UxFDASBgNVBAsTC1N5bmFwc2UgRGV2MRIwEAYDVQQDEwlsb2NhbGhvc3QwHhcNMDcwNTEwMTcwOTE1WhcNMTIwNTA4MTcwOTE1WjB6MSgwJgYJKoZIhvcNAQkBFhlzeW5hcHNlLWRldkB3cy5hcGFjaGUub3JnMQswCQYDVQQGEwJVUzEXMBUGA1UEChMOQXBhY2hlIFN5bmFwc2UxFDASBgNVBAsTC1N5bmFwc2UgRGV2MRIwEAYDVQQDEwlsb2NhbGhvc3QwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAJZc2RpWznuq5hWKNxGFUq5Jqooriqpr5JjPqi9hd7lqc6DSywrmjaTM7mQruiUKtTzat+rhv+W+vL7d77VNmYd5LM/xT08HiY33wMQYuWI3Y9EnvMsHQiQVxPpZIH65zWwxVKImAE+1YHHh0vzi+CiI5qV80N7MRDvlgkWnBDzrAgMBAAEwDQYJKoZIhvcNAQEEBQADgYEAjtTlFPK9fNKVlhpfWvd2z5O63K3Xpn36oUsV69JATf3fIf6tfTL+3xlKH1BP2tYj7nBTWaxEbQ8OR8iASV1EHBzBIew2vREGz+68yQpXu2lTZTBAblm+MzJ6medBKL2SKLgbhfMDk0PASA08DHy6ItLO0FYm1wxDNFF3aUNJuONSIj1AYtrxCjvLLzI1/xkZGrYIjQ==
@@ -1088,7 +1088,7 @@ Content-Type: application/octet-stream
 
 ## Interaction 16: GET /repos/asf/!svn/rvr/1776723/synapse/tags/3.0.0/modules/distribution/src/main/conf/log4j.properties
 
-### Request headers sent to the real server:
+### Request headers for playback:
 
 ```
 User-Agent: SVN/1.10.0 (x86_64-apple-darwin17.0.0) serf/1.3.9
@@ -1096,13 +1096,13 @@ Host: svn.apache.org
 Accept-Encoding: gzip
 ```
 
-### Body sent to the real server ():
+### Request body for playback ():
 
 ```
 
 ```
 
-### Resulting headers back from the real server:
+### Response headers for playback:
 
 ```
 Date: Sat, 05 Jan 2019 10:11:39 GMT
@@ -1117,7 +1117,7 @@ Connection: Keep-Alive
 Content-Type: text/plain
 ```
 
-### Resulting body back from the real server (200: text/plain):
+### Response body for playback (200: text/plain):
 
 ```
 #

@@ -43,8 +43,8 @@ public class TodobackendDotComRecorderMain {
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(), manipulations)
-                .withAlphaSortingOfHeaders()
-                .withExtraDebugOutput(); // - This adds extra debugging output
+                .withAlphaSortingOfHeaders();
+//                .withExtraDebugOutput(); // - This adds extra debugging output
 
         ServirtiumServer servirtiumServer = makeServirtiumServer(manipulations, recorder);
 

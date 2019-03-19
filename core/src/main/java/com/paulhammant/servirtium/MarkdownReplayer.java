@@ -191,7 +191,7 @@ public class MarkdownReplayer implements Interactor {
             monitor.unexpectedClientRequestUrl(url, replay, mdMethod, mdUrl, filename, replay.context, e);
         }
 
-        final String REQUEST_HEADERS_SENT_TO_REAL_SERVER = "### Request headers sent to the real server";
+        final String REQUEST_HEADERS_SENT_TO_REAL_SERVER = "### Request headers for playback";
         replay.ix = replay.interactionText.indexOf(REQUEST_HEADERS_SENT_TO_REAL_SERVER, replay.ix);
         try {
             assertThat(replay.ix, not(equalTo(-1)));
@@ -202,7 +202,7 @@ public class MarkdownReplayer implements Interactor {
 
         String headersReceived = getCodeBlock(replay);
 
-        final String BODY_SENT_TO_REAL_SERVER = "### Body sent to the real server";
+        final String BODY_SENT_TO_REAL_SERVER = "### Request body for playback";
         replay.ix = replay.interactionText.indexOf(BODY_SENT_TO_REAL_SERVER, replay.ix);
         try {
             assertThat(replay.ix, not(equalTo(-1)));
@@ -261,7 +261,7 @@ public class MarkdownReplayer implements Interactor {
             throw error;
         }
 
-        final String RESULTING_HEADERS_BACK_FROM_REAL_SERVER = "### Resulting headers back from the real server";
+        final String RESULTING_HEADERS_BACK_FROM_REAL_SERVER = "### Response headers for playback";
         replay.ix = replay.interactionText.indexOf(RESULTING_HEADERS_BACK_FROM_REAL_SERVER, replay.ix);
         try {
             assertThat(replay.ix, not(equalTo(-1)));
@@ -270,7 +270,7 @@ public class MarkdownReplayer implements Interactor {
                     filename, replay.context, e);
         }
         String[] serverResponseHeaders = getCodeBlock(replay).split("\n");
-        final String RESULTING_BODY_BACK_FROM_REAL_SERVER = "### Resulting body back from the real server";
+        final String RESULTING_BODY_BACK_FROM_REAL_SERVER = "### Response body for playback";
         replay.ix = replay.interactionText.indexOf(RESULTING_BODY_BACK_FROM_REAL_SERVER, replay.ix);
 
         try {
