@@ -7,9 +7,16 @@ import com.paulhammant.servirtium.ServiceInteropViaOkHttp;
 import com.paulhammant.servirtium.ServirtiumServer;
 import com.paulhammant.servirtium.SimpleInteractionManipulations;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TodobackendDotComRecorderMain {
+
+    public static final Pattern UID_PATTERN = Pattern.compile("\"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})\"");
 
     public static void main(String[] args) throws Exception {
 
@@ -36,8 +43,8 @@ public class TodobackendDotComRecorderMain {
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(), manipulations)
-                .withAlphaSortingOfHeaders();
-             //   .withExtraDebugOutput(); - This adds extra debugging output
+                .withAlphaSortingOfHeaders()
+                .withExtraDebugOutput(); // - This adds extra debugging output
 
         ServirtiumServer servirtiumServer = makeServirtiumServer(manipulations, recorder);
 
@@ -53,8 +60,23 @@ public class TodobackendDotComRecorderMain {
                 .withPrettyPrintedTextBodies();
     }
 
+    private static class MockGuidReplacer implements BiConsumer<String, Integer> {
+        private String result;
+
+        public MockGuidReplacer(String str) {
+            this.result = str;
+        }
+
+        @Override
+        public void accept(String guid, Integer integer) {
+            result = result.replaceAll("MOCK-GUID-" + integer, guid);
+        }
+    }
+
+
     public static SimpleInteractionManipulations makeInteractionManipulations() {
         return new SimpleInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
+
             @Override
             public void changeAnyHeadersForRequestToService(List<String> clientRequestHeaders) {
                 String refer = "";
@@ -72,9 +94,39 @@ public class TodobackendDotComRecorderMain {
                 clientRequestHeaders.add(refer.replace(super.fromUrl, super.toUrl));
             }
 
+            Map<String, Integer> guids = new HashMap<>();
+
+            @Override
+            public String changeBodyReturnedBackFromServiceForRecording(String bodyFromService) {
+                return mockGuidCreator(bodyFromService);
+            }
+
+            private String mockGuidCreator(String result) {
+                Matcher uidMatcher = UID_PATTERN.matcher(result);
+                while (uidMatcher.find()) {
+                    final String uid1 = uidMatcher.group(1);
+                    System.out.println("++++" + uid1);
+                    if (!guids.containsKey(uid1)) {
+                        guids.put(uid1, guids.size() + 1);
+                    }
+                    result = result.replaceAll(uid1, "MOCK-GUID-" + guids.get(uid1));
+                    uidMatcher = UID_PATTERN.matcher(result);
+                }
+                return result;
+            }
+
+            @Override
+            public String changeUrlForRequestToService(String url) {
+                return super.changeUrlForRequestToService(mockGuidCreator(url));
+            }
+
             @Override
             public String changeServiceResponseBodyForClientPostRecording(String body) {
-                return body.replaceAll("todo-backend-sinatra\\.herokuapp\\.com",
+
+                final MockGuidReplacer mockGuidReplacer = new MockGuidReplacer(body);
+                guids.forEach(mockGuidReplacer);
+
+                return mockGuidReplacer.result.replaceAll("todo-backend-sinatra\\.herokuapp\\.com",
                         "localhost:8099");
             }
         };
