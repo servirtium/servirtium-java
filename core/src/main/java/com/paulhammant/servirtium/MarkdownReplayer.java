@@ -147,12 +147,22 @@ public class MarkdownReplayer implements Interactor {
         }
 
         @Override
-        public void debugRawServiceResponse(String[] headers, Object body, int statusCode, String contentType) {
+        public void debugRawServiceResponseHeader(String[] headers) {
             // Nothing to note, this is already the replay of a recording
         }
 
         @Override
-        public void noteServiceResponse(String[] headers, Object body, int statusCode, String contentType) {
+        public void debugRawServiceResponseBody(Object body, int statusCode, String contentType) {
+            // Nothing to note, this is already the replay of a recording
+        }
+
+        @Override
+        public void noteServiceResponseHeaders(String[] headers) {
+            // Nothing to note, this is already the replay of a recording
+        }
+
+        @Override
+        public void noteServiceResponseBody(Object body, int statusCode, String contentType) {
             // Nothing to note, this is already the replay of a recording
         }
 

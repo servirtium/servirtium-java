@@ -32,6 +32,7 @@
 package com.paulhammant.servirtium;
 
 import com.paulhammant.servirtium.svn.SubversionInteractionManipulations;
+import org.hamcrest.Matcher;
 
 import java.io.ByteArrayOutputStream;
 
@@ -201,7 +202,6 @@ public abstract class SimpleGetCentricTextTests {
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
                 .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:")
                 .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
-
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -434,6 +434,167 @@ public abstract class SimpleGetCentricTextTests {
                 "\n" +
                 "```\n" +
                 "\n"), sanitizeDate(out.toString()));
+
+    }
+
+
+    public void canSupplyDebugInformationOnRedditJsonGet() throws Exception {
+
+        final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
+
+        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
+                .withHeaderPrefixesToRemoveFromServiceResponse("x-", "source-age", "expires:")
+                .withHeaderPrefixesToRemoveFromClientRequest("accept-encoding");
+
+
+        MarkdownRecorder recorder = new MarkdownRecorder(
+                new ServiceInteropViaOkHttp(),
+                interactionManipulations)
+                .withAlphaSortingOfHeaders()
+                .withExtraDebugOutput();
+
+        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder)
+                .withPrettyPrintedTextBodies()
+                .withLowerCaseHeaders();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
+        servirtiumServer.start();
+
+        given()
+                .config(newConfig().decoderConfig(decoderConfig().contentDecoders(DEFLATE)))
+                .header("Connection", "keep-alive")
+                .header("User-Agent", "RestAssured")
+        .when()
+                .get("/paul-hammant/servirtium/master/core/src/test/resources/test.json")
+        .then()
+                .assertThat()
+                .statusCode(200)
+//                .body(equalTo(sillyJSONdoc))
+                .contentType("text/plain;charset=utf-8");
+
+        servirtiumServer.finishedScript();
+
+        // Order of headers is as originally sent
+        try {
+            assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/core/src/test/resources/test.json\n" +
+                    "\n" +
+                    "### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:\n" +
+                    "\n" +
+                    "```\n" +
+                    "Connection: keep-alive\n" +
+                    "User-Agent: RestAssured\n" +
+                    "Host: localhost:8080\n" +
+                    "Accept-Encoding: deflate\n" +
+                    "Accept: */*\n" +
+                    "```\n" +
+                    "\n" +
+                    "### Request headers for playback:\n" +
+                    "\n" +
+                    "```\n" +
+                    "accept: */*\n" +
+                    "connection: keep-alive\n" +
+                    "host: raw.githubusercontent.com\n" +
+                    "user-agent: RestAssured\n" +
+                    "```\n" +
+                    "\n" +
+                    "### DEBUG: Request body as received from client (), WITHOUT REDACTIONS, ETC:\n" +
+                    "\n" +
+                    "```\n" +
+                    "\n" +
+                    "```\n" +
+                    "\n" +
+                    "### Request body for playback ():\n" +
+                    "\n" +
+                    "```\n" +
+                    "\n" +
+                    "```\n" +
+                    "\n" +
+                    "### DEBUG: Response headers from real service, unchanged:\n" +
+                    "\n" +
+                    "```\n" +
+                    "accept-ranges: bytes\n" +
+                    "access-control-allow-origin: *\n" +
+                    "cache-control: max-age=300\n" +
+                    "connection: keep-alive\n" +
+                    "content-security-policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
+                    "content-type: text/plain; charset=utf-8\n" +
+                    "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+                    "etag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
+                    "expires: Sun, 24 Mar 2019 17:03:11 GMT\n" +
+                    "source-age: 0\n" +
+                    "strict-transport-security: max-age=31536000\n" +
+                    "vary: Authorization,Accept-Encoding\n" +
+                    "via: 1.1 varnish\n" +
+                    "x-cache-hits: 0\n" +
+                    "x-cache: MISS\n" +
+                    "x-content-type-options: nosniff\n" +
+                    "x-fastly-request-id: 4784f09532ddc9379e32ddde47983978e321a0a8\n" +
+                    "x-frame-options: deny\n" +
+                    "x-geo-block-list: \n" +
+                    "x-github-request-id: 88D8:552C:2E667D:34D854:5C97B723\n" +
+                    "x-served-by: cache-lcy19245-LCY\n" +
+                    "x-timer: S1553446691.461472,VS0,VE130\n" +
+                    "x-xss-protection: 1; mode=block\n" +
+                    "```\n" +
+                    "\n" +
+                    "### Response headers for playback:\n" +
+                    "\n" +
+                    "```\n" +
+                    "accept-ranges: bytes\n" +
+                    "access-control-allow-origin: *\n" +
+                    "cache-control: max-age=300\n" +
+                    "connection: keep-alive\n" +
+                    "content-security-policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
+                    "content-type: text/plain; charset=utf-8\n" +
+                    "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+                    "etag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
+                    "strict-transport-security: max-age=31536000\n" +
+                    "vary: Authorization,Accept-Encoding\n" +
+                    "via: 1.1 varnish\n" +
+                    "```\n" +
+                    "\n" +
+                    "### DEBUG: Response body from real service, unchanged (200: text/plain; charset=utf-8):\n" +
+                    "\n" +
+                    "```\n" +
+                    "{\"Accept-Language\": \"en-US,en;q=0.8\",  \"Host\": \"headers.jsontest.com\",  \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\" }\n" +
+                    "\n" +
+                    "```\n" +
+                    "\n" +
+                    "### Response body for playback (200: text/plain; charset=utf-8):\n" +
+                    "\n" +
+                    "```\n" +
+                    "{\n" +
+                    "   \"Accept-Language\": \"en-US,en;q=0.8\",\n" +
+                    "   \"Host\": \"headers.jsontest.com\",\n" +
+                    "   \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\n" +
+                    "   \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\"\n" +
+                    "}\n" +
+                    "```\n" +
+                    "\n"), sanitizeDate(out.toString()));
+            fail("shoulda failed here, but was not to be");
+        } catch (AssertionError e) {
+            String[] chunks = e.getMessage().split("but was");
+            assertBoth(chunks, containsString("source-age:"));
+            assertBoth(chunks, containsString("strict-transport-security:"));
+            assertBoth(chunks, containsString("vary:"));
+            assertBoth(chunks, containsString("x-cache-hits:"));
+            assertBoth(chunks, containsString("x-cache:"));
+            assertBoth(chunks, containsString("x-content-type-options:"));
+            assertBoth(chunks, containsString("x-fastly-request-id:"));
+            assertBoth(chunks, containsString("x-frame-options:"));
+            assertBoth(chunks, containsString("x-geo-block-list"));
+            assertBoth(chunks, containsString("x-github-request-id"));
+            assertBoth(chunks, containsString("x-served-by"));
+            assertBoth(chunks, containsString("x-timer"));
+            assertBoth(chunks, containsString("x-xss-protection"));
+        }
+
+    }
+
+    private void assertBoth(String[] chunks, Matcher<String> containsString) {
+        assertThat(chunks[0], containsString);
+        assertThat(chunks[1], containsString);
 
     }
 

@@ -60,10 +60,10 @@ public class TodobackendDotComRecorderMain {
                 .withPrettyPrintedTextBodies();
     }
 
-    private static class MockGuidReplacer implements BiConsumer<String, Integer> {
+    private static class ReplaceMockGuidForRealOnes implements BiConsumer<String, Integer> {
         private String result;
 
-        public MockGuidReplacer(String str) {
+        public ReplaceMockGuidForRealOnes(String str) {
             this.result = str;
         }
 
@@ -76,6 +76,8 @@ public class TodobackendDotComRecorderMain {
 
     public static SimpleInteractionManipulations makeInteractionManipulations() {
         return new SimpleInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
+
+            Map<String, Integer> guids = new HashMap<>();
 
             @Override
             public void changeAnyHeadersForRequestToService(List<String> clientRequestHeaders) {
@@ -94,14 +96,27 @@ public class TodobackendDotComRecorderMain {
                 clientRequestHeaders.add(refer.replace(super.fromUrl, super.toUrl));
             }
 
-            Map<String, Integer> guids = new HashMap<>();
-
             @Override
             public String changeBodyReturnedBackFromServiceForRecording(String bodyFromService) {
-                return mockGuidCreator(bodyFromService);
+                return replaceRealGuidForMockOnes(bodyFromService);
             }
 
-            private String mockGuidCreator(String result) {
+            @Override
+            public String changeUrlForRequestToService(String url) {
+                return super.changeUrlForRequestToService(replaceRealGuidForMockOnes(url));
+            }
+
+            @Override
+            public String changeServiceResponseBodyForClientPostRecording(String body) {
+
+                final ReplaceMockGuidForRealOnes replaceMockGuidForRealOnes = new ReplaceMockGuidForRealOnes(body);
+                guids.forEach(replaceMockGuidForRealOnes);
+
+                return replaceMockGuidForRealOnes.result.replaceAll("todo-backend-sinatra\\.herokuapp\\.com",
+                        "localhost:8099");
+            }
+
+            private String replaceRealGuidForMockOnes(String result) {
                 Matcher uidMatcher = UID_PATTERN.matcher(result);
                 while (uidMatcher.find()) {
                     final String uid1 = uidMatcher.group(1);
@@ -115,20 +130,6 @@ public class TodobackendDotComRecorderMain {
                 return result;
             }
 
-            @Override
-            public String changeUrlForRequestToService(String url) {
-                return super.changeUrlForRequestToService(mockGuidCreator(url));
-            }
-
-            @Override
-            public String changeServiceResponseBodyForClientPostRecording(String body) {
-
-                final MockGuidReplacer mockGuidReplacer = new MockGuidReplacer(body);
-                guids.forEach(mockGuidReplacer);
-
-                return mockGuidReplacer.result.replaceAll("todo-backend-sinatra\\.herokuapp\\.com",
-                        "localhost:8099");
-            }
         };
     }
 

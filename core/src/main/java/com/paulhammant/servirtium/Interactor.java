@@ -81,8 +81,13 @@ public interface Interactor {
             return clientRequestHeaders2;
         }
 
-        public abstract void debugRawServiceResponse(String[] headers, Object body, int statusCode, String contentType);
-        public abstract void noteServiceResponse(String[] headers, Object body, int statusCode, String contentType);
+        public abstract void debugRawServiceResponseHeader(String[] headers);
+
+        public abstract void debugRawServiceResponseBody(Object body, int statusCode, String contentType);
+
+        public abstract void noteServiceResponseHeaders(String[] headers);
+
+        public abstract void noteServiceResponseBody(Object body, int statusCode, String contentType);
     }
 
     public class NullObject implements Interactor {

@@ -37,6 +37,11 @@ public class SimpleGetCentricTextWithJettyTests extends SimpleGetCentricTextTest
     }
 
     @Override @Test
+    public void canSupplyDebugInformationOnRedditJsonGet() throws Exception {
+        super.canSupplyDebugInformationOnRedditJsonGet();
+    }
+
+    @Override @Test
     public void worksThroughAproxyServer() throws Exception {
         super.worksThroughAproxyServer();
     }

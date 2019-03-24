@@ -122,7 +122,7 @@ public class MarkdownRecorder implements Interactor {
 
                 // Debug / Raw headers
 
-                blockStart("DEBUG: Request headers as received from client WITHOUT ALPHA-SORT, REDACTIONS, ETC");
+                blockStart("DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC");
                 for (String s : clientRequestHeaders) {
                     this.recording.append(s).append("\n");
                 }
@@ -202,18 +202,29 @@ public class MarkdownRecorder implements Interactor {
         }
 
         @Override
-        public void debugRawServiceResponse(String[] headers, Object serverResponseBody, int statusCode, String serverResponseContentType) {
+        public void debugRawServiceResponseHeader(String[] headers) {
             if (extraDebugOutput) {
                 doServiceResponseHeaders(headers, "DEBUG: Response headers from real service, unchanged");
+            }
+        }
+
+        @Override
+        public void debugRawServiceResponseBody(Object serverResponseBody, int statusCode, String serverResponseContentType) {
+            if (extraDebugOutput) {
                 doServiceResponseBody(serverResponseBody, statusCode, serverResponseContentType, "DEBUG: Response body from real service, unchanged");
             }
         }
 
         @Override
-        public void noteServiceResponse(String[] headers, Object serverResponseBody, int statusCode,
-                                        String serverResponseContentType) {
+        public void noteServiceResponseHeaders(String[] headers) {
 
             doServiceResponseHeaders(headers, "Response headers for playback");
+
+        }
+
+        @Override
+        public void noteServiceResponseBody(Object serverResponseBody, int statusCode,
+                                            String serverResponseContentType) {
 
             doServiceResponseBody(serverResponseBody, statusCode, serverResponseContentType, "Response body for playback");
         }

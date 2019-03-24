@@ -139,11 +139,11 @@ public class JettyServirtiumServer extends ServirtiumServer {
         }
     }
 
-    private ServiceResponse processHeadersAndBodyBackFromService(Interactor.Interaction interaction,
-                                                                 ServiceResponse serviceResponse) {
+    private ServiceResponse processHeadersAndBodyBackFromService(Interactor.Interaction interaction, ServiceResponse serviceResponse) {
 
-        interaction.debugRawServiceResponse(serviceResponse.headers, serviceResponse.body, serviceResponse.statusCode,
-                serviceResponse.contentType);
+        interaction.debugRawServiceResponseHeader(serviceResponse.headers);
+
+        ServiceResponse originalResponse = serviceResponse;
 
         List<String> newHeaders = new ArrayList<>();
         Collections.addAll(newHeaders, serviceResponse.headers);
@@ -188,8 +188,11 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
         serviceResponse = serviceResponse.withRevisedHeaders(newHeaders.toArray(new String[0]));
 
-        interaction.noteServiceResponse(serviceResponse.headers, serviceResponse.body, serviceResponse.statusCode,
-                serviceResponse.contentType);
+        interaction.noteServiceResponseHeaders(serviceResponse.headers);
+
+        interaction.debugRawServiceResponseBody(originalResponse.body, originalResponse.statusCode, originalResponse.contentType);
+
+        interaction.noteServiceResponseBody(serviceResponse.body, serviceResponse.statusCode, serviceResponse.contentType);
 
         if (serviceResponse.body instanceof String) {
             serviceResponse = serviceResponse.withRevisedBody(
