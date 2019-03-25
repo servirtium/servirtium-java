@@ -202,16 +202,30 @@ public class MarkdownRecorder implements Interactor {
         }
 
         @Override
-        public void debugRawServiceResponseHeader(String[] headers) {
+        public void debugOriginalServiceResponseHeaders(String[] headers) {
             if (extraDebugOutput) {
                 doServiceResponseHeaders(headers, "DEBUG: Response headers from real service, unchanged");
             }
         }
 
         @Override
-        public void debugRawServiceResponseBody(Object serverResponseBody, int statusCode, String serverResponseContentType) {
+        public void debugClientsServiceResponseHeaders(String[] headers) {
+            if (extraDebugOutput) {
+                doServiceResponseHeaders(headers, "DEBUG: Headers for client, possibly changed after recording");
+            }
+        }
+
+        @Override
+        public void debugOriginalServiceResponseBody(Object serverResponseBody, int statusCode, String serverResponseContentType) {
             if (extraDebugOutput) {
                 doServiceResponseBody(serverResponseBody, statusCode, serverResponseContentType, "DEBUG: Response body from real service, unchanged");
+            }
+        }
+
+        @Override
+        public void debugClientsServiceResponseBody(Object serverResponseBody, int statusCode, String serverResponseContentType) {
+            if (extraDebugOutput) {
+                doServiceResponseBody(serverResponseBody, statusCode, serverResponseContentType, "DEBUG: Response body for client, possibly changed after recording");
             }
         }
 

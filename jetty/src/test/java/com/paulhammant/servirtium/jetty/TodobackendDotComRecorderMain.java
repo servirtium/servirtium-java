@@ -97,7 +97,7 @@ public class TodobackendDotComRecorderMain {
             }
 
             @Override
-            public String changeBodyReturnedBackFromServiceForRecording(String bodyFromService) {
+            public String changeBodyReturnedBackFromRealServiceForRecording(String bodyFromService) {
                 return replaceRealGuidForMockOnes(bodyFromService);
             }
 
@@ -107,7 +107,7 @@ public class TodobackendDotComRecorderMain {
             }
 
             @Override
-            public String changeServiceResponseBodyForClientPostRecording(String body) {
+            public String changeBodyForClientResponseAfterRecording(String body) {
 
                 final ReplaceMockGuidForRealOnes replaceMockGuidForRealOnes = new ReplaceMockGuidForRealOnes(body);
                 guids.forEach(replaceMockGuidForRealOnes);

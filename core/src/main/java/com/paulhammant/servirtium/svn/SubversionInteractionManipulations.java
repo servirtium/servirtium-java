@@ -70,7 +70,7 @@ public class SubversionInteractionManipulations extends SimpleInteractionManipul
     }
 
     @Override
-    public String changeSingleHeaderReturnedBackFromService(int ix, String headerBackFromService) {
+    public String changeSingleHeaderReturnedBackFromRealServiceForRecording(int ix, String headerBackFromService) {
         if (headerBackFromService.startsWith("DAV:")) {
             headerBackFromService = "DAV:" + spaces(ix) + headerBackFromService.substring(4);
         }

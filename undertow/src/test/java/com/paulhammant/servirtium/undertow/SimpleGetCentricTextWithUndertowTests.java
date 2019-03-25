@@ -36,11 +36,11 @@ public class SimpleGetCentricTextWithUndertowTests extends SimpleGetCentricTextT
         super.canRecordASimpleGetOfARedditJsonDocumentAndPrettify();
     }
 
-    @Override @Test
+    @Override @Test @Ignore
     public void canSupplyDebugInformationOnRedditJsonGet() throws Exception {
         super.canSupplyDebugInformationOnRedditJsonGet();
     }
-    
+
     @Override @Test
     public void worksThroughAproxyServer() throws Exception {
         super.worksThroughAproxyServer();

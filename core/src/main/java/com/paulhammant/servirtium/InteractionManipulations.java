@@ -48,7 +48,7 @@ public interface InteractionManipulations {
         return url;
     }
 
-    default String changeSingleHeaderReturnedBackFromService(int ix, String headerBackFromService) {
+    default String changeSingleHeaderReturnedBackFromRealServiceForRecording(int ix, String headerBackFromService) {
         return headerBackFromService;
     }
 
@@ -64,20 +64,24 @@ public interface InteractionManipulations {
      * @param bodyFromService the string representation of the body returned from the server
      * @return the modified (or not) string representation of the body returned from the server
      */
-    default String changeBodyReturnedBackFromServiceForRecording(String bodyFromService) {
+    default String changeBodyReturnedBackFromRealServiceForRecording(String bodyFromService) {
         return bodyFromService;
     }
 
     /**
      * Change things in the body returned from the server as it was recorded (and potentially changed
-     * in changeBodyReturnedBackFromServiceForRecording() but before responding to the client.
+     * in changeBodyReturnedBackFromRealServiceForRecording() but before responding to the client.
      * This is called after any pretty printing happened (because that's in the recording too).
      *
      * @param bodyAsRecorded the string representation of the body as recorded.
      * @return the modified (or not) string representation of the body as recorded
      */
-    default String changeServiceResponseBodyForClientPostRecording(String bodyAsRecorded) {
+    default String changeBodyForClientResponseAfterRecording(String bodyAsRecorded) {
         return bodyAsRecorded;
+    }
+
+    default String[] changeHeadersForClientResponseAfterRecording(String[] headers) {
+        return headers;
     }
 
     default void changeAnyHeadersForRequestToService(List<String> clientRequestHeaders) {

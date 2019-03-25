@@ -81,9 +81,13 @@ public interface Interactor {
             return clientRequestHeaders2;
         }
 
-        public abstract void debugRawServiceResponseHeader(String[] headers);
+        public abstract void debugOriginalServiceResponseHeaders(String[] headers);
 
-        public abstract void debugRawServiceResponseBody(Object body, int statusCode, String contentType);
+        public abstract void debugOriginalServiceResponseBody(Object body, int statusCode, String contentType);
+
+        public abstract void debugClientsServiceResponseHeaders(String[] headers);
+
+        public abstract void debugClientsServiceResponseBody(Object body, int statusCode, String contentType);
 
         public abstract void noteServiceResponseHeaders(String[] headers);
 

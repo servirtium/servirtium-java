@@ -140,7 +140,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
                                                                  ServiceResponse serviceResponse,
                                                                  InteractionManipulations interactionManipulations) {
 
-        interaction.debugRawServiceResponseHeader(serviceResponse.headers);
+        interaction.debugOriginalServiceResponseHeaders(serviceResponse.headers);
 
         ServiceResponse originalResponse = serviceResponse;
 
@@ -152,7 +152,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         ArrayList<String> newHeadersTmp = new ArrayList<>();
         for (int i = 0; i < newHeaders.size(); i++) {
             String headerBackFromService = newHeaders.get(i);
-            String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderReturnedBackFromService(i, headerBackFromService);
+            String potentiallyChangedHeader = interactionManipulations.changeSingleHeaderReturnedBackFromRealServiceForRecording(i, headerBackFromService);
             if (potentiallyChangedHeader != null) {
                 newHeadersTmp.add(potentiallyChangedHeader);
             }
@@ -163,7 +163,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
         if (serviceResponse.body instanceof String) {
             serviceResponse = serviceResponse.withRevisedBody(
-                    interactionManipulations.changeBodyReturnedBackFromServiceForRecording((String) serviceResponse.body));
+                    interactionManipulations.changeBodyReturnedBackFromRealServiceForRecording((String) serviceResponse.body));
             // recreate response
 
             if (shouldHavePrettyPrintedTextBodies()) {
@@ -188,14 +188,21 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
         interaction.noteServiceResponseHeaders(serviceResponse.headers);
 
-        interaction.debugRawServiceResponseBody(originalResponse.body, originalResponse.statusCode, originalResponse.contentType);
+        serviceResponse = serviceResponse.withRevisedHeaders(
+                interactionManipulations.changeHeadersForClientResponseAfterRecording(serviceResponse.headers));
+
+        interaction.debugClientsServiceResponseHeaders(serviceResponse.headers);
+
+        interaction.debugOriginalServiceResponseBody(originalResponse.body, originalResponse.statusCode, originalResponse.contentType);
 
         interaction.noteServiceResponseBody(serviceResponse.body, serviceResponse.statusCode, serviceResponse.contentType);
 
         if (serviceResponse.body instanceof String) {
             serviceResponse = serviceResponse.withRevisedBody(
-                    interactionManipulations.changeServiceResponseBodyForClientPostRecording((String) serviceResponse.body));
+                    interactionManipulations.changeBodyForClientResponseAfterRecording((String) serviceResponse.body));
         }
+
+        interaction.debugClientsServiceResponseBody(originalResponse.body, originalResponse.statusCode, originalResponse.contentType);
 
         return serviceResponse;
     }
