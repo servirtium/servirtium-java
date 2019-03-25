@@ -99,6 +99,17 @@ public class MarkdownRecorder implements Interactor {
         return this;
     }
 
+    public void additionalNote(String noteTitle, String text) {
+
+        out.append("## Note: ").append(noteTitle).append(":\n")
+                .append("\n")
+                .append("```\n")
+                .append(text)
+                .append("```\n")
+                .append("\n");
+
+    }
+
     public class RecordingInteraction extends Interaction {
 
         private StringBuilder recording = new StringBuilder();
@@ -120,7 +131,7 @@ public class MarkdownRecorder implements Interactor {
 
             if (extraDebugOutput) {
 
-                // Debug / Raw headers
+                // Debug of original client headers
 
                 blockStart("DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC");
                 for (String s : clientRequestHeaders) {

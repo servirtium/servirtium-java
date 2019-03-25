@@ -1,3 +1,25 @@
+## Note: GUIDs and their mock names:
+
+```
+5f6e6649-af24-471d-9168-7bae3814a8c8=5
+d569f91c-8e26-4dd8-a870-07fe21dfd97c=7
+9d54e3df-d699-4059-b1de-c892594e6404=13
+266907b6-d23d-4faf-822f-8dbbbf1cfa35=6
+80794b29-4962-4b98-9a96-8dbcb9e76c36=3
+f987239e-1822-4825-a056-5d38de594ff3=15
+e8dc6c9c-b210-46fe-bc0b-d38cff9b6f63=11
+0789fa2a-fa67-4780-b78d-24b7e74ce75d=14
+2b64ff0a-6222-4b68-9587-3d0a2c8729b3=17
+ab7a4a17-04a4-4216-ae0f-def45b533e23=8
+ba9fc540-5279-4d35-a06c-aef8c72246fb=1
+0bcf3ace-0101-43d2-b3ba-7ec3c2feb5e5=4
+502969d5-7ba1-4b58-9626-6d7f6eafcf60=10
+3a4ffe29-1c25-4013-bd01-c40a3084b244=12
+c5a2f094-082b-4cda-88b3-97cf92ef00f0=9
+afab8e6e-8995-422a-aecc-bd324580252e=16
+60934d73-5a90-4110-afd6-3f19e9ce4354=2
+```
+
 ## Interaction 0: GET /todos
 
 ### Request headers for playback:
@@ -30,7 +52,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 780
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:17 GMT
+Date: Mon, 25 Mar 2019 10:54:09 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -61,7 +83,7 @@ X-Xss-Protection: 1; mode=block
    {
       "uid": "MOCK-GUID-3",
       "title": "blah",
-      "order": 10,
+      "order": 95,
       "completed": false,
       "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-3",
       "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-3"
@@ -103,7 +125,7 @@ Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
 Access-Control-Allow-Origin: *
 Connection: close
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:16 GMT
+Date: Mon, 25 Mar 2019 10:54:09 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -148,7 +170,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 780
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:17 GMT
+Date: Mon, 25 Mar 2019 10:54:09 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -179,7 +201,7 @@ X-Xss-Protection: 1; mode=block
    {
       "uid": "MOCK-GUID-3",
       "title": "blah",
-      "order": 10,
+      "order": 95,
       "completed": false,
       "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-3",
       "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-3"
@@ -221,8 +243,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 219
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:17 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/8b7ad848-0100-402b-9b7f-a9b90b01d0a8
+Date: Mon, 25 Mar 2019 10:54:10 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/0bcf3ace-0101-43d2-b3ba-7ec3c2feb5e5
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -273,7 +295,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Tue, 19 Mar 2019 05:23:18 GMT
+Date: Mon, 25 Mar 2019 10:54:10 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -316,7 +338,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Tue, 19 Mar 2019 05:23:18 GMT
+Date: Mon, 25 Mar 2019 10:54:10 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -359,7 +381,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Tue, 19 Mar 2019 05:23:18 GMT
+Date: Mon, 25 Mar 2019 10:54:10 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -405,8 +427,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 225
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:18 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/31cc78e5-a4ab-41a2-92dd-3e8b641914c1
+Date: Mon, 25 Mar 2019 10:54:10 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/5f6e6649-af24-471d-9168-7bae3814a8c8
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -457,7 +479,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 268
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:18 GMT
+Date: Mon, 25 Mar 2019 10:54:10 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -511,7 +533,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Tue, 19 Mar 2019 05:23:18 GMT
+Date: Mon, 25 Mar 2019 10:54:11 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -557,8 +579,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 217
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:18 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/c862886f-c5d3-473f-9b4d-d45b76728cb5
+Date: Mon, 25 Mar 2019 10:54:11 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/266907b6-d23d-4faf-822f-8dbbbf1cfa35
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -609,7 +631,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 260
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:19 GMT
+Date: Mon, 25 Mar 2019 10:54:11 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -663,7 +685,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Tue, 19 Mar 2019 05:23:19 GMT
+Date: Mon, 25 Mar 2019 10:54:11 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -709,8 +731,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 217
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:19 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/70d696d8-44f6-4ec9-94d1-ae650d8920ab
+Date: Mon, 25 Mar 2019 10:54:11 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/d569f91c-8e26-4dd8-a870-07fe21dfd97c
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -761,7 +783,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 260
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:19 GMT
+Date: Mon, 25 Mar 2019 10:54:11 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -815,7 +837,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Tue, 19 Mar 2019 05:23:19 GMT
+Date: Mon, 25 Mar 2019 10:54:11 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -861,8 +883,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 220
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:19 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/d9587449-a23f-4b1f-b964-3ee051980387
+Date: Mon, 25 Mar 2019 10:54:12 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/ab7a4a17-04a4-4216-ae0f-def45b533e23
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -882,7 +904,7 @@ X-Xss-Protection: 1; mode=block
 }
 ```
 
-## Interaction 17: OPTIONS /todos/d9587449-a23f-4b1f-b964-3ee051980387
+## Interaction 17: OPTIONS /todos/ab7a4a17-04a4-4216-ae0f-def45b533e23
 
 ### Request headers for playback:
 
@@ -916,7 +938,7 @@ Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
 Access-Control-Allow-Origin: *
 Connection: close
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:19 GMT
+Date: Mon, 25 Mar 2019 10:54:12 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -930,7 +952,7 @@ X-Xss-Protection: 1; mode=block
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 18: GET /todos/d9587449-a23f-4b1f-b964-3ee051980387
+## Interaction 18: GET /todos/ab7a4a17-04a4-4216-ae0f-def45b533e23
 
 ### Request headers for playback:
 
@@ -961,7 +983,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 235
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:19 GMT
+Date: Mon, 25 Mar 2019 10:54:12 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1013,7 +1035,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Tue, 19 Mar 2019 05:23:19 GMT
+Date: Mon, 25 Mar 2019 10:54:12 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1059,8 +1081,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 227
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:19 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/aa224ec2-4cd4-498e-8795-f1204d745bd2
+Date: Mon, 25 Mar 2019 10:54:12 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/c5a2f094-082b-4cda-88b3-97cf92ef00f0
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1114,8 +1136,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 231
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:19 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/e1298305-d57e-4ddc-8cab-33db17f7a084
+Date: Mon, 25 Mar 2019 10:54:13 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/502969d5-7ba1-4b58-9626-6d7f6eafcf60
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1166,7 +1188,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 542
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:19 GMT
+Date: Mon, 25 Mar 2019 10:54:13 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1197,7 +1219,7 @@ X-Xss-Protection: 1; mode=block
 ]
 ```
 
-## Interaction 23: OPTIONS /todos/aa224ec2-4cd4-498e-8795-f1204d745bd2
+## Interaction 23: OPTIONS /todos/c5a2f094-082b-4cda-88b3-97cf92ef00f0
 
 ### Request headers for playback:
 
@@ -1231,7 +1253,7 @@ Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
 Access-Control-Allow-Origin: *
 Connection: close
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:19 GMT
+Date: Mon, 25 Mar 2019 10:54:13 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1245,7 +1267,7 @@ X-Xss-Protection: 1; mode=block
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 24: GET /todos/aa224ec2-4cd4-498e-8795-f1204d745bd2
+## Interaction 24: GET /todos/c5a2f094-082b-4cda-88b3-97cf92ef00f0
 
 ### Request headers for playback:
 
@@ -1276,7 +1298,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 242
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:20 GMT
+Date: Mon, 25 Mar 2019 10:54:13 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1328,7 +1350,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Tue, 19 Mar 2019 05:23:20 GMT
+Date: Mon, 25 Mar 2019 10:54:14 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1374,8 +1396,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 229
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:20 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/eb8c3914-d9ff-4ea7-b1de-be9cd628158e
+Date: Mon, 25 Mar 2019 10:54:14 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/e8dc6c9c-b210-46fe-bc0b-d38cff9b6f63
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1395,7 +1417,7 @@ X-Xss-Protection: 1; mode=block
 }
 ```
 
-## Interaction 27: OPTIONS /todos/fb9a2008-fcdb-4406-90aa-bd7e6cbdadad1
+## Interaction 27: OPTIONS /todos/ba9fc540-5279-4d35-a06c-aef8c72246fb1
 
 ### Request headers for playback:
 
@@ -1429,7 +1451,7 @@ Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
 Access-Control-Allow-Origin: *
 Connection: close
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:20 GMT
+Date: Mon, 25 Mar 2019 10:54:14 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1443,7 +1465,7 @@ X-Xss-Protection: 1; mode=block
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 28: PATCH /todos/fb9a2008-fcdb-4406-90aa-bd7e6cbdadad1
+## Interaction 28: PATCH /todos/ba9fc540-5279-4d35-a06c-aef8c72246fb1
 
 ### Request headers for playback:
 
@@ -1477,7 +1499,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:21 GMT
+Date: Mon, 25 Mar 2019 10:54:14 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1522,7 +1544,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Tue, 19 Mar 2019 05:23:21 GMT
+Date: Mon, 25 Mar 2019 10:54:14 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1568,8 +1590,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 220
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:21 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/19c47533-440e-4a05-8315-8c23e9918c95
+Date: Mon, 25 Mar 2019 10:54:14 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/3a4ffe29-1c25-4013-bd01-c40a3084b244
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1589,7 +1611,7 @@ X-Xss-Protection: 1; mode=block
 }
 ```
 
-## Interaction 31: OPTIONS /todos/19c47533-440e-4a05-8315-8c23e9918c95
+## Interaction 31: OPTIONS /todos/ba9fc540-5279-4d35-a06c-aef8c72246fb2
 
 ### Request headers for playback:
 
@@ -1623,7 +1645,7 @@ Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
 Access-Control-Allow-Origin: *
 Connection: close
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:21 GMT
+Date: Mon, 25 Mar 2019 10:54:14 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1637,7 +1659,7 @@ X-Xss-Protection: 1; mode=block
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 32: PATCH /todos/19c47533-440e-4a05-8315-8c23e9918c95
+## Interaction 32: PATCH /todos/ba9fc540-5279-4d35-a06c-aef8c72246fb2
 
 ### Request headers for playback:
 
@@ -1669,211 +1691,9 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ```
 Access-Control-Allow-Origin: *
 Connection: keep-alive
-Content-Length: 234
-Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:21 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-{
-   "uid": "MOCK-GUID-12",
-   "title": "blah",
-   "order": 0,
-   "completed": true,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-12",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-12"
-}
-```
-
-## Interaction 33: DELETE /todos
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Length: 0
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback (application/json):
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 0
-Date: Tue, 19 Mar 2019 05:23:21 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-```
-
-### Response body for playback (204: null - Base64 below):
-
-```
-
-```
-
-## Interaction 34: POST /todos
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Length: 16
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback (application/json):
-
-```
-{
-   "title": "blah"
-}
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 220
-Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:21 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/2dc1a69f-c488-4caa-aaf0-24995188fc3f
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (201: text/html;charset=utf-8):
-
-```
-{
-   "title": "blah",
-   "uid": "MOCK-GUID-13",
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13"
-}
-```
-
-## Interaction 35: OPTIONS /todos/fb9a2008-fcdb-4406-90aa-bd7e6cbdadad3
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
-Access-Control-Request-Headers: content-type
-Access-Control-Request-Method: PATCH
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Length: 0
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback ():
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Headers: content-type
-Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-Access-Control-Allow-Origin: *
-Connection: close
-Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:22 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
-```
-
-## Interaction 36: PATCH /todos/fb9a2008-fcdb-4406-90aa-bd7e6cbdadad3
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Length: 42
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback (application/json):
-
-```
-{
-   "title": "changed title",
-   "completed": true
-}
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
 Content-Length: 0
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:22 GMT
+Date: Mon, 25 Mar 2019 10:54:14 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1887,7 +1707,7 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-## Interaction 37: OPTIONS /todos
+## Interaction 33: OPTIONS /todos
 
 ### Request headers for playback:
 
@@ -1921,7 +1741,7 @@ Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
 Access-Control-Allow-Origin: *
 Connection: close
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:22 GMT
+Date: Mon, 25 Mar 2019 10:54:14 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1935,7 +1755,7 @@ X-Xss-Protection: 1; mode=block
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 38: DELETE /todos
+## Interaction 34: DELETE /todos
 
 ### Request headers for playback:
 
@@ -1966,7 +1786,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Tue, 19 Mar 2019 05:23:22 GMT
+Date: Mon, 25 Mar 2019 10:54:15 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -1978,7 +1798,7 @@ X-Content-Type-Options: nosniff
 
 ```
 
-## Interaction 39: POST /todos
+## Interaction 35: POST /todos
 
 ### Request headers for playback:
 
@@ -2012,8 +1832,316 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 220
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:22 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/ee4b6c4d-6f26-43dd-81b1-855f039fd176
+Date: Mon, 25 Mar 2019 10:54:15 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/9d54e3df-d699-4059-b1de-c892594e6404
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Response body for playback (201: text/html;charset=utf-8):
+
+```
+{
+   "title": "blah",
+   "uid": "MOCK-GUID-13",
+   "completed": false,
+   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13",
+   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13"
+}
+```
+
+## Interaction 36: OPTIONS /todos/9d54e3df-d699-4059-b1de-c892594e6404
+
+### Request headers for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: */*
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: PATCH
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 0
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### Request body for playback ():
+
+```
+
+```
+
+### Response headers for playback:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
+Access-Control-Allow-Origin: *
+Connection: close
+Content-Type: text/html;charset=utf-8
+Date: Mon, 25 Mar 2019 10:54:15 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Response body for playback (200: text/html;charset=utf-8):
+
+```
+Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+```
+
+## Interaction 37: PATCH /todos/9d54e3df-d699-4059-b1de-c892594e6404
+
+### Request headers for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 42
+Content-Type: application/json
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### Request body for playback (application/json):
+
+```
+{
+   "title": "changed title",
+   "completed": true
+}
+```
+
+### Response headers for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 243
+Content-Type: text/html;charset=utf-8
+Date: Mon, 25 Mar 2019 10:54:15 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Response body for playback (200: text/html;charset=utf-8):
+
+```
+{
+   "uid": "MOCK-GUID-13",
+   "title": "changed title",
+   "order": 0,
+   "completed": true,
+   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13",
+   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13"
+}
+```
+
+## Interaction 38: GET /todos/9d54e3df-d699-4059-b1de-c892594e6404
+
+### Request headers for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### Request body for playback (application/json):
+
+```
+
+```
+
+### Response headers for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 243
+Content-Type: text/html;charset=utf-8
+Date: Mon, 25 Mar 2019 10:54:15 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Response body for playback (200: text/html;charset=utf-8):
+
+```
+{
+   "uid": "MOCK-GUID-13",
+   "title": "changed title",
+   "order": 0,
+   "completed": true,
+   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13",
+   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13"
+}
+```
+
+## Interaction 39: GET /todos
+
+### Request headers for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### Request body for playback (application/json):
+
+```
+
+```
+
+### Response headers for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 271
+Content-Type: text/html;charset=utf-8
+Date: Mon, 25 Mar 2019 10:54:16 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+```
+
+### Response body for playback (200: text/html;charset=utf-8):
+
+```
+[
+   {
+      "uid": "MOCK-GUID-13",
+      "title": "changed title",
+      "order": 0,
+      "completed": true,
+      "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13",
+      "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13"
+   }
+]
+```
+
+## Interaction 40: DELETE /todos
+
+### Request headers for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 0
+Content-Type: application/json
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### Request body for playback (application/json):
+
+```
+
+```
+
+### Response headers for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 0
+Date: Mon, 25 Mar 2019 10:54:16 GMT
+Server: thin 1.6.2 codename Doc Brown
+Via: 1.1 vegur
+X-Content-Type-Options: nosniff
+```
+
+### Response body for playback (204: null - Base64 below):
+
+```
+
+```
+
+## Interaction 41: POST /todos
+
+### Request headers for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 16
+Content-Type: application/json
+Host: todo-backend-sinatra.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### Request body for playback (application/json):
+
+```
+{
+   "title": "blah"
+}
+```
+
+### Response headers for playback:
+
+```
+Access-Control-Allow-Origin: *
+Connection: keep-alive
+Content-Length: 220
+Content-Type: text/html;charset=utf-8
+Date: Mon, 25 Mar 2019 10:54:16 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/0789fa2a-fa67-4780-b78d-24b7e74ce75d
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -2033,7 +2161,7 @@ X-Xss-Protection: 1; mode=block
 }
 ```
 
-## Interaction 40: OPTIONS /todos/fb9a2008-fcdb-4406-90aa-bd7e6cbdadad4
+## Interaction 42: OPTIONS /todos/0789fa2a-fa67-4780-b78d-24b7e74ce75d
 
 ### Request headers for playback:
 
@@ -2067,7 +2195,7 @@ Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
 Access-Control-Allow-Origin: *
 Connection: close
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:22 GMT
+Date: Mon, 25 Mar 2019 10:54:16 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -2081,7 +2209,7 @@ X-Xss-Protection: 1; mode=block
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 41: DELETE /todos/fb9a2008-fcdb-4406-90aa-bd7e6cbdadad4
+## Interaction 43: DELETE /todos/0789fa2a-fa67-4780-b78d-24b7e74ce75d
 
 ### Request headers for playback:
 
@@ -2112,7 +2240,7 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
-Date: Tue, 19 Mar 2019 05:23:22 GMT
+Date: Mon, 25 Mar 2019 10:54:16 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -2124,7 +2252,7 @@ X-Content-Type-Options: nosniff
 
 ```
 
-## Interaction 42: GET /todos
+## Interaction 44: GET /todos
 
 ### Request headers for playback:
 
@@ -2153,9 +2281,9 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 ```
 Access-Control-Allow-Origin: *
 Connection: keep-alive
-Content-Length: 263
+Content-Length: 3
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:23 GMT
+Date: Mon, 25 Mar 2019 10:54:16 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -2167,18 +2295,10 @@ X-Xss-Protection: 1; mode=block
 
 ```
 [
-   {
-      "uid": "MOCK-GUID-14",
-      "title": "blah",
-      "order": 0,
-      "completed": false,
-      "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-14",
-      "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-14"
-   }
 ]
 ```
 
-## Interaction 43: POST /todos
+## Interaction 45: POST /todos
 
 ### Request headers for playback:
 
@@ -2213,8 +2333,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 237
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:23 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/9c0aef61-644a-4e4b-832c-55f3da95ee36
+Date: Mon, 25 Mar 2019 10:54:17 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/f987239e-1822-4825-a056-5d38de594ff3
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -2235,7 +2355,7 @@ X-Xss-Protection: 1; mode=block
 }
 ```
 
-## Interaction 44: POST /todos
+## Interaction 46: POST /todos
 
 ### Request headers for playback:
 
@@ -2270,8 +2390,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 236
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:23 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/8b4b91f0-b6f4-4c0f-af9b-9d38c38d4ddd
+Date: Mon, 25 Mar 2019 10:54:17 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/afab8e6e-8995-422a-aecc-bd324580252e
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -2292,7 +2412,7 @@ X-Xss-Protection: 1; mode=block
 }
 ```
 
-## Interaction 45: OPTIONS /todos/fb9a2008-fcdb-4406-90aa-bd7e6cbdadad6
+## Interaction 47: OPTIONS /todos/ba9fc540-5279-4d35-a06c-aef8c72246fb6
 
 ### Request headers for playback:
 
@@ -2326,7 +2446,7 @@ Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
 Access-Control-Allow-Origin: *
 Connection: close
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:23 GMT
+Date: Mon, 25 Mar 2019 10:54:17 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -2340,7 +2460,7 @@ X-Xss-Protection: 1; mode=block
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 46: PATCH /todos/fb9a2008-fcdb-4406-90aa-bd7e6cbdadad6
+## Interaction 48: PATCH /todos/ba9fc540-5279-4d35-a06c-aef8c72246fb6
 
 ### Request headers for playback:
 
@@ -2374,7 +2494,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 0
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:24 GMT
+Date: Mon, 25 Mar 2019 10:54:17 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -2388,7 +2508,7 @@ X-Xss-Protection: 1; mode=block
 
 ```
 
-## Interaction 47: POST /todos
+## Interaction 49: POST /todos
 
 ### Request headers for playback:
 
@@ -2423,8 +2543,8 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 236
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:24 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/13c1be92-5fd5-448e-b308-a591f4797cf5
+Date: Mon, 25 Mar 2019 10:54:17 GMT
+Location: http://todo-backend-sinatra.herokuapp.com/todos/2b64ff0a-6222-4b68-9587-3d0a2c8729b3
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -2445,7 +2565,7 @@ X-Xss-Protection: 1; mode=block
 }
 ```
 
-## Interaction 48: OPTIONS /todos/13c1be92-5fd5-448e-b308-a591f4797cf5
+## Interaction 50: OPTIONS /todos/2b64ff0a-6222-4b68-9587-3d0a2c8729b3
 
 ### Request headers for playback:
 
@@ -2479,7 +2599,7 @@ Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
 Access-Control-Allow-Origin: *
 Connection: close
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:24 GMT
+Date: Mon, 25 Mar 2019 10:54:17 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -2493,7 +2613,7 @@ X-Xss-Protection: 1; mode=block
 Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
 ```
 
-## Interaction 49: PATCH /todos/13c1be92-5fd5-448e-b308-a591f4797cf5
+## Interaction 51: PATCH /todos/2b64ff0a-6222-4b68-9587-3d0a2c8729b3
 
 ### Request headers for playback:
 
@@ -2527,7 +2647,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 236
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:24 GMT
+Date: Mon, 25 Mar 2019 10:54:18 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff
@@ -2548,7 +2668,7 @@ X-Xss-Protection: 1; mode=block
 }
 ```
 
-## Interaction 50: GET /todos/13c1be92-5fd5-448e-b308-a591f4797cf5
+## Interaction 52: GET /todos/2b64ff0a-6222-4b68-9587-3d0a2c8729b3
 
 ### Request headers for playback:
 
@@ -2579,7 +2699,7 @@ Access-Control-Allow-Origin: *
 Connection: keep-alive
 Content-Length: 236
 Content-Type: text/html;charset=utf-8
-Date: Tue, 19 Mar 2019 05:23:24 GMT
+Date: Mon, 25 Mar 2019 10:54:18 GMT
 Server: thin 1.6.2 codename Doc Brown
 Via: 1.1 vegur
 X-Content-Type-Options: nosniff

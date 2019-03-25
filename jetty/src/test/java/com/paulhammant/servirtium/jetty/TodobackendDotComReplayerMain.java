@@ -4,6 +4,9 @@ import com.paulhammant.servirtium.MarkdownReplayer;
 import com.paulhammant.servirtium.ServirtiumServer;
 import com.paulhammant.servirtium.SimpleInteractionManipulations;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.paulhammant.servirtium.jetty.TodobackendDotComRecorderMain.makeInteractionManipulations;
 import static com.paulhammant.servirtium.jetty.TodobackendDotComRecorderMain.makeServirtiumServer;
 
@@ -19,7 +22,9 @@ public class TodobackendDotComReplayerMain {
         // ... src/test/resources/TodobackendDotComServiceRecording.md will be read and
         // hopefully the Jasmine tests in the browser still pass.
 
-        final SimpleInteractionManipulations manipulations = makeInteractionManipulations();
+        Map<String, Integer> guids = new HashMap<>();
+
+        final SimpleInteractionManipulations manipulations = makeInteractionManipulations(guids);
 
         MarkdownReplayer replayer = new MarkdownReplayer().withAlphaSortingOfHeaders()
                 .withAlphaSortingOfHeaders();

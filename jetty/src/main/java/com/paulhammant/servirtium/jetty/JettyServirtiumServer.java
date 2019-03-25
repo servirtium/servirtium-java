@@ -161,7 +161,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
         newHeaders = newHeadersTmp;
 
-        interactionManipulations.changeAnyHeadersReturnedBackFromService(newHeaders);
+        interactionManipulations.changeAnyHeadersReturnedBackFromRealServiceForRecording(newHeaders);
 
         if (serviceResponse.body instanceof String) {
             serviceResponse = serviceResponse.withRevisedBody(

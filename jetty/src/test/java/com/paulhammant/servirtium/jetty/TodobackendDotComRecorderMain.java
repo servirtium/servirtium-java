@@ -7,6 +7,7 @@ import com.paulhammant.servirtium.ServiceInteropViaOkHttp;
 import com.paulhammant.servirtium.ServirtiumServer;
 import com.paulhammant.servirtium.SimpleInteractionManipulations;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,9 @@ public class TodobackendDotComRecorderMain {
 
         // ([0-9a-f\-]{28,60})
 
-        final SimpleInteractionManipulations manipulations = makeInteractionManipulations();
+        Map<String, Integer> guids = new HashMap<>();
+
+        final SimpleInteractionManipulations manipulations = makeInteractionManipulations(guids);
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(), manipulations)
@@ -51,7 +54,17 @@ public class TodobackendDotComRecorderMain {
         recorder.setScriptFilename("core/src/test/resources/TodobackendDotComServiceRecording.md");
         servirtiumServer.start();
 
-        Runtime.getRuntime().addShutdownHook(new Thread(servirtiumServer::stop));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+
+            recorder.additionalNote("GUIDs and their mock names",
+                    guids.toString()
+                            .replace(" ","")
+                            .replace("{","")
+                            .replace("}","")
+                            .replace(",","\n") + "\n") ;
+            servirtiumServer.stop();
+
+        }));
     }
 
     public static ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations manipulations, Interactor interactor) {
@@ -74,10 +87,8 @@ public class TodobackendDotComRecorderMain {
     }
 
 
-    public static SimpleInteractionManipulations makeInteractionManipulations() {
+    public static SimpleInteractionManipulations makeInteractionManipulations(Map<String, Integer> guids) {
         return new SimpleInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
-
-            Map<String, Integer> guids = new HashMap<>();
 
             @Override
             public void changeAnyHeadersForRequestToService(List<String> clientRequestHeaders) {
@@ -99,6 +110,11 @@ public class TodobackendDotComRecorderMain {
             @Override
             public String changeBodyReturnedBackFromRealServiceForRecording(String bodyFromService) {
                 return replaceRealGuidForMockOnes(bodyFromService);
+            }
+
+            @Override
+            public String changeSingleHeaderReturnedBackFromRealServiceForRecording(int ix, String orig) {
+                return replaceRealGuidForMockOnes(orig);
             }
 
             @Override
