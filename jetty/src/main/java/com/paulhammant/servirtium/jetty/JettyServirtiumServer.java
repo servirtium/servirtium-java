@@ -94,7 +94,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
             // INTERACTION
             ServiceResponse serverResponse = interactor.getServiceResponseForRequest(method, urlAndHeaders.url, urlAndHeaders.clientRequestHeaders,
-                    interaction, getLowerCaseHeaders());
+                    interaction, useLowerCaseHeaders());
 
             serverResponse = processHeadersAndBodyBackFromService(interaction, serverResponse);
 
@@ -261,9 +261,18 @@ public class JettyServirtiumServer extends ServirtiumServer {
             }
         }
 
-        List<String> clientRequestHeaders2 = interaction.noteClientRequestHeadersAndBody(interactionManipulations, clientRequestHeaders, clientRequestBody, clientRequestContentType, method, getLowerCaseHeaders());
+        List<String> clientRequestHeaders2 = interaction.noteClientRequestHeadersAndBody(interactionManipulations, clientRequestHeaders, clientRequestBody, clientRequestContentType, method, useLowerCaseHeaders());
 
-        return new UrlAndHeaders(interactionManipulations.changeUrlForRequestToService(url), clientRequestHeaders2);
+        final String chgdURL = interactionManipulations.changeUrlForRequestToService(url);
+
+        int ixU = url.indexOf("/", url.indexOf(":") + 3);
+        int ixC = chgdURL.indexOf("/", chgdURL.indexOf(":") + 3);
+
+        if (ixU != -1 && ixC != -1 && !url.substring(ixU).equals(chgdURL.substring(ixC))) {
+            interaction.noteChangedResourceForRequestToClient(url.substring(ixU), chgdURL.substring(ixC));
+        }
+
+        return new UrlAndHeaders(chgdURL, clientRequestHeaders2);
     }
 
     public ServirtiumServer start() throws Exception {

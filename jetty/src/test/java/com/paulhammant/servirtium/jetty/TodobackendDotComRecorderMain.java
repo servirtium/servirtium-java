@@ -46,8 +46,8 @@ public class TodobackendDotComRecorderMain {
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(), manipulations)
-                .withAlphaSortingOfHeaders();
-//                .withExtraDebugOutput(); // - This adds extra debugging output
+                .withAlphaSortingOfHeaders()
+                .withExtraDebugOutput(); // - This adds extra debugging output
 
         ServirtiumServer servirtiumServer = makeServirtiumServer(manipulations, recorder);
 
@@ -88,7 +88,7 @@ public class TodobackendDotComRecorderMain {
 
 
     public static SimpleInteractionManipulations makeInteractionManipulations(Map<String, Integer> guids) {
-        return new SimpleInteractionManipulations("localhost:8099", "todo-backend-sinatra.herokuapp.com") {
+        return new SimpleInteractionManipulations("localhost:8099", "todo-backend-rocket-rust.herokuapp.com") {
 
             @Override
             public void changeAnyHeadersForRequestToService(List<String> clientRequestHeaders) {
@@ -128,7 +128,7 @@ public class TodobackendDotComRecorderMain {
                 final ReplaceMockGuidForRealOnes replaceMockGuidForRealOnes = new ReplaceMockGuidForRealOnes(body);
                 guids.forEach(replaceMockGuidForRealOnes);
 
-                return replaceMockGuidForRealOnes.result.replaceAll("todo-backend-sinatra\\.herokuapp\\.com",
+                return replaceMockGuidForRealOnes.result.replaceAll("todo-backend-rocket-rust\\.herokuapp\\.com",
                         "localhost:8099");
             }
 

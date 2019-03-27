@@ -1,97 +1,26 @@
 ## Note: GUIDs and their mock names:
 
 ```
-5f6e6649-af24-471d-9168-7bae3814a8c8=5
-d569f91c-8e26-4dd8-a870-07fe21dfd97c=7
-9d54e3df-d699-4059-b1de-c892594e6404=13
-266907b6-d23d-4faf-822f-8dbbbf1cfa35=6
-80794b29-4962-4b98-9a96-8dbcb9e76c36=3
-f987239e-1822-4825-a056-5d38de594ff3=15
-e8dc6c9c-b210-46fe-bc0b-d38cff9b6f63=11
-0789fa2a-fa67-4780-b78d-24b7e74ce75d=14
-2b64ff0a-6222-4b68-9587-3d0a2c8729b3=17
-ab7a4a17-04a4-4216-ae0f-def45b533e23=8
-ba9fc540-5279-4d35-a06c-aef8c72246fb=1
-0bcf3ace-0101-43d2-b3ba-7ec3c2feb5e5=4
-502969d5-7ba1-4b58-9626-6d7f6eafcf60=10
-3a4ffe29-1c25-4013-bd01-c40a3084b244=12
-c5a2f094-082b-4cda-88b3-97cf92ef00f0=9
-afab8e6e-8995-422a-aecc-bd324580252e=16
-60934d73-5a90-4110-afd6-3f19e9ce4354=2
-```
-
-## Interaction 0: GET /todos
-
-### Request headers for playback:
 
 ```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Type: application/json
-Cookie: Webstorm-83fc7c3a=328bd980-db39-4ff1-b428-4a2de37a062c; __utma=111872281.305267849.1471227400.1493602468.1505656390.3
-Host: todo-backend-sinatra.herokuapp.com
+
+## Interaction 0: OPTIONS /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
 Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback (application/json):
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
+Access-Control-Request-Method: GET
+Accept: */*
+Access-Control-Request-Headers: content-type
 Connection: keep-alive
-Content-Length: 780
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:09 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Content-Length: 0
 ```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-[
-   {
-      "uid": "MOCK-GUID-1",
-      "title": "blah",
-      "order": 523,
-      "completed": false,
-      "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-1",
-      "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-1"
-   },
-   {
-      "uid": "MOCK-GUID-2",
-      "title": "blah",
-      "order": 10,
-      "completed": false,
-      "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-2",
-      "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-2"
-   },
-   {
-      "uid": "MOCK-GUID-3",
-      "title": "blah",
-      "order": 95,
-      "completed": false,
-      "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-3",
-      "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-3"
-   }
-]
-```
-
-## Interaction 1: OPTIONS /todos
 
 ### Request headers for playback:
 
@@ -104,11 +33,17 @@ Access-Control-Request-Method: GET
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (), WITHOUT REDACTIONS, ETC:
+
+```
+
 ```
 
 ### Request body for playback ():
@@ -117,29 +52,86 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: PATCH, DELETE, HEAD, POST, OPTIONS, PUT, GET
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:19 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
 Access-Control-Allow-Headers: content-type
-Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
-Access-Control-Allow-Origin: *
-Connection: close
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:09 GMT
-Server: thin 1.6.2 codename Doc Brown
+Access-Control-Allow-Methods: PATCH, DELETE, HEAD, POST, OPTIONS, PUT, GET
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:19 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (200: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
+Access-Control-Allow-Headers: content-type
+Access-Control-Allow-Methods: PATCH, DELETE, HEAD, POST, OPTIONS, PUT, GET
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:19 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
 ```
 
-## Interaction 2: GET /todos
+### DEBUG: Response body from real service, unchanged (204: text/html; charset=utf-8):
+
+```
+
+```
+
+### Response body for playback (204: text/html; charset=utf-8):
+
+```
+
+```
+
+### DEBUG: Response body for client, possibly changed after recording (204: text/html; charset=utf-8):
+
+```
+
+```
+
+## Interaction 1: GET /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Pragma: no-cache
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Content-Type: application/json
+```
 
 ### Request headers for playback:
 
@@ -150,11 +142,17 @@ Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+
 ```
 
 ### Request body for playback (application/json):
@@ -163,53 +161,130 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 565
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:19 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 780
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:09 GMT
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 565
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:19 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (200: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-[
-   {
-      "uid": "MOCK-GUID-1",
-      "title": "blah",
-      "order": 523,
-      "completed": false,
-      "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-1",
-      "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-1"
-   },
-   {
-      "uid": "MOCK-GUID-2",
-      "title": "blah",
-      "order": 10,
-      "completed": false,
-      "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-2",
-      "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-2"
-   },
-   {
-      "uid": "MOCK-GUID-3",
-      "title": "blah",
-      "order": 95,
-      "completed": false,
-      "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-3",
-      "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-3"
-   }
-]
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 565
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:19 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
 ```
 
-## Interaction 3: POST /todos
+### DEBUG: Response body from real service, unchanged (500: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>500 Internal Server Error</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>500: Internal Server Error</h1>
+                    <p>The server encountered an internal error
+                while processing this request.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### Response body for playback (500: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>500 Internal Server Error</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>500: Internal Server Error</h1>
+                    <p>The server encountered an internal error
+                while processing this request.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### DEBUG: Response body for client, possibly changed after recording (500: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>500 Internal Server Error</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>500: Internal Server Error</h1>
+                    <p>The server encountered an internal error
+                while processing this request.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+## Interaction 2: POST /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Content-Length: 18
+Content-Type: application/json
+```
 
 ### Request headers for playback:
 
@@ -221,11 +296,19 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 18
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+{
+   "title": "a todo"
+}
 ```
 
 ### Request body for playback (application/json):
@@ -236,78 +319,227 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 }
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:19 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 219
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:10 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/0bcf3ace-0101-43d2-b3ba-7ec3c2feb5e5
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:19 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (201: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-{
-   "title": "a todo",
-   "uid": "MOCK-GUID-4",
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-4",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-4"
-}
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:19 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### Response body for playback (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### DEBUG: Response body for client, possibly changed after recording (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+## Interaction 3: DELETE /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Content-Length: 0
+Content-Type: application/json
+```
+
+### Request headers for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 0
+Content-Type: application/json
+Host: todo-backend-rocket-rust.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+
+```
+
+### Request body for playback (application/json):
+
+```
+
+```
+
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### Response headers for playback:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Headers for client, possibly changed after recording:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (200: null - Base64 below):
+
+```
+
+```
+
+### Response body for playback (200: null - Base64 below):
+
+```
+
+```
+
+### DEBUG: Response body for client, possibly changed after recording (200: null - Base64 below):
+
+```
+
 ```
 
 ## Interaction 4: DELETE /todos
 
-### Request headers for playback:
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
 
 ```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
+Origin: http://www.todobackend.com
 Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
 Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
 Content-Length: 0
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
 ```
-
-### Request body for playback (application/json):
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 0
-Date: Mon, 25 Mar 2019 10:54:10 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-```
-
-### Response body for playback (204: null - Base64 below):
-
-```
-
-```
-
-## Interaction 5: DELETE /todos
 
 ### Request headers for playback:
 
@@ -319,11 +551,17 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+
 ```
 
 ### Request body for playback (application/json):
@@ -332,26 +570,229 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
 Content-Length: 0
-Date: Mon, 25 Mar 2019 10:54:10 GMT
-Server: thin 1.6.2 codename Doc Brown
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
 ```
 
-### Response body for playback (204: null - Base64 below):
+### DEBUG: Headers for client, possibly changed after recording:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (200: null - Base64 below):
 
 ```
 
+```
+
+### Response body for playback (200: null - Base64 below):
+
+```
+
+```
+
+### DEBUG: Response body for client, possibly changed after recording (200: null - Base64 below):
+
+```
+
+```
+
+## Interaction 5: GET /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Content-Type: application/json
+```
+
+### Request headers for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: application/json
+Host: todo-backend-rocket-rust.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+
+```
+
+### Request body for playback (application/json):
+
+```
+
+```
+
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 565
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### Response headers for playback:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 565
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Headers for client, possibly changed after recording:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 565
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (500: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>500 Internal Server Error</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>500: Internal Server Error</h1>
+                    <p>The server encountered an internal error
+                while processing this request.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### Response body for playback (500: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>500 Internal Server Error</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>500: Internal Server Error</h1>
+                    <p>The server encountered an internal error
+                while processing this request.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### DEBUG: Response body for client, possibly changed after recording (500: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>500 Internal Server Error</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>500: Internal Server Error</h1>
+                    <p>The server encountered an internal error
+                while processing this request.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
 ```
 
 ## Interaction 6: DELETE /todos
 
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Content-Length: 0
+Content-Type: application/json
+```
+
 ### Request headers for playback:
 
 ```
@@ -362,11 +803,17 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+
 ```
 
 ### Request body for playback (application/json):
@@ -375,25 +822,76 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
 Content-Length: 0
-Date: Mon, 25 Mar 2019 10:54:10 GMT
-Server: thin 1.6.2 codename Doc Brown
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
 ```
 
-### Response body for playback (204: null - Base64 below):
+### DEBUG: Headers for client, possibly changed after recording:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (200: null - Base64 below):
+
+```
+
+```
+
+### Response body for playback (200: null - Base64 below):
+
+```
+
+```
+
+### DEBUG: Response body for client, possibly changed after recording (200: null - Base64 below):
 
 ```
 
 ```
 
 ## Interaction 7: POST /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Content-Length: 24
+Content-Type: application/json
+```
 
 ### Request headers for playback:
 
@@ -405,11 +903,19 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 24
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+{
+   "title": "walk the dog"
+}
 ```
 
 ### Request body for playback (application/json):
@@ -420,89 +926,127 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 }
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 225
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:10 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/5f6e6649-af24-471d-9168-7bae3814a8c8
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (201: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-{
-   "title": "walk the dog",
-   "uid": "MOCK-GUID-5",
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-5",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-5"
-}
-```
-
-## Interaction 8: GET /todos
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### Response body for playback (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### DEBUG: Response body for client, possibly changed after recording (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+## Interaction 8: DELETE /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
 Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback (application/json):
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
+Accept: text/plain, */*; q=0.01
 Connection: keep-alive
-Content-Length: 268
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:10 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Content-Length: 0
+Content-Type: application/json
 ```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-[
-   {
-      "uid": "MOCK-GUID-5",
-      "title": "walk the dog",
-      "order": 0,
-      "completed": false,
-      "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-5",
-      "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-5"
-   }
-]
-```
-
-## Interaction 9: DELETE /todos
 
 ### Request headers for playback:
 
@@ -514,11 +1058,17 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+
 ```
 
 ### Request body for playback (application/json):
@@ -527,25 +1077,76 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
 Content-Length: 0
-Date: Mon, 25 Mar 2019 10:54:11 GMT
-Server: thin 1.6.2 codename Doc Brown
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
 ```
 
-### Response body for playback (204: null - Base64 below):
+### DEBUG: Headers for client, possibly changed after recording:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (200: null - Base64 below):
 
 ```
 
 ```
 
-## Interaction 10: POST /todos
+### Response body for playback (200: null - Base64 below):
+
+```
+
+```
+
+### DEBUG: Response body for client, possibly changed after recording (200: null - Base64 below):
+
+```
+
+```
+
+## Interaction 9: POST /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Content-Length: 16
+Content-Type: application/json
+```
 
 ### Request headers for playback:
 
@@ -557,11 +1158,19 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+{
+   "title": "blah"
+}
 ```
 
 ### Request body for playback (application/json):
@@ -572,35 +1181,127 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 }
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 217
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:11 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/266907b6-d23d-4faf-822f-8dbbbf1cfa35
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (201: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-{
-   "title": "blah",
-   "uid": "MOCK-GUID-6",
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-6",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-6"
-}
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:20 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
 ```
 
-## Interaction 11: GET /todos
+### DEBUG: Response body from real service, unchanged (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### Response body for playback (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### DEBUG: Response body for client, possibly changed after recording (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+## Interaction 10: DELETE /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Content-Length: 0
+Content-Type: application/json
+```
 
 ### Request headers for playback:
 
@@ -610,12 +1311,19 @@ Accept-Language: en-us
 Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
+Content-Length: 0
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+
 ```
 
 ### Request body for playback (application/json):
@@ -624,38 +1332,232 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 260
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:11 GMT
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (200: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-[
-   {
-      "uid": "MOCK-GUID-6",
-      "title": "blah",
-      "order": 0,
-      "completed": false,
-      "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-6",
-      "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-6"
-   }
-]
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (200: null - Base64 below):
+
+```
+
+```
+
+### Response body for playback (200: null - Base64 below):
+
+```
+
+```
+
+### DEBUG: Response body for client, possibly changed after recording (200: null - Base64 below):
+
+```
+
+```
+
+## Interaction 11: POST /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Content-Length: 16
+Content-Type: application/json
+```
+
+### Request headers for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: text/plain, */*; q=0.01
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 16
+Content-Type: application/json
+Host: todo-backend-rocket-rust.herokuapp.com
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+{
+   "title": "blah"
+}
+```
+
+### Request body for playback (application/json):
+
+```
+{
+   "title": "blah"
+}
+```
+
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### Response headers for playback:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Headers for client, possibly changed after recording:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### Response body for playback (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### DEBUG: Response body for client, possibly changed after recording (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
 ```
 
 ## Interaction 12: DELETE /todos
 
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Content-Length: 0
+Content-Type: application/json
+```
+
 ### Request headers for playback:
 
 ```
@@ -666,11 +1568,17 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+
 ```
 
 ### Request body for playback (application/json):
@@ -679,19 +1587,55 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
 Content-Length: 0
-Date: Mon, 25 Mar 2019 10:54:11 GMT
-Server: thin 1.6.2 codename Doc Brown
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
 ```
 
-### Response body for playback (204: null - Base64 below):
+### DEBUG: Headers for client, possibly changed after recording:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (200: null - Base64 below):
+
+```
+
+```
+
+### Response body for playback (200: null - Base64 below):
+
+```
+
+```
+
+### DEBUG: Response body for client, possibly changed after recording (200: null - Base64 below):
 
 ```
 
@@ -699,157 +1643,20 @@ X-Content-Type-Options: nosniff
 
 ## Interaction 13: POST /todos
 
-### Request headers for playback:
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
 
 ```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
 Accept-Encoding: gzip, deflate
 Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Length: 16
+Content-Length: 19
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
 ```
-
-### Request body for playback (application/json):
-
-```
-{
-   "title": "blah"
-}
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 217
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:11 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/d569f91c-8e26-4dd8-a870-07fe21dfd97c
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (201: text/html;charset=utf-8):
-
-```
-{
-   "title": "blah",
-   "uid": "MOCK-GUID-7",
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-7",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-7"
-}
-```
-
-## Interaction 14: GET /todos
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback (application/json):
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 260
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:11 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-[
-   {
-      "uid": "MOCK-GUID-7",
-      "title": "blah",
-      "order": 0,
-      "completed": false,
-      "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-7",
-      "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-7"
-   }
-]
-```
-
-## Interaction 15: DELETE /todos
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Length: 0
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback (application/json):
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 0
-Date: Mon, 25 Mar 2019 10:54:11 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-```
-
-### Response body for playback (204: null - Base64 below):
-
-```
-
-```
-
-## Interaction 16: POST /todos
 
 ### Request headers for playback:
 
@@ -861,11 +1668,19 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 19
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+{
+   "title": "my todo"
+}
 ```
 
 ### Request body for playback (application/json):
@@ -876,135 +1691,127 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 }
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 220
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:12 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/ab7a4a17-04a4-4216-ae0f-def45b533e23
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (201: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-{
-   "title": "my todo",
-   "uid": "MOCK-GUID-8",
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-8",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-8"
-}
-```
-
-## Interaction 17: OPTIONS /todos/ab7a4a17-04a4-4216-ae0f-def45b533e23
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
-Access-Control-Request-Headers: content-type
-Access-Control-Request-Method: GET
-Cache-Control: no-cache
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 0
-Host: todo-backend-sinatra.herokuapp.com
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### Response body for playback (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### DEBUG: Response body for client, possibly changed after recording (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+## Interaction 14: DELETE /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
 Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback ():
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Headers: content-type
-Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-Access-Control-Allow-Origin: *
-Connection: close
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:12 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
-```
-
-## Interaction 18: GET /todos/ab7a4a17-04a4-4216-ae0f-def45b533e23
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
 Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
 Connection: keep-alive
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Content-Length: 0
+Content-Type: application/json
 ```
-
-### Request body for playback (application/json):
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 235
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:12 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-{
-   "uid": "MOCK-GUID-8",
-   "title": "my todo",
-   "order": 0,
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-8",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-8"
-}
-```
-
-## Interaction 19: DELETE /todos
 
 ### Request headers for playback:
 
@@ -1016,11 +1823,17 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+
 ```
 
 ### Request body for playback (application/json):
@@ -1029,25 +1842,76 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
 Content-Length: 0
-Date: Mon, 25 Mar 2019 10:54:12 GMT
-Server: thin 1.6.2 codename Doc Brown
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
 ```
 
-### Response body for playback (204: null - Base64 below):
+### DEBUG: Headers for client, possibly changed after recording:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (200: null - Base64 below):
 
 ```
 
 ```
 
-## Interaction 20: POST /todos
+### Response body for playback (200: null - Base64 below):
+
+```
+
+```
+
+### DEBUG: Response body for client, possibly changed after recording (200: null - Base64 below):
+
+```
+
+```
+
+## Interaction 15: POST /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Content-Length: 26
+Content-Type: application/json
+```
 
 ### Request headers for playback:
 
@@ -1059,11 +1923,19 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 26
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+{
+   "title": "todo the first"
+}
 ```
 
 ### Request body for playback (application/json):
@@ -1074,35 +1946,127 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 }
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 227
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:12 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/c5a2f094-082b-4cda-88b3-97cf92ef00f0
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (201: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-{
-   "title": "todo the first",
-   "uid": "MOCK-GUID-9",
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-9",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-9"
-}
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
 ```
 
-## Interaction 21: POST /todos
+### DEBUG: Response body from real service, unchanged (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### Response body for playback (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### DEBUG: Response body for client, possibly changed after recording (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+## Interaction 16: POST /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Content-Length: 27
+Content-Type: application/json
+```
 
 ### Request headers for playback:
 
@@ -1114,11 +2078,19 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 27
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+{
+   "title": "todo the second"
+}
 ```
 
 ### Request body for playback (application/json):
@@ -1129,197 +2101,127 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 }
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 231
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:13 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/502969d5-7ba1-4b58-9626-6d7f6eafcf60
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (201: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-{
-   "title": "todo the second",
-   "uid": "MOCK-GUID-10",
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-10",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-10"
-}
-```
-
-## Interaction 22: GET /todos
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### Response body for playback (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### DEBUG: Response body for client, possibly changed after recording (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+## Interaction 17: DELETE /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
 Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback (application/json):
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 542
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:13 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-[
-   {
-      "uid": "MOCK-GUID-9",
-      "title": "todo the first",
-      "order": 0,
-      "completed": false,
-      "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-9",
-      "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-9"
-   },
-   {
-      "uid": "MOCK-GUID-10",
-      "title": "todo the second",
-      "order": 0,
-      "completed": false,
-      "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-10",
-      "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-10"
-   }
-]
-```
-
-## Interaction 23: OPTIONS /todos/c5a2f094-082b-4cda-88b3-97cf92ef00f0
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
 Accept-Language: en-us
-Accept: */*
-Access-Control-Request-Headers: content-type
-Access-Control-Request-Method: GET
-Cache-Control: no-cache
-Connection: keep-alive
+Accept-Encoding: gzip, deflate
 Content-Length: 0
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback ():
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Headers: content-type
-Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-Access-Control-Allow-Origin: *
-Connection: close
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:13 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
-```
-
-## Interaction 24: GET /todos/c5a2f094-082b-4cda-88b3-97cf92ef00f0
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
 ```
-
-### Request body for playback (application/json):
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 242
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:13 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-{
-   "uid": "MOCK-GUID-9",
-   "title": "todo the first",
-   "order": 0,
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-9",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-9"
-}
-```
-
-## Interaction 25: DELETE /todos
 
 ### Request headers for playback:
 
@@ -1331,11 +2233,17 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+
 ```
 
 ### Request body for playback (application/json):
@@ -1344,25 +2252,76 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
 Content-Length: 0
-Date: Mon, 25 Mar 2019 10:54:14 GMT
-Server: thin 1.6.2 codename Doc Brown
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
 ```
 
-### Response body for playback (204: null - Base64 below):
+### DEBUG: Headers for client, possibly changed after recording:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (200: null - Base64 below):
 
 ```
 
 ```
 
-## Interaction 26: POST /todos
+### Response body for playback (200: null - Base64 below):
+
+```
+
+```
+
+### DEBUG: Response body for client, possibly changed after recording (200: null - Base64 below):
+
+```
+
+```
+
+## Interaction 18: POST /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Content-Length: 25
+Content-Type: application/json
+```
 
 ### Request headers for playback:
 
@@ -1374,11 +2333,19 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 25
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+{
+   "title": "initial title"
+}
 ```
 
 ### Request body for playback (application/json):
@@ -1389,131 +2356,127 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 }
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 229
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:14 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/e8dc6c9c-b210-46fe-bc0b-d38cff9b6f63
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (201: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-{
-   "title": "initial title",
-   "uid": "MOCK-GUID-11",
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-11",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-11"
-}
-```
-
-## Interaction 27: OPTIONS /todos/ba9fc540-5279-4d35-a06c-aef8c72246fb1
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
-Access-Control-Request-Headers: content-type
-Access-Control-Request-Method: PATCH
-Cache-Control: no-cache
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 0
-Host: todo-backend-sinatra.herokuapp.com
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:21 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### Response body for playback (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### DEBUG: Response body for client, possibly changed after recording (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+## Interaction 19: DELETE /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
 Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback ():
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Headers: content-type
-Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-Access-Control-Allow-Origin: *
-Connection: close
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:14 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
-```
-
-## Interaction 28: PATCH /todos/ba9fc540-5279-4d35-a06c-aef8c72246fb1
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
 Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 25
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback (application/json):
-
-```
-{
-   "title": "bathe the cat"
-}
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
 Content-Length: 0
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:14 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
+Content-Type: application/json
 ```
-
-### Response body for playback (404: text/html;charset=utf-8):
-
-```
-
-```
-
-## Interaction 29: DELETE /todos
 
 ### Request headers for playback:
 
@@ -1525,11 +2488,17 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+
 ```
 
 ### Request body for playback (application/json):
@@ -1538,25 +2507,76 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
 Content-Length: 0
-Date: Mon, 25 Mar 2019 10:54:14 GMT
-Server: thin 1.6.2 codename Doc Brown
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
 ```
 
-### Response body for playback (204: null - Base64 below):
+### DEBUG: Headers for client, possibly changed after recording:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (200: null - Base64 below):
 
 ```
 
 ```
 
-## Interaction 30: POST /todos
+### Response body for playback (200: null - Base64 below):
+
+```
+
+```
+
+### DEBUG: Response body for client, possibly changed after recording (200: null - Base64 below):
+
+```
+
+```
+
+## Interaction 20: POST /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Content-Length: 16
+Content-Type: application/json
+```
 
 ### Request headers for playback:
 
@@ -1568,11 +2588,19 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+{
+   "title": "blah"
+}
 ```
 
 ### Request body for playback (application/json):
@@ -1583,179 +2611,127 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 }
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 220
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:14 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/3a4ffe29-1c25-4013-bd01-c40a3084b244
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (201: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-{
-   "title": "blah",
-   "uid": "MOCK-GUID-12",
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-12",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-12"
-}
-```
-
-## Interaction 31: OPTIONS /todos/ba9fc540-5279-4d35-a06c-aef8c72246fb2
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
-Access-Control-Request-Headers: content-type
-Access-Control-Request-Method: PATCH
-Cache-Control: no-cache
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 0
-Host: todo-backend-sinatra.herokuapp.com
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### Response body for playback (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### DEBUG: Response body for client, possibly changed after recording (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+## Interaction 21: DELETE /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
 Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback ():
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Headers: content-type
-Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-Access-Control-Allow-Origin: *
-Connection: close
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:14 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
-```
-
-## Interaction 32: PATCH /todos/ba9fc540-5279-4d35-a06c-aef8c72246fb2
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
 Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 18
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback (application/json):
-
-```
-{
-   "completed": true
-}
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 0
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:14 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (404: text/html;charset=utf-8):
-
-```
-
-```
-
-## Interaction 33: OPTIONS /todos
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
 Accept-Language: en-us
-Accept: */*
-Access-Control-Request-Headers: content-type
-Access-Control-Request-Method: DELETE
-Cache-Control: no-cache
-Connection: keep-alive
+Accept-Encoding: gzip, deflate
 Content-Length: 0
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Content-Type: application/json
 ```
-
-### Request body for playback ():
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Headers: content-type
-Access-Control-Allow-Methods: GET,HEAD,POST,DELETE,OPTIONS,PUT
-Access-Control-Allow-Origin: *
-Connection: close
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:14 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
-```
-
-## Interaction 34: DELETE /todos
 
 ### Request headers for playback:
 
@@ -1767,11 +2743,17 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+
 ```
 
 ### Request body for playback (application/json):
@@ -1780,25 +2762,76 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
 Content-Length: 0
-Date: Mon, 25 Mar 2019 10:54:15 GMT
-Server: thin 1.6.2 codename Doc Brown
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
 ```
 
-### Response body for playback (204: null - Base64 below):
+### DEBUG: Headers for client, possibly changed after recording:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (200: null - Base64 below):
 
 ```
 
 ```
 
-## Interaction 35: POST /todos
+### Response body for playback (200: null - Base64 below):
+
+```
+
+```
+
+### DEBUG: Response body for client, possibly changed after recording (200: null - Base64 below):
+
+```
+
+```
+
+## Interaction 22: POST /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Content-Length: 16
+Content-Type: application/json
+```
 
 ### Request headers for playback:
 
@@ -1810,11 +2843,19 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+{
+   "title": "blah"
+}
 ```
 
 ### Request body for playback (application/json):
@@ -1825,245 +2866,127 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 }
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 220
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:15 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/9d54e3df-d699-4059-b1de-c892594e6404
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (201: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-{
-   "title": "blah",
-   "uid": "MOCK-GUID-13",
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13"
-}
-```
-
-## Interaction 36: OPTIONS /todos/9d54e3df-d699-4059-b1de-c892594e6404
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
-Access-Control-Request-Headers: content-type
-Access-Control-Request-Method: PATCH
-Cache-Control: no-cache
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### Response body for playback (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### DEBUG: Response body for client, possibly changed after recording (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+## Interaction 23: DELETE /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
 Content-Length: 0
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback ():
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Headers: content-type
-Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-Access-Control-Allow-Origin: *
-Connection: close
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:15 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
-```
-
-## Interaction 37: PATCH /todos/9d54e3df-d699-4059-b1de-c892594e6404
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Length: 42
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
 ```
-
-### Request body for playback (application/json):
-
-```
-{
-   "title": "changed title",
-   "completed": true
-}
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 243
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:15 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-{
-   "uid": "MOCK-GUID-13",
-   "title": "changed title",
-   "order": 0,
-   "completed": true,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13"
-}
-```
-
-## Interaction 38: GET /todos/9d54e3df-d699-4059-b1de-c892594e6404
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback (application/json):
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 243
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:15 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-{
-   "uid": "MOCK-GUID-13",
-   "title": "changed title",
-   "order": 0,
-   "completed": true,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13"
-}
-```
-
-## Interaction 39: GET /todos
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback (application/json):
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 271
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:16 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-[
-   {
-      "uid": "MOCK-GUID-13",
-      "title": "changed title",
-      "order": 0,
-      "completed": true,
-      "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13",
-      "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-13"
-   }
-]
-```
-
-## Interaction 40: DELETE /todos
 
 ### Request headers for playback:
 
@@ -2075,11 +2998,17 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+
 ```
 
 ### Request body for playback (application/json):
@@ -2088,25 +3017,76 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
 Content-Length: 0
-Date: Mon, 25 Mar 2019 10:54:16 GMT
-Server: thin 1.6.2 codename Doc Brown
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
 ```
 
-### Response body for playback (204: null - Base64 below):
+### DEBUG: Headers for client, possibly changed after recording:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 0
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (200: null - Base64 below):
 
 ```
 
 ```
 
-## Interaction 41: POST /todos
+### Response body for playback (200: null - Base64 below):
+
+```
+
+```
+
+### DEBUG: Response body for client, possibly changed after recording (200: null - Base64 below):
+
+```
+
+```
+
+## Interaction 24: POST /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Content-Length: 16
+Content-Type: application/json
+```
 
 ### Request headers for playback:
 
@@ -2118,11 +3098,19 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+{
+   "title": "blah"
+}
 ```
 
 ### Request body for playback (application/json):
@@ -2133,172 +3121,127 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 }
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 220
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:16 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/0789fa2a-fa67-4780-b78d-24b7e74ce75d
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (201: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-{
-   "title": "blah",
-   "uid": "MOCK-GUID-14",
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-14",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-14"
-}
-```
-
-## Interaction 42: OPTIONS /todos/0789fa2a-fa67-4780-b78d-24b7e74ce75d
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
-Access-Control-Request-Headers: content-type
-Access-Control-Request-Method: DELETE
-Cache-Control: no-cache
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 0
-Host: todo-backend-sinatra.herokuapp.com
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### Response body for playback (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### DEBUG: Response body for client, possibly changed after recording (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+## Interaction 25: POST /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
 Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback ():
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Headers: content-type
-Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-Access-Control-Allow-Origin: *
-Connection: close
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:16 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
-```
-
-## Interaction 43: DELETE /todos/0789fa2a-fa67-4780-b78d-24b7e74ce75d
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
 Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 0
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback (application/json):
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 0
-Date: Mon, 25 Mar 2019 10:54:16 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-```
-
-### Response body for playback (204: null - Base64 below):
-
-```
-
-```
-
-## Interaction 44: GET /todos
-
-### Request headers for playback:
-
-```
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
 Accept-Encoding: gzip, deflate
 Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
+Content-Length: 28
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
 ```
-
-### Request body for playback (application/json):
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 3
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:16 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-[
-]
-```
-
-## Interaction 45: POST /todos
 
 ### Request headers for playback:
 
@@ -2310,11 +3253,20 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 28
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+{
+   "title": "blah",
+   "order": 523
+}
 ```
 
 ### Request body for playback (application/json):
@@ -2326,36 +3278,127 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 }
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 237
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:17 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/f987239e-1822-4825-a056-5d38de594ff3
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (201: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-{
-   "title": "blah",
-   "order": 523,
-   "uid": "MOCK-GUID-15",
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-15",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-15"
-}
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:22 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
 ```
 
-## Interaction 46: POST /todos
+### DEBUG: Response body from real service, unchanged (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### Response body for playback (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### DEBUG: Response body for client, possibly changed after recording (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+## Interaction 26: POST /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
+Origin: http://www.todobackend.com
+Accept: text/plain, */*; q=0.01
+Connection: keep-alive
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Content-Length: 27
+Content-Type: application/json
+```
 
 ### Request headers for playback:
 
@@ -2367,11 +3410,20 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 27
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+{
+   "order": 10,
+   "title": "blah"
+}
 ```
 
 ### Request body for playback (application/json):
@@ -2383,132 +3435,127 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 }
 ```
 
+### DEBUG: Response headers from real service, unchanged:
+
+```
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:23 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 236
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:17 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/afab8e6e-8995-422a-aecc-bd324580252e
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:23 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (201: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-{
-   "order": 10,
-   "title": "blah",
-   "uid": "MOCK-GUID-16",
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-16",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-16"
-}
-```
-
-## Interaction 47: OPTIONS /todos/ba9fc540-5279-4d35-a06c-aef8c72246fb6
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
-Access-Control-Request-Headers: content-type
-Access-Control-Request-Method: PATCH
-Cache-Control: no-cache
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 0
-Host: todo-backend-sinatra.herokuapp.com
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:23 GMT
+Server: Rocket
+Vary: Origin
+Via: 1.1 vegur
+```
+
+### DEBUG: Response body from real service, unchanged (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### Response body for playback (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+### DEBUG: Response body for client, possibly changed after recording (404: text/html; charset=utf-8):
+
+```
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
+```
+
+## Interaction 27: POST /todos
+
+### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:
+
+```
 Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback ():
-
-```
-
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Headers: content-type
-Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-Access-Control-Allow-Origin: *
-Connection: close
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:17 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
-```
-
-## Interaction 48: PATCH /todos/ba9fc540-5279-4d35-a06c-aef8c72246fb6
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
 Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
 Connection: keep-alive
-Content-Length: 12
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+Referer: http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+Host: localhost:8099
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Content-Length: 27
+Content-Type: application/json
 ```
-
-### Request body for playback (application/json):
-
-```
-{
-   "order": 95
-}
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 0
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:17 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (404: text/html;charset=utf-8):
-
-```
-
-```
-
-## Interaction 49: POST /todos
 
 ### Request headers for playback:
 
@@ -2520,11 +3567,20 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 27
 Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
+Host: todo-backend-rocket-rust.herokuapp.com
 Origin: http://www.todobackend.com
 Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-rocket-rust.herokuapp.com/todos
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
+```
+
+### DEBUG: Request body as received from client (application/json), WITHOUT REDACTIONS, ETC:
+
+```
+{
+   "order": 10,
+   "title": "blah"
+}
 ```
 
 ### Request body for playback (application/json):
@@ -2536,187 +3592,108 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15
 }
 ```
 
-### Response headers for playback:
+### DEBUG: Response headers from real service, unchanged:
 
 ```
-Access-Control-Allow-Origin: *
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 236
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:17 GMT
-Location: http://todo-backend-sinatra.herokuapp.com/todos/2b64ff0a-6222-4b68-9587-3d0a2c8729b3
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:23 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
-```
-
-### Response body for playback (201: text/html;charset=utf-8):
-
-```
-{
-   "order": 10,
-   "title": "blah",
-   "uid": "MOCK-GUID-17",
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-17",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-17"
-}
-```
-
-## Interaction 50: OPTIONS /todos/2b64ff0a-6222-4b68-9587-3d0a2c8729b3
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
-Access-Control-Request-Headers: content-type
-Access-Control-Request-Method: PATCH
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Length: 0
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback ():
-
-```
-
 ```
 
 ### Response headers for playback:
 
 ```
-Access-Control-Allow-Headers: content-type
-Access-Control-Allow-Methods: GET,PATCH,HEAD,DELETE,OPTIONS
-Access-Control-Allow-Origin: *
-Connection: close
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:17 GMT
-Server: thin 1.6.2 codename Doc Brown
+Access-Control-Allow-Origin: http://www.todobackend.com
+Connection: keep-alive
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:23 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (200: text/html;charset=utf-8):
+### DEBUG: Headers for client, possibly changed after recording:
 
 ```
-Content-Typeaccess-control-allow-originaccess-control-allow-headersaccess-control-allow-methodsX-XSS-ProtectionX-Content-Type-OptionsX-Frame-Options
-```
-
-## Interaction 51: PATCH /todos/2b64ff0a-6222-4b68-9587-3d0a2c8729b3
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
+Access-Control-Allow-Origin: http://www.todobackend.com
 Connection: keep-alive
-Content-Length: 12
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback (application/json):
-
-```
-{
-   "order": 95
-}
-```
-
-### Response headers for playback:
-
-```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 236
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:18 GMT
-Server: thin 1.6.2 codename Doc Brown
+Content-Length: 496
+Content-Type: text/html; charset=utf-8
+Date: Wed, 27 Mar 2019 05:59:23 GMT
+Server: Rocket
+Vary: Origin
 Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
 ```
 
-### Response body for playback (200: text/html;charset=utf-8):
-
-```
-{
-   "uid": "MOCK-GUID-17",
-   "title": "blah",
-   "order": 95,
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-17",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-17"
-}
-```
-
-## Interaction 52: GET /todos/2b64ff0a-6222-4b68-9587-3d0a2c8729b3
-
-### Request headers for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: text/plain, */*; q=0.01
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Type: application/json
-Host: todo-backend-sinatra.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0.3 Safari/605.1.15
-```
-
-### Request body for playback (application/json):
+### DEBUG: Response body from real service, unchanged (404: text/html; charset=utf-8):
 
 ```
 
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
 ```
 
-### Response headers for playback:
+### Response body for playback (404: text/html; charset=utf-8):
 
 ```
-Access-Control-Allow-Origin: *
-Connection: keep-alive
-Content-Length: 236
-Content-Type: text/html;charset=utf-8
-Date: Mon, 25 Mar 2019 10:54:18 GMT
-Server: thin 1.6.2 codename Doc Brown
-Via: 1.1 vegur
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-Xss-Protection: 1; mode=block
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
 ```
 
-### Response body for playback (200: text/html;charset=utf-8):
+### DEBUG: Response body for client, possibly changed after recording (404: text/html; charset=utf-8):
 
 ```
-{
-   "uid": "MOCK-GUID-17",
-   "title": "blah",
-   "order": 95,
-   "completed": false,
-   "href": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-17",
-   "url": "http://todo-backend-sinatra.herokuapp.com/todos/MOCK-GUID-17"
-}
+
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>404 Not Found</title>
+            </head>
+            <body align="center">
+                <div align="center">
+                    <h1>404: Not Found</h1>
+                    <p>The requested resource could not be found.</p>
+                    <hr />
+                    <small>Rocket</small>
+                </div>
+            </body>
+            </html>
+        
 ```
 

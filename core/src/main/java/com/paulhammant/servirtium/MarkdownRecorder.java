@@ -168,18 +168,22 @@ public class MarkdownRecorder implements Interactor {
 
             // Body
 
+            if (extraDebugOutput) {
+                blockStart("DEBUG: Request body as received from client (" + clientRequestContentType + "), WITHOUT REDACTIONS, ETC");
+                if (clientRequestBody instanceof String) {
+                    this.recording.append(clientRequestBody).append("\n");
+
+                } else {
+                    this.recording.append(objectToStringForRecording((byte[]) clientRequestBody)).append("\n");
+                }
+                blockEnd();
+            }
 
             if (clientRequestBody instanceof String) {
                 clientRequestBody = interactionManipulations.changeBodyForRequestToService((String) clientRequestBody);
             }
 
             super.setClientRequestBodyAndContentType(clientRequestBody, clientRequestContentType);
-
-            if (extraDebugOutput) {
-                blockStart("DEBUG: Request body as received from client (" + clientRequestContentType + "), WITHOUT REDACTIONS, ETC");
-                this.recording.append(clientRequestBody).append("\n");
-                blockEnd();
-            }
 
             String forRecording = null;
             if (clientRequestBody == null) {
@@ -190,8 +194,7 @@ public class MarkdownRecorder implements Interactor {
                     forRecording = forRecording.replaceAll(redactionRegex, redactions.get(redactionRegex));
                 }
             } else {
-                forRecording = "//SERVIRTIUM+Base64: " + Base64.getEncoder()
-                        .encodeToString((byte[]) clientRequestBody).replaceAll("(.{60})", "$1\n");
+                forRecording = objectToStringForRecording((byte[]) clientRequestBody);
             }
 
             blockStart("Request body for playback (" + clientRequestContentType + ")");
@@ -199,6 +202,11 @@ public class MarkdownRecorder implements Interactor {
             blockEnd();
 
             return clientRequestHeaders2;
+        }
+
+        private String objectToStringForRecording(byte[] clientRequestBody) {
+            return "//SERVIRTIUM+Base64: " + Base64.getEncoder()
+                    .encodeToString(clientRequestBody).replaceAll("(.{60})", "$1\n");
         }
 
         private void blockStart(String s) {
@@ -252,6 +260,16 @@ public class MarkdownRecorder implements Interactor {
                                             String serverResponseContentType) {
 
             doServiceResponseBody(serverResponseBody, statusCode, serverResponseContentType, "Response body for playback");
+        }
+
+        @Override
+        public void noteChangedResourceForRequestToClient(String from, String to) {
+            if (extraDebugOutput) {
+                blockStart("DEBUG Note: Resource changed for call to real server");
+                this.recording.append("From:").append(from).append("\n");
+                this.recording.append("To:").append(to).append("\n");
+                blockEnd();
+            }
         }
 
         private void doServiceResponseHeaders(String[] headers, String title) {

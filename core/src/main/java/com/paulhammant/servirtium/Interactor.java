@@ -92,6 +92,8 @@ public interface Interactor {
         public abstract void noteServiceResponseHeaders(String[] headers);
 
         public abstract void noteServiceResponseBody(Object body, int statusCode, String contentType);
+
+        public abstract void noteChangedResourceForRequestToClient(String from, String to);
     }
 
     public class NullObject implements Interactor {

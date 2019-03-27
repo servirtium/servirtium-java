@@ -93,7 +93,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
             // INTERACTION
             ServiceResponse serviceResponse = interactor.getServiceResponseForRequest(method, requestUrl, clientRequestHeaders,
-                    interaction, getLowerCaseHeaders());
+                    interaction, useLowerCaseHeaders());
 
             serviceResponse = processHeadersAndBodyBackFromService(interaction, serviceResponse, interactionManipulations);
 
@@ -243,7 +243,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             String hdrName = header.getHeaderName().toString();
             header.forEach(hdrVal -> {
                 hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
-                final String newHeader = (getLowerCaseHeaders() ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
+                final String newHeader = (useLowerCaseHeaders() ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
                 clientRequestHeaders.add(newHeader);
                 interactionManipulations.changeSingleHeaderForRequestToService(method, newHeader, clientRequestHeaders);
             });
@@ -258,7 +258,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             clientRequestBody = "";
         }
 
-        interaction.noteClientRequestHeadersAndBody(interactionManipulations, clientRequestHeaders, clientRequestBody, clientRequestContentType, method, getLowerCaseHeaders());
+        interaction.noteClientRequestHeadersAndBody(interactionManipulations, clientRequestHeaders, clientRequestBody, clientRequestContentType, method, useLowerCaseHeaders());
 
         return interactionManipulations.changeUrlForRequestToService(url);
     }

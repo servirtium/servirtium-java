@@ -176,6 +176,11 @@ public class MarkdownReplayer implements Interactor {
             // Nothing to note, this is already the replay of a recording
         }
 
+        @Override
+        public void noteChangedResourceForRequestToClient(String from, String to) {
+            // Nothing to note, this is already the replay of a recording
+        }
+
     }
 
     @Override

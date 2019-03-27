@@ -48,7 +48,7 @@ public abstract class ServirtiumServer {
         return this;
     }
 
-    protected boolean getLowerCaseHeaders() {
+    protected boolean useLowerCaseHeaders() {
         return lowerCaseHeaders;
     }
 
