@@ -53,7 +53,7 @@ public abstract class SimpleGetCentricTextTests {
     private static final String EXPECTED_1 =
             "## Interaction 0: GET /repos/asf/synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE\n" +
             "\n" +
-            "### Request headers for playback:\n" +
+            "### Request headers recorded for playback:\n" +
             "\n" +
             "```\n" +
             "Accept: */*\n" +
@@ -62,13 +62,13 @@ public abstract class SimpleGetCentricTextTests {
             "User-Agent: SVN/1.10.0 (x86_64-apple-darwin17.0.0) serf/1.3.9\n" +
             "```\n" +
             "\n" +
-            "### Request body for playback ():\n" +
+            "### Request body recorded for playback ():\n" +
             "\n" +
             "```\n" +
             "\n" +
             "```\n" +
             "\n" +
-            "### Response headers for playback:\n" +
+            "### Response headers recorded for playback:\n" +
             "\n" +
             "```\n";
 
@@ -100,7 +100,7 @@ public abstract class SimpleGetCentricTextTests {
     private static final String EXPECTED_3 =
             "```\n" +
             "\n" +
-            "### Response body for playback (200: text/plain):\n" +
+            "### Response body recorded for playback (200: text/plain):\n" +
             "\n" +
             "```\n" +
             "\tApache Synapse\n" +
@@ -113,7 +113,7 @@ public abstract class SimpleGetCentricTextTests {
 
     public static final String REDACTED_CONVERSATION = "## Interaction 0: GET /paul-hammant/servirtium/master/core/src/test/resources/test.json\n" +
             "\n" +
-            "### Request headers for playback:\n" +
+            "### Request headers recorded for playback:\n" +
             "\n" +
             "```\n" +
             "Accept: */*\n" +
@@ -122,13 +122,13 @@ public abstract class SimpleGetCentricTextTests {
             "User-Agent: RestAssured\n" +
             "```\n" +
             "\n" +
-            "### Request body for playback ():\n" +
+            "### Request body recorded for playback ():\n" +
             "\n" +
             "```\n" +
             "\n" +
             "```\n" +
             "\n" +
-            "### Response headers for playback:\n" +
+            "### Response headers recorded for playback:\n" +
             "\n" +
             "```\n" +
             "Accept-Ranges: bytes\n" +
@@ -144,7 +144,7 @@ public abstract class SimpleGetCentricTextTests {
             "Via: 1.1 varnish\n" +
             "```\n" +
             "\n" +
-            "### Response body for playback (200: text/plain; charset=utf-8):\n" +
+            "### Response body recorded for playback (200: text/plain; charset=utf-8):\n" +
             "\n" +
             "```\n" +
             "{\n" +
@@ -216,7 +216,7 @@ public abstract class SimpleGetCentricTextTests {
         // Order of headers is as originally sent
         String expected = "## Interaction 0: GET /paul-hammant/servirtium/master/core/src/test/resources/test.json\n" +
                 "\n" +
-                "### Request headers for playback:\n" +
+                "### Request headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
                 "Accept: */*\n" +
@@ -225,13 +225,13 @@ public abstract class SimpleGetCentricTextTests {
                 "User-Agent: RestAssured\n" +
                 "```\n" +
                 "\n" +
-                "### Request body for playback ():\n" +
+                "### Request body recorded for playback ():\n" +
                 "\n" +
                 "```\n" +
                 "\n" +
                 "```\n" +
                 "\n" +
-                "### Response headers for playback:\n" +
+                "### Response headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
                 "Accept-Ranges: bytes\n" +
@@ -247,7 +247,7 @@ public abstract class SimpleGetCentricTextTests {
                 "Via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
-                "### Response body for playback (200: text/plain; charset=utf-8):\n" +
+                "### Response body recorded for playback (200: text/plain; charset=utf-8):\n" +
                 "\n" +
                 "```\n" +
                 "{\"Accept-Language\": \"en-US,en;q=0.8\",  \"Host\": \"headers.jsontest.com\",  \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\" }\n\n" +
@@ -255,7 +255,7 @@ public abstract class SimpleGetCentricTextTests {
                 "\n" +
                 "## Interaction 1: GET /paul-hammant/servirtium/master/core/src/test/resources/does-not-exist.json\n" +
                 "\n" +
-                "### Request headers for playback:\n" +
+                "### Request headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
                 "Accept: */*\n" +
@@ -264,13 +264,13 @@ public abstract class SimpleGetCentricTextTests {
                 "User-Agent: RestAssured\n" +
                 "```\n" +
                 "\n" +
-                "### Request body for playback ():\n" +
+                "### Request body recorded for playback ():\n" +
                 "\n" +
                 "```\n" +
                 "\n" +
                 "```\n" +
                 "\n" +
-                "### Response headers for playback:\n" +
+                "### Response headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
                 "Accept-Ranges: bytes\n" +
@@ -284,7 +284,7 @@ public abstract class SimpleGetCentricTextTests {
                 "Via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
-                "### Response body for playback (404: null - Base64 below):\n" +
+                "### Response body recorded for playback (404: null - Base64 below):\n" +
                 "\n" +
                 "```\n" +
                 "NDA0OiBOb3QgRm91bmQK\n" +
@@ -396,7 +396,7 @@ public abstract class SimpleGetCentricTextTests {
         // Order of headers is as originally sent
         assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/core/src/test/resources/test.json\n" +
                 "\n" +
-                "### Request headers for playback:\n" +
+                "### Request headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
                 "accept: */*\n" +
@@ -405,13 +405,13 @@ public abstract class SimpleGetCentricTextTests {
                 "user-agent: RestAssured\n" +
                 "```\n" +
                 "\n" +
-                "### Request body for playback ():\n" +
+                "### Request body recorded for playback ():\n" +
                 "\n" +
                 "```\n" +
                 "\n" +
                 "```\n" +
                 "\n" +
-                "### Response headers for playback:\n" +
+                "### Response headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
                 "accept-ranges: bytes\n" +
@@ -427,7 +427,7 @@ public abstract class SimpleGetCentricTextTests {
                 "via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
-                "### Response body for playback (200: text/plain; charset=utf-8):\n" +
+                "### Response body recorded for playback (200: text/plain; charset=utf-8):\n" +
                 "\n" +
                 "```\n" +
                 sillyJSONdoc +
@@ -488,7 +488,7 @@ public abstract class SimpleGetCentricTextTests {
                 "Accept: */*\n" +
                 "```\n" +
                 "\n" +
-                "### Request headers for playback:\n" +
+                "### Request headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
                 "accept: */*\n" +
@@ -503,7 +503,7 @@ public abstract class SimpleGetCentricTextTests {
                 "\n" +
                 "```\n" +
                 "\n" +
-                "### Request body for playback ():\n" +
+                "### Request body recorded for playback ():\n" +
                 "\n" +
                 "```\n" +
                 "\n" +
@@ -537,7 +537,7 @@ public abstract class SimpleGetCentricTextTests {
                 "x-xss-protection: 1; mode=block\n" +
                 "```\n" +
                 "\n" +
-                "### Response headers for playback:\n" +
+                "### Response headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
                 "accept-ranges: bytes\n" +
@@ -576,7 +576,7 @@ public abstract class SimpleGetCentricTextTests {
                 "\n" +
                 "```\n" +
                 "\n" +
-                "### Response body for playback (200: text/plain; charset=utf-8):\n" +
+                "### Response body recorded for playback (200: text/plain; charset=utf-8):\n" +
                 "\n" +
                 "```\n" +
                 "{\n" +
@@ -680,7 +680,7 @@ public abstract class SimpleGetCentricTextTests {
         // Order of headers is as originally sent
         assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/core/src/test/resources/test.json\n" +
                 "\n" +
-                "### Request headers for playback:\n" +
+                "### Request headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
                 "Accept: */*\n" +
@@ -689,13 +689,13 @@ public abstract class SimpleGetCentricTextTests {
                 "User-Agent: RestAssured\n" +
                 "```\n" +
                 "\n" +
-                "### Request body for playback ():\n" +
+                "### Request body recorded for playback ():\n" +
                 "\n" +
                 "```\n" +
                 "\n" +
                 "```\n" +
                 "\n" +
-                "### Response headers for playback:\n" +
+                "### Response headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
                 "Accept-Ranges: bytes\n" +
@@ -711,7 +711,7 @@ public abstract class SimpleGetCentricTextTests {
                 "Via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
-                "### Response body for playback (200: text/plain; charset=utf-8):\n" +
+                "### Response body recorded for playback (200: text/plain; charset=utf-8):\n" +
                 "\n" +
                 "```\n" +
                 sillyJSONdoc +
@@ -754,7 +754,7 @@ public abstract class SimpleGetCentricTextTests {
         // Order of headers is as originally sent
         assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/core/src/test/resources/test.json\n" +
                 "\n" +
-                "### Request headers for playback:\n" +
+                "### Request headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
                 "Accept: */*\n" +
@@ -763,13 +763,13 @@ public abstract class SimpleGetCentricTextTests {
                 "User-Agent: RestAssured\n" +
                 "```\n" +
                 "\n" +
-                "### Request body for playback ():\n" +
+                "### Request body recorded for playback ():\n" +
                 "\n" +
                 "```\n" +
                 "\n" +
                 "```\n" +
                 "\n" +
-                "### Response headers for playback:\n" +
+                "### Response headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
                 "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
@@ -785,7 +785,7 @@ public abstract class SimpleGetCentricTextTests {
                 "Access-Control-Allow-Origin: *\n" +
                 "```\n" +
                 "\n" +
-                "### Response body for playback (200: text/plain; charset=utf-8):\n" +
+                "### Response body recorded for playback (200: text/plain; charset=utf-8):\n" +
                 "\n" +
                 "```\n" +
                 sillyJSONdoc +

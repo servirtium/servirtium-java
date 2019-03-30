@@ -58,7 +58,7 @@ public abstract class SimplePostCentricTests {
     public static final String EXPECTED =
             "## Interaction 0: POST /post\n" +
             "\n" +
-            "### Request headers for playback:\n" +
+            "### Request headers recorded for playback:\n" +
             "\n" +
             "```\n" +
             "Accept: */*\n" +
@@ -69,13 +69,13 @@ public abstract class SimplePostCentricTests {
             "User-Agent: RestAssured\n" +
             "```\n" +
             "\n" +
-            "### Request body for playback (text/plain; charset=ISO-8859-1):\n" +
+            "### Request body recorded for playback (text/plain; charset=ISO-8859-1):\n" +
             "\n" +
             "```\n" +
             "I'm a little teapot\n" +
             "```\n" +
             "\n" +
-            "### Response headers for playback:\n" +
+            "### Response headers recorded for playback:\n" +
             "\n" +
             "```\n" +
             "Connection: keep-alive\n" +
@@ -87,7 +87,7 @@ public abstract class SimplePostCentricTests {
             "set-cookie: sails.sid=s%3AQpYXn4PNOGmzId3jttU03ZketH2aY6Zz.dj6l8lpXUtFJTCoRxWRPPx4fISmmCKzgOAlIxT2DSxM; Path=/; HttpOnly\n" +
             "```\n" +
             "\n" +
-            "### Response body for playback (200: application/json; charset=utf-8):\n" +
+            "### Response body recorded for playback (200: application/json; charset=utf-8):\n" +
             "\n" +
             "```\n" +
             "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"postman-echo.com\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://postman-echo.com/post\"}\n" +
@@ -194,7 +194,7 @@ public abstract class SimplePostCentricTests {
             // Order of headers is as originally sent
             assertEquals(sanitizeDate("## Interaction 0: POST /not-important\n" +
             "\n" +
-            "### Request headers for playback:\n" +
+            "### Request headers recorded for playback:\n" +
             "\n" +
             "```\n" +
             "Accept: */*\n" +
@@ -205,14 +205,14 @@ public abstract class SimplePostCentricTests {
             "User-Agent: RestAssured\n" +
             "```\n" +
             "\n" +
-            "### Request body for playback (image/png; charset=ISO-8859-1):\n" +
+            "### Request body recorded for playback (image/png; charset=ISO-8859-1):\n" +
             "\n" +
             "```\n" +
             "//SERVIRTIUM+Base64: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMA\n" +
                     "AQAABQABDQottAAAAABJRU5ErkJggg==\n" +
             "```\n" +
             "\n" +
-            "### Response headers for playback:\n" +
+            "### Response headers recorded for playback:\n" +
             "\n" +
             "```\n" +
             "Content-Length: 7\n" +
@@ -221,7 +221,7 @@ public abstract class SimplePostCentricTests {
             "Server: Jetty(9.4.14.v20181114)\n" +
             "```\n" +
             "\n" +
-            "### Response body for playback (200: text/plain;charset=iso-8859-1):\n" +
+            "### Response body recorded for playback (200: text/plain;charset=iso-8859-1):\n" +
             "\n" +
             "```\n" +
             "yee ha!\n" +
@@ -279,7 +279,7 @@ public abstract class SimplePostCentricTests {
             // Order of headers is as originally sent
             assertEquals(sanitizeDate("## Interaction 0: PUT /not-important\n" +
             "\n" +
-            "### Request headers for playback:\n" +
+            "### Request headers recorded for playback:\n" +
             "\n" +
             "```\n" +
             "Accept: */*\n" +
@@ -290,14 +290,14 @@ public abstract class SimplePostCentricTests {
             "User-Agent: RestAssured\n" +
             "```\n" +
             "\n" +
-            "### Request body for playback (image/png; charset=ISO-8859-1):\n" +
+            "### Request body recorded for playback (image/png; charset=ISO-8859-1):\n" +
             "\n" +
             "```\n" +
             "//SERVIRTIUM+Base64: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMA\n" +
                     "AQAABQABDQottAAAAABJRU5ErkJggg==\n" +
             "```\n" +
             "\n" +
-            "### Response headers for playback:\n" +
+            "### Response headers recorded for playback:\n" +
             "\n" +
             "```\n" +
             "Content-Length: 7\n" +
@@ -306,7 +306,7 @@ public abstract class SimplePostCentricTests {
             "Server: Jetty(9.4.14.v20181114)\n" +
             "```\n" +
             "\n" +
-            "### Response body for playback (200: text/plain;charset=iso-8859-1):\n" +
+            "### Response body recorded for playback (200: text/plain;charset=iso-8859-1):\n" +
             "\n" +
             "```\n" +
             "yee ha!\n" +

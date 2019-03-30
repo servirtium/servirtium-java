@@ -141,7 +141,7 @@ public class MarkdownRecorder implements Interactor {
                 blockEnd();
             }
 
-            // Headers for playback
+            // Headers recorded for playback
 
             List<String> clientRequestHeaders2 = changeRequestHeadersIfNeeded(interactionManipulations, clientRequestHeaders, method, lowerCaseHeaders);
 
@@ -160,7 +160,7 @@ public class MarkdownRecorder implements Interactor {
                 headersToRecord2.add(h);
             }
 
-            blockStart("Request headers for playback");
+            blockStart("Request headers recorded for playback");
             for (String s : headersToRecord2) {
                 this.recording.append(s).append("\n");
             }
@@ -197,7 +197,7 @@ public class MarkdownRecorder implements Interactor {
                 forRecording = objectToStringForRecording((byte[]) clientRequestBody);
             }
 
-            blockStart("Request body for playback (" + clientRequestContentType + ")");
+            blockStart("Request body recorded for playback (" + clientRequestContentType + ")");
             this.recording.append(forRecording).append("\n");
             blockEnd();
 
@@ -251,7 +251,7 @@ public class MarkdownRecorder implements Interactor {
         @Override
         public void noteServiceResponseHeaders(String[] headers) {
 
-            doServiceResponseHeaders(headers, "Response headers for playback");
+            doServiceResponseHeaders(headers, "Response headers recorded for playback");
 
         }
 
@@ -259,7 +259,7 @@ public class MarkdownRecorder implements Interactor {
         public void noteServiceResponseBody(Object serverResponseBody, int statusCode,
                                             String serverResponseContentType) {
 
-            doServiceResponseBody(serverResponseBody, statusCode, serverResponseContentType, "Response body for playback");
+            doServiceResponseBody(serverResponseBody, statusCode, serverResponseContentType, "Response body recorded for playback");
         }
 
         @Override
