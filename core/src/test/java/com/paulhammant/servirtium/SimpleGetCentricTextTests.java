@@ -553,7 +553,7 @@ public abstract class SimpleGetCentricTextTests {
                 "via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
-                "### DEBUG: Headers for client, possibly changed after recording:\n" +
+                "### DEBUG: Response Headers for client, possibly changed after recording:\n" +
                 "\n" +
                 "```\n" +
                 "accept-ranges: bytes\n" +

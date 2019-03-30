@@ -35,6 +35,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
@@ -151,13 +152,12 @@ public class MarkdownRecorder implements Interactor {
             if (alphaSortHeaders) {
                 Arrays.sort(headersToRecord);
             }
-            final String[] headersToRecord2 = new String[headersToRecord.length];
-            int ix = 0;
+            final List<String> headersToRecord2 = new ArrayList<>();
             for (String h : headersToRecord) {
                 for (String redactionRegex : redactions.keySet()) {
                     h = h.replaceAll(redactionRegex, redactions.get(redactionRegex));
                 }
-                headersToRecord2[ix++ ] = h;
+                headersToRecord2.add(h);
             }
 
             blockStart("Request headers for playback");
@@ -201,7 +201,7 @@ public class MarkdownRecorder implements Interactor {
             this.recording.append(forRecording).append("\n");
             blockEnd();
 
-            return clientRequestHeaders2;
+            return headersToRecord2;
         }
 
         private String objectToStringForRecording(byte[] clientRequestBody) {
@@ -230,7 +230,7 @@ public class MarkdownRecorder implements Interactor {
         @Override
         public void debugClientsServiceResponseHeaders(String[] headers) {
             if (extraDebugOutput) {
-                doServiceResponseHeaders(headers, "DEBUG: Headers for client, possibly changed after recording");
+                doServiceResponseHeaders(headers, "DEBUG: Response Headers for client, possibly changed after recording");
             }
         }
 

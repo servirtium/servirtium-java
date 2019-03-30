@@ -27,18 +27,16 @@ public class TodobackendDotComRecorderMain {
 
         Then, in a browser go to:
 
-           http://www.todobackend.com/specs/index.html?http://localhost:8099/todos
+           http://www.todobackend.com/specs/index.html?http://localhost:8099/api/todos
 
          ... src/test/resources/TodobackendDotComServiceRecording.md should be overwritten
 
         Effectively, this is the same as pointing the browser to ...
 
-          https://www.todobackend.com/specs/index.html?https://todo-backend-sinatra.herokuapp.com/todos
-          or http://www.todobackend.com/specs/index.html?http://todo-backend-sinatra.herokuapp.com/todos
+          https://www.todobackend.com/specs/index.html?https://todobackend-phoenix.herokuapp.com
+          or http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com
 
          */
-
-        // ([0-9a-f\-]{28,60})
 
         Map<String, Integer> guids = new HashMap<>();
 
@@ -88,7 +86,7 @@ public class TodobackendDotComRecorderMain {
 
 
     public static SimpleInteractionManipulations makeInteractionManipulations(Map<String, Integer> guids) {
-        return new SimpleInteractionManipulations("localhost:8099", "todo-backend-rocket-rust.herokuapp.com") {
+        return new SimpleInteractionManipulations("localhost:8099", "todobackend-phoenix.herokuapp.com") {
 
             @Override
             public void changeAnyHeadersForRequestToService(List<String> clientRequestHeaders) {
@@ -128,7 +126,7 @@ public class TodobackendDotComRecorderMain {
                 final ReplaceMockGuidForRealOnes replaceMockGuidForRealOnes = new ReplaceMockGuidForRealOnes(body);
                 guids.forEach(replaceMockGuidForRealOnes);
 
-                return replaceMockGuidForRealOnes.result.replaceAll("todo-backend-rocket-rust\\.herokuapp\\.com",
+                return replaceMockGuidForRealOnes.result.replaceAll("todobackend-phoenix\\.herokuapp\\.com",
                         "localhost:8099");
             }
 
