@@ -17,7 +17,277 @@ Access-Control-Request-Method: GET
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos/api/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Safari/605.1.15
+```
+
+### Request body recorded for playback ():
+
+```
+
+```
+
+### Response headers recorded for playback:
+
+```
+Cache-Control: max-age=0, private, must-revalidate
+Connection: keep-alive
+Content-Length: 14
+Content-Type: text/html; charset=utf-8
+Date: Sat, 30 Mar 2019 13:49:27 GMT
+Server: Cowboy
+Via: 1.1 vegur
+X-Request-Id: fd6911d4-5a7f-4d3f-b640-b04941154433
+```
+
+### Response body recorded for playback (404: text/html; charset=utf-8):
+
+```
+Page not found
+```
+
+## Interaction 1: OPTIONS /api/todos
+
+### Request headers recorded for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: */*
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 0
+Host: todobackend-phoenix.herokuapp.com/api/todos
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos/api/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Safari/605.1.15
+```
+
+### Request body recorded for playback ():
+
+```
+
+```
+
+### Response headers recorded for playback:
+
+```
+Cache-Control: max-age=0, private, must-revalidate
+Connection: keep-alive
+Content-Length: 14
+Content-Type: text/html; charset=utf-8
+Date: Sat, 30 Mar 2019 13:49:27 GMT
+Server: Cowboy
+Via: 1.1 vegur
+X-Request-Id: f6eada86-afff-4d08-97b5-ec2b408c6a86
+```
+
+### Response body recorded for playback (404: text/html; charset=utf-8):
+
+```
+Page not found
+```
+
+## Interaction 2: OPTIONS /api/todos
+
+### Request headers recorded for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: */*
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: DELETE
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 0
+Host: todobackend-phoenix.herokuapp.com/api/todos
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos/api/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Safari/605.1.15
+```
+
+### Request body recorded for playback ():
+
+```
+
+```
+
+### Response headers recorded for playback:
+
+```
+Cache-Control: max-age=0, private, must-revalidate
+Connection: keep-alive
+Content-Length: 14
+Content-Type: text/html; charset=utf-8
+Date: Sat, 30 Mar 2019 13:49:27 GMT
+Server: Cowboy
+Via: 1.1 vegur
+X-Request-Id: ee19ff37-2595-47ea-8777-3326f4292a92
+```
+
+### Response body recorded for playback (404: text/html; charset=utf-8):
+
+```
+Page not found
+```
+
+## Interaction 3: OPTIONS /api/todos
+
+### Request headers recorded for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: */*
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: DELETE
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 0
+Host: todobackend-phoenix.herokuapp.com/api/todos
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos/api/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Safari/605.1.15
+```
+
+### Request body recorded for playback ():
+
+```
+
+```
+
+### Response headers recorded for playback:
+
+```
+Cache-Control: max-age=0, private, must-revalidate
+Connection: keep-alive
+Content-Length: 14
+Content-Type: text/html; charset=utf-8
+Date: Sat, 30 Mar 2019 13:49:27 GMT
+Server: Cowboy
+Via: 1.1 vegur
+X-Request-Id: c420ee09-a4f3-4e30-ab6f-f5c91e600496
+```
+
+### Response body recorded for playback (404: text/html; charset=utf-8):
+
+```
+Page not found
+```
+
+## Interaction 4: OPTIONS /api/todos
+
+### Request headers recorded for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: */*
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: DELETE
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 0
+Host: todobackend-phoenix.herokuapp.com/api/todos
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos/api/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Safari/605.1.15
+```
+
+### Request body recorded for playback ():
+
+```
+
+```
+
+### Response headers recorded for playback:
+
+```
+Cache-Control: max-age=0, private, must-revalidate
+Connection: keep-alive
+Content-Length: 14
+Content-Type: text/html; charset=utf-8
+Date: Sat, 30 Mar 2019 13:49:27 GMT
+Server: Cowboy
+Via: 1.1 vegur
+X-Request-Id: fb237593-7383-40c4-9fd0-91badbfa5e4b
+```
+
+### Response body recorded for playback (404: text/html; charset=utf-8):
+
+```
+Page not found
+```
+
+## Interaction 5: OPTIONS /api/todos
+
+### Request headers recorded for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: */*
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: DELETE
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 0
+Host: todobackend-phoenix.herokuapp.com/api/todos
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos/api/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Safari/605.1.15
+```
+
+### Request body recorded for playback ():
+
+```
+
+```
+
+### Response headers recorded for playback:
+
+```
+Cache-Control: max-age=0, private, must-revalidate
+Connection: keep-alive
+Content-Length: 14
+Content-Type: text/html; charset=utf-8
+Date: Sat, 30 Mar 2019 13:49:27 GMT
+Server: Cowboy
+Via: 1.1 vegur
+X-Request-Id: 8ddcdb13-07d6-473a-ad12-3e50c9261bcf
+```
+
+### Response body recorded for playback (404: text/html; charset=utf-8):
+
+```
+Page not found
+```
+
+## Interaction 6: OPTIONS /
+
+### Request headers recorded for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: */*
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: GET
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 0
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -39,10 +309,10 @@ Access-Control-Allow-Origin: *
 Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 27
-Date: Sat, 30 Mar 2019 13:30:22 GMT
+Date: Sat, 30 Mar 2019 13:49:28 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 809aa493-4ed1-42d5-8e69-77ec8093bd56
+X-Request-Id: d1335c02-72e7-4e6e-82d8-6b0148182e8d
 ```
 
 ### Response body recorded for playback (200: null - Base64 below):
@@ -51,7 +321,7 @@ X-Request-Id: 809aa493-4ed1-42d5-8e69-77ec8093bd56
 R0VULFBPU1QsREVMRVRFLE9QVElPTlMsUFVU
 ```
 
-## Interaction 1: GET /api/todos
+## Interaction 7: GET /
 
 ### Request headers recorded for playback:
 
@@ -62,7 +332,7 @@ Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -85,10 +355,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 507
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:22 GMT
+Date: Sat, 30 Mar 2019 13:49:28 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 05f51e2d-ff1e-464d-a54a-fabfacef7287
+X-Request-Id: 1fd92bc8-534d-4056-8fb5-882e83e92224
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -96,30 +366,30 @@ X-Request-Id: 05f51e2d-ff1e-464d-a54a-fabfacef7287
 ```
 [
    {
-      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9459",
+      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9473",
       "title": "blah",
       "order": 523,
-      "id": 9459,
+      "id": 9473,
       "completed": false
    },
    {
-      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9460",
+      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9474",
       "title": "blah",
       "order": 95,
-      "id": 9460,
+      "id": 9474,
       "completed": false
    },
    {
-      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9461",
+      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9475",
       "title": "blah",
       "order": 95,
-      "id": 9461,
+      "id": 9475,
       "completed": false
    }
 ]
 ```
 
-## Interaction 2: POST /api/todos
+## Interaction 8: POST /
 
 ### Request headers recorded for playback:
 
@@ -131,7 +401,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 18
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -156,25 +426,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 149
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:23 GMT
+Date: Sat, 30 Mar 2019 13:49:28 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: f14e8ef2-3d53-4b34-bdc0-efd056f84e8f
+X-Request-Id: d3670e30-2382-49e0-bcd2-f06331d99441
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9462",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9476",
    "title": "a todo",
    "order": null,
-   "id": 9462,
+   "id": 9476,
    "completed": false
 }
 ```
 
-## Interaction 3: DELETE /api/todos
+## Interaction 9: DELETE /
 
 ### Request headers recorded for playback:
 
@@ -186,7 +456,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -209,10 +479,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 3
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:23 GMT
+Date: Sat, 30 Mar 2019 13:49:28 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 14f255fc-af0c-4b0f-86ac-c040ac7dad3c
+X-Request-Id: 524bb5c1-0af1-4693-aec7-c65f7958728f
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -222,7 +492,7 @@ X-Request-Id: 14f255fc-af0c-4b0f-86ac-c040ac7dad3c
 ]
 ```
 
-## Interaction 4: DELETE /api/todos
+## Interaction 10: DELETE /
 
 ### Request headers recorded for playback:
 
@@ -234,7 +504,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -257,10 +527,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 3
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:23 GMT
+Date: Sat, 30 Mar 2019 13:49:28 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 106f2cbd-7bab-49bf-b8e0-decf968677ab
+X-Request-Id: 96c82969-3dcb-45a7-a3c8-5f0dc7fccd9f
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -270,7 +540,7 @@ X-Request-Id: 106f2cbd-7bab-49bf-b8e0-decf968677ab
 ]
 ```
 
-## Interaction 5: GET /api/todos
+## Interaction 11: GET /
 
 ### Request headers recorded for playback:
 
@@ -281,7 +551,7 @@ Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -304,10 +574,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 3
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:23 GMT
+Date: Sat, 30 Mar 2019 13:49:28 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 8f8c85ca-f41d-4676-b5f4-eaad99738bab
+X-Request-Id: d1d94f5c-0707-4295-ab4e-d700f1af58d6
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -317,7 +587,7 @@ X-Request-Id: 8f8c85ca-f41d-4676-b5f4-eaad99738bab
 ]
 ```
 
-## Interaction 6: DELETE /api/todos
+## Interaction 12: DELETE /
 
 ### Request headers recorded for playback:
 
@@ -329,7 +599,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -352,10 +622,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 3
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:23 GMT
+Date: Sat, 30 Mar 2019 13:49:28 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: dde5bb21-322f-4544-a26d-c9dca766469f
+X-Request-Id: 7c3c7629-2db9-4452-be6e-cfc8e7d12af7
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -365,7 +635,7 @@ X-Request-Id: dde5bb21-322f-4544-a26d-c9dca766469f
 ]
 ```
 
-## Interaction 7: POST /api/todos
+## Interaction 13: POST /
 
 ### Request headers recorded for playback:
 
@@ -377,7 +647,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 24
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -402,25 +672,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 155
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:23 GMT
+Date: Sat, 30 Mar 2019 13:49:29 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: ecd47d62-655d-4f47-824b-c46903033b69
+X-Request-Id: 6761adff-9ecb-4716-a3f6-47b1a6c6a1ce
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9463",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9477",
    "title": "walk the dog",
    "order": null,
-   "id": 9463,
+   "id": 9477,
    "completed": false
 }
 ```
 
-## Interaction 8: GET /api/todos
+## Interaction 14: GET /
 
 ### Request headers recorded for playback:
 
@@ -431,7 +701,7 @@ Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -454,10 +724,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 180
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:23 GMT
+Date: Sat, 30 Mar 2019 13:49:29 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: dfcf77d6-633e-4a1a-9fba-fee50977e828
+X-Request-Id: 4adeca9a-0d52-4394-a44b-37a6172ed2e2
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -465,16 +735,16 @@ X-Request-Id: dfcf77d6-633e-4a1a-9fba-fee50977e828
 ```
 [
    {
-      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9463",
+      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9477",
       "title": "walk the dog",
       "order": null,
-      "id": 9463,
+      "id": 9477,
       "completed": false
    }
 ]
 ```
 
-## Interaction 9: DELETE /api/todos
+## Interaction 15: DELETE /
 
 ### Request headers recorded for playback:
 
@@ -486,7 +756,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -509,10 +779,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 3
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:24 GMT
+Date: Sat, 30 Mar 2019 13:49:29 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: abd12665-323e-4591-b41f-c7787036da3b
+X-Request-Id: d652095e-a341-401e-b961-85c9cc25c6f4
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -522,7 +792,7 @@ X-Request-Id: abd12665-323e-4591-b41f-c7787036da3b
 ]
 ```
 
-## Interaction 10: POST /api/todos
+## Interaction 16: POST /
 
 ### Request headers recorded for playback:
 
@@ -534,7 +804,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -559,25 +829,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 147
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:24 GMT
+Date: Sat, 30 Mar 2019 13:49:29 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 475edbd1-64ea-4121-b86a-f69a0ff2de94
+X-Request-Id: 33ef9d34-e969-4ddd-bcf1-2836f6a5d866
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9464",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9478",
    "title": "blah",
    "order": null,
-   "id": 9464,
+   "id": 9478,
    "completed": false
 }
 ```
 
-## Interaction 11: GET /api/todos
+## Interaction 17: GET /
 
 ### Request headers recorded for playback:
 
@@ -588,7 +858,7 @@ Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -611,10 +881,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 172
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:24 GMT
+Date: Sat, 30 Mar 2019 13:49:29 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 8c8c2f32-49e1-404d-9556-4c6faf006160
+X-Request-Id: f7ecb865-4947-4c03-b560-5d0f685d4c3f
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -622,16 +892,16 @@ X-Request-Id: 8c8c2f32-49e1-404d-9556-4c6faf006160
 ```
 [
    {
-      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9464",
+      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9478",
       "title": "blah",
       "order": null,
-      "id": 9464,
+      "id": 9478,
       "completed": false
    }
 ]
 ```
 
-## Interaction 12: DELETE /api/todos
+## Interaction 18: DELETE /
 
 ### Request headers recorded for playback:
 
@@ -643,7 +913,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -666,10 +936,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 3
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:24 GMT
+Date: Sat, 30 Mar 2019 13:49:29 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 40039ed8-377b-46b1-b364-ac5b5820dd6f
+X-Request-Id: 637ce7ad-0412-4aa3-8753-9fa83b915203
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -679,7 +949,7 @@ X-Request-Id: 40039ed8-377b-46b1-b364-ac5b5820dd6f
 ]
 ```
 
-## Interaction 13: POST /api/todos
+## Interaction 19: POST /
 
 ### Request headers recorded for playback:
 
@@ -691,7 +961,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -716,25 +986,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 147
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:24 GMT
+Date: Sat, 30 Mar 2019 13:49:29 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 052ea8e8-6e6b-4557-b9a3-9644cfb135a3
+X-Request-Id: c13b8190-ac0e-44a4-8c6c-9b0496b5669b
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9465",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9479",
    "title": "blah",
    "order": null,
-   "id": 9465,
+   "id": 9479,
    "completed": false
 }
 ```
 
-## Interaction 14: GET /api/todos
+## Interaction 20: GET /
 
 ### Request headers recorded for playback:
 
@@ -745,7 +1015,7 @@ Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -768,10 +1038,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 172
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:24 GMT
+Date: Sat, 30 Mar 2019 13:49:30 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 44be4b10-d6d3-4df5-9508-47e1c83d817f
+X-Request-Id: d564c75b-a802-40bd-aad8-6d9b77701fdc
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -779,16 +1049,16 @@ X-Request-Id: 44be4b10-d6d3-4df5-9508-47e1c83d817f
 ```
 [
    {
-      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9465",
+      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9479",
       "title": "blah",
       "order": null,
-      "id": 9465,
+      "id": 9479,
       "completed": false
    }
 ]
 ```
 
-## Interaction 15: DELETE /api/todos
+## Interaction 21: DELETE /
 
 ### Request headers recorded for playback:
 
@@ -800,7 +1070,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -823,10 +1093,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 3
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:24 GMT
+Date: Sat, 30 Mar 2019 13:49:30 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: a1c03ee5-66e0-4f82-a57f-1c18ed68cb60
+X-Request-Id: e754fbd3-d740-4766-b521-a558ab799f90
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -836,7 +1106,7 @@ X-Request-Id: a1c03ee5-66e0-4f82-a57f-1c18ed68cb60
 ]
 ```
 
-## Interaction 16: POST /api/todos
+## Interaction 22: POST /
 
 ### Request headers recorded for playback:
 
@@ -848,7 +1118,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 19
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -873,25 +1143,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 150
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:25 GMT
+Date: Sat, 30 Mar 2019 13:49:30 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: c646fc33-6fe5-4f82-8b2a-58f15dd848c8
+X-Request-Id: 5a5b34b2-a002-45e3-9e4f-d8166851f430
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9466",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9480",
    "title": "my todo",
    "order": null,
-   "id": 9466,
+   "id": 9480,
    "completed": false
 }
 ```
 
-## Interaction 17: OPTIONS /api/todos/9466
+## Interaction 23: OPTIONS /9480
 
 ### Request headers recorded for playback:
 
@@ -904,7 +1174,7 @@ Access-Control-Request-Method: GET
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -926,10 +1196,10 @@ Access-Control-Allow-Origin: *
 Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 27
-Date: Sat, 30 Mar 2019 13:30:25 GMT
+Date: Sat, 30 Mar 2019 13:49:30 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 83c6c3da-9be0-480e-8553-412dceaa261d
+X-Request-Id: 853e8c7d-89d0-4a3a-9a1e-141deff50668
 ```
 
 ### Response body recorded for playback (200: null - Base64 below):
@@ -938,7 +1208,7 @@ X-Request-Id: 83c6c3da-9be0-480e-8553-412dceaa261d
 R0VULFBPU1QsREVMRVRFLE9QVElPTlMsUFVU
 ```
 
-## Interaction 18: GET /api/todos/9466
+## Interaction 24: GET /9480
 
 ### Request headers recorded for playback:
 
@@ -949,7 +1219,7 @@ Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -972,25 +1242,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 150
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:25 GMT
+Date: Sat, 30 Mar 2019 13:49:30 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: b74fb8fc-e8c7-4da9-a8b5-96d163ac971f
+X-Request-Id: 9dce6842-4fbd-4586-aef7-015db64429fb
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9466",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9480",
    "title": "my todo",
    "order": null,
-   "id": 9466,
+   "id": 9480,
    "completed": false
 }
 ```
 
-## Interaction 19: DELETE /api/todos
+## Interaction 25: DELETE /
 
 ### Request headers recorded for playback:
 
@@ -1002,7 +1272,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1025,10 +1295,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 3
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:25 GMT
+Date: Sat, 30 Mar 2019 13:49:30 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 2ecd3110-2b62-4d79-94b6-9f73cf513a57
+X-Request-Id: 8eb63535-217f-40e4-88a6-bc1f2b1e860b
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -1038,7 +1308,7 @@ X-Request-Id: 2ecd3110-2b62-4d79-94b6-9f73cf513a57
 ]
 ```
 
-## Interaction 20: POST /api/todos
+## Interaction 26: POST /
 
 ### Request headers recorded for playback:
 
@@ -1050,7 +1320,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 26
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1075,25 +1345,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 157
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:25 GMT
+Date: Sat, 30 Mar 2019 13:49:30 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: c14d742c-a184-4d90-a38c-8b7581207a47
+X-Request-Id: c2166716-bd22-4956-9089-cb4d80300e12
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9467",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9481",
    "title": "todo the first",
    "order": null,
-   "id": 9467,
+   "id": 9481,
    "completed": false
 }
 ```
 
-## Interaction 21: POST /api/todos
+## Interaction 27: POST /
 
 ### Request headers recorded for playback:
 
@@ -1105,7 +1375,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 27
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1130,25 +1400,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 158
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:25 GMT
+Date: Sat, 30 Mar 2019 13:49:30 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 6ba3779c-d402-49a3-8bdf-cc96b87cd096
+X-Request-Id: 2f0a98a1-10da-4c8c-90a9-f3c942c11588
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9468",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9482",
    "title": "todo the second",
    "order": null,
-   "id": 9468,
+   "id": 9482,
    "completed": false
 }
 ```
 
-## Interaction 22: GET /api/todos
+## Interaction 28: GET /
 
 ### Request headers recorded for playback:
 
@@ -1159,7 +1429,7 @@ Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1182,10 +1452,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 363
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:25 GMT
+Date: Sat, 30 Mar 2019 13:49:31 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: ec163da7-6561-49e1-ad86-cb1f86391ee7
+X-Request-Id: b540816b-f88b-47c8-8d0e-39c14c73a6ed
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -1193,23 +1463,23 @@ X-Request-Id: ec163da7-6561-49e1-ad86-cb1f86391ee7
 ```
 [
    {
-      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9467",
+      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9481",
       "title": "todo the first",
       "order": null,
-      "id": 9467,
+      "id": 9481,
       "completed": false
    },
    {
-      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9468",
+      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9482",
       "title": "todo the second",
       "order": null,
-      "id": 9468,
+      "id": 9482,
       "completed": false
    }
 ]
 ```
 
-## Interaction 23: OPTIONS /api/todos/9467
+## Interaction 29: OPTIONS /9481
 
 ### Request headers recorded for playback:
 
@@ -1222,7 +1492,7 @@ Access-Control-Request-Method: GET
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1244,10 +1514,10 @@ Access-Control-Allow-Origin: *
 Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 27
-Date: Sat, 30 Mar 2019 13:30:26 GMT
+Date: Sat, 30 Mar 2019 13:49:31 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 0b613168-85d3-4fb3-a7f4-aaf1b4ddfd1f
+X-Request-Id: 48eec645-e747-46b0-9f46-7e02aa8c17af
 ```
 
 ### Response body recorded for playback (200: null - Base64 below):
@@ -1256,7 +1526,7 @@ X-Request-Id: 0b613168-85d3-4fb3-a7f4-aaf1b4ddfd1f
 R0VULFBPU1QsREVMRVRFLE9QVElPTlMsUFVU
 ```
 
-## Interaction 24: GET /api/todos/9467
+## Interaction 30: GET /9481
 
 ### Request headers recorded for playback:
 
@@ -1267,7 +1537,7 @@ Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1290,25 +1560,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 157
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:26 GMT
+Date: Sat, 30 Mar 2019 13:49:31 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 578348b3-a6d7-4e0c-ae00-d10461d7d238
+X-Request-Id: 95623862-06dd-41b4-b7eb-0a7c64134471
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9467",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9481",
    "title": "todo the first",
    "order": null,
-   "id": 9467,
+   "id": 9481,
    "completed": false
 }
 ```
 
-## Interaction 25: DELETE /api/todos
+## Interaction 31: DELETE /
 
 ### Request headers recorded for playback:
 
@@ -1320,7 +1590,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1343,10 +1613,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 3
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:26 GMT
+Date: Sat, 30 Mar 2019 13:49:31 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 46d5b6ab-52aa-4ad0-b5dd-18e004022311
+X-Request-Id: 52e9620e-bae2-4832-916d-cff14375ec3e
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -1356,7 +1626,7 @@ X-Request-Id: 46d5b6ab-52aa-4ad0-b5dd-18e004022311
 ]
 ```
 
-## Interaction 26: POST /api/todos
+## Interaction 32: POST /
 
 ### Request headers recorded for playback:
 
@@ -1368,7 +1638,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 25
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1393,25 +1663,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 156
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:26 GMT
+Date: Sat, 30 Mar 2019 13:49:31 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 5037512b-4c8b-4358-acd8-c9bf03b7db8b
+X-Request-Id: 948ea99e-fff0-4dea-bb1d-224f3de24386
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9469",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9483",
    "title": "initial title",
    "order": null,
-   "id": 9469,
+   "id": 9483,
    "completed": false
 }
 ```
 
-## Interaction 27: OPTIONS /api/todos/9469
+## Interaction 33: OPTIONS /9483
 
 ### Request headers recorded for playback:
 
@@ -1424,7 +1694,7 @@ Access-Control-Request-Method: PATCH
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1446,10 +1716,10 @@ Access-Control-Allow-Origin: *
 Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 27
-Date: Sat, 30 Mar 2019 13:30:26 GMT
+Date: Sat, 30 Mar 2019 13:49:31 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 410a624d-2afe-45ea-a83d-0457bcddf0d7
+X-Request-Id: b4684f75-17b8-4515-80db-60ffd1300803
 ```
 
 ### Response body recorded for playback (200: null - Base64 below):
@@ -1458,7 +1728,7 @@ X-Request-Id: 410a624d-2afe-45ea-a83d-0457bcddf0d7
 R0VULFBPU1QsREVMRVRFLE9QVElPTlMsUFVU
 ```
 
-## Interaction 28: PATCH /api/todos/9469
+## Interaction 34: PATCH /9483
 
 ### Request headers recorded for playback:
 
@@ -1470,7 +1740,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 25
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1495,25 +1765,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 156
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:26 GMT
+Date: Sat, 30 Mar 2019 13:49:31 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: aedcb3ec-b803-4200-8df5-6b4be040fa52
+X-Request-Id: 3b648622-653d-476e-81fe-e44ea8da8288
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9469",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9483",
    "title": "bathe the cat",
    "order": null,
-   "id": 9469,
+   "id": 9483,
    "completed": false
 }
 ```
 
-## Interaction 29: DELETE /api/todos
+## Interaction 35: DELETE /
 
 ### Request headers recorded for playback:
 
@@ -1525,7 +1795,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1548,10 +1818,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 3
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:26 GMT
+Date: Sat, 30 Mar 2019 13:49:31 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 2371a336-6559-4d25-b4b2-f8acac534513
+X-Request-Id: fcfd639e-44bd-4595-887f-6cab0962b1b5
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -1561,7 +1831,7 @@ X-Request-Id: 2371a336-6559-4d25-b4b2-f8acac534513
 ]
 ```
 
-## Interaction 30: POST /api/todos
+## Interaction 36: POST /
 
 ### Request headers recorded for playback:
 
@@ -1573,7 +1843,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1598,25 +1868,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 147
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:27 GMT
+Date: Sat, 30 Mar 2019 13:49:32 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: c5f39f71-ca9b-4953-903a-f47ae3ad9355
+X-Request-Id: aed88194-090e-4df7-b860-8b440f30e4f0
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9470",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9484",
    "title": "blah",
    "order": null,
-   "id": 9470,
+   "id": 9484,
    "completed": false
 }
 ```
 
-## Interaction 31: OPTIONS /api/todos/9470
+## Interaction 37: OPTIONS /9484
 
 ### Request headers recorded for playback:
 
@@ -1629,7 +1899,7 @@ Access-Control-Request-Method: PATCH
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1651,10 +1921,10 @@ Access-Control-Allow-Origin: *
 Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 27
-Date: Sat, 30 Mar 2019 13:30:27 GMT
+Date: Sat, 30 Mar 2019 13:49:32 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: e15b9837-e051-4d6a-ad76-6253e378dcf9
+X-Request-Id: 872271e7-5181-4f6a-b1f9-343c89bd4eb3
 ```
 
 ### Response body recorded for playback (200: null - Base64 below):
@@ -1663,7 +1933,7 @@ X-Request-Id: e15b9837-e051-4d6a-ad76-6253e378dcf9
 R0VULFBPU1QsREVMRVRFLE9QVElPTlMsUFVU
 ```
 
-## Interaction 32: PATCH /api/todos/9470
+## Interaction 38: PATCH /9484
 
 ### Request headers recorded for playback:
 
@@ -1675,7 +1945,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 18
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1700,25 +1970,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 146
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:27 GMT
+Date: Sat, 30 Mar 2019 13:49:32 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 0b8fda47-fe6a-4b51-8bbc-9c484cf3ee79
+X-Request-Id: c8209b6c-e569-4b64-b58a-bd5cc7d1ac21
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9470",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9484",
    "title": "blah",
    "order": null,
-   "id": 9470,
+   "id": 9484,
    "completed": true
 }
 ```
 
-## Interaction 33: DELETE /api/todos
+## Interaction 39: DELETE /
 
 ### Request headers recorded for playback:
 
@@ -1730,7 +2000,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1753,10 +2023,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 3
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:27 GMT
+Date: Sat, 30 Mar 2019 13:49:32 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 1d1fda4c-f928-44f0-9b37-408c7784058b
+X-Request-Id: 0dbc403c-27bd-4dca-b916-c9dc1a4e582b
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -1766,7 +2036,7 @@ X-Request-Id: 1d1fda4c-f928-44f0-9b37-408c7784058b
 ]
 ```
 
-## Interaction 34: POST /api/todos
+## Interaction 40: POST /
 
 ### Request headers recorded for playback:
 
@@ -1778,7 +2048,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1803,25 +2073,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 147
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:27 GMT
+Date: Sat, 30 Mar 2019 13:49:32 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 8491a9a4-3d0e-4403-8fd1-3d76b7884ca4
+X-Request-Id: 70f2ded6-41ba-4480-b13f-ad7b8a935a5a
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9471",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9485",
    "title": "blah",
    "order": null,
-   "id": 9471,
+   "id": 9485,
    "completed": false
 }
 ```
 
-## Interaction 35: OPTIONS /api/todos/9471
+## Interaction 41: OPTIONS /9485
 
 ### Request headers recorded for playback:
 
@@ -1834,7 +2104,7 @@ Access-Control-Request-Method: PATCH
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1856,10 +2126,10 @@ Access-Control-Allow-Origin: *
 Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 27
-Date: Sat, 30 Mar 2019 13:30:27 GMT
+Date: Sat, 30 Mar 2019 13:49:32 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 070ff2db-f4ab-4d10-b0bf-a13416689fea
+X-Request-Id: b7a4af0e-1efb-4e85-aca5-e9dffe6df4a0
 ```
 
 ### Response body recorded for playback (200: null - Base64 below):
@@ -1868,7 +2138,7 @@ X-Request-Id: 070ff2db-f4ab-4d10-b0bf-a13416689fea
 R0VULFBPU1QsREVMRVRFLE9QVElPTlMsUFVU
 ```
 
-## Interaction 36: PATCH /api/todos/9471
+## Interaction 42: PATCH /9485
 
 ### Request headers recorded for playback:
 
@@ -1880,7 +2150,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 42
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1906,25 +2176,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 155
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:27 GMT
+Date: Sat, 30 Mar 2019 13:49:32 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 0bc24d58-90f6-42b4-9824-d1231b246e5a
+X-Request-Id: 8b9b6e1f-975f-4e76-b8b0-e8fc17ff08ca
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9471",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9485",
    "title": "changed title",
    "order": null,
-   "id": 9471,
+   "id": 9485,
    "completed": true
 }
 ```
 
-## Interaction 37: GET /api/todos/9471
+## Interaction 43: GET /9485
 
 ### Request headers recorded for playback:
 
@@ -1935,7 +2205,7 @@ Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -1958,72 +2228,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 155
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:27 GMT
+Date: Sat, 30 Mar 2019 13:49:33 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: a5ec2603-abee-4639-a6c3-6cd661756fc2
+X-Request-Id: d7c838f1-b938-467a-8b56-d8b409a49158
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9471",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9485",
    "title": "changed title",
    "order": null,
-   "id": 9471,
+   "id": 9485,
    "completed": true
 }
 ```
 
-## Interaction 38: OPTIONS /api/todos
-
-### Request headers recorded for playback:
-
-```
-Accept-Encoding: gzip, deflate
-Accept-Language: en-us
-Accept: */*
-Access-Control-Request-Headers: content-type
-Access-Control-Request-Method: GET
-Cache-Control: no-cache
-Connection: keep-alive
-Content-Length: 0
-Host: todobackend-phoenix.herokuapp.com
-Origin: http://www.todobackend.com
-Pragma: no-cache
-Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Safari/605.1.15
-```
-
-### Request body recorded for playback ():
-
-```
-
-```
-
-### Response headers recorded for playback:
-
-```
-Access-Control-Allow-Headers: Content-Type
-Access-Control-Allow-Methods: GET,PUT,PATCH,OPTIONS,DELETE,POST
-Access-Control-Allow-Origin: *
-Cache-Control: max-age=0, private, must-revalidate
-Connection: keep-alive
-Content-Length: 27
-Date: Sat, 30 Mar 2019 13:30:27 GMT
-Server: Cowboy
-Via: 1.1 vegur
-X-Request-Id: 2731384f-4420-4ad0-9f30-1aac17b595f8
-```
-
-### Response body recorded for playback (200: null - Base64 below):
-
-```
-R0VULFBPU1QsREVMRVRFLE9QVElPTlMsUFVU
-```
-
-## Interaction 39: GET /api/todos
+## Interaction 44: GET /
 
 ### Request headers recorded for playback:
 
@@ -2034,7 +2257,7 @@ Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -2057,10 +2280,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 180
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:28 GMT
+Date: Sat, 30 Mar 2019 13:49:33 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 9e52da55-711f-401f-936b-c4222f1479a9
+X-Request-Id: 1265e61a-c9b2-448a-8e85-629bbe012617
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -2068,16 +2291,63 @@ X-Request-Id: 9e52da55-711f-401f-936b-c4222f1479a9
 ```
 [
    {
-      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9471",
+      "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9485",
       "title": "changed title",
       "order": null,
-      "id": 9471,
+      "id": 9485,
       "completed": true
    }
 ]
 ```
 
-## Interaction 40: DELETE /api/todos
+## Interaction 45: OPTIONS /
+
+### Request headers recorded for playback:
+
+```
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Accept: */*
+Access-Control-Request-Headers: content-type
+Access-Control-Request-Method: DELETE
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Length: 0
+Host: todobackend-phoenix.herokuapp.com/api/todos
+Origin: http://www.todobackend.com
+Pragma: no-cache
+Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Safari/605.1.15
+```
+
+### Request body recorded for playback ():
+
+```
+
+```
+
+### Response headers recorded for playback:
+
+```
+Access-Control-Allow-Headers: Content-Type
+Access-Control-Allow-Methods: GET,PUT,PATCH,OPTIONS,DELETE,POST
+Access-Control-Allow-Origin: *
+Cache-Control: max-age=0, private, must-revalidate
+Connection: keep-alive
+Content-Length: 27
+Date: Sat, 30 Mar 2019 13:49:33 GMT
+Server: Cowboy
+Via: 1.1 vegur
+X-Request-Id: bc021b6c-1f0f-4907-85e5-901af7375c98
+```
+
+### Response body recorded for playback (200: null - Base64 below):
+
+```
+R0VULFBPU1QsREVMRVRFLE9QVElPTlMsUFVU
+```
+
+## Interaction 46: DELETE /
 
 ### Request headers recorded for playback:
 
@@ -2089,7 +2359,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -2112,10 +2382,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 3
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:28 GMT
+Date: Sat, 30 Mar 2019 13:49:33 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 539ddf6a-a139-489c-b0e8-5299e0b43b7e
+X-Request-Id: c41b475b-fafb-42a6-b014-b9a01ce1440e
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -2125,7 +2395,7 @@ X-Request-Id: 539ddf6a-a139-489c-b0e8-5299e0b43b7e
 ]
 ```
 
-## Interaction 41: POST /api/todos
+## Interaction 47: POST /
 
 ### Request headers recorded for playback:
 
@@ -2137,7 +2407,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 16
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -2162,25 +2432,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 147
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:28 GMT
+Date: Sat, 30 Mar 2019 13:49:33 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: b928ab11-cd60-4f7c-99d0-3a8184e60c0e
+X-Request-Id: af10d7fe-9f81-4a7b-bea6-0e5ae888adce
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9472",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9486",
    "title": "blah",
    "order": null,
-   "id": 9472,
+   "id": 9486,
    "completed": false
 }
 ```
 
-## Interaction 42: OPTIONS /api/todos/9472
+## Interaction 48: OPTIONS /9486
 
 ### Request headers recorded for playback:
 
@@ -2193,7 +2463,7 @@ Access-Control-Request-Method: DELETE
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -2215,10 +2485,10 @@ Access-Control-Allow-Origin: *
 Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 27
-Date: Sat, 30 Mar 2019 13:30:28 GMT
+Date: Sat, 30 Mar 2019 13:49:33 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 72721b3c-0749-43c3-9f56-1a69a54db88b
+X-Request-Id: 860af143-6062-42dc-9d61-bfe251003f63
 ```
 
 ### Response body recorded for playback (200: null - Base64 below):
@@ -2227,7 +2497,7 @@ X-Request-Id: 72721b3c-0749-43c3-9f56-1a69a54db88b
 R0VULFBPU1QsREVMRVRFLE9QVElPTlMsUFVU
 ```
 
-## Interaction 43: DELETE /api/todos/9472
+## Interaction 49: DELETE /9486
 
 ### Request headers recorded for playback:
 
@@ -2239,7 +2509,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -2262,25 +2532,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 147
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:28 GMT
+Date: Sat, 30 Mar 2019 13:49:33 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 24566934-c50d-47bb-bd5f-8113599e4282
+X-Request-Id: cb250f09-2771-4b2d-bd25-2738865a75d4
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9472",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9486",
    "title": "blah",
    "order": null,
-   "id": 9472,
+   "id": 9486,
    "completed": false
 }
 ```
 
-## Interaction 44: GET /api/todos
+## Interaction 50: GET /
 
 ### Request headers recorded for playback:
 
@@ -2291,7 +2561,7 @@ Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -2314,10 +2584,10 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 3
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:28 GMT
+Date: Sat, 30 Mar 2019 13:49:34 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 506c8e69-d6e3-4894-a294-e2d589f5b589
+X-Request-Id: fe81c200-7576-4028-ba0c-919a23df5e48
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
@@ -2327,7 +2597,7 @@ X-Request-Id: 506c8e69-d6e3-4894-a294-e2d589f5b589
 ]
 ```
 
-## Interaction 45: POST /api/todos
+## Interaction 51: POST /
 
 ### Request headers recorded for playback:
 
@@ -2339,7 +2609,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 28
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -2365,25 +2635,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 146
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:28 GMT
+Date: Sat, 30 Mar 2019 13:49:34 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: a0b1ef25-c67c-4121-82a8-e44e6d653d97
+X-Request-Id: 224fee7c-a88d-4013-9e40-8652684c35ea
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9473",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9487",
    "title": "blah",
    "order": 523,
-   "id": 9473,
+   "id": 9487,
    "completed": false
 }
 ```
 
-## Interaction 46: POST /api/todos
+## Interaction 52: POST /
 
 ### Request headers recorded for playback:
 
@@ -2395,7 +2665,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 27
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -2421,25 +2691,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 145
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:29 GMT
+Date: Sat, 30 Mar 2019 13:49:34 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: bb208f22-7979-44ba-8650-70ad387248cd
+X-Request-Id: bab3a1fb-4961-4199-9285-c3ce98a67bca
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9474",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9488",
    "title": "blah",
    "order": 10,
-   "id": 9474,
+   "id": 9488,
    "completed": false
 }
 ```
 
-## Interaction 47: OPTIONS /api/todos/9474
+## Interaction 53: OPTIONS /9488
 
 ### Request headers recorded for playback:
 
@@ -2452,7 +2722,7 @@ Access-Control-Request-Method: PATCH
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -2474,10 +2744,10 @@ Access-Control-Allow-Origin: *
 Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 27
-Date: Sat, 30 Mar 2019 13:30:29 GMT
+Date: Sat, 30 Mar 2019 13:49:34 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 13cb638f-e3d1-4fdc-b467-6646d4bc36b8
+X-Request-Id: 0676c74b-4ef8-44ef-9374-1683f1d62fb3
 ```
 
 ### Response body recorded for playback (200: null - Base64 below):
@@ -2486,7 +2756,7 @@ X-Request-Id: 13cb638f-e3d1-4fdc-b467-6646d4bc36b8
 R0VULFBPU1QsREVMRVRFLE9QVElPTlMsUFVU
 ```
 
-## Interaction 48: PATCH /api/todos/9474
+## Interaction 54: PATCH /9488
 
 ### Request headers recorded for playback:
 
@@ -2498,7 +2768,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 12
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -2523,25 +2793,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 145
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:29 GMT
+Date: Sat, 30 Mar 2019 13:49:34 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: cbdaaf48-b7d1-4fe0-9606-b8668e6ba130
+X-Request-Id: c0c29435-2947-4f7e-96ea-51b65f6b3c62
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9474",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9488",
    "title": "blah",
    "order": 95,
-   "id": 9474,
+   "id": 9488,
    "completed": false
 }
 ```
 
-## Interaction 49: POST /api/todos
+## Interaction 55: POST /
 
 ### Request headers recorded for playback:
 
@@ -2553,7 +2823,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 27
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -2579,25 +2849,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 145
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:29 GMT
+Date: Sat, 30 Mar 2019 13:49:34 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 67e7e5d8-115b-46ba-834a-34fad15ec9ba
+X-Request-Id: 85527076-517f-4043-97bd-6a2481266bc7
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9475",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9489",
    "title": "blah",
    "order": 10,
-   "id": 9475,
+   "id": 9489,
    "completed": false
 }
 ```
 
-## Interaction 50: OPTIONS /api/todos/9475
+## Interaction 56: OPTIONS /9489
 
 ### Request headers recorded for playback:
 
@@ -2610,7 +2880,7 @@ Access-Control-Request-Method: PATCH
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 0
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -2632,10 +2902,10 @@ Access-Control-Allow-Origin: *
 Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 27
-Date: Sat, 30 Mar 2019 13:30:29 GMT
+Date: Sat, 30 Mar 2019 13:49:34 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: d389a101-9f61-4493-9f88-ab22c7ea4293
+X-Request-Id: e0a4e6d5-8d82-432b-9d66-adf20f1cb75d
 ```
 
 ### Response body recorded for playback (200: null - Base64 below):
@@ -2644,7 +2914,7 @@ X-Request-Id: d389a101-9f61-4493-9f88-ab22c7ea4293
 R0VULFBPU1QsREVMRVRFLE9QVElPTlMsUFVU
 ```
 
-## Interaction 51: PATCH /api/todos/9475
+## Interaction 57: PATCH /9489
 
 ### Request headers recorded for playback:
 
@@ -2656,7 +2926,7 @@ Cache-Control: no-cache
 Connection: keep-alive
 Content-Length: 12
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -2681,25 +2951,25 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 145
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:29 GMT
+Date: Sat, 30 Mar 2019 13:49:35 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 507902b7-7cda-4e90-b3d0-ec0e08eb8a3a
+X-Request-Id: a21592b5-a423-41de-982f-62929387fb0e
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9475",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9489",
    "title": "blah",
    "order": 95,
-   "id": 9475,
+   "id": 9489,
    "completed": false
 }
 ```
 
-## Interaction 52: GET /api/todos/9475
+## Interaction 58: GET /9489
 
 ### Request headers recorded for playback:
 
@@ -2710,7 +2980,7 @@ Accept: text/plain, */*; q=0.01
 Cache-Control: no-cache
 Connection: keep-alive
 Content-Type: application/json
-Host: todobackend-phoenix.herokuapp.com
+Host: todobackend-phoenix.herokuapp.com/api/todos
 Origin: http://www.todobackend.com
 Pragma: no-cache
 Referer: http://www.todobackend.com/specs/index.html?http://todobackend-phoenix.herokuapp.com/api/todos
@@ -2733,20 +3003,20 @@ Cache-Control: max-age=0, private, must-revalidate
 Connection: keep-alive
 Content-Length: 145
 Content-Type: application/json; charset=utf-8
-Date: Sat, 30 Mar 2019 13:30:29 GMT
+Date: Sat, 30 Mar 2019 13:49:35 GMT
 Server: Cowboy
 Via: 1.1 vegur
-X-Request-Id: 5dccb587-12a1-4734-a4ee-e874ebbe238a
+X-Request-Id: cef0e621-a183-460f-bd81-bae3e5cf35b6
 ```
 
 ### Response body recorded for playback (200: application/json; charset=utf-8):
 
 ```
 {
-   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9475",
+   "url": "http://todobackend-phoenix.herokuapp.com/api/todos/9489",
    "title": "blah",
    "order": 95,
-   "id": 9475,
+   "id": 9489,
    "completed": false
 }
 ```

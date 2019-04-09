@@ -7,7 +7,6 @@ import com.paulhammant.servirtium.ServiceInteropViaOkHttp;
 import com.paulhammant.servirtium.ServirtiumServer;
 import com.paulhammant.servirtium.SimpleInteractionManipulations;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +18,8 @@ public class TodobackendDotComRecorderMain {
 
     public static final Pattern UID_PATTERN = Pattern.compile("\"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})\"");
 
+    public static final String DOMAIN = "todobackend-phoenix.herokuapp.com";
+
     public static void main(String[] args) throws Exception {
 
         /*
@@ -27,7 +28,7 @@ public class TodobackendDotComRecorderMain {
 
         Then, in a browser go to:
 
-           http://www.todobackend.com/specs/index.html?http://localhost:8099/api/todos
+           http://www.todobackend.com/specs/index.html?http://localhost:8099
 
          ... src/test/resources/TodobackendDotComServiceRecording.md should be overwritten
 
@@ -86,7 +87,7 @@ public class TodobackendDotComRecorderMain {
 
 
     public static SimpleInteractionManipulations makeInteractionManipulations(Map<String, Integer> guids) {
-        return new SimpleInteractionManipulations("localhost:8099", "todobackend-phoenix.herokuapp.com") {
+        return new SimpleInteractionManipulations("localhost:8099", DOMAIN) {
 
             @Override
             public void changeAnyHeadersForRequestToService(List<String> clientRequestHeaders) {
@@ -126,8 +127,7 @@ public class TodobackendDotComRecorderMain {
                 final ReplaceMockGuidForRealOnes replaceMockGuidForRealOnes = new ReplaceMockGuidForRealOnes(body);
                 guids.forEach(replaceMockGuidForRealOnes);
 
-                return replaceMockGuidForRealOnes.result.replaceAll("todobackend-phoenix\\.herokuapp\\.com",
-                        "localhost:8099");
+                return replaceMockGuidForRealOnes.result.replaceAll(escapeDots(DOMAIN), "localhost:8099");
             }
 
             private String replaceRealGuidForMockOnes(String result) {
@@ -145,6 +145,10 @@ public class TodobackendDotComRecorderMain {
             }
 
         };
+    }
+
+    private static String escapeDots(String domain) {
+        return domain.replaceAll("\\.", "\\.");
     }
 
 }
