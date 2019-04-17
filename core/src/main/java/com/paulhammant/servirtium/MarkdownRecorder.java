@@ -48,7 +48,7 @@ public class MarkdownRecorder implements Interactor {
     private final InteractionManipulations interactionManipulations;
     private PrintStream out;
     private Map<Integer, String> interactions = new HashMap<>();
-    private Map<String, String> redactions = new HashMap<>();
+    private Map<String, String> replacements = new HashMap<>();
     private boolean alphaSortHeaders;
     private boolean extraDebugOutput;
 
@@ -82,7 +82,7 @@ public class MarkdownRecorder implements Interactor {
      * @return this
      */
     public MarkdownRecorder withReplacementInRecording(String regex, String replacement) {
-        redactions.put(regex, replacement);
+        replacements.put(regex, replacement);
         return this;
     }
 
@@ -95,7 +95,7 @@ public class MarkdownRecorder implements Interactor {
     public MarkdownRecorder withReplacementsInRecording(String... terms) {
         final int i = terms.length / 2;
         for (int x = 0; x < i; x++) {
-            redactions.put(terms[x*2], terms[(x*2)+1]);
+            replacements.put(terms[x*2], terms[(x*2)+1]);
         }
         return this;
     }
@@ -154,8 +154,8 @@ public class MarkdownRecorder implements Interactor {
             }
             final List<String> headersToRecord2 = new ArrayList<>();
             for (String h : headersToRecord) {
-                for (String redactionRegex : redactions.keySet()) {
-                    h = h.replaceAll(redactionRegex, redactions.get(redactionRegex));
+                for (String redactionRegex : replacements.keySet()) {
+                    h = h.replaceAll(redactionRegex, replacements.get(redactionRegex));
                 }
                 headersToRecord2.add(h);
             }
@@ -190,8 +190,8 @@ public class MarkdownRecorder implements Interactor {
                 forRecording = "";
             } else if (clientRequestBody instanceof String) {
                 forRecording = (String) clientRequestBody;
-                for (String redactionRegex : redactions.keySet()) {
-                    forRecording = forRecording.replaceAll(redactionRegex, redactions.get(redactionRegex));
+                for (String redactionRegex : replacements.keySet()) {
+                    forRecording = forRecording.replaceAll(redactionRegex, replacements.get(redactionRegex));
                 }
             } else {
                 forRecording = objectToStringForRecording((byte[]) clientRequestBody);
@@ -201,7 +201,7 @@ public class MarkdownRecorder implements Interactor {
             this.recording.append(forRecording).append("\n");
             blockEnd();
 
-            return headersToRecord2;
+            return Arrays.asList(headersToRecord);
         }
 
         private String objectToStringForRecording(byte[] clientRequestBody) {
@@ -285,8 +285,8 @@ public class MarkdownRecorder implements Interactor {
                 int ix = hdrLine.indexOf(": ");
                 String hdrKey = hdrLine.substring(0, ix);
                 String hdrVal = hdrLine.substring(ix + 2);
-                for (String next : redactions.keySet()) {
-                    hdrVal = hdrVal.replaceAll(next, redactions.get(next));
+                for (String next : replacements.keySet()) {
+                    hdrVal = hdrVal.replaceAll(next, replacements.get(next));
                 }
                 this.recording.append(hdrKey).append(": ").append(
                         interactionManipulations.headerReplacement(hdrKey, hdrVal)).append("\n");
@@ -308,8 +308,8 @@ public class MarkdownRecorder implements Interactor {
             blockStart(title + " (" + statusCode + ": " + serverResponseContentType + xtra + ")");
 
             if (serverResponseBody instanceof String) {
-                for (String next : redactions.keySet()) {
-                    serverResponseBody = ((String) serverResponseBody).replaceAll(next, redactions.get(next));
+                for (String next : replacements.keySet()) {
+                    serverResponseBody = ((String) serverResponseBody).replaceAll(next, replacements.get(next));
                 }
                 this.recording.append(serverResponseBody).append("\n");
             } else if (serverResponseBody instanceof byte[]) {

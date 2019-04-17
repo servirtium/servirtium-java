@@ -172,7 +172,6 @@ public class UndertowServirtiumServer extends ServirtiumServer {
                 if (!body.equals(serviceResponse.body)) {
 //                                realResponse.headers
                     serviceResponse = serviceResponse.withRevisedBody(body);
-                    newHeaders = changeContentLength(newHeaders, body);;
                 }
             }
         }
@@ -194,7 +193,6 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             final String b = (String) serviceResponse.body;
 
             serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyForClientResponseAfterRecording(b));
-            serviceResponse = serviceResponse.withRevisedHeaders(changeContentLength(newHeaders, b).toArray(new String[0]));
 
         }
 

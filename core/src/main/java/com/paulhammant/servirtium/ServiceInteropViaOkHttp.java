@@ -97,12 +97,11 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
 
             ResponseBody body = response.body();
             Object responseBody = null;
-            String contentType;
-            final MediaType mediaType = body.contentType();
-            if (mediaType == null) {
+            String contentType = null;
+            if (body.contentType() == null) {
                 contentType = "";
             } else {
-                contentType = mediaType.toString();
+                contentType = body.contentType().toString();
                 if (contentType == null) {
                     contentType = "";
                 }
