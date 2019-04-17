@@ -11,7 +11,7 @@
 
     <groupId>com.paulhammant</groupId>
     <artifactId>servirtium-pom</artifactId>
-    <version>0.7.1</version>
+    <version>0.7.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Service Virtualized HTTP</name>
