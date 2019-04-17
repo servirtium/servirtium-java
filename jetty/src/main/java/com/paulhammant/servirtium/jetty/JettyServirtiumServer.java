@@ -173,15 +173,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
                 if (!body.equals(serviceResponse.body)) {
 //                                realResponse.headers
                     serviceResponse = serviceResponse.withRevisedBody(body);
-                    ArrayList<String> tmp = new ArrayList<>();
-                    for (String header : newHeaders) {
-                        if (header.startsWith("Content-Length")) {
-                            tmp.add("Content-Length: " + body.length());
-                        } else {
-                            tmp.add(header);
-                        }
-                    }
-                    newHeaders = tmp;
+                    newHeaders = changeContentLength(newHeaders, body);
                 }
             }
         }
@@ -201,8 +193,9 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
 
         if (serviceResponse.body instanceof String) {
-            serviceResponse = serviceResponse.withRevisedBody(
-                    interactionManipulations.changeBodyForClientResponseAfterRecording((String) serviceResponse.body));
+            final String b = (String) serviceResponse.body;
+            serviceResponse = serviceResponse.withRevisedBody(interactionManipulations.changeBodyForClientResponseAfterRecording(b));
+            serviceResponse = serviceResponse.withRevisedHeaders(changeContentLength(newHeaders, b).toArray(new String[0]));
         }
 
         interaction.debugClientsServiceResponseBody(originalResponse.body, originalResponse.statusCode, originalResponse.contentType);

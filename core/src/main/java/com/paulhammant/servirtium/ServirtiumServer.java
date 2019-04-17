@@ -1,5 +1,8 @@
 package com.paulhammant.servirtium;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class ServirtiumServer {
 
     protected final InteractionManipulations interactionManipulations;
@@ -68,6 +71,17 @@ public abstract class ServirtiumServer {
         interactionNum = -1;
     }
 
+    protected ArrayList<String> changeContentLength(List<String> newHeaders, String body) {
+        ArrayList<String> tmp = new ArrayList<>();
+        for (String header : newHeaders) {
+            if (header.startsWith("Content-Length")) {
+                tmp.add("Content-Length: " + body.length());
+            } else {
+                tmp.add(header);
+            }
+        }
+        return tmp;
+    }
 
     public static class NullObject extends ServirtiumServer {
 
