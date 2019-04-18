@@ -35,7 +35,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.nio.file.Files.readAllBytes;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -51,6 +53,8 @@ public class MarkdownReplayer implements Interactor {
     private List<String> allMarkdownInteractions = new ArrayList<>();
     private String filename;
     private boolean alphaSortHeaders = false;
+    private Map<String, String> replacements = new HashMap<>();
+
 
     public static final String SERVIRTIUM_INTERACTION = "## Interaction ";
 
@@ -96,6 +100,33 @@ public class MarkdownReplayer implements Interactor {
             }
         }
     }
+
+    /**
+     * In the recording, some things that will be recorded differently to
+     * what was sent/received to/from the real.
+     * @param regex - something that may be in the read data sent to/from the real.
+     * @param replacement - something that will replace the above in the recording.
+     * @return this
+     */
+    public MarkdownReplayer withReplacementInPlatback(String regex, String replacement) {
+        replacements.put(regex, replacement);
+        return this;
+    }
+
+    /**
+     * In the recording, some things that will be recorded differently to
+     * what was sent/received to/from the real.
+     * @param terms - an even number of 'regex' and 'replacement' pairs.
+     * @return this
+     */
+    public MarkdownReplayer withReplacementsInRecording(String... terms) {
+        final int i = terms.length / 2;
+        for (int x = 0; x < i; x++) {
+            replacements.put(terms[x*2], terms[(x*2)+1]);
+        }
+        return this;
+    }
+
 
     @Override
     public void finishedScript(int interactionNum, boolean failed) {
@@ -270,9 +301,19 @@ public class MarkdownReplayer implements Interactor {
             }
         }
 
+        final String[] currentHeaders2 = new String[currentHeaders.length];
+        int ix = 0;
+        for (String h : currentHeaders) {
+            for (String redactionRegex : replacements.keySet()) {
+                h = h.replaceAll(redactionRegex, replacements.get(redactionRegex));
+            }
+            currentHeaders2[ix] = h;
+            ix++;
+        }
+
         try {
             try {
-                assertThat(currentHeaders, arrayContainingInAnyOrder(prevRecorded));
+                assertThat(currentHeaders2, arrayContainingInAnyOrder(prevRecorded));
             } catch (AssertionError e) {
                 monitor.unexpectedClientRequestHeaders(replay.interactionNum, mdMethod, filename, replay.context, e);
             }
