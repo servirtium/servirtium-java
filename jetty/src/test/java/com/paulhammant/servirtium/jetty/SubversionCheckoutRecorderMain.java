@@ -31,7 +31,7 @@
 
 package com.paulhammant.servirtium.jetty;
 
-import com.paulhammant.servirtium.Interactor;
+import com.paulhammant.servirtium.InteractionMonitor;
 import com.paulhammant.servirtium.MarkdownRecorder;
 import com.paulhammant.servirtium.ServiceMonitor;
 import com.paulhammant.servirtium.ServiceInteropViaOkHttp;
@@ -81,10 +81,10 @@ public class SubversionCheckoutRecorderMain {
 
     }
 
-    public static ServirtiumServer makeServirtiumServer(ServiceMonitor.Console serverMonitor, Interactor interactor) {
+    public static ServirtiumServer makeServirtiumServer(ServiceMonitor.Console serverMonitor, InteractionMonitor interactionMonitor) {
         return new JettyServirtiumServer(serverMonitor,
                 8099,
-                new SubversionInteractionManipulations("", ""), interactor);
+                new SubversionInteractionManipulations("", ""), interactionMonitor);
     }
 
     public static void createWorkDirAndDeleteCheckout(String tempDir) throws IOException {

@@ -1,6 +1,6 @@
 package com.paulhammant.servirtium.jetty;
 
-import com.paulhammant.servirtium.Interactor;
+import com.paulhammant.servirtium.InteractionMonitor;
 import com.paulhammant.servirtium.ServiceMonitor;
 import com.paulhammant.servirtium.ServirtiumServer;
 import com.paulhammant.servirtium.SimpleInteractionManipulations;
@@ -10,9 +10,9 @@ import org.junit.Test;
 
 public class SimplePostCentricWithJettyTests extends SimplePostCentricTests {
 
-    public ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations interactionManipulations, Interactor interactor) {
+    public ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations interactionManipulations, InteractionMonitor interactionMonitor) {
         return new JettyServirtiumServer(new ServiceMonitor.Console(),
-                8080, interactionManipulations, interactor);
+                8080, interactionManipulations, interactionMonitor);
     }
 
     @Override @After

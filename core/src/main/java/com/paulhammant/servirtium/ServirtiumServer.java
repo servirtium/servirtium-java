@@ -1,23 +1,19 @@
 package com.paulhammant.servirtium;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class ServirtiumServer {
 
     protected final InteractionManipulations interactionManipulations;
-    protected final Interactor interactor;
+    protected final InteractionMonitor interactionMonitor;
 
     private String context = "no context";
     private boolean pretty;
     private int interactionNum = -1;
     private boolean lowerCaseHeaders;
 
-    public ServirtiumServer(InteractionManipulations interactionManipulations, Interactor interactor) {
+    public ServirtiumServer(InteractionManipulations interactionManipulations, InteractionMonitor interactionMonitor) {
 
         this.interactionManipulations = interactionManipulations;
-        this.interactor = interactor;
+        this.interactionMonitor = interactionMonitor;
     }
 
     public abstract ServirtiumServer start() throws Exception;
@@ -107,7 +103,7 @@ public abstract class ServirtiumServer {
     public static class NullObject extends ServirtiumServer {
 
         public NullObject() {
-            super(new InteractionManipulations.NullObject(), new Interactor.NullObject());
+            super(new InteractionManipulations.NullObject(), new InteractionMonitor.NullObject());
         }
 
         @Override

@@ -50,11 +50,11 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
     private OkHttpClient okHttpClient;
 
     public ServiceInteropViaOkHttp() {
-        makeOkHttpClient();
+        okHttpClient = makeOkHttpClient();
     }
 
-    protected void makeOkHttpClient() {
-        okHttpClient = new OkHttpClient();
+    protected OkHttpClient makeOkHttpClient() {
+        return new OkHttpClient();
     }
 
     @Override

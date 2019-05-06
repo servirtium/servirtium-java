@@ -1,7 +1,7 @@
 package com.paulhammant.servirtium.undertow;
 
 import com.paulhammant.servirtium.InteractionManipulations;
-import com.paulhammant.servirtium.Interactor;
+import com.paulhammant.servirtium.InteractionMonitor;
 import com.paulhammant.servirtium.ServiceMonitor;
 import com.paulhammant.servirtium.ServiceResponse;
 import com.paulhammant.servirtium.ServirtiumServer;
@@ -27,8 +27,8 @@ public class UndertowServirtiumServer extends ServirtiumServer {
     private boolean failed = false;
 
     public UndertowServirtiumServer(ServiceMonitor monitor, int port,
-                                    InteractionManipulations interactionManipulations, Interactor interactor) {
-        super(interactionManipulations, interactor);
+                                    InteractionManipulations interactionManipulations, InteractionMonitor interactionMonitor) {
+        super(interactionManipulations, interactionMonitor);
 
         undertowServer = Undertow.builder()
                 .addHttpListener(port, "localhost")
@@ -64,7 +64,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
                 return;
             }
 
-            Interactor.Interaction interaction = interactor.newInteraction(method, uri, getInteractionNum(), url, getContext());
+            InteractionMonitor.Interaction interaction = interactionMonitor.newInteraction(method, uri, getInteractionNum(), url, getContext());
 
             monitor.interactionStarted(getInteractionNum(), interaction);
 
@@ -92,12 +92,12 @@ public class UndertowServirtiumServer extends ServirtiumServer {
                     interaction, clientRequestContentType, interactionManipulations);
 
             // INTERACTION
-            ServiceResponse serviceResponse = interactor.getServiceResponseForRequest(method, requestUrl, clientRequestHeaders,
+            ServiceResponse serviceResponse = interactionMonitor.getServiceResponseForRequest(method, requestUrl, clientRequestHeaders,
                     interaction, useLowerCaseHeaders());
 
             serviceResponse = processHeadersAndBodyBackFromService(interaction, serviceResponse, interactionManipulations);
 
-            interactor.addInteraction(interaction);
+            interactionMonitor.addInteraction(interaction);
 
             exchange.setStatusCode(serviceResponse.statusCode);
 
@@ -136,7 +136,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         }
     }
 
-    private ServiceResponse processHeadersAndBodyBackFromService(Interactor.Interaction interaction,
+    private ServiceResponse processHeadersAndBodyBackFromService(InteractionMonitor.Interaction interaction,
                                                                  ServiceResponse serviceResponse,
                                                                  InteractionManipulations interactionManipulations) {
 
@@ -202,7 +202,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
     }
 
     private String prepareHeadersAndBodyForService(HttpServerExchange exchange, String method, String url,
-                                                   List<String> clientRequestHeaders, Interactor.Interaction interaction,
+                                                   List<String> clientRequestHeaders, InteractionMonitor.Interaction interaction,
                                                    String clientRequestContentType,
                                                    InteractionManipulations interactionManipulations) throws IOException {
 
@@ -245,7 +245,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
 
         if (clientRequestBody instanceof String) {
-            clientRequestBody = interactionManipulations.changeBodyForRequestToService((String) clientRequestBody);
+            clientRequestBody = interactionManipulations.changeBodyForRequestToRealService((String) clientRequestBody);
         }
 
         if (clientRequestBody == null) {
@@ -254,7 +254,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
         interaction.noteClientRequestHeadersAndBody(interactionManipulations, clientRequestHeaders, clientRequestBody, clientRequestContentType, method, useLowerCaseHeaders());
 
-        return interactionManipulations.changeUrlForRequestToService(url);
+        return interactionManipulations.changeUrlForRequestToRealService(url);
     }
 
     public ServirtiumServer start() throws Exception {
@@ -264,14 +264,14 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
     public void stop() {
         try {
-            interactor.finishedScript(getInteractionNum(), failed); // just in case
+            interactionMonitor.finishedScript(getInteractionNum(), failed); // just in case
         } finally {
             undertowServer.stop();
         }
     }
 
     public void finishedScript() {
-        interactor.finishedScript(getInteractionNum(), failed);
+        interactionMonitor.finishedScript(getInteractionNum(), failed);
     }
 
 

@@ -36,7 +36,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface Interactor {
+public interface InteractionMonitor {
 
     void finishedScript(int interactionNum, boolean failed);
 
@@ -96,7 +96,7 @@ public interface Interactor {
         public abstract void noteChangedResourceForRequestToClient(String from, String to);
     }
 
-    public class NullObject implements Interactor {
+    public class NullObject implements InteractionMonitor {
         @Override
         public void finishedScript(int interactionNum, boolean failed) {
         }

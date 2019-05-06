@@ -1,7 +1,7 @@
 package com.paulhammant.servirtium.jetty;
 
 import com.paulhammant.servirtium.InteractionManipulations;
-import com.paulhammant.servirtium.Interactor;
+import com.paulhammant.servirtium.InteractionMonitor;
 import com.paulhammant.servirtium.ServiceMonitor;
 import com.paulhammant.servirtium.ServiceResponse;
 import com.paulhammant.servirtium.ServirtiumServer;
@@ -29,8 +29,8 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
     public JettyServirtiumServer(ServiceMonitor monitor, int port,
                                  InteractionManipulations interactionManipulations,
-                                 Interactor interactor) {
-        super(interactionManipulations, interactor);
+                                 InteractionMonitor interactionMonitor) {
+        super(interactionManipulations, interactionMonitor);
 
         jettyServer = new Server(port);
         // How the f*** do you turn off Embedded Jetty's logging???
@@ -70,7 +70,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
                 return;
             }
 
-            Interactor.Interaction interaction = interactor.newInteraction(method, uri, getInteractionNum(), url, getContext());
+            InteractionMonitor.Interaction interaction = interactionMonitor.newInteraction(method, uri, getInteractionNum(), url, getContext());
 
             monitor.interactionStarted(getInteractionNum(), interaction);
 
@@ -93,12 +93,12 @@ public class JettyServirtiumServer extends ServirtiumServer {
                     interaction, clientRequestContentType, interactionManipulations);
 
             // INTERACTION
-            ServiceResponse serverResponse = interactor.getServiceResponseForRequest(method, urlAndHeaders.url, urlAndHeaders.clientRequestHeaders,
+            ServiceResponse serverResponse = interactionMonitor.getServiceResponseForRequest(method, urlAndHeaders.url, urlAndHeaders.clientRequestHeaders,
                     interaction, useLowerCaseHeaders());
 
             serverResponse = processHeadersAndBodyBackFromService(interaction, serverResponse);
 
-            interactor.addInteraction(interaction);
+            interactionMonitor.addInteraction(interaction);
 
             response.setStatus(serverResponse.statusCode);
 
@@ -141,7 +141,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
         }
     }
 
-    private ServiceResponse processHeadersAndBodyBackFromService(Interactor.Interaction interaction, ServiceResponse serviceResponse) {
+    private ServiceResponse processHeadersAndBodyBackFromService(InteractionMonitor.Interaction interaction, ServiceResponse serviceResponse) {
 
         interaction.debugOriginalServiceResponseHeaders(serviceResponse.headers);
 
@@ -214,7 +214,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
     }
 
     private UrlAndHeaders prepareHeadersAndBodyForService(HttpServletRequest request, String method, String url,
-                                                   Interactor.Interaction interaction,
+                                                   InteractionMonitor.Interaction interaction,
                                                    String clientRequestContentType,
                                                    InteractionManipulations interactionManipulations) throws IOException {
         Enumeration<String> hdrs = request.getHeaderNames();
@@ -256,7 +256,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
         List<String> clientRequestHeaders2 = interaction.noteClientRequestHeadersAndBody(interactionManipulations, clientRequestHeaders, clientRequestBody, clientRequestContentType, method, useLowerCaseHeaders());
 
-        final String chgdURL = interactionManipulations.changeUrlForRequestToService(url);
+        final String chgdURL = interactionManipulations.changeUrlForRequestToRealService(url);
 
         int ixU = url.indexOf("/", url.indexOf(":") + 3);
         int ixC = chgdURL.indexOf("/", chgdURL.indexOf(":") + 3);
@@ -275,7 +275,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
     public void stop() {
         try {
-            interactor.finishedScript(getInteractionNum(), failed); // just in case
+            interactionMonitor.finishedScript(getInteractionNum(), failed); // just in case
         } finally {
             try {
                 jettyServer.setStopTimeout(1);
@@ -287,7 +287,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
     }
 
     public void finishedScript() {
-        interactor.finishedScript(getInteractionNum(), failed);
+        interactionMonitor.finishedScript(getInteractionNum(), failed);
     }
 
     public static void disableJettyLogging() {

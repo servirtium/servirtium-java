@@ -1,6 +1,6 @@
 package com.paulhammant.servirtium.jetty;
 
-import com.paulhammant.servirtium.Interactor;
+import com.paulhammant.servirtium.InteractionMonitor;
 import com.paulhammant.servirtium.MarkdownRecorder;
 import com.paulhammant.servirtium.ServiceMonitor;
 import com.paulhammant.servirtium.ServiceInteropViaOkHttp;
@@ -18,7 +18,7 @@ public class TodobackendDotComRecorderMain {
 
     public static final Pattern UID_PATTERN = Pattern.compile("\"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})\"");
 
-    public static final String DOMAIN = "todobackend-phoenix.herokuapp.com";
+    public static final String DOMAIN = "todo-backend-sinatra.herokuapp.com";
 
     public static void main(String[] args) throws Exception {
 
@@ -66,9 +66,9 @@ public class TodobackendDotComRecorderMain {
         }));
     }
 
-    public static ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations manipulations, Interactor interactor) {
+    public static ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations manipulations, InteractionMonitor interactionMonitor) {
         return new JettyServirtiumServer(new ServiceMonitor.Console(), 8099,
-                manipulations, interactor)
+                manipulations, interactionMonitor)
                 .withPrettyPrintedTextBodies();
     }
 
@@ -90,7 +90,7 @@ public class TodobackendDotComRecorderMain {
         return new SimpleInteractionManipulations("localhost:8099", DOMAIN) {
 
             @Override
-            public void changeAnyHeadersForRequestToService(List<String> clientRequestHeaders) {
+            public void changeAnyHeadersForRequestToRealService(List<String> clientRequestHeaders) {
                 String refer = "";
                 for (int i = 0; i < clientRequestHeaders.size(); i++) {
                     String s = clientRequestHeaders.get(i);
@@ -117,8 +117,8 @@ public class TodobackendDotComRecorderMain {
             }
 
             @Override
-            public String changeUrlForRequestToService(String url) {
-                return super.changeUrlForRequestToService(replaceRealGuidForMockOnes(url));
+            public String changeUrlForRequestToRealService(String url) {
+                return super.changeUrlForRequestToRealService(replaceRealGuidForMockOnes(url));
             }
 
             @Override

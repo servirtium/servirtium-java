@@ -35,7 +35,7 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
     }
 
     @Override
-    public String changeUrlForRequestToService(String url) {
+    public String changeUrlForRequestToRealService(String url) {
         return url.replace(fromUrl, toUrl);
     }
 

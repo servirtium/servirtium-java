@@ -85,6 +85,7 @@ public abstract class SimplePostCentricTests {
             "Server: nginx\n" +
             "Vary: Accept-Encoding\n" +
             "set-cookie: sails.sid=s%3AQpYXn4PNOGmzId3jttU03ZketH2aY6Zz.dj6l8lpXUtFJTCoRxWRPPx4fISmmCKzgOAlIxT2DSxM; Path=/; HttpOnly\n" +
+//            "transfer-encoding: chunked\n" +
             "```\n" +
             "\n" +
             "### Response body recorded for playback (200: application/json; charset=utf-8):\n" +
@@ -126,7 +127,7 @@ public abstract class SimplePostCentricTests {
 
     }
 
-    public abstract ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations interactionManipulations, Interactor interactor);
+    public abstract ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations interactionManipulations, InteractionMonitor interactionMonitor);
 
     public void canReplayASimplePostToPostmanEcho() throws Exception {
 

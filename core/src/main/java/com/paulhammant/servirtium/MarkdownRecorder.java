@@ -42,7 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MarkdownRecorder implements Interactor {
+public class MarkdownRecorder implements InteractionMonitor {
 
     private final ServiceInteroperation serviceInteroperation;
     private final InteractionManipulations interactionManipulations;
@@ -145,7 +145,7 @@ public class MarkdownRecorder implements Interactor {
 
             List<String> clientRequestHeaders2 = changeRequestHeadersIfNeeded(interactionManipulations, clientRequestHeaders, method, lowerCaseHeaders);
 
-            interactionManipulations.changeAnyHeadersForRequestToService(clientRequestHeaders2);
+            interactionManipulations.changeAnyHeadersForRequestToRealService(clientRequestHeaders2);
 
             final String[] headersToRecord = clientRequestHeaders2.toArray(new String[0]);
 
@@ -180,7 +180,7 @@ public class MarkdownRecorder implements Interactor {
             }
 
             if (clientRequestBody instanceof String) {
-                clientRequestBody = interactionManipulations.changeBodyForRequestToService((String) clientRequestBody);
+                clientRequestBody = interactionManipulations.changeBodyForRequestToRealService((String) clientRequestBody);
             }
 
             super.setClientRequestBodyAndContentType(clientRequestBody, clientRequestContentType);

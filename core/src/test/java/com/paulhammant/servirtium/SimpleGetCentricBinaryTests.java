@@ -124,7 +124,7 @@ public abstract class SimpleGetCentricBinaryTests {
 
     }
 
-    protected abstract ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations interactionManipulations, Interactor interactor);
+    protected abstract ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations interactionManipulations, InteractionMonitor interactionMonitor);
 
     public void canRecordAPngGetFromWikimedia() throws Exception {
 

@@ -32,7 +32,6 @@
 package com.paulhammant.servirtium;
 
 import com.paulhammant.servirtium.svn.SubversionInteractionManipulations;
-import org.hamcrest.Matcher;
 
 import java.io.ByteArrayOutputStream;
 
@@ -355,7 +354,7 @@ public abstract class SimpleGetCentricTextTests {
 
     }
 
-    public abstract ServirtiumServer makeServirtiumServer(ServiceMonitor.Console serverMonitor, SimpleInteractionManipulations interactionManipulations, Interactor interactor);
+    public abstract ServirtiumServer makeServirtiumServer(ServiceMonitor.Console serverMonitor, SimpleInteractionManipulations interactionManipulations, InteractionMonitor interactionMonitor);
 
     public void canRecordASimpleGetOfARedditJsonDocumentAndPrettify() throws Exception {
 

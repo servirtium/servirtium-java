@@ -46,7 +46,7 @@ import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class MarkdownReplayer implements Interactor {
+public class MarkdownReplayer implements InteractionMonitor {
 
     private final ReplayMonitor monitor;
 
@@ -155,7 +155,7 @@ public class MarkdownReplayer implements Interactor {
 
             List<String> clientRequestHeaders2 = changeRequestHeadersIfNeeded(interactionManipulations, clientRequestHeaders, method, lowerCaseHeaders);
 
-            interactionManipulations.changeAnyHeadersForRequestToService(clientRequestHeaders2);
+            interactionManipulations.changeAnyHeadersForRequestToRealService(clientRequestHeaders2);
 
             StringBuilder sb = new StringBuilder();
             for (String h : clientRequestHeaders2) {
@@ -169,7 +169,7 @@ public class MarkdownReplayer implements Interactor {
                 clientRequestBody = "";
             }
             if (clientRequestBody instanceof String) {
-                clientRequestBody = interactionManipulations.changeBodyForRequestToService((String) clientRequestBody);
+                clientRequestBody = interactionManipulations.changeBodyForRequestToRealService((String) clientRequestBody);
             }
 
             super.setClientRequestBodyAndContentType(clientRequestBody, clientRequestContentType);

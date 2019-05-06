@@ -6,7 +6,7 @@ import java.io.PrintStream;
 
 public interface ServiceMonitor {
 
-    default void interactionStarted(int interactionNum, Interactor.Interaction interactionl){}
+    default void interactionStarted(int interactionNum, InteractionMonitor.Interaction interactionl){}
 
     default void interactionFinished(int interactionNum, String method, String url, String context) {}
 

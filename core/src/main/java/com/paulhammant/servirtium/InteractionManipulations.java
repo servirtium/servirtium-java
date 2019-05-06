@@ -31,9 +31,7 @@
 
 package com.paulhammant.servirtium;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public interface InteractionManipulations {
 
@@ -44,7 +42,7 @@ public interface InteractionManipulations {
         return hdrVal;
     }
 
-    default String changeUrlForRequestToService(String url) {
+    default String changeUrlForRequestToRealService(String url) {
         return url;
     }
 
@@ -84,11 +82,11 @@ public interface InteractionManipulations {
         return headers;
     }
 
-    default void changeAnyHeadersForRequestToService(List<String> clientRequestHeaders) {
+    default void changeAnyHeadersForRequestToRealService(List<String> clientRequestHeaders) {
     }
 
     /** This may be Base84 encoded binary, but you're seldom going to want to change that */
-    default String changeBodyForRequestToService(String body) {
+    default String changeBodyForRequestToRealService(String body) {
         return body;
     }
 
