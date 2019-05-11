@@ -268,7 +268,7 @@ public class MarkdownReplayer implements InteractionMonitor {
         }
         lineEnd = replay.interactionText.indexOf("\n", replay.ix);
         line = replay.interactionText.substring(replay.ix +4, lineEnd);
-        String serverResponseContentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
+        String serviceResponseContentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
 
         // TODO remove trim()
         final String[] prevRecorded = reorderMaybe(headersReceived).split("\n");
@@ -291,7 +291,7 @@ public class MarkdownReplayer implements InteractionMonitor {
 
         try {
             try {
-                assertThat(replay.clientRequestContentType, equalTo(serverResponseContentType));
+                assertThat(replay.clientRequestContentType, equalTo(serviceResponseContentType));
             } catch (AssertionError e) {
                 monitor.unexpectedClientRequestContentType(replay.interactionNum, mdMethod, filename, replay.context, e);
             }
@@ -335,7 +335,7 @@ public class MarkdownReplayer implements InteractionMonitor {
             monitor.markdownSectionHeadingMissing(replay.interactionNum, RESULTING_HEADERS_BACK_FROM_REAL_SERVER,
                     filename, replay.context, e);
         }
-        String[] serverResponseHeaders = getCodeBlock(replay).split("\n");
+        String[] serviceResponseHeaders = getCodeBlock(replay).split("\n");
         final String RESULTING_BODY_BACK_FROM_REAL_SERVER = "### Response body recorded for playback";
         replay.ix = replay.interactionText.indexOf(RESULTING_BODY_BACK_FROM_REAL_SERVER, replay.ix);
 
@@ -350,15 +350,15 @@ public class MarkdownReplayer implements InteractionMonitor {
         String statusContent = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
         parts = statusContent.split(": ");
         int statusCode = Integer.parseInt(parts[0]);
-        serverResponseContentType = parts[1];
-        Object serverResponseBody;
-        if (serverResponseContentType.endsWith("- Base64 below")) {
-            serverResponseContentType = serverResponseContentType.substring(0, serverResponseContentType.indexOf(" "));
-            serverResponseBody = Base64.getDecoder().decode(getCodeBlock(replay));
+        serviceResponseContentType = parts[1];
+        Object serviceResponseBody;
+        if (serviceResponseContentType.endsWith("- Base64 below")) {
+            serviceResponseContentType = serviceResponseContentType.substring(0, serviceResponseContentType.indexOf(" "));
+            serviceResponseBody = Base64.getDecoder().decode(getCodeBlock(replay));
         } else {
-            serverResponseBody = getCodeBlock(replay);
+            serviceResponseBody = getCodeBlock(replay);
         }
-        return new ServiceResponse(serverResponseBody, serverResponseContentType, statusCode, serverResponseHeaders);
+        return new ServiceResponse(serviceResponseBody, serviceResponseContentType, statusCode, serviceResponseHeaders);
 
 
     }

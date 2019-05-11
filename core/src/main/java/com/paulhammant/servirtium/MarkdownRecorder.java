@@ -235,16 +235,16 @@ public class MarkdownRecorder implements InteractionMonitor {
         }
 
         @Override
-        public void debugOriginalServiceResponseBody(Object serverResponseBody, int statusCode, String serverResponseContentType) {
+        public void debugOriginalServiceResponseBody(Object serviceResponseBody, int statusCode, String serviceResponseContentType) {
             if (extraDebugOutput) {
-                doServiceResponseBody(serverResponseBody, statusCode, serverResponseContentType, "DEBUG: Response body from real service, unchanged");
+                doServiceResponseBody(serviceResponseBody, statusCode, serviceResponseContentType, "DEBUG: Response body from real service, unchanged");
             }
         }
 
         @Override
-        public void debugClientsServiceResponseBody(Object serverResponseBody, int statusCode, String serverResponseContentType) {
+        public void debugClientsServiceResponseBody(Object serviceResponseBody, int statusCode, String serviceResponseContentType) {
             if (extraDebugOutput) {
-                doServiceResponseBody(serverResponseBody, statusCode, serverResponseContentType, "DEBUG: Response body for client, possibly changed after recording");
+                doServiceResponseBody(serviceResponseBody, statusCode, serviceResponseContentType, "DEBUG: Response body for client, possibly changed after recording");
             }
         }
 
@@ -256,10 +256,10 @@ public class MarkdownRecorder implements InteractionMonitor {
         }
 
         @Override
-        public void noteServiceResponseBody(Object serverResponseBody, int statusCode,
-                                            String serverResponseContentType) {
+        public void noteServiceResponseBody(Object serviceResponseBody, int statusCode,
+                                            String serviceResponseContentType) {
 
-            doServiceResponseBody(serverResponseBody, statusCode, serverResponseContentType, "Response body recorded for playback");
+            doServiceResponseBody(serviceResponseBody, statusCode, serviceResponseContentType, "Response body recorded for playback");
         }
 
         @Override
@@ -296,24 +296,24 @@ public class MarkdownRecorder implements InteractionMonitor {
 
         }
 
-        private void doServiceResponseBody(Object serverResponseBody, int statusCode, String serverResponseContentType, String title) {
+        private void doServiceResponseBody(Object serviceResponseBody, int statusCode, String serviceResponseContentType, String title) {
 
             guardOut();
 
             String xtra = "";
-            if (serverResponseBody instanceof byte[]) {
+            if (serviceResponseBody instanceof byte[]) {
                 xtra = " - Base64 below";
             }
 
-            blockStart(title + " (" + statusCode + ": " + serverResponseContentType + xtra + ")");
+            blockStart(title + " (" + statusCode + ": " + serviceResponseContentType + xtra + ")");
 
-            if (serverResponseBody instanceof String) {
+            if (serviceResponseBody instanceof String) {
                 for (String next : replacements.keySet()) {
-                    serverResponseBody = ((String) serverResponseBody).replaceAll(next, replacements.get(next));
+                    serviceResponseBody = ((String) serviceResponseBody).replaceAll(next, replacements.get(next));
                 }
-                this.recording.append(serverResponseBody).append("\n");
-            } else if (serverResponseBody instanceof byte[]) {
-                this.recording.append(Base64.getEncoder().encodeToString((byte[]) serverResponseBody)).append("\n");
+                this.recording.append(serviceResponseBody).append("\n");
+            } else if (serviceResponseBody instanceof byte[]) {
+                this.recording.append(Base64.getEncoder().encodeToString((byte[]) serviceResponseBody)).append("\n");
             } else {
                 throw new UnsupportedOperationException();
             }

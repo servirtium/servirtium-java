@@ -76,7 +76,7 @@ public interface InteractionMonitor {
                 hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
                 final String fullHeader = (lowerCaseHeaders ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
                 clientRequestHeaders2.add(fullHeader);
-                interactionManipulations.changeSingleHeaderForRequestToService(method, fullHeader, clientRequestHeaders2);
+                interactionManipulations.changeSingleHeaderForRequestToRealService(method, fullHeader, clientRequestHeaders2);
             }
             return clientRequestHeaders2;
         }

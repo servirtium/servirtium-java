@@ -42,7 +42,7 @@ public class SubversionInteractionManipulations extends SimpleInteractionManipul
     }
 
     @Override
-    public void changeSingleHeaderForRequestToService(String method, String currentHeader, List<String> clientRequestHeaders) {
+    public void changeSingleHeaderForRequestToRealService(String method, String currentHeader, List<String> clientRequestHeaders) {
         if (currentHeader.startsWith("User-Agent:")) {
             for (int i = 0; i < clientRequestHeaders.size(); i++) {
                 String s = clientRequestHeaders.get(i);
@@ -54,7 +54,7 @@ public class SubversionInteractionManipulations extends SimpleInteractionManipul
             }
         }
 
-        super.changeSingleHeaderForRequestToService(method, currentHeader, clientRequestHeaders);
+        super.changeSingleHeaderForRequestToRealService(method, currentHeader, clientRequestHeaders);
     }
 
     protected String getUserAgentString() {
@@ -62,8 +62,8 @@ public class SubversionInteractionManipulations extends SimpleInteractionManipul
     }
 
     @Override
-    public String headerReplacement(String hdrKey, String serverResponseHeaders) {
-        return serverResponseHeaders
+    public String headerReplacement(String hdrKey, String serviceResponseHeaders) {
+        return serviceResponseHeaders
                 //.replace(from, to)
                 .replaceAll("SVN-Repository-UUID: ([a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12})", "SVN-Repository-UUID: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee")
                 .replaceAll("Date: ((Mon|Tue|Wed|Thu|Fri|Sat|Sun), [0-9]{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT)", "Date: Tue, 01 Jan 2018 01:02:03 GMT");

@@ -40,7 +40,7 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
     }
 
     @Override
-    public void changeSingleHeaderForRequestToService(String method, String currentHeader, List<String> clientRequestHeaders) {
+    public void changeSingleHeaderForRequestToRealService(String method, String currentHeader, List<String> clientRequestHeaders) {
         String currentHeaderKey = null;
         String currentHeaderVal = null;
         try {
@@ -70,12 +70,12 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
     }
     
     @Override
-    public void changeAnyHeadersReturnedBackFromRealServiceForRecording(List<String> serverResponseHeaders) {
-        String[] hdrs = serverResponseHeaders.toArray(new String[0]);
+    public void changeAnyHeadersReturnedBackFromRealServiceForRecording(List<String> serviceResponseHeaders) {
+        String[] hdrs = serviceResponseHeaders.toArray(new String[0]);
         for (String hdr : hdrs) {
             for (String pfx : headerPrefixesToRemoveFromResponse) {
                 if (hdr.startsWith(pfx)) {
-                    serverResponseHeaders.remove(hdr);
+                    serviceResponseHeaders.remove(hdr);
                 }
             }
         }

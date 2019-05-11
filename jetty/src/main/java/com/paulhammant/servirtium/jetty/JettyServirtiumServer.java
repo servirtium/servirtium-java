@@ -93,16 +93,16 @@ public class JettyServirtiumServer extends ServirtiumServer {
                     interaction, clientRequestContentType, interactionManipulations);
 
             // INTERACTION
-            ServiceResponse serverResponse = interactionMonitor.getServiceResponseForRequest(method, urlAndHeaders.url, urlAndHeaders.clientRequestHeaders,
+            ServiceResponse serviceResponse = interactionMonitor.getServiceResponseForRequest(method, urlAndHeaders.url, urlAndHeaders.clientRequestHeaders,
                     interaction, useLowerCaseHeaders());
 
-            serverResponse = processHeadersAndBodyBackFromService(interaction, serverResponse);
+            serviceResponse = processHeadersAndBodyBackFromRealService(interaction, serviceResponse);
 
             interactionMonitor.addInteraction(interaction);
 
-            response.setStatus(serverResponse.statusCode);
+            response.setStatus(serviceResponse.statusCode);
 
-            for (String header : serverResponse.headers) {
+            for (String header : serviceResponse.headers) {
                 int ix = header.indexOf(": ");
                 String hdrKey = header.substring(0, ix);
                 String hdrVal = header.substring(ix + 2);
@@ -111,14 +111,14 @@ public class JettyServirtiumServer extends ServirtiumServer {
                 }
             }
 
-            if (serverResponse.contentType != null) {
-                response.setContentType(serverResponse.contentType);
+            if (serviceResponse.contentType != null) {
+                response.setContentType(serviceResponse.contentType);
             }
 
-            if (serverResponse.body instanceof String) {
-                response.getWriter().write((String) serverResponse.body);
+            if (serviceResponse.body instanceof String) {
+                response.getWriter().write((String) serviceResponse.body);
             } else {
-                response.getOutputStream().write((byte[]) serverResponse.body);
+                response.getOutputStream().write((byte[]) serviceResponse.body);
             }
 
             monitor.interactionFinished(getInteractionNum(), method, url, getContext());
@@ -141,7 +141,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
         }
     }
 
-    private ServiceResponse processHeadersAndBodyBackFromService(InteractionMonitor.Interaction interaction, ServiceResponse serviceResponse) {
+    private ServiceResponse processHeadersAndBodyBackFromRealService(InteractionMonitor.Interaction interaction, ServiceResponse serviceResponse) {
 
         interaction.debugOriginalServiceResponseHeaders(serviceResponse.headers);
 
