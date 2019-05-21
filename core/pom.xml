@@ -19,7 +19,7 @@
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>3.14.0</version>
+            <version>3.14.2</version>
         </dependency>
 
         <dependency>
@@ -62,14 +62,14 @@
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
-            <version>3.3.0</version>
+            <version>4.0.0</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
-            <version>9.4.14.v20181114</version>
+            <version>9.4.18.v20190429</version>
             <scope>test</scope>
         </dependency>
 
