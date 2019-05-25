@@ -98,6 +98,12 @@ public class MarkdownReplayer implements InteractionMonitor {
                 allMarkdownInteractions.add(interactionText);
                 ctr++;
             }
+            if (ctr == 0 && charPosn == -1) {
+                again = false;
+            }
+        }
+        if (ctr == 0) {
+            throw new UnsupportedOperationException("No '" + SERVIRTIUM_INTERACTION.trim() + "' found in conversation '" + conversation + "'. Wrong/empty script file?");
         }
     }
 
@@ -108,7 +114,7 @@ public class MarkdownReplayer implements InteractionMonitor {
      * @param replacement - something that will replace the above in the recording.
      * @return this
      */
-    public MarkdownReplayer withReplacementInPlatback(String regex, String replacement) {
+    public MarkdownReplayer withReplacementInPlayback(String regex, String replacement) {
         replacements.put(regex, replacement);
         return this;
     }

@@ -43,11 +43,16 @@ public interface InteractionMonitor {
     void setScriptFilename(String filename) throws FileNotFoundException;
 
     ServiceResponse getServiceResponseForRequest(String method, String url,
-                                                 List<String> clientRequestHeaders, Interaction interaction, boolean lowerCaseHeaders) throws IOException;
+                                                 List<String> clientRequestHeaders, Interaction interaction,
+                                                 boolean lowerCaseHeaders) throws IOException;
 
     Interaction newInteraction(String method, String path, int interactionNum, String url, String context);
 
     default void addInteraction(Interaction interaction) {}
+
+    default void codeNoteForNextInteraction(String title, String multiline) {}
+
+    default void noteForNextInteraction(String title, String multiline) {}
 
     abstract class Interaction {
 

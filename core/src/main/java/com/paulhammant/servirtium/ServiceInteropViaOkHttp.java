@@ -40,28 +40,52 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.paulhammant.servirtium.ServirtiumServer.isText;
 
 public class ServiceInteropViaOkHttp implements ServiceInteroperation {
 
     private OkHttpClient okHttpClient;
+    private int readTimeout = 10; // secs
+    private int writeTimeout = 10; // secs
+    private int connectionTimeout = 10; // secs
 
-    public ServiceInteropViaOkHttp() {
-        okHttpClient = makeOkHttpClient();
+    public ServiceInteropViaOkHttp withWriteTimeout(int writeTimeout) {
+        this.writeTimeout = writeTimeout;
+        return this;
+    }
+
+    public ServiceInteropViaOkHttp withReadTimeout(int readTimeout) {
+        this.readTimeout = readTimeout;
+        return this;
+    }
+
+    public ServiceInteropViaOkHttp withConnectionTimeout(int connectionTimeout) {
+        this.connectionTimeout = connectionTimeout;
+        return this;
     }
 
     protected OkHttpClient makeOkHttpClient() {
-        return new OkHttpClient();
+        return  new OkHttpClient.Builder()
+                .readTimeout(readTimeout, TimeUnit.SECONDS)
+                .writeTimeout(writeTimeout, TimeUnit.SECONDS)
+                .connectTimeout(connectionTimeout, TimeUnit.SECONDS)
+                .build();
     }
 
     @Override
     public ServiceResponse invokeServiceEndpoint(String method, Object clientRequestBody, String clientRequestContentType,
                                                  String url, List<String> clientRequestHeaders,
                                                  InteractionManipulations interactionManipulations,
-                                                 boolean lowerCaseHeaders) throws InteractionException {
+                                                 boolean lowerCaseHeaders) throws ServiceInteroperationFailed {
+
+        if (okHttpClient == null) {
+            okHttpClient = makeOkHttpClient();
+        }
 
         RequestBody nonGetBody = null;
         if (!method.equals("GET")) {
@@ -93,7 +117,11 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
                 reqBuilder = new Request.Builder().url(url).method(method, nonGetBody).headers(headerForOkHttp);
             }
 
-            response = okHttpClient.newCall(reqBuilder.build()).execute();
+            try {
+                response = okHttpClient.newCall(reqBuilder.build()).execute();
+            } catch (SocketTimeoutException e) {
+                throw new ServiceInteroperationFailed("OkHttp "  +  method + " to " + url + " timed out. See ServiceInteropViaOkHttp.withReadTimeout(), withWriteTimeout(), and withConnectionTimeout()", e);
+            }
 
             ResponseBody body = response.body();
             Object responseBody = null;
@@ -126,7 +154,7 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
             return new ServiceResponse(responseBody, responseContentType, statusCode, headers);
 
         } catch (IOException e) {
-            throw new InteractionException(e);
+            throw new ServiceInteroperationFailed("OkHttp " + method + " to " + url + " failed with an IOException", e);
         }
     }
 

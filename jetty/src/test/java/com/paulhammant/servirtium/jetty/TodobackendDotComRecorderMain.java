@@ -55,7 +55,7 @@ public class TodobackendDotComRecorderMain {
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 
-            recorder.additionalNote("GUIDs and their mock names",
+            recorder.noteForNextInteraction("GUIDs and their mock names",
                     guids.toString()
                             .replace(" ","")
                             .replace("{","")

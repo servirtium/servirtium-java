@@ -1,5 +1,8 @@
 package com.paulhammant.servirtium;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 public abstract class ServirtiumServer {
 
     protected final InteractionManipulations interactionManipulations;

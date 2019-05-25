@@ -48,9 +48,21 @@ public class MarkdownRecorder implements InteractionMonitor {
     private final InteractionManipulations interactionManipulations;
     private PrintStream out;
     private Map<Integer, String> interactions = new HashMap<>();
+    private Map<Integer, List<Note>> notes = new HashMap<>();
     private Map<String, String> replacements = new HashMap<>();
     private boolean alphaSortHeaders;
     private boolean extraDebugOutput;
+
+    public static class Note  {
+        String title;
+        private final String multiline;
+        String body;
+
+        public Note(String title, String multiline) {
+            this.title = title;
+            this.multiline = multiline;
+        }
+    }
 
     public MarkdownRecorder(ServiceInteroperation serviceInteroperation, InteractionManipulations interactionManipulations) {
         this.serviceInteroperation = serviceInteroperation;
@@ -100,15 +112,18 @@ public class MarkdownRecorder implements InteractionMonitor {
         return this;
     }
 
-    public void additionalNote(String noteTitle, String text) {
+    public void codeNoteForNextInteraction(String title, String multiline) {
+        noteForNextInteraction(title, "```\n" + multiline + "\n```\n");
+    }
 
-        out.append("## Note: ").append(noteTitle).append(":\n")
-                .append("\n")
-                .append("```\n")
-                .append(text)
-                .append("```\n")
-                .append("\n");
+    public void noteForNextInteraction(String title, String multiline) {
 
+        List<Note> n = notes.get(interactions.size());
+        if (n == null) {
+            n = new ArrayList<Note>();
+            notes.put(interactions.size(), n);
+        }
+        n.add(new Note(title, multiline));
     }
 
     public class RecordingInteraction extends Interaction {
@@ -349,7 +364,23 @@ public class MarkdownRecorder implements InteractionMonitor {
         if (this.out != null) {
             int i = 0;
             while (this.interactions.size() >0) {
-                this.out.print(this.interactions.remove(i++));
+
+                String interaction = this.interactions.remove(i++);
+
+                List<Note> n = notes.get(i);
+                if (n != null) {
+                    StringBuilder sb = new StringBuilder();
+                    for (Note note : n) {
+                        sb.append("## [Note] ").append(note.title).append(":\n")
+                                .append("\n")
+                                .append(note.multiline)
+                                .append("\n");
+
+                    }
+                    interaction = interaction.replaceAll("### Request headers recorded for playback:", sb.toString() + "\n\n### Request headers recorded for playback:");
+                }
+
+                this.out.print(interaction);
             }
             if (failed) {
                 this.out.println("# Failure noted during recording.\n\nMeaning this recording may be shorter than intended. " +
