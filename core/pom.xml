@@ -4,14 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>9</version>
+        <groupId>com.paulhammant</groupId>
+        <artifactId>servirtium-pom</artifactId>
+        <version>0.9.1-SNAPSHOT</version>
     </parent>
 
     <groupId>com.paulhammant</groupId>
     <artifactId>servirtium-core</artifactId>
-    <version>0.9.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <dependencies>
