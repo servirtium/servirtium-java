@@ -108,7 +108,7 @@ public class MarkdownReplayer implements InteractionMonitor {
     }
 
     /**
-     * In the recording, some things that will be recorded differently to
+     * In the playback, some things that will have been recorded differently to
      * what was sent/received to/from the real.
      * @param regex - something that may be in the read data sent to/from the real.
      * @param replacement - something that will replace the above in the recording.
@@ -120,12 +120,12 @@ public class MarkdownReplayer implements InteractionMonitor {
     }
 
     /**
-     * In the recording, some things that will be recorded differently to
+     * In the recording, some things that will have been recorded differently to
      * what was sent/received to/from the real.
      * @param terms - an even number of 'regex' and 'replacement' pairs.
      * @return this
      */
-    public MarkdownReplayer withReplacementsInRecording(String... terms) {
+    public MarkdownReplayer withReplacementsInPlayback(String... terms) {
         final int i = terms.length / 2;
         for (int x = 0; x < i; x++) {
             replacements.put(terms[x*2], terms[(x*2)+1]);
@@ -237,15 +237,13 @@ public class MarkdownReplayer implements InteractionMonitor {
         String[] parts = line.split(" ");
         int iNum = Integer.parseInt(parts[0].replace(":",""));
         String mdMethod = parts[1];
-
+        String mdUrl = parts[2];
 
         try {
             assertThat(method, equalTo(mdMethod));
         } catch (AssertionError e) {
-            monitor.unexpectedClientRequestMethod(replay.interactionNum, filename, mdMethod, method, replay.context, e);
+            monitor.unexpectedClientRequestMethod(replay.interactionNum, filename, mdMethod, method, replay.context, url, e);
         }
-
-        String mdUrl = parts[2];
 
         try {
             assertThat(url, endsWith(mdUrl));
@@ -255,26 +253,14 @@ public class MarkdownReplayer implements InteractionMonitor {
 
         final String REQUEST_HEADERS_SENT_TO_REAL_SERVER = "### Request headers recorded for playback";
         replay.ix = replay.interactionText.indexOf(REQUEST_HEADERS_SENT_TO_REAL_SERVER, replay.ix);
-        try {
-            assertThat(replay.ix, not(equalTo(-1)));
-        } catch (AssertionError e) {
-            monitor.markdownSectionHeadingMissing(replay.interactionNum, REQUEST_HEADERS_SENT_TO_REAL_SERVER, filename,
-                    replay.context, e);
-        }
+        guardAgainstMissingSection(replay, REQUEST_HEADERS_SENT_TO_REAL_SERVER);
 
         String headersReceived = getCodeBlock(replay);
 
         final String BODY_SENT_TO_REAL_SERVER = "### Request body recorded for playback";
         replay.ix = replay.interactionText.indexOf(BODY_SENT_TO_REAL_SERVER, replay.ix);
-        try {
-            assertThat(replay.ix, not(equalTo(-1)));
-        } catch (AssertionError e) {
-            monitor.markdownSectionHeadingMissing(replay.interactionNum, BODY_SENT_TO_REAL_SERVER, filename,
-                    replay.context, e);
-        }
-        lineEnd = replay.interactionText.indexOf("\n", replay.ix);
-        line = replay.interactionText.substring(replay.ix +4, lineEnd);
-        String serviceResponseContentType = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
+        guardAgainstMissingSection(replay, BODY_SENT_TO_REAL_SERVER);
+        String serviceResponseContentType = getStringInParensAtIndex(replay.interactionText, replay.ix);
 
         // TODO remove trim()
         final String[] prevRecorded = reorderMaybe(headersReceived).split("\n");
@@ -335,25 +321,14 @@ public class MarkdownReplayer implements InteractionMonitor {
 
         final String RESULTING_HEADERS_BACK_FROM_REAL_SERVER = "### Response headers recorded for playback";
         replay.ix = replay.interactionText.indexOf(RESULTING_HEADERS_BACK_FROM_REAL_SERVER, replay.ix);
-        try {
-            assertThat(replay.ix, not(equalTo(-1)));
-        } catch (AssertionError e) {
-            monitor.markdownSectionHeadingMissing(replay.interactionNum, RESULTING_HEADERS_BACK_FROM_REAL_SERVER,
-                    filename, replay.context, e);
-        }
+        guardAgainstMissingSection(replay, RESULTING_HEADERS_BACK_FROM_REAL_SERVER);
         String[] serviceResponseHeaders = getCodeBlock(replay).split("\n");
         final String RESULTING_BODY_BACK_FROM_REAL_SERVER = "### Response body recorded for playback";
         replay.ix = replay.interactionText.indexOf(RESULTING_BODY_BACK_FROM_REAL_SERVER, replay.ix);
 
-        try {
-            assertThat(replay.ix, not(equalTo(-1)));
-        } catch (AssertionError e) {
-            monitor.markdownSectionHeadingMissing(replay.interactionNum, RESULTING_BODY_BACK_FROM_REAL_SERVER,
-                    filename, replay.context, e);
-        }
-        lineEnd = replay.interactionText.indexOf("\n", replay.ix);
-        line = replay.interactionText.substring(replay.ix +4, lineEnd);
-        String statusContent = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
+        guardAgainstMissingSection(replay, RESULTING_BODY_BACK_FROM_REAL_SERVER);
+        String statusContent = getStringInParensAtIndex(replay.interactionText, replay.ix);
+
         parts = statusContent.split(": ");
         int statusCode = Integer.parseInt(parts[0]);
         serviceResponseContentType = parts[1];
@@ -367,6 +342,21 @@ public class MarkdownReplayer implements InteractionMonitor {
         return new ServiceResponse(serviceResponseBody, serviceResponseContentType, statusCode, serviceResponseHeaders);
 
 
+    }
+
+    private void guardAgainstMissingSection(ReplayingInteraction replay, String RESULTING_BODY_BACK_FROM_REAL_SERVER) {
+        try {
+            assertThat(replay.ix, not(equalTo(-1)));
+        } catch (AssertionError e) {
+            monitor.markdownSectionHeadingMissing(replay.interactionNum, RESULTING_BODY_BACK_FROM_REAL_SERVER,
+                    filename, replay.context, e);
+        }
+    }
+
+    private String getStringInParensAtIndex(String interactionText, int ix) {
+        int lineEnd = interactionText.indexOf("\n", ix);
+        String line = interactionText.substring(ix + 4, lineEnd);
+        return line.substring(line.indexOf("(") + 1, line.indexOf(")"));
     }
 
     private String reorderMaybe(String headersReceived) {
@@ -403,7 +393,7 @@ public class MarkdownReplayer implements InteractionMonitor {
 
         void couldNotFindInteraction(int interaction, String filename, String context, AssertionError e);
 
-        void unexpectedClientRequestMethod(int interaction, String filename, String expectedMethod, String method, String context, AssertionError e);
+        void unexpectedClientRequestMethod(int interaction, String filename, String expectedMethod, String method, String context, String url, AssertionError e);
 
         void unexpectedClientRequestUrl(String url, ReplayingInteraction rc, String method, String mdUrl, String filename, String context, AssertionError e);
 
@@ -430,9 +420,10 @@ public class MarkdownReplayer implements InteractionMonitor {
             }
 
             public void unexpectedClientRequestMethod(int interaction, String filename, String expectedMethod, String method,
-                                                      String context, AssertionError e) {
+                                                      String context, String url, AssertionError e) {
                 throw makeAssertionError(methodFileAndContextPrefix(interaction, expectedMethod, filename, context)
-                        + ", method from the client that should be sent to real server are not the same as expected: " + method, e);
+                        + ", method from the client that should be sent to real server are not the same as expected: "
+                        + method + " (URL=" + url + ", script=" + filename + ")", e);
             }
 
             public void unexpectedClientRequestUrl(String url, ReplayingInteraction interaction, String method,
@@ -504,9 +495,9 @@ public class MarkdownReplayer implements InteractionMonitor {
 
             @Override
             public void unexpectedClientRequestMethod(int interaction, String filename, String expectedMethod,
-                                                      String method, String context, AssertionError e) {
+                                                      String method, String context, String url, AssertionError e) {
                 try {
-                    super.unexpectedClientRequestMethod(interaction, filename, expectedMethod, method, context, e);
+                    super.unexpectedClientRequestMethod(interaction, filename, expectedMethod, method, context, url, e);
                 } catch (AssertionError e1) {
                     throw printAndRethrow(e, e1);
                 }

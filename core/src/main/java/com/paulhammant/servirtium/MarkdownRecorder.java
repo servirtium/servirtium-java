@@ -118,10 +118,11 @@ public class MarkdownRecorder implements InteractionMonitor {
 
     public void noteForNextInteraction(String title, String multiline) {
 
-        List<Note> n = notes.get(interactions.size());
+        int key = interactions.size() + 1;
+        List<Note> n = notes.get(key);
         if (n == null) {
             n = new ArrayList<Note>();
-            notes.put(interactions.size(), n);
+            notes.put(key, n);
         }
         n.add(new Note(title, multiline));
     }
@@ -169,8 +170,8 @@ public class MarkdownRecorder implements InteractionMonitor {
             }
             final List<String> headersToRecord2 = new ArrayList<>();
             for (String h : headersToRecord) {
-                for (String redactionRegex : replacements.keySet()) {
-                    h = h.replaceAll(redactionRegex, replacements.get(redactionRegex));
+                for (String replacementRegex : replacements.keySet()) {
+                    h = h.replaceAll(replacementRegex, replacements.get(replacementRegex));
                 }
                 headersToRecord2.add(h);
             }
@@ -346,10 +347,17 @@ public class MarkdownRecorder implements InteractionMonitor {
     @Override
     public Interaction newInteraction(String method, String path, int interactionNum, String url, String context) {
         guardOut();
+
+        String path2 = path;
+
+        for (String replacementRegex : replacements.keySet()) {
+            path2 = path2.replaceAll(replacementRegex, replacements.get(replacementRegex));
+        }
+
         RecordingInteraction rc = new RecordingInteraction(interactionNum, context);
 
         rc.recording.append("## Interaction ").append(interactionNum).append(": ").append(method)
-                .append(" ").append(path).append("\n\n");
+                .append(" ").append(path2).append("\n\n");
         return rc;
     }
 
@@ -377,7 +385,7 @@ public class MarkdownRecorder implements InteractionMonitor {
                                 .append("\n");
 
                     }
-                    interaction = interaction.replaceAll("### Request headers recorded for playback:", sb.toString() + "\n\n### Request headers recorded for playback:");
+                    interaction = interaction.replaceAll("### Request headers recorded for playback:", sb.toString() + "\n### Request headers recorded for playback:");
                 }
 
                 this.out.print(interaction);
