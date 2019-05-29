@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.paulhammant</groupId>
         <artifactId>servirtium-pom</artifactId>
-        <version>0.9.1-SNAPSHOT</version>
+        <version>0.9.1</version>
     </parent>
 
     <groupId>com.paulhammant</groupId>
