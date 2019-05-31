@@ -363,8 +363,8 @@ public class MarkdownRecorder implements InteractionMonitor {
 
     private void guardOut() {
         if (out == null) {
-            throw new AssertionError("Recording in progress, but previous recording was " +
-                    "finishedScript() and/or no new setScriptFilename(..) started");
+            throw new AssertionError("Recording in progress, but no PrintStream set up for " +
+                    "the recording. See setScriptFilename(..)");
         }
     }
 
