@@ -98,7 +98,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
             serviceResponse = processHeadersAndBodyBackFromRealService(interaction, serviceResponse);
 
-            interactionMonitor.addInteraction(interaction);
+            interaction.complete();
 
             response.setStatus(serviceResponse.statusCode);
 

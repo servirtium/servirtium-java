@@ -97,7 +97,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
             serviceResponse = processHeadersAndBodyBackFromService(interaction, serviceResponse, interactionManipulations);
 
-            interactionMonitor.addInteraction(interaction);
+            interaction.complete();
 
             exchange.setStatusCode(serviceResponse.statusCode);
 

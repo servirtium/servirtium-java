@@ -135,6 +135,11 @@ public class MarkdownRecorder implements InteractionMonitor {
             super(interactionNumber, context);
         }
 
+        @Override
+        public void complete() {
+            MarkdownRecorder.this.addInteraction(this);
+        }
+
         public List<String> noteClientRequestHeadersAndBody(InteractionManipulations interactionManipulations,
                                                             List<String> clientRequestHeaders, Object clientRequestBody,
                                                             String clientRequestContentType, String method, boolean lowerCaseHeaders) {
@@ -339,8 +344,7 @@ public class MarkdownRecorder implements InteractionMonitor {
 
     }
 
-    @Override
-    public void addInteraction(Interaction interaction) {
+    private void addInteraction(Interaction interaction) {
         this.interactions.put(interaction.interactionNum, ((RecordingInteraction) interaction).recording.toString());
     }
 

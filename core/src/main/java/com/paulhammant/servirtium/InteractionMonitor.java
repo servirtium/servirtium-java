@@ -48,8 +48,6 @@ public interface InteractionMonitor {
 
     Interaction newInteraction(String method, String path, int interactionNum, String url, String context);
 
-    default void addInteraction(Interaction interaction) {}
-
     default void codeNoteForNextInteraction(String title, String multiline) {}
 
     default void noteForNextInteraction(String title, String multiline) {}
@@ -65,6 +63,9 @@ public interface InteractionMonitor {
             this.interactionNum = interactionNum;
             this.context = context;
         }
+
+        public void complete() {}
+
 
         public abstract List<String> noteClientRequestHeadersAndBody(InteractionManipulations interactionManipulations, List<String> clientRequestHeaders, Object clientRequestBody, String clientRequestContentType, String method, boolean lowerCaseHeaders);
 
