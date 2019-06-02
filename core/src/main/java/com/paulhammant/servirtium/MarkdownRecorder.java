@@ -113,7 +113,7 @@ public class MarkdownRecorder implements InteractionMonitor {
     }
 
     public void codeNoteForNextInteraction(String title, String multiline) {
-        noteForNextInteraction(title, "```\n" + multiline + "\n```\n");
+        noteForNextInteraction(title, "```\n" + multiline + "\n```");
     }
 
     public void noteForNextInteraction(String title, String multiline) {

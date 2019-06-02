@@ -206,47 +206,29 @@ public class MarkdownRecorderTest {
         final InteractionManipulations im = mock(InteractionManipulations.class);
         final ServiceInteroperation si = mock(ServiceInteroperation.class);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        when(im.headerReplacement("ZZZZ", "ZZ")).thenReturn("Z-Z");
-        when(im.headerReplacement("REQ_HEADER_KEY", "VAL")).thenReturn("V-A-L");
         when(im.changeBodyForRequestToRealService("REQ_BODY")).thenReturn("R-E-Q__B-O-D-Y");
-        when(im.headerReplacement("RSP_HEADER_KEY", "RSP_VAL")).thenReturn("R-S-P__V-A-L");
 
         MarkdownRecorder mr = new MarkdownRecorder(si, im);
         mr.setOutputStream("foo", out);
         InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
-        mr.noteForNextInteraction("Title1", "L1a\nL2a");
-        mr.noteForNextInteraction("Title2", "L1b\nL2b");
-        i.noteClientRequestHeadersAndBody(im, asList("ZZZZ: ZZ", "REQ_HEADER_KEY: VAL"),
+        mr.noteForNextInteraction("Mary", "... Had a Little Lamb");
+        i.noteClientRequestHeadersAndBody(im, asList(),
                 "REQ_BODY", "text/plain", "FOO", true);
-        i.noteServiceResponseHeaders(new String[] {"RSP_HEADER_KEY: RSP_VAL"});
-        i.noteServiceResponseBody("RSP_BODY", 200, "text/plain");
         i.complete();
         mr.finishedScript(0, false);
 
-        verify(im).headerReplacement("ZZZZ", "ZZ");
-        verify(im).headerReplacement("REQ_HEADER_KEY", "VAL");
-        verify(im).changeSingleHeaderForRequestToRealService(eq("FOO"), eq("req_header_key: V-A-L"), any(List.class));
-        verify(im).changeSingleHeaderForRequestToRealService(eq("FOO"), eq("zzzz: Z-Z"), any(List.class));
         verify(im).changeAnyHeadersForRequestToRealService(any(List.class));
         verify(im).changeBodyForRequestToRealService("REQ_BODY");
-        verify(im).headerReplacement("RSP_HEADER_KEY", "RSP_VAL");
         verifyNoMoreInteractions(im, si);
         assertEquals("## Interaction 0: FOO /a/b/c\n" +
                 "\n" +
-                "## [Note] Title1:\n" +
+                "## [Note] Mary:\n" +
                 "\n" +
-                "L1a\n" +
-                "L2a\n" +
-                "## [Note] Title2:\n" +
-                "\n" +
-                "L1b\n" +
-                "L2b\n" +
+                "... Had a Little Lamb\n" +
                 "\n" +
                 "### Request headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
-                "zzzz: Z-Z\n" +
-                "req_header_key: V-A-L\n" +
                 "```\n" +
                 "\n" +
                 "### Request body recorded for playback (text/plain):\n" +
@@ -254,17 +236,46 @@ public class MarkdownRecorderTest {
                 "```\n" +
                 "R-E-Q__B-O-D-Y\n" +
                 "```\n" +
+                "\n", out.toString());
+    }
+
+    @Test
+    public void canRecordASimpleScriptWithCodeNotes() {
+        final InteractionManipulations im = mock(InteractionManipulations.class);
+        final ServiceInteroperation si = mock(ServiceInteroperation.class);
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        when(im.changeBodyForRequestToRealService("REQ_BODY")).thenReturn("R-E-Q__B-O-D-Y");
+
+        MarkdownRecorder mr = new MarkdownRecorder(si, im);
+        mr.setOutputStream("foo", out);
+        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
+        mr.codeNoteForNextInteraction("CodeNotes", "111\n222");
+        i.noteClientRequestHeadersAndBody(im, asList(),
+                "REQ_BODY", "text/plain", "FOO", true);
+        i.complete();
+        mr.finishedScript(0, false);
+
+        verify(im).changeAnyHeadersForRequestToRealService(any(List.class));
+        verify(im).changeBodyForRequestToRealService("REQ_BODY");
+        verifyNoMoreInteractions(im, si);
+        assertEquals("## Interaction 0: FOO /a/b/c\n" +
                 "\n" +
-                "### Response headers recorded for playback:\n" +
+                "## [Note] CodeNotes:\n" +
                 "\n" +
                 "```\n" +
-                "RSP_HEADER_KEY: R-S-P__V-A-L\n" +
+                "111\n" +
+                "222\n" +
                 "```\n" +
                 "\n" +
-                "### Response body recorded for playback (200: text/plain):\n" +
+                "### Request headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
-                "RSP_BODY\n" +
+                "```\n" +
+                "\n" +
+                "### Request body recorded for playback (text/plain):\n" +
+                "\n" +
+                "```\n" +
+                "R-E-Q__B-O-D-Y\n" +
                 "```\n" +
                 "\n", out.toString());
     }
