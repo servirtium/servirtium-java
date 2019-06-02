@@ -107,7 +107,7 @@ public class MarkdownRecorder implements InteractionMonitor {
     public MarkdownRecorder withReplacementsInRecording(String... terms) {
         final int i = terms.length / 2;
         for (int x = 0; x < i; x++) {
-            replacements.put(terms[x*2], terms[(x*2)+1]);
+            withReplacementInRecording(terms[x*2], terms[(x*2)+1]);
         }
         return this;
     }

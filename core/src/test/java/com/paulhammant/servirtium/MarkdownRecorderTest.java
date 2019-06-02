@@ -280,5 +280,105 @@ public class MarkdownRecorderTest {
                 "\n", out.toString());
     }
 
+    @Test
+    public void canPerformBodyReplacementsInRecording() {
+        final InteractionManipulations im = mock(InteractionManipulations.class);
+        final ServiceInteroperation si = mock(ServiceInteroperation.class);
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        when(im.changeBodyForRequestToRealService("Mary had a little lamb")).thenReturn("Mary had a little lamb");
+
+        MarkdownRecorder mr = new MarkdownRecorder(si, im).withReplacementsInRecording("little", "tiny", "lamb", "piglet");
+        mr.setOutputStream("foo", out);
+        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
+        i.noteClientRequestHeadersAndBody(im, asList(),
+                "Mary had a little lamb", "text/plain", "FOO", true);
+        i.noteServiceResponseHeaders(new String[0]);
+        i.noteServiceResponseBody("A little lamb had Mary", 200, "text/plain");
+        i.complete();
+        mr.finishedScript(0, false);
+
+        verify(im).changeAnyHeadersForRequestToRealService(any(List.class));
+        verify(im).changeBodyForRequestToRealService("Mary had a little lamb");
+        verifyNoMoreInteractions(im, si);
+        assertEquals("## Interaction 0: FOO /a/b/c\n" +
+                "\n" +
+                "### Request headers recorded for playback:\n" +
+                "\n" +
+                "```\n" +
+                "```\n" +
+                "\n" +
+                "### Request body recorded for playback (text/plain):\n" +
+                "\n" +
+                "```\n" +
+                "Mary had a tiny piglet\n" +
+                "```\n" +
+                "\n" +
+                "### Response headers recorded for playback:\n" +
+                "\n" +
+                "```\n" +
+                "```\n" +
+                "\n" +
+                "### Response body recorded for playback (200: text/plain):\n" +
+                "\n" +
+                "```\n" +
+                "A tiny piglet had Mary\n" +
+                "```\n\n", out.toString());
+    }
+
+    @Test
+    public void canPerformHeaderReplacementsInRecording() {
+        final InteractionManipulations im = mock(InteractionManipulations.class);
+        final ServiceInteroperation si = mock(ServiceInteroperation.class);
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        when(im.headerReplacement("Mary", "had a little lamb")).thenReturn("had a little lamb");
+        when(im.headerReplacement("A", "tiny piglet had Mary")).thenReturn("tiny piglet had Mary");
+
+
+        MarkdownRecorder mr = new MarkdownRecorder(si, im).withReplacementsInRecording("little", "tiny", "lamb", "piglet");
+        mr.setOutputStream("foo", out);
+        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
+        i.noteClientRequestHeadersAndBody(im, asList("Mary: had a little lamb"),
+                "", "text/plain", "FOO", true);
+        i.noteServiceResponseHeaders(new String[]{"A: little lamb had Mary"});
+        i.noteServiceResponseBody("", 200, "text/plain");
+        i.complete();
+        mr.finishedScript(0, false);
+
+        verify(im).changeAnyHeadersForRequestToRealService(any(List.class));
+        verify(im).changeSingleHeaderForRequestToRealService(eq("FOO"), eq("mary: had a little lamb"), any(List.class));
+
+        verify(im).headerReplacement("Mary", "had a little lamb");
+        verify(im).headerReplacement("A", "tiny piglet had Mary");
+        verify(im).changeBodyForRequestToRealService("");
+        verifyNoMoreInteractions(im, si);
+        assertEquals("## Interaction 0: FOO /a/b/c\n" +
+                "\n" +
+                "### Request headers recorded for playback:\n" +
+                "\n" +
+                "```\n" +
+                "mary: had a tiny piglet\n" +
+                "```\n" +
+                "\n" +
+                "### Request body recorded for playback (text/plain):\n" +
+                "\n" +
+                "```\n" +
+                "\n" +
+                "```\n" +
+                "\n" +
+                "### Response headers recorded for playback:\n" +
+                "\n" +
+                "```\n" +
+                "A: tiny piglet had Mary\n" +
+                "```\n" +
+                "\n" +
+                "### Response body recorded for playback (200: text/plain):\n" +
+                "\n" +
+                "```\n" +
+                "\n" +
+                "```\n\n", out.toString());
+    }
+
+
 
 }
