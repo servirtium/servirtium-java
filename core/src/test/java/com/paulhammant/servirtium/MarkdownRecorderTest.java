@@ -10,6 +10,7 @@ import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -31,7 +32,7 @@ public class MarkdownRecorderTest {
         InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
         i.noteClientRequestHeadersAndBody(im, asList("ZZZZ: ZZ", "REQ_HEADER_KEY: VAL"),
                 "REQ_BODY", "text/plain", "FOO", true);
-        i.noteServiceResponseHeaders(new String[] {"RSP_HEADER_KEY: RSP_VAL"});
+        i.noteServiceResponseHeaders("RSP_HEADER_KEY: RSP_VAL");
         i.noteServiceResponseBody("RSP_BODY", 200, "text/plain");
         i.complete();
         mr.finishedScript(0, false);
@@ -88,7 +89,7 @@ public class MarkdownRecorderTest {
         InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
         i.noteClientRequestHeadersAndBody(im, asList("ZZZZ: ZZ", "REQ_HEADER_KEY: VAL"),
                 "REQ_BODY", "text/plain", "FOO", true);
-        i.noteServiceResponseHeaders(new String[] {"RSP_HEADER_KEY: RSP_VAL"});
+        i.noteServiceResponseHeaders("RSP_HEADER_KEY: RSP_VAL");
         i.noteServiceResponseBody("RSP_BODY", 200, "text/plain");
         i.complete();
         mr.finishedScript(0, false);
@@ -159,7 +160,7 @@ public class MarkdownRecorderTest {
         InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
         i.noteClientRequestHeadersAndBody(im, asList("ZZZZ: ZZ", "REQ_HEADER_KEY: VAL"),
                 "REQ_BODY", "text/plain", "FOO", true);
-        i.noteServiceResponseHeaders(new String[] {"RSP_HEADER_KEY: RSP_VAL"});
+        i.noteServiceResponseHeaders("RSP_HEADER_KEY: RSP_VAL");
         i.noteServiceResponseBody("RSP_BODY", 200, "text/plain");
         i.complete();
         mr.finishedScript(0, false);
@@ -292,7 +293,7 @@ public class MarkdownRecorderTest {
         InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
         i.noteClientRequestHeadersAndBody(im, asList(),
                 "Mary had a little lamb", "text/plain", "FOO", true);
-        i.noteServiceResponseHeaders(new String[0]);
+        i.noteServiceResponseHeaders();
         i.noteServiceResponseBody("A little lamb had Mary", 200, "text/plain");
         i.complete();
         mr.finishedScript(0, false);
@@ -340,7 +341,7 @@ public class MarkdownRecorderTest {
         InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
         i.noteClientRequestHeadersAndBody(im, asList("Mary: had a little lamb"),
                 "", "text/plain", "FOO", true);
-        i.noteServiceResponseHeaders(new String[]{"A: little lamb had Mary"});
+        i.noteServiceResponseHeaders("A: little lamb had Mary");
         i.noteServiceResponseBody("", 200, "text/plain");
         i.complete();
         mr.finishedScript(0, false);
@@ -377,6 +378,74 @@ public class MarkdownRecorderTest {
                 "```\n" +
                 "\n" +
                 "```\n\n", out.toString());
+    }
+
+    @Test
+    public void debugChunksCanBeRecorded() {
+        final InteractionManipulations im = mock(InteractionManipulations.class);
+        final ServiceInteroperation si = mock(ServiceInteroperation.class);
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        when(im.headerReplacement("A", "a")).thenReturn("a");
+        when(im.headerReplacement("B", "b")).thenReturn("b");
+        when(im.headerReplacement("C", "c")).thenReturn("c");
+        when(im.headerReplacement("D", "d")).thenReturn("d");
+        when(im.headerReplacement("XX", "xx")).thenReturn("xx");
+
+        MarkdownRecorder mr = new MarkdownRecorder(si, im).withExtraDebugOutput();
+        mr.setOutputStream("foo", out);
+        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
+
+        i.noteServiceResponseHeaders("XX: xx");
+        i.noteServiceResponseBody("", 200, "text/plain");
+        i.debugOriginalServiceResponseHeaders("A: a", "B: b");
+        i.debugClientsServiceResponseHeaders("C: c", "D: d");
+        i.debugOriginalServiceResponseBody("BBBB", 999, "foo/bar");
+        i.debugClientsServiceResponseBody("ZZZZ", 888, "bar/foo");
+
+        i.complete();
+        mr.finishedScript(0, false);
+
+        //verifyNoMoreInteractions(im, si);
+        assertEquals("## Interaction 0: FOO /a/b/c\n" +
+                "\n" +
+                "### Response headers recorded for playback:\n" +
+                "\n" +
+                "```\n" +
+                "XX: xx\n" +
+                "```\n" +
+                "\n" +
+                "### Response body recorded for playback (200: text/plain):\n" +
+                "\n" +
+                "```\n" +
+                "\n" +
+                "```\n" +
+                "\n" +
+                "### DEBUG: Response headers from real service, unchanged:\n" +
+                "\n" +
+                "```\n" +
+                "A: a\n" +
+                "B: b\n" +
+                "```\n" +
+                "\n" +
+                "### DEBUG: Response Headers for client, possibly changed after recording:\n" +
+                "\n" +
+                "```\n" +
+                "C: c\n" +
+                "D: d\n" +
+                "```\n" +
+                "\n" +
+                "### DEBUG: Response body from real service, unchanged (999: foo/bar):\n" +
+                "\n" +
+                "```\n" +
+                "BBBB\n" +
+                "```\n" +
+                "\n" +
+                "### DEBUG: Response body for client, possibly changed after recording (888: bar/foo):\n" +
+                "\n" +
+                "```\n" +
+                "ZZZZ\n" +
+                "```\n" +
+                "\n", out.toString());
     }
 
 
