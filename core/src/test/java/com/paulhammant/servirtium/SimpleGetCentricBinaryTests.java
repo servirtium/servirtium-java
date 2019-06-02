@@ -190,9 +190,10 @@ public abstract class SimpleGetCentricBinaryTests {
                 "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
                 "etag: 0a8a432cd4d057f31a443b55743e26db\n" +
                 "last-modified: Sat, 09 Jun 2018 17:56:24 GMT\n" +
+                "server: ATS/8.0.3\n" +
                 "strict-transport-security: max-age=106384710; includeSubDomains; preload\n" +
                 "timing-allow-origin: *\n" +
-                "via: 1.1 varnish (Varnish/5.1), 1.1 varnish (Varnish/5.1), 1.1 varnish (Varnish/5.1)\n" +
+                "via: 1.1 varnish (Varnish/5.1)\n" +
                 "```\n" +
                 "\n" +
                 "### Response body recorded for playback (200: image/png - Base64 below):\n" +
