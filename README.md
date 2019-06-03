@@ -4,7 +4,7 @@ Servirtium == Service Virtualized HTTP (for Java)
 
 **Utilization of "Service Virtualization" is best practice towards fast and 
 consistent test automation. This tech should be used in conjunction with 
-JUnit/TestNG etc.**
+JUnit/TestNG etc. **
 
 ## Design goal 
 
@@ -58,8 +58,8 @@ compatible with that JavaScript/Browser test suite.
 of that, and [here's the code for the replayer](https://github.com/paul-hammant/servirtium/blob/master/src/test/java/com/paulhammant/servirtium/SubversionCheckoutReplayerMain.java)
 for that.  
 
-Note: playback doesn't pass all the tests because tehre's a randomized GUID in the request 
-payload that changes every time you run the test suite. It get's 1/3 of the way through though.
+Note: playback doesn't pass all the tests because there's a randomized GUID in the request 
+payload that changes every time you run the test suite. It gets one third of the way through though.
 
 **Note: this limitation is being resolved, presently**
 
