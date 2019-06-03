@@ -70,11 +70,10 @@ public abstract class SimpleGetCentricBinaryTests {
     private static final String EXPECTED_2a =
             "Accept-Ranges: bytes\n" +
             "Cache-Control: max-age=604800\n" +
-            "Connection: Keep-Alive\n" +
+            "Connection: keep-alive\n" +
             "Content-Type: application/octet-stream\n" +
             "Date: Thu, 08 Nov 2018 09:52:36 GMT\n" +
             "ETag: \"584057//synapse/tags/3.0.0/modules/distribution/src/main/bin/libwrapper-linux-x86-32.so-gzip\"\n" +
-            "Keep-Alive: timeout=15, max=1000\n" +
             "Last-Modified: Fri, 12 Oct 2007 05:56:23 GMT\n" +
             "Server: Apache/2.4.7 (Ubuntu)\n" +
             "Vary: Accept-Encoding\n";
@@ -102,7 +101,8 @@ public abstract class SimpleGetCentricBinaryTests {
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
-                        .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
+                        .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding")
+                        .withHeaderPrefixesToRemoveFromServiceResponse("Age", "Keep-Alive");;
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),

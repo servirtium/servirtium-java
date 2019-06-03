@@ -74,11 +74,10 @@ public abstract class SimpleGetCentricTextTests {
     private static final String EXPECTED_2a =
             "Accept-Ranges: bytes\n" +
             "Cache-Control: max-age=604800\n" +
-            "Connection: Keep-Alive\n" +
+            "Connection: keep-alive\n" +
             "Content-Type: text/plain\n" +
             "Date: Thu, 08 Nov 2018 09:52:36 GMT\n" +
             "ETag: \"594498//synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE-gzip\"\n" +
-            "Keep-Alive: timeout=15, max=1000\n" +
             "Last-Modified: Tue, 13 Nov 2007 11:58:38 GMT\n" +
             "Server: Apache/2.4.7 (Ubuntu)\n" +
             "Vary: Accept-Encoding\n";
@@ -173,7 +172,8 @@ public abstract class SimpleGetCentricTextTests {
     public void canRecordASimpleGetFromApachesSubversionViaOkHttp() throws Exception {
 
         final SimpleInteractionManipulations interactionManipulations = new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
-                .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
+                .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding")
+                .withHeaderPrefixesToRemoveFromServiceResponse("Age", "Keep-Alive");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
