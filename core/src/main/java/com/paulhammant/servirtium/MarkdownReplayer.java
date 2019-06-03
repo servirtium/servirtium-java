@@ -86,10 +86,10 @@ public class MarkdownReplayer implements InteractionMonitor {
         int ctr = 0;
         boolean again = true;
         while (again) {
-            charPosn = conversation.indexOf(SERVIRTIUM_INTERACTION + ctr + ":");
+            charPosn = conversation.indexOf(SERVIRTIUM_INTERACTION + ctr + ":", charPosn+1);
             int charEndPosn;
             if (charPosn > -1) {
-                charEndPosn = conversation.indexOf(SERVIRTIUM_INTERACTION + (ctr+1) + ":");
+                charEndPosn = conversation.indexOf(SERVIRTIUM_INTERACTION + (ctr+1) + ":", charPosn);
                 if (charEndPosn == -1) {
                     charEndPosn = conversation.length();
                     again = false;
@@ -102,6 +102,7 @@ public class MarkdownReplayer implements InteractionMonitor {
                 again = false;
             }
         }
+        System.err.println("setPlaybackConversation string index cumulative duration: " + dur);
         if (ctr == 0) {
             throw new UnsupportedOperationException("No '" + SERVIRTIUM_INTERACTION.trim() + "' found in conversation '" + conversation + "'. Wrong/empty script file?");
         }
