@@ -70,7 +70,7 @@ public abstract class SimpleGetCentricBinaryTests {
     private static final String EXPECTED_2a =
             "Accept-Ranges: bytes\n" +
             "Cache-Control: max-age=604800\n" +
-            "Connection: keep-alive\n" +
+            "Connection: Keep-Alive\n" +
             "Content-Type: application/octet-stream\n" +
             "Date: Thu, 08 Nov 2018 09:52:36 GMT\n" +
             "ETag: \"584057//synapse/tags/3.0.0/modules/distribution/src/main/bin/libwrapper-linux-x86-32.so-gzip\"\n" +

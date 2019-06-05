@@ -174,7 +174,6 @@ public abstract class SimplePostCentricTests {
             final InputStream resourceAsStream = new FileInputStream("../core/src/test/resources/png-transparent.png");
             byte[] pic = new byte[resourceAsStream.available()];
             resourceAsStream.read(pic);
-            System.out.println();
 
             given()
                     .header("User-Agent", "RestAssured")
@@ -259,7 +258,6 @@ public abstract class SimplePostCentricTests {
             final InputStream resourceAsStream = new FileInputStream("../core/src/test/resources/png-transparent.png");
             byte[] pic = new byte[resourceAsStream.available()];
             resourceAsStream.read(pic);
-            System.out.println();
 
             given()
                     .header("User-Agent", "RestAssured")
@@ -391,7 +389,6 @@ public abstract class SimplePostCentricTests {
                 .body(jsonEqualTo("{\"args\":{},\"data\":{},\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"postman-echo.com\",\"content-length\":\"67\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip,deflate\",\"content-type\":\"image/foofoo; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://postman-echo.com/post\"}\n"))
                 .contentType("application/json;charset=utf-8");
 
-        System.out.println("XXXXX");
 
 //        OkHttpClient client = new OkHttpClient();
 //

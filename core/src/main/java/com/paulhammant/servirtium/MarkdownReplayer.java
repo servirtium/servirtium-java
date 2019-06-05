@@ -102,7 +102,6 @@ public class MarkdownReplayer implements InteractionMonitor {
                 again = false;
             }
         }
-        System.err.println("setPlaybackConversation string index cumulative duration: " + dur);
         if (ctr == 0) {
             throw new UnsupportedOperationException("No '" + SERVIRTIUM_INTERACTION.trim() + "' found in conversation '" + conversation + "'. Wrong/empty script file?");
         }

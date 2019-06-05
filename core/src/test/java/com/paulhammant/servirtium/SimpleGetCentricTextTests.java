@@ -74,7 +74,7 @@ public abstract class SimpleGetCentricTextTests {
     private static final String EXPECTED_2a =
             "Accept-Ranges: bytes\n" +
             "Cache-Control: max-age=604800\n" +
-            "Connection: keep-alive\n" +
+            "Connection: Keep-Alive\n" +
             "Content-Type: text/plain\n" +
             "Date: Thu, 08 Nov 2018 09:52:36 GMT\n" +
             "ETag: \"594498//synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE-gzip\"\n" +

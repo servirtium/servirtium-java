@@ -40,12 +40,8 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
     public void changeSingleHeaderForRequestToRealService(String method, String currentHeader, List<String> clientRequestHeaders) {
         String currentHeaderKey = null;
         String currentHeaderVal = null;
-        try {
-            currentHeaderKey = currentHeader.substring(0, currentHeader.indexOf(": "));
-            currentHeaderVal = currentHeader.substring(currentHeader.indexOf(": ") +2);
-        } catch (StringIndexOutOfBoundsException e) {
-            System.out.println("CH: " + currentHeader + "<CH");
-        }
+        currentHeaderKey = currentHeader.substring(0, currentHeader.indexOf(": "));
+        currentHeaderVal = currentHeader.substring(currentHeader.indexOf(": ") +2);
 
         for (String pfx : headerPrefixesToRemoveFromRequest) {
             if (currentHeader.startsWith(pfx)) {

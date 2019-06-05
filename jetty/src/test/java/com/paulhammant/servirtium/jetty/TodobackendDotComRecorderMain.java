@@ -134,7 +134,6 @@ public class TodobackendDotComRecorderMain {
                 Matcher uidMatcher = UID_PATTERN.matcher(result);
                 while (uidMatcher.find()) {
                     final String uid1 = uidMatcher.group(1);
-                    System.out.println("++++" + uid1);
                     if (!guids.containsKey(uid1)) {
                         guids.put(uid1, guids.size() + 1);
                     }
