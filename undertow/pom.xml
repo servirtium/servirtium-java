@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.paulhammant</groupId>
+        <groupId>com.paulhammant.servirtium</groupId>
         <artifactId>servirtium-pom</artifactId>
         <version>0.9.3-SNAPSHOT</version>
     </parent>
