@@ -86,7 +86,7 @@ The playback box art shows two fewer boxes in that mode of operation.
 
 ### Differences between record and playback tests
 
-[See a picture of the differences between the record and playack modes for service tests](SvnMerkleizer_More_Info.md)
+[See a picture of the differences between the record and playack modes for service tests](docs/SvnMerkleizer_More_Info.md)
 
 ## SvnMerkleizer project - testbase emulation of SvnMerkleizer itself
 
