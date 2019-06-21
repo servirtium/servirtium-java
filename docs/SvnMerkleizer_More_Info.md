@@ -13,9 +13,12 @@ operations to Subversion, and each of these three modes of operation give 69% co
 coverage to the SvnMerkleizer codebase for RecordingSubversionServiceTests or 
 PlayingBackSvnMerkleizerServiceTests test classes.
 
-This suite is overkill really, as 13,500 HTTP operations recorded into Markdown is too big to be human comprehensible.
+This suite is ridiculous overkill really, as 13,500 HTTP operations recorded into Markdown is too big to be human comprehensible.
 For correct usage of Servirtium, you'd have a test that did a handful of HTTP operations at most, and finished 
 (playback mode) in less than half a second.
+
+* `RecordingSubversionServiceTests` - 69% code coverage - 2m 21s
+* `PlayingBackSvnMerkleizerServiceTests` - 69% code coverage - 51s  
 
 Markdown recordings [here](https://github.com/paul-hammant/SvnMerkleizer/tree/master/src/test/mocks/subversion).
 
@@ -37,8 +40,8 @@ The playback box art shows two fewer boxes in that mode of operation.
 This is nonsensical as testing mocks is not really legitmate - tests should be of "prod code" with mocks removing dependencies 
 on collaborators). However, here is the breakdown:
 
-* RecordingSvnMerkleizerServiceTests - 69% code coverage - 1m 36s
-* PlayingBackSvnMerkleizerServiceTests - 0% code coverage - 31s  
+* `RecordingSvnMerkleizerServiceTests` - 69% code coverage - 1m 36s
+* `PlayingBackSvnMerkleizerServiceTests` - 0% code coverage - 31s  
 
 The playback shows the lack of coverage of SvnMerkleizer itself. The mocking using Servirtium of SvnMerkleizer is only 
 appropriate for **another library/app** that does HTTP calls to a SvnMerkleizer extended Subversion server. For that 
