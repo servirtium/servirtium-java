@@ -218,7 +218,7 @@ public abstract class SimplePostCentricTests {
             "Content-Length: 7\n" +
             "Content-Type: text/plain;charset=iso-8859-1\n" +
             "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-            "Server: Jetty(9.4.18.v20190429)\n" +
+            "Server: Jetty(9.4.19.v20190610)\n" +
             "```\n" +
             "\n" +
             "### Response body recorded for playback (200: text/plain;charset=iso-8859-1):\n" +
@@ -302,7 +302,7 @@ public abstract class SimplePostCentricTests {
             "Content-Length: 7\n" +
             "Content-Type: text/plain;charset=iso-8859-1\n" +
             "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-            "Server: Jetty(9.4.18.v20190429)\n" +
+            "Server: Jetty(9.4.19.v20190610)\n" +
             "```\n" +
             "\n" +
             "### Response body recorded for playback (200: text/plain;charset=iso-8859-1):\n" +

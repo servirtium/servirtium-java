@@ -480,11 +480,11 @@ public abstract class SimpleGetCentricTextTests {
                 "### DEBUG: Request headers as received from client, WITHOUT ALPHA-SORT, REDACTIONS, ETC:\n" +
                 "\n" +
                 "```\n" +
+                "Accept: */*\n" +
                 "Connection: keep-alive\n" +
                 "User-Agent: RestAssured\n" +
                 "Host: localhost:8080\n" +
                 "Accept-Encoding: deflate\n" +
-                "Accept: */*\n" +
                 "```\n" +
                 "\n" +
                 "### Request headers recorded for playback:\n" +
