@@ -60,7 +60,6 @@ deployments. See [S3](https://github.com/paul-hammant/servirtium/wiki/S3).
 
 [Read more about two seprate uses of Servirtium for this project](docs/SvnMerkleizer_More_Info.md)
 
-
 ## Todobackend record and playback
 
 [TodobackendDotComServiceRecording.md](https://github.com/paul-hammant/servirtium/blob/master/src/test/resources/TodobackendDotComServiceRecording.md) 
@@ -74,7 +73,7 @@ compatible with that JavaScript/Browser test suite.
 of that, and [here's the code for the replayer](https://github.com/paul-hammant/servirtium/blob/master/src/test/java/com/paulhammant/servirtium/SubversionCheckoutReplayerMain.java)
 for that.  
 
-Note: playback doesn't pass all the tests because there's a randomized GUID in the request 
+Note: playback does not pass all the tests because there's a randomized GUID in the request 
 payload that changes every time you run the test suite. It gets one third of the way through though.
 
 **Note: this limitation is being resolved, presently**
@@ -82,6 +81,20 @@ payload that changes every time you run the test suite. It gets one third of the
 ## Readiness for general industry by lovers of test automation?
 
 Nearly ready, but still being actively worked on.
+
+# Building Servirtium
+
+This builds the binaries, but skips integration tests
+
+```
+mvn clean install
+```
+
+This builds the binaries, and includes integration tests (that use various services on the web)
+
+```
+mvn clean install -Ptests
+```
 
 ## License & Legal warning
 
