@@ -403,8 +403,12 @@ public class MarkdownRecorder implements InteractionMonitor {
         }
     }
 
-    public void setScriptFilename(String filename) throws FileNotFoundException {
-        setOutputStream(filename, new FileOutputStream(filename));
+    public void setScriptFilename(String filename) {
+        try {
+            setOutputStream(filename, new FileOutputStream(filename));
+        } catch (FileNotFoundException e) {
+            throw new UnsupportedOperationException("Can't write to " + filename + ". Does the directory exist?");
+        }
     }
 
     public void setOutputStream(String filename, OutputStream out) {

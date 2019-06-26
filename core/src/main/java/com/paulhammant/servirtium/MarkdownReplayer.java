@@ -76,7 +76,7 @@ public class MarkdownReplayer implements InteractionMonitor {
             setPlaybackConversation(new String(readAllBytes(Paths.get(filename))));
             this.filename = filename;
         } catch (IOException e) {
-            throw new UnsupportedOperationException();
+            throw new UnsupportedOperationException("Can't read contents of " + filename);
         }
     }
 
@@ -264,7 +264,8 @@ public class MarkdownReplayer implements InteractionMonitor {
 
         // TODO remove trim()
         final String[] prevRecorded = reorderMaybe(headersReceived).split("\n");
-        final String[] currentHeaders = reorderMaybe(replay.clientRequestHeaders.trim()).split("\n");
+        final String trim = replay.clientRequestHeaders.trim();
+        final String[] currentHeaders = reorderMaybe(trim).split("\n");
 
         String bodyReceived = getCodeBlock(replay);
 

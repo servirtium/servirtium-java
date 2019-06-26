@@ -40,7 +40,11 @@ public interface InteractionMonitor {
 
     void finishedScript(int interactionNum, boolean failed);
 
-    void setScriptFilename(String filename) throws FileNotFoundException;
+    /**
+     * Set the filename for the source of the conversation
+     * @param filename the filename
+     */
+    void setScriptFilename(String filename);
 
     ServiceResponse getServiceResponseForRequest(String method, String url,
                                                  List<String> clientRequestHeaders, Interaction interaction,
