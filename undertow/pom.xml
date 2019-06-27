@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.paulhammant.servirtium</groupId>
         <artifactId>servirtium-pom</artifactId>
-        <version>0.9.4</version>
+        <version>0.9.5-SNAPSHOT</version>
     </parent>
 
     <artifactId>servirtium-undertow</artifactId>
@@ -38,7 +38,7 @@
             <artifactId>servirtium-core</artifactId>
             <classifier>tests</classifier>
             <type>test-jar</type>
-            <version>0.9.4</version>
+            <version>0.9.5-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
 
