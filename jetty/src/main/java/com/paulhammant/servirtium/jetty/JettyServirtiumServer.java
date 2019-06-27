@@ -54,7 +54,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
         String method = request.getMethod();
 
         String url = request.getRequestURL().toString();
-        final String uri = request.getRequestURI();
+        final String uri = ((Request) request).getOriginalURI();
 
         url = (url.startsWith("http://") || url.startsWith("https://"))
                 ? url : "http://" + request.getRemoteHost() + ":" + request.getRemotePort() + uri;
