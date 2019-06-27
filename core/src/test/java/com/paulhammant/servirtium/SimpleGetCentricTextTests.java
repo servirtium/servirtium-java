@@ -136,9 +136,9 @@ public abstract class SimpleGetCentricTextTests {
             "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
             "Content-Type: text/plain; charset=utf-8\n" +
             "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-            "ETag: \"XxXxXxXxX\"\n" +
+            "ETag: W/\"XxXxXxXxX\"\n" +
             "Strict-Transport-Security: max-age=31536000\n" +
-            "Vary: Authorization,Accept-Encoding\n" +
+            "Vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
             "Via: 1.1 varnish\n" +
             "```\n" +
             "\n" +
@@ -240,16 +240,17 @@ public abstract class SimpleGetCentricTextTests {
                 "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
                 "Content-Type: text/plain; charset=utf-8\n" +
                 "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "ETag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
+                "ETag: W/\"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
                 "Strict-Transport-Security: max-age=31536000\n" +
-                "Vary: Authorization,Accept-Encoding\n" +
+                "Vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
                 "Via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
                 "### Response body recorded for playback (200: text/plain; charset=utf-8):\n" +
                 "\n" +
                 "```\n" +
-                "{\"Accept-Language\": \"en-US,en;q=0.8\",  \"Host\": \"headers.jsontest.com\",  \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\" }\n\n" +
+                "{\"Accept-Language\": \"en-US,en;q=0.8\",  \"Host\": \"headers.jsontest.com\",  \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\" }\n" +
+                "\n" +
                 "```\n" +
                 "\n" +
                 "## Interaction 1: GET /paul-hammant/servirtium/master/core/src/test/resources/does-not-exist.json\n" +
@@ -420,17 +421,21 @@ public abstract class SimpleGetCentricTextTests {
                 "content-security-policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
                 "content-type: text/plain; charset=utf-8\n" +
                 "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "etag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
+                "etag: W/\"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
                 "strict-transport-security: max-age=31536000\n" +
-                "vary: Authorization,Accept-Encoding\n" +
+                "vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
                 "via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
                 "### Response body recorded for playback (200: text/plain; charset=utf-8):\n" +
                 "\n" +
                 "```\n" +
-                sillyJSONdoc +
-                "\n" +
+                "{\n" +
+                "   \"Accept-Language\": \"en-US,en;q=0.8\",\n" +
+                "   \"Host\": \"headers.jsontest.com\",\n" +
+                "   \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\n" +
+                "   \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\"\n" +
+                "}\n" +
                 "```\n" +
                 "\n"), sanitizeDate(out.toString()));
 
@@ -518,21 +523,21 @@ public abstract class SimpleGetCentricTextTests {
                 "content-security-policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
                 "content-type: text/plain; charset=utf-8\n" +
                 "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "etag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
+                "etag: W/\"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
                 "expires: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "source-age: 161\n" +
+                "source-age: 142\n" +
                 "strict-transport-security: max-age=31536000\n" +
-                "vary: Authorization,Accept-Encoding\n" +
+                "vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
                 "via: 1.1 varnish\n" +
-                "x-cache-hits: 1\n" +
+                "x-cache-hits: 2\n" +
                 "x-cache: HIT\n" +
                 "x-content-type-options: nosniff\n" +
-                "x-fastly-request-id: 5859b24e028d1c57a42aab8824e506a3dbbf350e\n" +
+                "x-fastly-request-id: e07368cfcf9768713b0873d9b2a6316366e3802c\n" +
                 "x-frame-options: deny\n" +
                 "x-geo-block-list: \n" +
-                "x-github-request-id: C970:25C0:45A226:4E7652:5C9897B3\n" +
-                "x-served-by: cache-lcy19226-LCY\n" +
-                "x-timer: S1553504340.425332,VS0,VE0\n" +
+                "x-github-request-id: EAF4:60D6:C33E:F7BF:5D151F5A\n" +
+                "x-served-by: cache-lhr6351-LHR\n" +
+                "x-timer: S1561665512.245348,VS0,VE0\n" +
                 "x-xss-protection: 1; mode=block\n" +
                 "```\n" +
                 "\n" +
@@ -546,9 +551,9 @@ public abstract class SimpleGetCentricTextTests {
                 "content-security-policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
                 "content-type: text/plain; charset=utf-8\n" +
                 "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "etag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
+                "etag: W/\"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
                 "strict-transport-security: max-age=31536000\n" +
-                "vary: Authorization,Accept-Encoding\n" +
+                "vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
                 "via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
@@ -562,9 +567,9 @@ public abstract class SimpleGetCentricTextTests {
                 "content-security-policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
                 "content-type: text/plain; charset=utf-8\n" +
                 "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "etag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
+                "etag: W/\"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
                 "strict-transport-security: max-age=31536000\n" +
-                "vary: Authorization,Accept-Encoding\n" +
+                "vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
                 "via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
@@ -704,17 +709,22 @@ public abstract class SimpleGetCentricTextTests {
                 "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
                 "Content-Type: text/plain; charset=utf-8\n" +
                 "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "ETag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
+                "ETag: W/\"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
                 "Strict-Transport-Security: max-age=31536000\n" +
-                "Vary: Authorization,Accept-Encoding\n" +
+                "Vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
                 "Via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
                 "### Response body recorded for playback (200: text/plain; charset=utf-8):\n" +
                 "\n" +
                 "```\n" +
-                sillyJSONdoc +
-                "\n```\n" +
+                "{\n" +
+                "   \"Accept-Language\": \"en-US,en;q=0.8\",\n" +
+                "   \"Host\": \"headers.jsontest.com\",\n" +
+                "   \"Accept-Charset\": \"ISO-8859-1,utf-8;q=0.7,*;q=0.3\",\n" +
+                "   \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\"\n" +
+                "}\n" +
+                "```\n" +
                 "\n"), sanitizeDate(out.toString()));
 
     }
@@ -773,7 +783,7 @@ public abstract class SimpleGetCentricTextTests {
                 "```\n" +
                 "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
                 "Strict-Transport-Security: max-age=31536000\n" +
-                "ETag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
+                "ETag: W/\"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
                 "Content-Type: text/plain; charset=utf-8\n" +
                 "Cache-Control: max-age=300\n" +
                 "Accept-Ranges: bytes\n" +
@@ -866,7 +876,7 @@ public abstract class SimpleGetCentricTextTests {
         .then()
                 .assertThat()
                 .statusCode(200)
-                .header("ETag", equalTo("\"XxXxXxXxX\""))
+                .header("ETag", equalTo("W/\"XxXxXxXxX\""))
                 .body(equalTo("{\n" +
                         "   \"Accept-Language\": \"en-US,en;q=0.8\",\n" +
                         "   \"Host\": \"headers.jsontest.com\",\n" +
