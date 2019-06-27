@@ -82,6 +82,10 @@ payload that changes every time you run the test suite. It gets one third of the
 
 Nearly ready, but still being actively worked on.
 
+## Servirtium's default listening port
+
+As per [the default port calculator for 'servirtium'](https://paul-hammant.github.io/default-port-calculator/#servirtium): 61417 
+
 # Building Servirtium
 
 This builds the binaries, but skips integration tests
