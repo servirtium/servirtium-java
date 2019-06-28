@@ -45,6 +45,7 @@ public class MarkdownRecorderTest {
         verify(im).changeBodyForRequestToRealService("REQ_BODY");
         verify(im).headerReplacement("RSP_HEADER_KEY", "RSP_VAL");
         verifyNoMoreInteractions(im, si);
+        
         assertEquals("## Interaction 0: FOO /a/b/c\n" +
                 "\n" +
                 "### Request headers recorded for playback:\n" +
@@ -94,6 +95,7 @@ public class MarkdownRecorderTest {
         verify(im).changeAnyHeadersForRequestToRealService(any(List.class));
         verify(im).changeBodyForRequestToRealService("REQ_BODY");
         verifyNoMoreInteractions(im, si);
+
         assertEquals("## Interaction 0: FOO /a/b/c?password=hardyHarHar\n" +
                 "\n" +
                 "### Request headers recorded for playback:\n" +
@@ -118,7 +120,52 @@ public class MarkdownRecorderTest {
                 "RSP_BODY\n" +
                 "```\n\n", out.toString());
     }
-    
+
+    @Test
+    public void canRecordASimpleScriptWithQueryStringAndRedactPartOfTheURL() {
+        final SimpleInteractionManipulations im = new SimpleInteractionManipulations();
+        final ServiceInteroperation si = mock(ServiceInteroperation.class);
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        MarkdownRecorder mr = new MarkdownRecorder(si, im)
+                .withReplacementsInRecording("hardyHarHar", "pAsSwOrD-rEdAcTeD");
+        mr.setOutputStream("foo", out);
+        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c?password=hardyHarHar", 0, "http://foo.com/bar?password=hardyHarHar", "ctx");
+        i.noteClientRequestHeadersAndBody(im, asList(),
+                "REQ_BODY", "text/plain", "FOO", true);
+        i.noteServiceResponseHeaders();
+        i.noteServiceResponseBody("RSP_BODY", 200, "text/plain");
+        i.complete();
+        mr.finishedScript(0, false);
+
+        verifyNoMoreInteractions(si);
+
+        assertEquals("## Interaction 0: FOO /a/b/c?password=pAsSwOrD-rEdAcTeD\n" +
+                "\n" +
+                "### Request headers recorded for playback:\n" +
+                "\n" +
+                "```\n" +
+                "```\n" +
+                "\n" +
+                "### Request body recorded for playback (text/plain):\n" +
+                "\n" +
+                "```\n" +
+                "REQ_BODY\n" +
+                "```\n" +
+                "\n" +
+                "### Response headers recorded for playback:\n" +
+                "\n" +
+                "```\n" +
+                "```\n" +
+                "\n" +
+                "### Response body recorded for playback (200: text/plain):\n" +
+                "\n" +
+                "```\n" +
+                "RSP_BODY\n" +
+                "```\n\n", out.toString());
+    }
+
+
     @Test
     public void canRecordASimpleScriptWithDebugging() {
         final InteractionManipulations im = mock(InteractionManipulations.class);
