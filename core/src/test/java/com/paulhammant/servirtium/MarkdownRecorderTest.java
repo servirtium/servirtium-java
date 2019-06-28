@@ -74,6 +74,52 @@ public class MarkdownRecorderTest {
     }
 
     @Test
+    public void canRecordASimpleScriptWithQueryString() {
+        final InteractionManipulations im = mock(InteractionManipulations.class);
+        final ServiceInteroperation si = mock(ServiceInteroperation.class);
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        when(im.changeBodyForRequestToRealService("REQ_BODY")).thenReturn("REQ_BODY");
+
+        MarkdownRecorder mr = new MarkdownRecorder(si, im);
+        mr.setOutputStream("foo", out);
+        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c?password=hardyHarHar", 0, "http://foo.com/bar?password=hardyHarHar", "ctx");
+        i.noteClientRequestHeadersAndBody(im, asList(),
+                "REQ_BODY", "text/plain", "FOO", true);
+        i.noteServiceResponseHeaders();
+        i.noteServiceResponseBody("RSP_BODY", 200, "text/plain");
+        i.complete();
+        mr.finishedScript(0, false);
+
+        verify(im).changeAnyHeadersForRequestToRealService(any(List.class));
+        verify(im).changeBodyForRequestToRealService("REQ_BODY");
+        verifyNoMoreInteractions(im, si);
+        assertEquals("## Interaction 0: FOO /a/b/c?password=hardyHarHar\n" +
+                "\n" +
+                "### Request headers recorded for playback:\n" +
+                "\n" +
+                "```\n" +
+                "```\n" +
+                "\n" +
+                "### Request body recorded for playback (text/plain):\n" +
+                "\n" +
+                "```\n" +
+                "REQ_BODY\n" +
+                "```\n" +
+                "\n" +
+                "### Response headers recorded for playback:\n" +
+                "\n" +
+                "```\n" +
+                "```\n" +
+                "\n" +
+                "### Response body recorded for playback (200: text/plain):\n" +
+                "\n" +
+                "```\n" +
+                "RSP_BODY\n" +
+                "```\n\n", out.toString());
+    }
+    
+    @Test
     public void canRecordASimpleScriptWithDebugging() {
         final InteractionManipulations im = mock(InteractionManipulations.class);
         final ServiceInteroperation si = mock(ServiceInteroperation.class);
