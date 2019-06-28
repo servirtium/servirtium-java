@@ -1,5 +1,7 @@
 # Servirtium
 
+![](Servirtium.svg?raw=true&sanitize=true)%
+
 Servirtium == Service Virtualized HTTP (for Java)
 
 **Utilization of "Service Virtualization" is best practice towards fast and 
