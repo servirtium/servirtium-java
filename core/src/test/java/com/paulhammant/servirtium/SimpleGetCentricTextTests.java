@@ -37,7 +37,6 @@ import java.io.ByteArrayOutputStream;
 
 import static com.paulhammant.servirtium.JsonAndXmlUtilities.jsonEqualTo;
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 import static io.restassured.config.DecoderConfig.ContentDecoder.DEFLATE;
 import static io.restassured.config.DecoderConfig.decoderConfig;
 import static io.restassured.config.RestAssuredConfig.newConfig;
@@ -138,6 +137,7 @@ public abstract class SimpleGetCentricTextTests {
             "Content-Type: text/plain; charset=utf-8\n" +
             "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
             "ETag: W/\"XxXxXxXxX\"\n" +
+            //"ETag: \"XxXxXxXxX\"\n" +
             "Strict-Transport-Security: max-age=31536000\n" +
             "Vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
             "Via: 1.1 varnish\n" +
@@ -154,6 +154,97 @@ public abstract class SimpleGetCentricTextTests {
             "}\n" +
             "```\n" +
             "\n";
+
+    public static final String SERVIRTIUM_SVG_CONVERSATION = "## Interaction 0: GET /paul-hammant/servirtium/master/Servirtium.svg?sanitize=true\n" +
+            "\n" +
+            "### Request headers recorded for playback:\n" +
+            "\n" +
+            "```\n" +
+            "accept-encoding: deflate\n" +
+            "accept: */*\n" +
+            "connection: keep-alive\n" +
+            "host: raw.githubusercontent.com\n" +
+            "user-agent: java\n" +
+            "```\n" +
+            "\n" +
+            "### Request body recorded for playback ():\n" +
+            "\n" +
+            "```\n" +
+            "\n" +
+            "```\n" +
+            "\n" +
+            "### Response headers recorded for playback:\n" +
+            "\n" +
+            "```\n" +
+            "accept-ranges: bytes\n" +
+            "access-control-allow-origin: *\n" +
+            "cache-control: max-age=300\n" +
+            "connection: keep-alive\n" +
+            "content-length: 1238\n" +
+            "content-security-policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
+            "content-type: image/svg+xml\n" +
+            "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+            "etag: \"ac09d02640c8005b4419456f173de5e3ebaaabe3\"\n" +
+            "expires: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+            "strict-transport-security: max-age=31536000\n" +
+            "via: 1.1 varnish\n" +
+            "x-content-type-options: nosniff\n" +
+            "x-frame-options: deny\n" +
+            "x-geo-block-list: \n" +
+            "x-xss-protection: 1; mode=block\n" +
+            "```\n" +
+            "\n" +
+            "### Response body recorded for playback (200: image/svg+xml):\n" +
+            "\n" +
+            "```\n" +
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+            "<svg xmlns:xl=\"http://www.w3.org/1999/xlink\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewBox=\"217 111 164 43\" width=\"164\" height=\"43\">\n" +
+            "   <defs>\n" +
+            "    \n" +
+            "  </defs>\n" +
+            "   <metadata> Produced by OmniGraffle 7.10.1 \n" +
+            "    \n" +
+            "  </metadata>\n" +
+            "   <g id=\"Canvas_1\" stroke-opacity=\"1\" stroke-dasharray=\"none\" fill-opacity=\"1\" stroke=\"none\" fill=\"none\">\n" +
+            "      <title>Canvas 1</title>\n" +
+            "      <rect fill=\"white\" x=\"217\" y=\"111\" width=\"164\" height=\"43\"/>\n" +
+            "      <g id=\"Canvas_1: Layer 1\">\n" +
+            "         <title>Layer 1</title>\n" +
+            "         <g id=\"Graphic_2\">\n" +
+            "            <path d=\"M 218 132.5 L 258.5 112 L 339.5 112 L 380 132.5 L 339.5 153 L 258.5 153 Z\" fill=\"#80ff80\"/>\n" +
+            "            <path d=\"M 218 132.5 L 258.5 112 L 339.5 112 L 380 132.5 L 339.5 153 L 258.5 153 Z\" stroke=\"black\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1\"/>\n" +
+            "            <text transform=\"translate(223 119)\" fill=\"#ff2600\">\n" +
+            "               <tspan font-family=\"Helvetica Neue\" font-size=\"22\" font-weight=\"700\" fill=\"#ff2600\" x=\"22.232\" y=\"21\">Servirtium</tspan>\n" +
+            "            </text>\n" +
+            "         </g>\n" +
+            "      </g>\n" +
+            "   </g>\n" +
+            "</svg>\n" +
+            "```\n" +
+            "\n";
+    public static final String SERVIRTIUM_SVG_SANITIZED = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+            "<svg xmlns:xl=\"http://www.w3.org/1999/xlink\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewBox=\"217 111 164 43\" width=\"164\" height=\"43\">\n" +
+            "   <defs>\n" +
+            "    \n" +
+            "  </defs>\n" +
+            "   <metadata> Produced by OmniGraffle 7.10.1 \n" +
+            "    \n" +
+            "  </metadata>\n" +
+            "   <g id=\"Canvas_1\" stroke-opacity=\"1\" stroke-dasharray=\"none\" fill-opacity=\"1\" stroke=\"none\" fill=\"none\">\n" +
+            "      <title>Canvas 1</title>\n" +
+            "      <rect fill=\"white\" x=\"217\" y=\"111\" width=\"164\" height=\"43\"/>\n" +
+            "      <g id=\"Canvas_1: Layer 1\">\n" +
+            "         <title>Layer 1</title>\n" +
+            "         <g id=\"Graphic_2\">\n" +
+            "            <path d=\"M 218 132.5 L 258.5 112 L 339.5 112 L 380 132.5 L 339.5 153 L 258.5 153 Z\" fill=\"#80ff80\"/>\n" +
+            "            <path d=\"M 218 132.5 L 258.5 112 L 339.5 112 L 380 132.5 L 339.5 153 L 258.5 153 Z\" stroke=\"black\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1\"/>\n" +
+            "            <text transform=\"translate(223 119)\" fill=\"#ff2600\">\n" +
+            "               <tspan font-family=\"Helvetica Neue\" font-size=\"22\" font-weight=\"700\" fill=\"#ff2600\" x=\"22.232\" y=\"21\">Servirtium</tspan>\n" +
+            "            </text>\n" +
+            "         </g>\n" +
+            "      </g>\n" +
+            "   </g>\n" +
+            "</svg>";
 
     final String sillyJSONdoc = "{\n" +
             "   \"Accept-Language\": \"en-US,en;q=0.8\",\n" +
@@ -475,109 +566,52 @@ public abstract class SimpleGetCentricTextTests {
         .then()
                 .assertThat()
                 .statusCode(200)
-                .body(equalTo("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
-                        "<svg version=\"1.1\" xmlns:xl=\"http://www.w3.org/1999/xlink\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"217 111 164 43\" width=\"164\" height=\"43\">\n" +
-                        "   <defs>\n" +
-                        "      <font-face font-family=\"Helvetica Neue\" font-size=\"22\" panose-1=\"2 0 8 3 0 0 0 9 0 4\" units-per-em=\"1000\" underline-position=\"-100\" underline-thickness=\"50\" slope=\"0\" x-height=\"517\" cap-height=\"714\" ascent=\"975.0061\" descent=\"-216.99524\" font-weight=\"700\">\n" +
-                        "         <font-face-src>\n" +
-                        "            <font-face-name name=\"HelveticaNeue-Bold\"/>\n" +
-                        "         </font-face-src>\n" +
-                        "      </font-face>\n" +
-                        "   </defs>\n" +
-                        "   <metadata> Produced by OmniGraffle 7.10.1 \n" +
-                        "    <dc:date>2019-06-28 10:51:13 +0000</dc:date>\n" +
-                        "   </metadata>\n" +
-                        "   <g id=\"Canvas_1\" stroke-opacity=\"1\" stroke-dasharray=\"none\" fill-opacity=\"1\" stroke=\"none\" fill=\"none\">\n" +
-                        "      <title>Canvas 1</title>\n" +
-                        "      <rect fill=\"white\" x=\"217\" y=\"111\" width=\"164\" height=\"43\"/>\n" +
-                        "      <g id=\"Canvas_1: Layer 1\">\n" +
-                        "         <title>Layer 1</title>\n" +
-                        "         <g id=\"Graphic_2\">\n" +
-                        "            <path d=\"M 218 132.5 L 258.5 112 L 339.5 112 L 380 132.5 L 339.5 153 L 258.5 153 Z\" fill=\"#80ff80\"/>\n" +
-                        "            <path d=\"M 218 132.5 L 258.5 112 L 339.5 112 L 380 132.5 L 339.5 153 L 258.5 153 Z\" stroke=\"black\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1\"/>\n" +
-                        "            <text transform=\"translate(223 119)\" fill=\"#ff2600\">\n" +
-                        "               <tspan font-family=\"Helvetica Neue\" font-size=\"22\" font-weight=\"700\" fill=\"#ff2600\" x=\"22.232\" y=\"21\">Servirtium</tspan>\n" +
-                        "            </text>\n" +
-                        "         </g>\n" +
-                        "      </g>\n" +
-                        "   </g>\n" +
-                        "</svg>"))
-                .contentType("text/plain;charset=utf-8");
+                .body(equalTo(SERVIRTIUM_SVG_SANITIZED))
+                .contentType("image/svg+xml");
 
         servirtiumServer.finishedScript();
 
         // Order of headers is as originally sent
-        assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/Servirtium.svg?sanitize=true\n" +
-                "\n" +
-                "### Request headers recorded for playback:\n" +
-                "\n" +
-                "```\n" +
-                "accept-encoding: deflate\n" +
-                "accept: */*\n" +
-                "connection: keep-alive\n" +
-                "host: raw.githubusercontent.com\n" +
-                "user-agent: java\n" +
-                "```\n" +
-                "\n" +
-                "### Request body recorded for playback ():\n" +
-                "\n" +
-                "```\n" +
-                "\n" +
-                "```\n" +
-                "\n" +
-                "### Response headers recorded for playback:\n" +
-                "\n" +
-                "```\n" +
-                "accept-ranges: bytes\n" +
-                "access-control-allow-origin: *\n" +
-                "cache-control: max-age=300\n" +
-                "connection: keep-alive\n" +
-                "content-length: 1652\n" +
-                "content-security-policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
-                "content-type: text/plain; charset=utf-8\n" +
-                "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "etag: \"ac09d02640c8005b4419456f173de5e3ebaaabe3\"\n" +
-                "expires: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "strict-transport-security: max-age=31536000\n" +
-                "via: 1.1 varnish\n" +
-                "x-content-type-options: nosniff\n" +
-                "x-frame-options: deny\n" +
-                "x-geo-block-list: \n" +
-                "x-xss-protection: 1; mode=block\n" +
-                "```\n" +
-                "\n" +
-                "### Response body recorded for playback (200: text/plain; charset=utf-8):\n" +
-                "\n" +
-                "```\n" +
-                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
-                "<svg version=\"1.1\" xmlns:xl=\"http://www.w3.org/1999/xlink\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"217 111 164 43\" width=\"164\" height=\"43\">\n" +
-                "   <defs>\n" +
-                "      <font-face font-family=\"Helvetica Neue\" font-size=\"22\" panose-1=\"2 0 8 3 0 0 0 9 0 4\" units-per-em=\"1000\" underline-position=\"-100\" underline-thickness=\"50\" slope=\"0\" x-height=\"517\" cap-height=\"714\" ascent=\"975.0061\" descent=\"-216.99524\" font-weight=\"700\">\n" +
-                "         <font-face-src>\n" +
-                "            <font-face-name name=\"HelveticaNeue-Bold\"/>\n" +
-                "         </font-face-src>\n" +
-                "      </font-face>\n" +
-                "   </defs>\n" +
-                "   <metadata> Produced by OmniGraffle 7.10.1 \n" +
-                "    <dc:date>2019-06-28 10:51:13 +0000</dc:date>\n" +
-                "   </metadata>\n" +
-                "   <g id=\"Canvas_1\" stroke-opacity=\"1\" stroke-dasharray=\"none\" fill-opacity=\"1\" stroke=\"none\" fill=\"none\">\n" +
-                "      <title>Canvas 1</title>\n" +
-                "      <rect fill=\"white\" x=\"217\" y=\"111\" width=\"164\" height=\"43\"/>\n" +
-                "      <g id=\"Canvas_1: Layer 1\">\n" +
-                "         <title>Layer 1</title>\n" +
-                "         <g id=\"Graphic_2\">\n" +
-                "            <path d=\"M 218 132.5 L 258.5 112 L 339.5 112 L 380 132.5 L 339.5 153 L 258.5 153 Z\" fill=\"#80ff80\"/>\n" +
-                "            <path d=\"M 218 132.5 L 258.5 112 L 339.5 112 L 380 132.5 L 339.5 153 L 258.5 153 Z\" stroke=\"black\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1\"/>\n" +
-                "            <text transform=\"translate(223 119)\" fill=\"#ff2600\">\n" +
-                "               <tspan font-family=\"Helvetica Neue\" font-size=\"22\" font-weight=\"700\" fill=\"#ff2600\" x=\"22.232\" y=\"21\">Servirtium</tspan>\n" +
-                "            </text>\n" +
-                "         </g>\n" +
-                "      </g>\n" +
-                "   </g>\n" +
-                "</svg>\n" +
-                "```\n" +
-                "\n"), sanitizeDate(out.toString()));
+        assertEquals(sanitizeDate(SERVIRTIUM_SVG_CONVERSATION), sanitizeDate(out.toString()));
+
+    }
+
+    public void canPlaybackASimpleQueryStringGet() throws Exception {
+
+        final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
+
+        final SimpleInteractionManipulations interactionManipulations =
+                new SimpleInteractionManipulations("http://localhost:61417", "https://raw.githubusercontent.com")
+                        .withHeaderPrefixesToRemoveFromServiceResponse("source-age:",
+                                "x-fastly-request-id:", "x-served-by:", "x-timer:",
+                                "x-github-request-id:", "vary:", "x-cache");
+
+        MarkdownReplayer playback = new MarkdownReplayer(new MarkdownReplayer.ReplayMonitor.Console())
+                .withAlphaSortingOfHeaders();
+
+        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, playback, 61417)
+                .withPrettyPrintedTextBodies()
+                .withLowerCaseHeaders();
+
+        playback.setPlaybackConversation(SERVIRTIUM_SVG_CONVERSATION);
+
+        servirtiumServer.start();
+
+
+        given().
+                config(newConfig().decoderConfig(decoderConfig().contentDecoders(DEFLATE))).
+                header("User-Agent", "Java").
+                port(61417).
+        when()
+                .get("/paul-hammant/servirtium/master/Servirtium.svg?sanitize=true")
+        .then()
+                .assertThat()
+                .statusCode(200)
+                .body(equalTo(SERVIRTIUM_SVG_SANITIZED))
+                .contentType(containsString("image/svg+xml"));
+
+        servirtiumServer.finishedScript();
+
 
     }
 
@@ -587,7 +621,7 @@ public abstract class SimpleGetCentricTextTests {
         final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
 
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromServiceResponse("x-", "source-age", "expires:")
+                .withHeaderPrefixesToRemoveFromServiceResponse("x-", "source-age", "expires:", "etag:", "vary:")
                 .withHeaderPrefixesToRemoveFromClientRequest("accept-encoding");
 
 
@@ -664,6 +698,7 @@ public abstract class SimpleGetCentricTextTests {
                 "content-type: text/plain; charset=utf-8\n" +
                 "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
                 "etag: W/\"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
+                //"etag: \"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
                 "expires: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
                 "source-age: 142\n" +
                 "strict-transport-security: max-age=31536000\n" +
@@ -691,9 +726,7 @@ public abstract class SimpleGetCentricTextTests {
                 "content-security-policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
                 "content-type: text/plain; charset=utf-8\n" +
                 "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "etag: W/\"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
                 "strict-transport-security: max-age=31536000\n" +
-                "vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
                 "via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
@@ -707,9 +740,7 @@ public abstract class SimpleGetCentricTextTests {
                 "content-security-policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
                 "content-type: text/plain; charset=utf-8\n" +
                 "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "etag: W/\"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
                 "strict-transport-security: max-age=31536000\n" +
-                "vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
                 "via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
@@ -793,7 +824,7 @@ public abstract class SimpleGetCentricTextTests {
         final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
 
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:")
+                .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:", "ETag:", "Vary:")
                 .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
@@ -849,9 +880,7 @@ public abstract class SimpleGetCentricTextTests {
                 "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
                 "Content-Type: text/plain; charset=utf-8\n" +
                 "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "ETag: W/\"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
                 "Strict-Transport-Security: max-age=31536000\n" +
-                "Vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
                 "Via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +

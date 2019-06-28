@@ -41,6 +41,11 @@ public class SimpleGetCentricTextWithUndertowTests extends SimpleGetCentricTextT
         super.canRecordASimpleQueryStringGet();
     }
 
+    @Override @Test
+    public void canPlaybackASimpleQueryStringGet() throws Exception {
+        super.canPlaybackASimpleQueryStringGet();
+    }
+
     @Override @Test @Ignore
     public void canSupplyDebugInformationOnRedditJsonGet() throws Exception {
         super.canSupplyDebugInformationOnRedditJsonGet();

@@ -300,6 +300,9 @@ public class MarkdownReplayer implements InteractionMonitor {
             for (String redactionRegex : replacements.keySet()) {
                 h = h.replaceAll(redactionRegex, replacements.get(redactionRegex));
             }
+            if (lowerCaseHeaders) {
+                h = h.toLowerCase();
+            }
             currentHeaders2[ix] = h;
             ix++;
         }

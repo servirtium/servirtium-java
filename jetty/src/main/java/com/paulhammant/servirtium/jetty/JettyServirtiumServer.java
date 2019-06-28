@@ -54,10 +54,15 @@ public class JettyServirtiumServer extends ServirtiumServer {
         String method = request.getMethod();
 
         String url = request.getRequestURL().toString();
-        String uri = ((Request) request).getOriginalURI();
+        String uri = request.getRequestURI();
+
+        String qs = request.getQueryString();
+        if (qs != null) {
+            uri = uri + "?" + qs;
+            url = url + "?" + qs;
+        }
 
         if (uri.contains("://")) {
-            System.out.println(">>>>> " + uri);
             uri = uri.substring(uri.indexOf("/", 8));
         }
 

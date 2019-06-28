@@ -42,6 +42,11 @@ public class SimpleGetCentricTextWithJettyTests extends SimpleGetCentricTextTest
     }
 
     @Override @Test
+    public void canPlaybackASimpleQueryStringGet() throws Exception {
+        super.canPlaybackASimpleQueryStringGet();
+    }
+
+    @Override @Test
     public void canSupplyDebugInformationOnRedditJsonGet() throws Exception {
         super.canSupplyDebugInformationOnRedditJsonGet();
     }
