@@ -45,6 +45,11 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         String uri = exchange.getRequestURI();
         String url = exchange.getRequestURL();
 
+        String qs = exchange.getQueryString();
+        if (!qs.equals("")) {
+            uri = uri + "?" + qs;
+        }
+
         // Fixes for Proxy server case - Jetty and Undertow are different here.
         if (uri.startsWith("https://") || uri.startsWith("http://")) {
             uri = uri.substring(url.indexOf("/",7));

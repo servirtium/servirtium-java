@@ -37,6 +37,7 @@ import java.io.ByteArrayOutputStream;
 
 import static com.paulhammant.servirtium.JsonAndXmlUtilities.jsonEqualTo;
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
 import static io.restassured.config.DecoderConfig.ContentDecoder.DEFLATE;
 import static io.restassured.config.DecoderConfig.decoderConfig;
 import static io.restassured.config.RestAssuredConfig.newConfig;
@@ -180,7 +181,7 @@ public abstract class SimpleGetCentricTextTests {
                 interactionManipulations
         ).withAlphaSortingOfHeaders();
 
-        servirtiumServer = makeServirtiumServer(new ServiceMonitor.Console(), interactionManipulations, recorder);
+        servirtiumServer = makeServirtiumServer(new ServiceMonitor.Console(), interactionManipulations, recorder, 8080);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
@@ -207,7 +208,7 @@ public abstract class SimpleGetCentricTextTests {
                 interactionManipulations)
                 .withAlphaSortingOfHeaders();
 
-        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder);
+        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder, 8080);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
@@ -326,7 +327,7 @@ public abstract class SimpleGetCentricTextTests {
         replayer.setPlaybackConversation(expected);
 
         servirtiumServer = makeServirtiumServer(serverMonitor,
-                interactionManipulations, replayer);
+                interactionManipulations, replayer, 8080);
 
         servirtiumServer.start();
 
@@ -355,7 +356,7 @@ public abstract class SimpleGetCentricTextTests {
 
     }
 
-    public abstract ServirtiumServer makeServirtiumServer(ServiceMonitor.Console serverMonitor, SimpleInteractionManipulations interactionManipulations, InteractionMonitor interactionMonitor);
+    public abstract ServirtiumServer makeServirtiumServer(ServiceMonitor.Console serverMonitor, SimpleInteractionManipulations interactionManipulations, InteractionMonitor interactionMonitor, int port);
 
     public void canRecordASimpleGetOfARedditJsonDocumentAndPrettify() throws Exception {
 
@@ -371,7 +372,7 @@ public abstract class SimpleGetCentricTextTests {
                 interactionManipulations)
                 .withAlphaSortingOfHeaders();
 
-        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder)
+        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder, 8080)
                 .withPrettyPrintedTextBodies()
                 .withLowerCaseHeaders();
 
@@ -402,7 +403,7 @@ public abstract class SimpleGetCentricTextTests {
                 "accept: */*\n" +
                 "connection: keep-alive\n" +
                 "host: raw.githubusercontent.com\n" +
-                "user-agent: RestAssured\n" +
+                "user-agent: restassured\n" +
                 "```\n" +
                 "\n" +
                 "### Request body recorded for playback ():\n" +
@@ -441,6 +442,145 @@ public abstract class SimpleGetCentricTextTests {
 
     }
 
+    public void canRecordASimpleQueryStringGet() throws Exception {
+
+        final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
+
+        final SimpleInteractionManipulations interactionManipulations =
+                new SimpleInteractionManipulations("http://localhost:61417", "https://raw.githubusercontent.com")
+                        .withHeaderPrefixesToRemoveFromServiceResponse("source-age:",
+                                "x-fastly-request-id:", "x-served-by:", "x-timer:",
+                                "x-github-request-id:", "vary:", "x-cache");
+
+        MarkdownRecorder recorder = new MarkdownRecorder(
+                new ServiceInteropViaOkHttp(),
+                interactionManipulations)
+                .withAlphaSortingOfHeaders();
+
+        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder, 61417)
+                .withPrettyPrintedTextBodies()
+                .withLowerCaseHeaders();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
+        servirtiumServer.start();
+
+
+        given().
+                config(newConfig().decoderConfig(decoderConfig().contentDecoders(DEFLATE))).
+                header("User-Agent", "Java").
+                port(61417).
+        when()
+                .get("/paul-hammant/servirtium/master/Servirtium.svg?sanitize=true")
+        .then()
+                .assertThat()
+                .statusCode(200)
+                .body(equalTo("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+                        "<svg version=\"1.1\" xmlns:xl=\"http://www.w3.org/1999/xlink\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"217 111 164 43\" width=\"164\" height=\"43\">\n" +
+                        "   <defs>\n" +
+                        "      <font-face font-family=\"Helvetica Neue\" font-size=\"22\" panose-1=\"2 0 8 3 0 0 0 9 0 4\" units-per-em=\"1000\" underline-position=\"-100\" underline-thickness=\"50\" slope=\"0\" x-height=\"517\" cap-height=\"714\" ascent=\"975.0061\" descent=\"-216.99524\" font-weight=\"700\">\n" +
+                        "         <font-face-src>\n" +
+                        "            <font-face-name name=\"HelveticaNeue-Bold\"/>\n" +
+                        "         </font-face-src>\n" +
+                        "      </font-face>\n" +
+                        "   </defs>\n" +
+                        "   <metadata> Produced by OmniGraffle 7.10.1 \n" +
+                        "    <dc:date>2019-06-28 10:51:13 +0000</dc:date>\n" +
+                        "   </metadata>\n" +
+                        "   <g id=\"Canvas_1\" stroke-opacity=\"1\" stroke-dasharray=\"none\" fill-opacity=\"1\" stroke=\"none\" fill=\"none\">\n" +
+                        "      <title>Canvas 1</title>\n" +
+                        "      <rect fill=\"white\" x=\"217\" y=\"111\" width=\"164\" height=\"43\"/>\n" +
+                        "      <g id=\"Canvas_1: Layer 1\">\n" +
+                        "         <title>Layer 1</title>\n" +
+                        "         <g id=\"Graphic_2\">\n" +
+                        "            <path d=\"M 218 132.5 L 258.5 112 L 339.5 112 L 380 132.5 L 339.5 153 L 258.5 153 Z\" fill=\"#80ff80\"/>\n" +
+                        "            <path d=\"M 218 132.5 L 258.5 112 L 339.5 112 L 380 132.5 L 339.5 153 L 258.5 153 Z\" stroke=\"black\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1\"/>\n" +
+                        "            <text transform=\"translate(223 119)\" fill=\"#ff2600\">\n" +
+                        "               <tspan font-family=\"Helvetica Neue\" font-size=\"22\" font-weight=\"700\" fill=\"#ff2600\" x=\"22.232\" y=\"21\">Servirtium</tspan>\n" +
+                        "            </text>\n" +
+                        "         </g>\n" +
+                        "      </g>\n" +
+                        "   </g>\n" +
+                        "</svg>"))
+                .contentType("text/plain;charset=utf-8");
+
+        servirtiumServer.finishedScript();
+
+        // Order of headers is as originally sent
+        assertEquals(sanitizeDate("## Interaction 0: GET /paul-hammant/servirtium/master/Servirtium.svg?sanitize=true\n" +
+                "\n" +
+                "### Request headers recorded for playback:\n" +
+                "\n" +
+                "```\n" +
+                "accept-encoding: deflate\n" +
+                "accept: */*\n" +
+                "connection: keep-alive\n" +
+                "host: raw.githubusercontent.com\n" +
+                "user-agent: java\n" +
+                "```\n" +
+                "\n" +
+                "### Request body recorded for playback ():\n" +
+                "\n" +
+                "```\n" +
+                "\n" +
+                "```\n" +
+                "\n" +
+                "### Response headers recorded for playback:\n" +
+                "\n" +
+                "```\n" +
+                "accept-ranges: bytes\n" +
+                "access-control-allow-origin: *\n" +
+                "cache-control: max-age=300\n" +
+                "connection: keep-alive\n" +
+                "content-length: 1652\n" +
+                "content-security-policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
+                "content-type: text/plain; charset=utf-8\n" +
+                "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+                "etag: \"ac09d02640c8005b4419456f173de5e3ebaaabe3\"\n" +
+                "expires: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+                "strict-transport-security: max-age=31536000\n" +
+                "via: 1.1 varnish\n" +
+                "x-content-type-options: nosniff\n" +
+                "x-frame-options: deny\n" +
+                "x-geo-block-list: \n" +
+                "x-xss-protection: 1; mode=block\n" +
+                "```\n" +
+                "\n" +
+                "### Response body recorded for playback (200: text/plain; charset=utf-8):\n" +
+                "\n" +
+                "```\n" +
+                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+                "<svg version=\"1.1\" xmlns:xl=\"http://www.w3.org/1999/xlink\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"217 111 164 43\" width=\"164\" height=\"43\">\n" +
+                "   <defs>\n" +
+                "      <font-face font-family=\"Helvetica Neue\" font-size=\"22\" panose-1=\"2 0 8 3 0 0 0 9 0 4\" units-per-em=\"1000\" underline-position=\"-100\" underline-thickness=\"50\" slope=\"0\" x-height=\"517\" cap-height=\"714\" ascent=\"975.0061\" descent=\"-216.99524\" font-weight=\"700\">\n" +
+                "         <font-face-src>\n" +
+                "            <font-face-name name=\"HelveticaNeue-Bold\"/>\n" +
+                "         </font-face-src>\n" +
+                "      </font-face>\n" +
+                "   </defs>\n" +
+                "   <metadata> Produced by OmniGraffle 7.10.1 \n" +
+                "    <dc:date>2019-06-28 10:51:13 +0000</dc:date>\n" +
+                "   </metadata>\n" +
+                "   <g id=\"Canvas_1\" stroke-opacity=\"1\" stroke-dasharray=\"none\" fill-opacity=\"1\" stroke=\"none\" fill=\"none\">\n" +
+                "      <title>Canvas 1</title>\n" +
+                "      <rect fill=\"white\" x=\"217\" y=\"111\" width=\"164\" height=\"43\"/>\n" +
+                "      <g id=\"Canvas_1: Layer 1\">\n" +
+                "         <title>Layer 1</title>\n" +
+                "         <g id=\"Graphic_2\">\n" +
+                "            <path d=\"M 218 132.5 L 258.5 112 L 339.5 112 L 380 132.5 L 339.5 153 L 258.5 153 Z\" fill=\"#80ff80\"/>\n" +
+                "            <path d=\"M 218 132.5 L 258.5 112 L 339.5 112 L 380 132.5 L 339.5 153 L 258.5 153 Z\" stroke=\"black\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1\"/>\n" +
+                "            <text transform=\"translate(223 119)\" fill=\"#ff2600\">\n" +
+                "               <tspan font-family=\"Helvetica Neue\" font-size=\"22\" font-weight=\"700\" fill=\"#ff2600\" x=\"22.232\" y=\"21\">Servirtium</tspan>\n" +
+                "            </text>\n" +
+                "         </g>\n" +
+                "      </g>\n" +
+                "   </g>\n" +
+                "</svg>\n" +
+                "```\n" +
+                "\n"), sanitizeDate(out.toString()));
+
+    }
+
 
     public void canSupplyDebugInformationOnRedditJsonGet() throws Exception {
 
@@ -457,7 +597,7 @@ public abstract class SimpleGetCentricTextTests {
                 .withAlphaSortingOfHeaders()
                 .withExtraDebugOutput();
 
-        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder)
+        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder, 8080)
                 .withPrettyPrintedTextBodies()
                 .withLowerCaseHeaders();
 
@@ -498,7 +638,7 @@ public abstract class SimpleGetCentricTextTests {
                 "accept: */*\n" +
                 "connection: keep-alive\n" +
                 "host: raw.githubusercontent.com\n" +
-                "user-agent: RestAssured\n" +
+                "user-agent: restassured\n" +
                 "```\n" +
                 "\n" +
                 "### DEBUG: Request body as received from client (), WITHOUT REDACTIONS, ETC:\n" +
@@ -661,7 +801,7 @@ public abstract class SimpleGetCentricTextTests {
                 interactionManipulations)
                 .withAlphaSortingOfHeaders();
 
-        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder)
+        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder, 8080)
                 .withPrettyPrintedTextBodies();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -740,7 +880,7 @@ public abstract class SimpleGetCentricTextTests {
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations);
-        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder)
+        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder, 8080)
                 .withPrettyPrintedTextBodies();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -819,7 +959,7 @@ public abstract class SimpleGetCentricTextTests {
                 .withReplacementInRecording("dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36", "XxXxXxXxX")
                 .withAlphaSortingOfHeaders();
 
-        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder)
+        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder, 8080)
                 .withPrettyPrintedTextBodies();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -863,7 +1003,7 @@ public abstract class SimpleGetCentricTextTests {
                         .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         servirtiumServer = makeServirtiumServer(serverMonitor,
-                interactionManipulations, replayer)
+                interactionManipulations, replayer, 8080)
                 .withPrettyPrintedTextBodies();
 
         servirtiumServer.start();
@@ -898,7 +1038,7 @@ public abstract class SimpleGetCentricTextTests {
         servirtiumServer = makeServirtiumServer(new ServiceMonitor.Console(),
                 new SubversionInteractionManipulations("localhost:8080", "svn.apache.org")
                         .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding")
-                , replayer);
+                , replayer, 8080);
 
         servirtiumServer.start();
 

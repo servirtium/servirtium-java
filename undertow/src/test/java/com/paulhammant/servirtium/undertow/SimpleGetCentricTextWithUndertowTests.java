@@ -11,9 +11,9 @@ import org.junit.Test;
 
 public class SimpleGetCentricTextWithUndertowTests extends SimpleGetCentricTextTests {
 
-    public ServirtiumServer makeServirtiumServer(ServiceMonitor.Console serverMonitor, SimpleInteractionManipulations interactionManipulations, InteractionMonitor interactionMonitor) {
+    public ServirtiumServer makeServirtiumServer(ServiceMonitor.Console serverMonitor, SimpleInteractionManipulations interactionManipulations, InteractionMonitor interactionMonitor, int port) {
         return new UndertowServirtiumServer(serverMonitor,
-                8080, interactionManipulations, interactionMonitor);
+                port, interactionManipulations, interactionMonitor);
     }
 
     @After
@@ -34,6 +34,11 @@ public class SimpleGetCentricTextWithUndertowTests extends SimpleGetCentricTextT
     @Override @Test
     public void canRecordASimpleGetOfARedditJsonDocumentAndPrettify() throws Exception {
         super.canRecordASimpleGetOfARedditJsonDocumentAndPrettify();
+    }
+
+    @Override @Test
+    public void canRecordASimpleQueryStringGet() throws Exception {
+        super.canRecordASimpleQueryStringGet();
     }
 
     @Override @Test @Ignore

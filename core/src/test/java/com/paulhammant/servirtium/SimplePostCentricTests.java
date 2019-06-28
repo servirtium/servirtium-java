@@ -107,9 +107,7 @@ public abstract class SimplePostCentricTests {
                 new SimpleInteractionManipulations("http://localhost:8080", "https://postman-echo.com")
                         .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
-        MarkdownRecorder recorder = new MarkdownRecorder(
-                new ServiceInteropViaOkHttp(),
-                interactionManipulations)
+        MarkdownRecorder recorder = new MarkdownRecorder(new ServiceInteropViaOkHttp(), interactionManipulations)
                 .withAlphaSortingOfHeaders();
 
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder);

@@ -1,6 +1,6 @@
 # Servirtium
 
-![](Servirtium.svg?raw=true&sanitize=true)%
+![](Servirtium.svg?raw=true&sanitize=true)
 
 Servirtium == Service Virtualized HTTP (for Java)
 

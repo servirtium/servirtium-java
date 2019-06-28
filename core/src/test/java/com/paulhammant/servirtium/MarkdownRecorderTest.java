@@ -50,8 +50,8 @@ public class MarkdownRecorderTest {
                 "### Request headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
-                "zzzz: Z-Z\n" +
-                "req_header_key: V-A-L\n" +
+                "zzzz: z-z\n" +
+                "req_header_key: v-a-l\n" +
                 "```\n" +
                 "\n" +
                 "### Request body recorded for playback (text/plain):\n" +
@@ -114,8 +114,8 @@ public class MarkdownRecorderTest {
                 "### Request headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
-                "zzzz: Z-Z\n" +
-                "req_header_key: V-A-L\n" +
+                "zzzz: z-z\n" +
+                "req_header_key: v-a-l\n" +
                 "```\n" +
                 "\n" +
                 "### DEBUG: Request body as received from client (text/plain), WITHOUT REDACTIONS, ETC:\n" +
@@ -178,8 +178,8 @@ public class MarkdownRecorderTest {
                 "### Request headers recorded for playback:\n" +
                 "\n" +
                 "```\n" +
-                "req_header_key: V-A-L\n" +
-                "zzzz: Z-Z\n" +
+                "req_header_key: v-a-l\n" +
+                "zzzz: z-z\n" +
                 "```\n" +
                 "\n" +
                 "### Request body recorded for playback (text/plain):\n" +

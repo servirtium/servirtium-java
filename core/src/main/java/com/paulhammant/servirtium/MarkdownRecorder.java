@@ -178,6 +178,9 @@ public class MarkdownRecorder implements InteractionMonitor {
                 for (String replacementRegex : replacements.keySet()) {
                     h = h.replaceAll(replacementRegex, replacements.get(replacementRegex));
                 }
+                if (lowerCaseHeaders) {
+                    h = h.toLowerCase();
+                }
                 headersToRecord2.add(h);
             }
 

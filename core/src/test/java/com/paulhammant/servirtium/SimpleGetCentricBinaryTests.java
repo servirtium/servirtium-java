@@ -169,7 +169,7 @@ public abstract class SimpleGetCentricBinaryTests {
                 "accept: */*\n" +
                 "connection: keep-alive\n" +
                 "host: upload.wikimedia.org\n" +
-                "user-agent: RestAssured\n" +
+                "user-agent: restassured\n" +
                 "```\n" +
                 "\n" +
                 "### Request body recorded for playback ():\n" +
@@ -247,7 +247,7 @@ public abstract class SimpleGetCentricBinaryTests {
                         "accept: */*\n" +
                         "connection: keep-alive\n" +
                         "host: upload.wikimedia.org\n" +
-                        "user-agent: RestAssured\n" +
+                        "user-agent: restassured\n" +
                         "```\n" +
                         "\n" +
                         "### Request body recorded for playback ():\n" +

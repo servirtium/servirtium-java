@@ -55,7 +55,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
         String url = request.getRequestURL().toString();
         String uri = ((Request) request).getOriginalURI();
-        
+
         if (uri.contains("://")) {
             System.out.println(">>>>> " + uri);
             uri = uri.substring(uri.indexOf("/", 8));
