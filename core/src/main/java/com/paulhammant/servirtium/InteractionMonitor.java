@@ -38,13 +38,13 @@ import java.util.List;
 
 public interface InteractionMonitor {
 
-    void finishedScript(int interactionNum, boolean failed);
+    default void finishedScript(int interactionNum, boolean failed) {}
 
     /**
      * Set the filename for the source of the conversation
      * @param filename the filename
      */
-    void setScriptFilename(String filename);
+    default void setScriptFilename(String filename) {}
 
     ServiceResponse getServiceResponseForRequest(String method, String url,
                                                  List<String> clientRequestHeaders, Interaction interaction,
@@ -91,19 +91,19 @@ public interface InteractionMonitor {
             return clientRequestHeaders2;
         }
 
-        public abstract void debugOriginalServiceResponseHeaders(String... headers);
+        public void debugOriginalServiceResponseHeaders(String... headers) {}
 
-        public abstract void debugOriginalServiceResponseBody(Object body, int statusCode, String contentType);
+        public void debugOriginalServiceResponseBody(Object body, int statusCode, String contentType) {}
 
-        public abstract void debugClientsServiceResponseHeaders(String... headers);
+        public void debugClientsServiceResponseHeaders(String... headers) {}
 
-        public abstract void debugClientsServiceResponseBody(Object body, int statusCode, String contentType);
+        public void debugClientsServiceResponseBody(Object body, int statusCode, String contentType) {}
 
-        public abstract void noteServiceResponseHeaders(String... headers);
+        public void noteServiceResponseHeaders(String... headers) {}
 
-        public abstract void noteServiceResponseBody(Object body, int statusCode, String contentType);
+        public void noteServiceResponseBody(Object body, int statusCode, String contentType) {}
 
-        public abstract void noteChangedResourceForRequestToClient(String from, String to);
+        public void noteChangedResourceForRequestToClient(String from, String to) {}
     }
 
     public class NullObject implements InteractionMonitor {

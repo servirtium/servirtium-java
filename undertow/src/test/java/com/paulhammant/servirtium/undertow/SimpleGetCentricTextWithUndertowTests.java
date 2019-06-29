@@ -42,6 +42,11 @@ public class SimpleGetCentricTextWithUndertowTests extends SimpleGetCentricTextT
     }
 
     @Override @Test
+    public void canPassThroughASimpleQueryStringGet() throws Exception {
+        super.canPassThroughASimpleQueryStringGet();
+    }
+
+    @Override @Test
     public void canPlaybackASimpleQueryStringGet() throws Exception {
         super.canPlaybackASimpleQueryStringGet();
     }

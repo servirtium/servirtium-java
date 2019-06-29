@@ -45,7 +45,7 @@ public class MarkdownRecorderTest {
         verify(im).changeBodyForRequestToRealService("REQ_BODY");
         verify(im).headerReplacement("RSP_HEADER_KEY", "RSP_VAL");
         verifyNoMoreInteractions(im, si);
-        
+
         assertEquals("## Interaction 0: FOO /a/b/c\n" +
                 "\n" +
                 "### Request headers recorded for playback:\n" +

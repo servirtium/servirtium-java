@@ -576,6 +576,44 @@ public abstract class SimpleGetCentricTextTests {
 
     }
 
+    public void canPassThroughASimpleQueryStringGet() throws Exception {
+
+        final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
+
+        final SimpleInteractionManipulations interactionManipulations =
+                new SimpleInteractionManipulations("http://localhost:61417", "https://raw.githubusercontent.com")
+                        .withHeaderPrefixesToRemoveFromServiceResponse("source-age:",
+                                "x-fastly-request-id:", "x-served-by:", "x-timer:",
+                                "x-github-request-id:", "vary:", "x-cache");
+
+        NonRecordingPassThrough nonRecordingPassThrough = new NonRecordingPassThrough(
+                new ServiceInteropViaOkHttp(),
+                interactionManipulations)
+                .withAlphaSortingOfHeaders();
+
+        servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, nonRecordingPassThrough, 61417)
+                .withPrettyPrintedTextBodies()
+                .withLowerCaseHeaders();
+
+        servirtiumServer.start();
+
+        given().
+                config(newConfig().decoderConfig(decoderConfig().contentDecoders(DEFLATE))).
+                header("User-Agent", "Java").
+                port(61417).
+        when()
+                .get("/paul-hammant/servirtium/master/Servirtium.svg?sanitize=true")
+        .then()
+                .assertThat()
+                .statusCode(200)
+                .body(equalTo(SERVIRTIUM_SVG_SANITIZED))
+                .contentType("image/svg+xml");
+
+        servirtiumServer.finishedScript();
+
+
+    }
+
     public void canPlaybackASimpleQueryStringGet() throws Exception {
 
         final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
