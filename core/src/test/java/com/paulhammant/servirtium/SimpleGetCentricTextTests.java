@@ -1023,6 +1023,7 @@ public abstract class SimpleGetCentricTextTests {
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations)
                 .withReplacementInRecording("ISO-\\d\\d\\d\\d-1", "ISO-NNNN-1")
+                .withReplacementInRecording("W/dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36", "XxXxXxXxX")
                 .withReplacementInRecording("dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36", "XxXxXxXxX")
                 .withAlphaSortingOfHeaders();
 
