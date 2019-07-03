@@ -50,7 +50,6 @@ public class NonRecordingPassThrough implements InteractionMonitor {
         return this;
     }
 
-
     public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRequestHeaders,
                                                         Interaction interaction, boolean lowerCaseHeaders) {
         return serviceInteroperation.invokeServiceEndpoint(method,
@@ -61,7 +60,6 @@ public class NonRecordingPassThrough implements InteractionMonitor {
     }
 
     public class NonRecordingInteraction extends Interaction {
-
 
         NonRecordingInteraction(int interactionNumber, String context) {
             super(interactionNumber, context);

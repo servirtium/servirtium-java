@@ -47,6 +47,9 @@ import java.util.concurrent.TimeUnit;
 
 import static com.paulhammant.servirtium.ServirtiumServer.isText;
 
+/**
+ * Invoke remote HTTP services using Square's OkHttp library.
+ */
 public class ServiceInteropViaOkHttp implements ServiceInteroperation {
 
     private OkHttpClient okHttpClient;
@@ -54,22 +57,37 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
     private int writeTimeout = 10; // secs
     private int connectionTimeout = 10; // secs
 
+    /**
+     * Change client to have a write timeout that's no the default for OkHttp
+     * @param writeTimeout in milliseconds
+     * @return this
+     */
     public ServiceInteropViaOkHttp withWriteTimeout(int writeTimeout) {
         this.writeTimeout = writeTimeout;
         return this;
     }
 
+    /**
+     * Change client to have a read timeout that's no the default for OkHttp
+     * @param readTimeout in milliseconds
+     * @return this
+     */
     public ServiceInteropViaOkHttp withReadTimeout(int readTimeout) {
         this.readTimeout = readTimeout;
         return this;
     }
 
+    /**
+     * Change client to have a connection timeout that's no the default for OkHttp
+     * @param connectionTimeout in milliseconds
+     * @return this
+     */
     public ServiceInteropViaOkHttp withConnectionTimeout(int connectionTimeout) {
         this.connectionTimeout = connectionTimeout;
         return this;
     }
 
-    protected OkHttpClient makeOkHttpClient() {
+    private OkHttpClient makeOkHttpClient() {
         return  new OkHttpClient.Builder()
                 .readTimeout(readTimeout, TimeUnit.SECONDS)
                 .writeTimeout(writeTimeout, TimeUnit.SECONDS)
@@ -78,10 +96,12 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
     }
 
     @Override
-    public ServiceResponse invokeServiceEndpoint(String method, Object clientRequestBody, String clientRequestContentType,
+    public ServiceResponse invokeServiceEndpoint(String method,
+                                                 Object clientRequestBody,
+                                                 String clientRequestContentType,
                                                  String url, List<String> clientRequestHeaders,
                                                  InteractionManipulations interactionManipulations,
-                                                 boolean lowerCaseHeaders) throws ServiceInteroperationFailed {
+                                                 boolean forceHeadersToLowerCase) throws ServiceInteroperationFailed {
 
         if (okHttpClient == null) {
             okHttpClient = makeOkHttpClient();
@@ -147,7 +167,7 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
                 int ix = hdrLine.indexOf(": ");
                 String hdrName = hdrLine.substring(0, ix);
                 String hdrVal = hdrLine.substring(ix + 2);
-                String hdrKey = lowerCaseHeaders ? hdrName.toLowerCase() : hdrName; // HTTP 2.0 says lower-case header keys.
+                String hdrKey = forceHeadersToLowerCase ? hdrName.toLowerCase() : hdrName; // HTTP 2.0 says lower-case header keys.
                 responseHeaders2.add(hdrKey + ": " + interactionManipulations.headerReplacement(hdrKey, hdrVal));
             }
             final String[] headers = responseHeaders2.toArray(new String[responseHeaders.length]);
@@ -158,14 +178,4 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
         }
     }
 
-    private String[] alternatingHeaderNamesAndValues(List<String> headers) {
-        String[] rv = new String[headers.size() * 2];
-        int x = 0;
-        for (String header : headers) {
-            String[] s = header.split(": ");
-            rv[x++] = s[0];
-            rv[x++] = s[1];
-        }
-        return rv;
-    }
 }
