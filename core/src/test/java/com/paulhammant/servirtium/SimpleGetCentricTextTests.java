@@ -136,8 +136,6 @@ public abstract class SimpleGetCentricTextTests {
             "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
             "Content-Type: text/plain; charset=utf-8\n" +
             "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-            "ETag: W/\"XxXxXxXxX\"\n" +
-            //"ETag: \"XxXxXxXxX\"\n" +
             "Strict-Transport-Security: max-age=31536000\n" +
             "Vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
             "Via: 1.1 varnish\n" +
@@ -291,7 +289,7 @@ public abstract class SimpleGetCentricTextTests {
 
         final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:")
+                .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:", "ETag:")
                 .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
@@ -332,7 +330,6 @@ public abstract class SimpleGetCentricTextTests {
                 "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
                 "Content-Type: text/plain; charset=utf-8\n" +
                 "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "ETag: W/\"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
                 "Strict-Transport-Security: max-age=31536000\n" +
                 "Vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
                 "Via: 1.1 varnish\n" +
@@ -454,9 +451,8 @@ public abstract class SimpleGetCentricTextTests {
         final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
 
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromServiceResponse("x-", "source-age", "expires:")
+                .withHeaderPrefixesToRemoveFromServiceResponse("x-", "source-age", "expires:", "vary:", "etag:")
                 .withHeaderPrefixesToRemoveFromClientRequest("accept-encoding");
-
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
@@ -513,9 +509,7 @@ public abstract class SimpleGetCentricTextTests {
                 "content-security-policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
                 "content-type: text/plain; charset=utf-8\n" +
                 "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                "etag: W/\"dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36\"\n" +
                 "strict-transport-security: max-age=31536000\n" +
-                "vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
                 "via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
@@ -1016,15 +1010,13 @@ public abstract class SimpleGetCentricTextTests {
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:")
+                .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:", "ETag:")
                 .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations)
                 .withReplacementInRecording("ISO-\\d\\d\\d\\d-1", "ISO-NNNN-1")
-                .withReplacementInRecording("W/dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36", "XxXxXxXxX")
-                .withReplacementInRecording("dc98c3ae65b0caa93d436d47a3d2ffe59b02fd36", "XxXxXxXxX")
                 .withAlphaSortingOfHeaders();
 
         servirtiumServer = makeServirtiumServer(serverMonitor, interactionManipulations, recorder, 8080)
@@ -1067,7 +1059,7 @@ public abstract class SimpleGetCentricTextTests {
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                        .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:")
+                        .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:", "ETag:")
                         .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         servirtiumServer = makeServirtiumServer(serverMonitor,
@@ -1084,7 +1076,7 @@ public abstract class SimpleGetCentricTextTests {
         .then()
                 .assertThat()
                 .statusCode(200)
-                .header("ETag", equalTo("W/\"XxXxXxXxX\""))
+                //.header("ETag", equalTo("W/\"XxXxXxXxX\""))
                 .body(equalTo("{\n" +
                         "   \"Accept-Language\": \"en-US,en;q=0.8\",\n" +
                         "   \"Host\": \"headers.jsontest.com\",\n" +
