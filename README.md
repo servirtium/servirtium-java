@@ -2,30 +2,33 @@
 
 ![](Servirtium.svg?raw=true&sanitize=true)
 
-Servirtium == Service Virtualized HTTP (for Java)
+Servirtium == Service Virtualized HTTP (for Java) in a record/playback style
 
-**Utilization of "Service Virtualization" is best practice towards fast and 
+Utilization of "Service Virtualization" is best practice towards fast and 
 consistent test automation. This tech should be used in conjunction with 
-JUnit/TestNG, etc.**
+JUnit/TestNG, etc.  Versus alternate technologies, Servirtium utilizes Markdown
+for recorded HTTP conversations, which aids readability and diffing. Those are
+helpful when Service Virtualization is participating in a **Technology Compatibility Kit**
 
 ## Design goals 
 
-1. To enable recording of HTTP conversations, store them in Markdown under source control co-located with 
-the service tests themselves. 
-
-2. In playback allow the functionality tested in the service tests to be isolated from potentially flaky 
-and unquestionably slow "down stack" or remote services.
+1. By being a "man in the middle" it enables the recording of HTTP conversations and store them in Markdown under 
+source-control co-located with the automated tests themselves. 
+2. In playback, Servirtium allows the functionality tested in the service tests to be isolated from potentially flaky 
+and unquestionably slower "down stack" and remote services.
+3. A diffable format to clearly show the differences between two recordings of the same conversation.
 
 ## Design Limitations
 
-And this is just for Java teams. Use [Mountebank](http://mbtest.org) for a more versatile SV 
-solution and there's an established [WireMock](http://wiremock.org/) that's available for Java 
-solutions, though those two don't have a focus on Markdown for the recording format
+And this is just for Java teams. Non-Markdown alternates are: 
 
-Not only is this just for Java teams, it is for teams that want to do the testing that would 
-poke remote services, but do so **in process** and completely choreographed from within the test class
-itself. In other words, no other processes involved, even if multiple threads are cooperating 
-here. 
+* [Mountebank](http://mbtest.org) by ThoughtWorker Brandon Byars for a more versatile SV solution (written in NodeJs, but usable 
+from other languages).
+* [WireMock](http://wiremock.org/) (more establised)
+* Linkedin's [Flashback](https://github.com/linkedin/flashback) (newer)
+
+Not only is Servirtium just for Java teams wanting it is **in the same process** as the test-runner. It is not designed to be a 
+standalone server. 
 
 ## What do recordings look like?
 
