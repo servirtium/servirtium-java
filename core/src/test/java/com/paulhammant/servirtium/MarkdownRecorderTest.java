@@ -39,8 +39,8 @@ public class MarkdownRecorderTest {
 
         verify(im).headerReplacement("ZZZZ", "ZZ");
         verify(im).headerReplacement("REQ_HEADER_KEY", "VAL");
-        verify(im).changeSingleHeaderForRequestToRealService(eq("FOO"), eq("req_header_key: V-A-L"), any(List.class));
-        verify(im).changeSingleHeaderForRequestToRealService(eq("FOO"), eq("zzzz: Z-Z"), any(List.class));
+        verify(im).changeSingleHeaderForRequestToRealService(eq("req_header_key: V-A-L"), any(List.class));
+        verify(im).changeSingleHeaderForRequestToRealService(eq("zzzz: Z-Z"), any(List.class));
         verify(im).changeAnyHeadersForRequestToRealService(any(List.class));
         verify(im).changeBodyForRequestToRealService("REQ_BODY");
         verify(im).headerReplacement("RSP_HEADER_KEY", "RSP_VAL");
@@ -189,8 +189,8 @@ public class MarkdownRecorderTest {
 
         verify(im).headerReplacement("ZZZZ", "ZZ");
         verify(im).headerReplacement("REQ_HEADER_KEY", "VAL");
-        verify(im).changeSingleHeaderForRequestToRealService(eq("FOO"), eq("req_header_key: V-A-L"), any(List.class));
-        verify(im).changeSingleHeaderForRequestToRealService(eq("FOO"), eq("zzzz: Z-Z"), any(List.class));
+        verify(im).changeSingleHeaderForRequestToRealService(eq("req_header_key: V-A-L"), any(List.class));
+        verify(im).changeSingleHeaderForRequestToRealService(eq("zzzz: Z-Z"), any(List.class));
         verify(im).changeAnyHeadersForRequestToRealService(any(List.class));
         verify(im).changeBodyForRequestToRealService("REQ_BODY");
         verify(im).headerReplacement("RSP_HEADER_KEY", "RSP_VAL");
@@ -260,8 +260,8 @@ public class MarkdownRecorderTest {
 
         verify(im).headerReplacement("ZZZZ", "ZZ");
         verify(im).headerReplacement("REQ_HEADER_KEY", "VAL");
-        verify(im).changeSingleHeaderForRequestToRealService(eq("FOO"), eq("req_header_key: V-A-L"), any(List.class));
-        verify(im).changeSingleHeaderForRequestToRealService(eq("FOO"), eq("zzzz: Z-Z"), any(List.class));
+        verify(im).changeSingleHeaderForRequestToRealService(eq("req_header_key: V-A-L"), any(List.class));
+        verify(im).changeSingleHeaderForRequestToRealService(eq("zzzz: Z-Z"), any(List.class));
         verify(im).changeAnyHeadersForRequestToRealService(any(List.class));
         verify(im).changeBodyForRequestToRealService("REQ_BODY");
         verify(im).headerReplacement("RSP_HEADER_KEY", "RSP_VAL");
@@ -440,7 +440,7 @@ public class MarkdownRecorderTest {
         mr.finishedScript(0, false);
 
         verify(im).changeAnyHeadersForRequestToRealService(any(List.class));
-        verify(im).changeSingleHeaderForRequestToRealService(eq("FOO"), eq("mary: had a little lamb"), any(List.class));
+        verify(im).changeSingleHeaderForRequestToRealService(eq("mary: had a little lamb"), any(List.class));
 
         verify(im).headerReplacement("Mary", "had a little lamb");
         verify(im).headerReplacement("A", "tiny piglet had Mary");

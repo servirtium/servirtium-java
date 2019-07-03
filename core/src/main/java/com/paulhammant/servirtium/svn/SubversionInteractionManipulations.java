@@ -42,7 +42,7 @@ public class SubversionInteractionManipulations extends SimpleInteractionManipul
     }
 
     @Override
-    public void changeSingleHeaderForRequestToRealService(String method, String currentHeader, List<String> clientRequestHeaders) {
+    public void changeSingleHeaderForRequestToRealService(String currentHeader, List<String> clientRequestHeaders) {
         if (currentHeader.startsWith("User-Agent:")) {
             for (int i = 0; i < clientRequestHeaders.size(); i++) {
                 String s = clientRequestHeaders.get(i);
@@ -54,7 +54,7 @@ public class SubversionInteractionManipulations extends SimpleInteractionManipul
             }
         }
 
-        super.changeSingleHeaderForRequestToRealService(method, currentHeader, clientRequestHeaders);
+        super.changeSingleHeaderForRequestToRealService(currentHeader, clientRequestHeaders);
     }
 
     protected String getUserAgentString() {

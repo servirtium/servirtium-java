@@ -35,7 +35,7 @@ import java.util.List;
 
 public interface InteractionManipulations {
 
-    default void changeSingleHeaderForRequestToRealService(String method, String currentHeader, List<String> clientRequestHeaders) {
+    default void changeSingleHeaderForRequestToRealService(String currentHeader, List<String> clientRequestHeaders) {
     }
 
     default String headerReplacement(String hdrKey, String hdrVal) {

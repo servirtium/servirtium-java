@@ -31,7 +31,6 @@
 
 package com.paulhammant.servirtium;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +85,7 @@ public interface InteractionMonitor {
                 hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
                 final String fullHeader = (lowerCaseHeaders ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
                 clientRequestHeaders2.add(fullHeader);
-                interactionManipulations.changeSingleHeaderForRequestToRealService(method, fullHeader, clientRequestHeaders2);
+                interactionManipulations.changeSingleHeaderForRequestToRealService(fullHeader, clientRequestHeaders2);
             }
             return clientRequestHeaders2;
         }

@@ -37,7 +37,7 @@ public class SimpleInteractionManipulations implements InteractionManipulations 
     }
 
     @Override
-    public void changeSingleHeaderForRequestToRealService(String method, String currentHeader, List<String> clientRequestHeaders) {
+    public void changeSingleHeaderForRequestToRealService(String currentHeader, List<String> clientRequestHeaders) {
         String currentHeaderKey = null;
         String currentHeaderVal = null;
         currentHeaderKey = currentHeader.substring(0, currentHeader.indexOf(": "));

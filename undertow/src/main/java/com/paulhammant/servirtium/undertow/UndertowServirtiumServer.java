@@ -245,7 +245,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
                 hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
                 final String newHeader = (useLowerCaseHeaders() ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
                 clientRequestHeaders.add(newHeader);
-                interactionManipulations.changeSingleHeaderForRequestToRealService(method, newHeader, clientRequestHeaders);
+                interactionManipulations.changeSingleHeaderForRequestToRealService(newHeader, clientRequestHeaders);
             });
         });
 
