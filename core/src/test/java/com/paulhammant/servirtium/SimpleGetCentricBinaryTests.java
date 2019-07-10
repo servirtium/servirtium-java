@@ -133,7 +133,7 @@ public abstract class SimpleGetCentricBinaryTests {
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
-                .withHeaderPrefixesToRemoveFromServiceResponse("age:", "x-", "server-timing:"))
+                .withHeaderPrefixesToRemoveFromServiceResponse("age:", "x-", "server-timing:", "via:"))
                 .withAlphaSortingOfHeaders();
 
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder).withLowerCaseHeaders();
@@ -193,7 +193,6 @@ public abstract class SimpleGetCentricBinaryTests {
                 "server: ATS/8.0.3\n" +
                 "strict-transport-security: max-age=106384710; includeSubDomains; preload\n" +
                 "timing-allow-origin: *\n" +
-                "via: 1.1 varnish (Varnish/5.1)\n" +
                 "```\n" +
                 "\n" +
                 "### Response body recorded for playback (200: image/png - Base64 below):\n" +
@@ -212,7 +211,7 @@ public abstract class SimpleGetCentricBinaryTests {
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
-                .withHeaderPrefixesToRemoveFromServiceResponse("age:", "x-", "server-timing:", "server:")
+                .withHeaderPrefixesToRemoveFromServiceResponse("age:", "x-", "server-timing:", "server:", "via:")
         ).withAlphaSortingOfHeaders();
 
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder).withLowerCaseHeaders();
@@ -270,7 +269,6 @@ public abstract class SimpleGetCentricBinaryTests {
                         "last-modified: Sat, 05 Oct 2013 15:01:03 GMT\n" +
                         "strict-transport-security: max-age=106384710; includeSubDomains; preload\n" +
                         "timing-allow-origin: *\n" +
-                        "via: 1.1 varnish (Varnish/5.1)\n" +
                         "```\n" +
                         "\n" +
                         "### Response body recorded for playback (200: image/svg+xml):\n" +

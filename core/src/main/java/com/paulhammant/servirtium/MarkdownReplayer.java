@@ -238,6 +238,10 @@ public class MarkdownReplayer implements InteractionMonitor {
         int iNum = Integer.parseInt(parts[0].replace(":",""));
         String mdMethod = parts[1];
         String mdUrl = parts[2];
+        for (String redactionRegex : replacements.keySet()) {
+            mdUrl = mdUrl.replaceAll(redactionRegex, replacements.get(redactionRegex));
+        }
+
 
         try {
             assertThat(method, equalTo(mdMethod));
@@ -248,6 +252,7 @@ public class MarkdownReplayer implements InteractionMonitor {
         try {
             assertThat(url, endsWith(mdUrl));
         } catch (AssertionError e) {
+            // HERE
             monitor.unexpectedClientRequestUrl(url, replay, mdMethod, mdUrl, filename, replay.context, e);
         }
 

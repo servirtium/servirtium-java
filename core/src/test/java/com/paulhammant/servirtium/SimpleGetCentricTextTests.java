@@ -1090,6 +1090,47 @@ public abstract class SimpleGetCentricTextTests {
 
     }
 
+    public void canReplayWithAReplacementInTheURLtoo() throws Exception {
+
+        final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
+
+        MarkdownReplayer replayer = new MarkdownReplayer()
+                .withReplacementInPlayback(".json", ".jsonnnnnnn");
+        replayer.setPlaybackConversation(REDACTED_CONVERSATION);
+
+        final SimpleInteractionManipulations interactionManipulations =
+                new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
+                        .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:", "ETag:")
+                        .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
+
+        servirtiumServer = makeServirtiumServer(serverMonitor,
+                interactionManipulations, replayer, 8080)
+                .withPrettyPrintedTextBodies();
+
+        servirtiumServer.start();
+
+        given()
+                .header("User-Agent", "RestAssured")
+                .header("Connection", "keep-alive")
+        .when()
+                .get("/paul-hammant/servirtium/master/core/src/test/resources/test.jsonnnnnnn")
+        .then()
+                .assertThat()
+                .statusCode(200)
+                //.header("ETag", equalTo("W/\"XxXxXxXxX\""))
+                .body(equalTo("{\n" +
+                        "   \"Accept-Language\": \"en-US,en;q=0.8\",\n" +
+                        "   \"Host\": \"headers.jsontest.com\",\n" +
+                        "   \"Accept-Charset\": \"ISO-NNNN-1,utf-8;q=0.7,*;q=0.3\",\n" +
+                        "   \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\"\n" +
+                        "}"))
+                .contentType("text/plain;charset=utf-8");
+
+
+        servirtiumServer.finishedScript();
+
+    }
+
     public void canReplayASimpleGetFromApachesSubversion() throws Exception {
 
         MarkdownReplayer replayer = new MarkdownReplayer(new MarkdownReplayer.ReplayMonitor.Console());

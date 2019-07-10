@@ -77,6 +77,11 @@ public class SimpleGetCentricTextWithJettyTests extends SimpleGetCentricTextTest
     }
 
     @Override @Test
+    public void canReplayWithAReplacementInTheURLtoo() throws Exception {
+        super.canReplayWithAReplacementInTheURLtoo();
+    }
+
+    @Override @Test
     public void canReplayASimpleGetFromApachesSubversion() throws Exception {
         super.canReplayASimpleGetFromApachesSubversion();
     }
