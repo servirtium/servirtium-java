@@ -307,11 +307,11 @@ public class MarkdownRecorder implements InteractionMonitor {
             }
             for (String hdrLine : headers) {
                 int ix = hdrLine.indexOf(": ");
+                for (String next : replacements.keySet()) {
+                    hdrLine = hdrLine.replaceAll(next, replacements.get(next));
+                }
                 String hdrKey = hdrLine.substring(0, ix);
                 String hdrVal = hdrLine.substring(ix + 2);
-                for (String next : replacements.keySet()) {
-                    hdrVal = hdrVal.replaceAll(next, replacements.get(next));
-                }
                 this.recording.append(hdrKey).append(": ").append(
                         interactionManipulations.headerReplacement(hdrKey, hdrVal)).append("\n");
             }
