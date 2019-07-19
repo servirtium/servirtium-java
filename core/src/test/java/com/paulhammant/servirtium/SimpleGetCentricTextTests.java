@@ -137,7 +137,6 @@ public abstract class SimpleGetCentricTextTests {
             "Content-Type: text/plain; charset=utf-8\n" +
             "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
             "Strict-Transport-Security: max-age=31536000\n" +
-            "Vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
             "Via: 1.1 varnish\n" +
             "```\n" +
             "\n" +
@@ -289,7 +288,7 @@ public abstract class SimpleGetCentricTextTests {
 
         final ServiceMonitor.Console serverMonitor = new ServiceMonitor.Console();
         final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:", "ETag:")
+                .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:", "ETag:", "Vary:")
                 .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
@@ -331,7 +330,6 @@ public abstract class SimpleGetCentricTextTests {
                 "Content-Type: text/plain; charset=utf-8\n" +
                 "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
                 "Strict-Transport-Security: max-age=31536000\n" +
-                "Vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
                 "Via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
@@ -369,7 +367,6 @@ public abstract class SimpleGetCentricTextTests {
                 "Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
                 "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
                 "Strict-Transport-Security: max-age=31536000\n" +
-                "Vary: Authorization,Accept-Encoding\n" +
                 "Via: 1.1 varnish\n" +
                 "```\n" +
                 "\n" +
@@ -734,7 +731,6 @@ public abstract class SimpleGetCentricTextTests {
                 "expires: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
                 "source-age: 142\n" +
                 "strict-transport-security: max-age=31536000\n" +
-                "vary: Authorization,Accept-Encoding, Accept-Encoding\n" +
                 "via: 1.1 varnish\n" +
                 "x-cache-hits: 2\n" +
                 "x-cache: HIT\n" +
@@ -809,7 +805,7 @@ public abstract class SimpleGetCentricTextTests {
             String[] chunks = e.getMessage().split("but was");
             assertBoth(chunks, "source-age:");
             assertBoth(chunks, "strict-transport-security:");
-            assertBoth(chunks, "vary:");
+            //assertBoth(chunks, "vary:");
             assertBoth(chunks, "via:");
             assertBoth(chunks, "x-cache-hits:");
             assertBoth(chunks, "x-cache:");
@@ -820,8 +816,24 @@ public abstract class SimpleGetCentricTextTests {
             assertBoth(chunks, "x-github-request-id:");
             assertBoth(chunks, "x-served-by:");
             assertBoth(chunks, "x-timer:");
+            //assertBoth(chunks, "expires:");
             try {
                 assertBoth(chunks, "x-xss-protection:");
+            } catch (AssertionError e1) {
+                // optional
+            }
+            try {
+                assertBoth(chunks, "vary:");
+            } catch (AssertionError e1) {
+                // optional
+            }
+            try {
+                assertBoth(chunks, "etag:");
+            } catch (AssertionError e1) {
+                // optional
+            }
+            try {
+                assertBoth(chunks, "expires:");
             } catch (AssertionError e1) {
                 // optional
             }
@@ -833,11 +845,13 @@ public abstract class SimpleGetCentricTextTests {
     }
 
     private void assertBoth(String[] chunks, String stringToContain) {
-        assertThat(chunks[0], containsString(stringToContain));
-        assertThat(chunks[1], containsString(stringToContain));
-        chunks[0] = removeLine(chunks[0], stringToContain);
-        chunks[1] = removeLine(chunks[1], stringToContain);
-
+        try {
+            assertThat(chunks[0], containsString(stringToContain));
+            chunks[0] = removeLine(chunks[0], stringToContain);
+        } finally {
+            assertThat(chunks[1], containsString(stringToContain));
+            chunks[1] = removeLine(chunks[1], stringToContain);
+        }
     }
 
     private String removeLine(String chunk, String stringToContain) {
@@ -1010,7 +1024,7 @@ public abstract class SimpleGetCentricTextTests {
 
         final SimpleInteractionManipulations interactionManipulations =
                 new SimpleInteractionManipulations("http://localhost:8080", "https://raw.githubusercontent.com")
-                .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:", "ETag:")
+                .withHeaderPrefixesToRemoveFromServiceResponse("X-", "Source-Age", "Expires:", "ETag:", "Vary:")
                 .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
