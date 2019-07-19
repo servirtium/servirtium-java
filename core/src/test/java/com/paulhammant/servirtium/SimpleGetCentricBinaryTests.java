@@ -128,13 +128,10 @@ public abstract class SimpleGetCentricBinaryTests {
 
     public void canRecordAPngGetFromWikimedia() throws Exception {
 
-        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("localhost:8080", "upload.wikimedia.org");
+        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("localhost:8080", "upload.wikimedia.org")
+                .withHeaderPrefixesToRemoveFromServiceResponse("age:", "x-", "server-timing:", "via:", "connection:");
 
-        MarkdownRecorder recorder = new MarkdownRecorder(
-                new ServiceInteropViaOkHttp(),
-                interactionManipulations
-                .withHeaderPrefixesToRemoveFromServiceResponse("age:", "x-", "server-timing:",
-                        "via:", "connection:"))
+        MarkdownRecorder recorder = new MarkdownRecorder(new ServiceInteropViaOkHttp(), interactionManipulations)
                 .withAlphaSortingOfHeaders();
 
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder).withLowerCaseHeaders();
@@ -189,7 +186,7 @@ public abstract class SimpleGetCentricBinaryTests {
                 "content-type: image/png\n" +
                 "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
                 "etag: 0a8a432cd4d057f31a443b55743e26db\n" +
-                "last-modified: Wed, 18 Jul 2018 04:40:11 GMT\n" +
+                "last-modified: Sat, 09 Jun 2018 17:56:24 GMT\n" +
                 "server: ATS/8.0.3\n" +
                 "strict-transport-security: max-age=106384710; includeSubDomains; preload\n" +
                 "timing-allow-origin: *\n" +
