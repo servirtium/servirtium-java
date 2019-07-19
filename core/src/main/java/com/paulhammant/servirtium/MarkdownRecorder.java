@@ -81,14 +81,17 @@ public class MarkdownRecorder implements InteractionMonitor {
 
     public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRequestHeaders,
                                                         Interaction interaction, boolean lowerCaseHeaders) {
-        //clientRequestHeaders.remove("Accept-Encoding");
         return serviceInteroperation.invokeServiceEndpoint(method, interaction.clientRequestBody,
-                interaction.clientRequestContentType, url, clientRequestHeaders, interactionManipulations, lowerCaseHeaders);
+                interaction.clientRequestContentType, url, clientRequestHeaders,
+                interactionManipulations, lowerCaseHeaders);
     }
 
     /**
      * In the recording, some things that will be recorded differently to
      * what was sent/received to/from the real.
+     * Note for request headers: replacements will be tried once "as is" and a second after the
+     * whole header has been dropped to lower case (if applicable)
+     * Note for response headers: case is "as is" from the real service
      * @param regex - something that may be in the read data sent to/from the real.
      * @param replacement - something that will replace the above in the recording.
      * @return this
@@ -179,6 +182,12 @@ public class MarkdownRecorder implements InteractionMonitor {
                     h = h.replaceAll(replacementRegex, replacements.get(replacementRegex));
                 }
                 if (lowerCaseHeaders) {
+                    h = h.toLowerCase();
+                    // Redo replacements for case change scenario
+                    for (String replacementRegex : replacements.keySet()) {
+                        h = h.replaceAll(replacementRegex, replacements.get(replacementRegex));
+                    }
+                    // Redo case change in case of replacement above
                     h = h.toLowerCase();
                 }
                 headersToRecord2.add(h);
@@ -305,15 +314,16 @@ public class MarkdownRecorder implements InteractionMonitor {
             if (alphaSortHeaders) {
                 Arrays.sort(headers);
             }
+
             for (String hdrLine : headers) {
                 int ix = hdrLine.indexOf(": ");
                 for (String next : replacements.keySet()) {
                     hdrLine = hdrLine.replaceAll(next, replacements.get(next));
                 }
                 String hdrKey = hdrLine.substring(0, ix);
-                String hdrVal = hdrLine.substring(ix + 2);
-                this.recording.append(hdrKey).append(": ").append(
-                        interactionManipulations.headerReplacement(hdrKey, hdrVal)).append("\n");
+                this.recording.append(hdrKey).append(": ")
+                        .append(interactionManipulations.headerValueManipulation(hdrKey, hdrLine.substring(ix + 2)))
+                        .append("\n");
             }
 
             blockEnd();

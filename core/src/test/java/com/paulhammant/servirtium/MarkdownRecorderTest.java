@@ -22,10 +22,10 @@ public class MarkdownRecorderTest {
         final InteractionManipulations im = mock(InteractionManipulations.class);
         final ServiceInteroperation si = mock(ServiceInteroperation.class);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        when(im.headerReplacement("ZZZZ", "ZZ")).thenReturn("Z-Z");
-        when(im.headerReplacement("REQ_HEADER_KEY", "VAL")).thenReturn("V-A-L");
+        when(im.headerValueManipulation("ZZZZ", "ZZ")).thenReturn("Z-Z");
+        when(im.headerValueManipulation("REQ_HEADER_KEY", "VAL")).thenReturn("V-A-L");
         when(im.changeBodyForRequestToRealService("REQ_BODY")).thenReturn("R-E-Q__B-O-D-Y");
-        when(im.headerReplacement("RSP_HEADER_KEY", "RSP_VAL")).thenReturn("R-S-P__V-A-L");
+        when(im.headerValueManipulation("RSP_HEADER_KEY", "RSP_VAL")).thenReturn("R-S-P__V-A-L");
 
         MarkdownRecorder mr = new MarkdownRecorder(si, im);
         mr.setOutputStream("foo", out);
@@ -37,13 +37,13 @@ public class MarkdownRecorderTest {
         i.complete();
         mr.finishedScript(0, false);
 
-        verify(im).headerReplacement("ZZZZ", "ZZ");
-        verify(im).headerReplacement("REQ_HEADER_KEY", "VAL");
+        verify(im).headerValueManipulation("ZZZZ", "ZZ");
+        verify(im).headerValueManipulation("REQ_HEADER_KEY", "VAL");
         verify(im).changeSingleHeaderForRequestToRealService(eq("req_header_key: V-A-L"), any(List.class));
         verify(im).changeSingleHeaderForRequestToRealService(eq("zzzz: Z-Z"), any(List.class));
         verify(im).changeAnyHeadersForRequestToRealService(any(List.class));
         verify(im).changeBodyForRequestToRealService("REQ_BODY");
-        verify(im).headerReplacement("RSP_HEADER_KEY", "RSP_VAL");
+        verify(im).headerValueManipulation("RSP_HEADER_KEY", "RSP_VAL");
         verifyNoMoreInteractions(im, si);
 
         assertEquals("## Interaction 0: FOO /a/b/c\n" +
@@ -171,10 +171,10 @@ public class MarkdownRecorderTest {
         final InteractionManipulations im = mock(InteractionManipulations.class);
         final ServiceInteroperation si = mock(ServiceInteroperation.class);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        when(im.headerReplacement("ZZZZ", "ZZ")).thenReturn("Z-Z");
-        when(im.headerReplacement("REQ_HEADER_KEY", "VAL")).thenReturn("V-A-L");
+        when(im.headerValueManipulation("ZZZZ", "ZZ")).thenReturn("Z-Z");
+        when(im.headerValueManipulation("REQ_HEADER_KEY", "VAL")).thenReturn("V-A-L");
         when(im.changeBodyForRequestToRealService("REQ_BODY")).thenReturn("R-E-Q__B-O-D-Y");
-        when(im.headerReplacement("RSP_HEADER_KEY", "RSP_VAL")).thenReturn("R-S-P__V-A-L");
+        when(im.headerValueManipulation("RSP_HEADER_KEY", "RSP_VAL")).thenReturn("R-S-P__V-A-L");
 
         MarkdownRecorder mr = new MarkdownRecorder(si, im)
                 .withExtraDebugOutput();
@@ -187,13 +187,13 @@ public class MarkdownRecorderTest {
         i.complete();
         mr.finishedScript(0, false);
 
-        verify(im).headerReplacement("ZZZZ", "ZZ");
-        verify(im).headerReplacement("REQ_HEADER_KEY", "VAL");
+        verify(im).headerValueManipulation("ZZZZ", "ZZ");
+        verify(im).headerValueManipulation("REQ_HEADER_KEY", "VAL");
         verify(im).changeSingleHeaderForRequestToRealService(eq("req_header_key: V-A-L"), any(List.class));
         verify(im).changeSingleHeaderForRequestToRealService(eq("zzzz: Z-Z"), any(List.class));
         verify(im).changeAnyHeadersForRequestToRealService(any(List.class));
         verify(im).changeBodyForRequestToRealService("REQ_BODY");
-        verify(im).headerReplacement("RSP_HEADER_KEY", "RSP_VAL");
+        verify(im).headerValueManipulation("RSP_HEADER_KEY", "RSP_VAL");
         verifyNoMoreInteractions(im, si);
         assertEquals("## Interaction 0: FOO /a/b/c\n" +
                 "\n" +
@@ -242,10 +242,10 @@ public class MarkdownRecorderTest {
         final InteractionManipulations im = mock(InteractionManipulations.class);
         final ServiceInteroperation si = mock(ServiceInteroperation.class);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        when(im.headerReplacement("ZZZZ", "ZZ")).thenReturn("Z-Z");
-        when(im.headerReplacement("REQ_HEADER_KEY", "VAL")).thenReturn("V-A-L");
+        when(im.headerValueManipulation("ZZZZ", "ZZ")).thenReturn("Z-Z");
+        when(im.headerValueManipulation("REQ_HEADER_KEY", "VAL")).thenReturn("V-A-L");
         when(im.changeBodyForRequestToRealService("REQ_BODY")).thenReturn("R-E-Q__B-O-D-Y");
-        when(im.headerReplacement("RSP_HEADER_KEY", "RSP_VAL")).thenReturn("R-S-P__V-A-L");
+        when(im.headerValueManipulation("RSP_HEADER_KEY", "RSP_VAL")).thenReturn("R-S-P__V-A-L");
 
         MarkdownRecorder mr = new MarkdownRecorder(si, im)
                 .withAlphaSortingOfHeaders();
@@ -258,13 +258,13 @@ public class MarkdownRecorderTest {
         i.complete();
         mr.finishedScript(0, false);
 
-        verify(im).headerReplacement("ZZZZ", "ZZ");
-        verify(im).headerReplacement("REQ_HEADER_KEY", "VAL");
+        verify(im).headerValueManipulation("ZZZZ", "ZZ");
+        verify(im).headerValueManipulation("REQ_HEADER_KEY", "VAL");
         verify(im).changeSingleHeaderForRequestToRealService(eq("req_header_key: V-A-L"), any(List.class));
         verify(im).changeSingleHeaderForRequestToRealService(eq("zzzz: Z-Z"), any(List.class));
         verify(im).changeAnyHeadersForRequestToRealService(any(List.class));
         verify(im).changeBodyForRequestToRealService("REQ_BODY");
-        verify(im).headerReplacement("RSP_HEADER_KEY", "RSP_VAL");
+        verify(im).headerValueManipulation("RSP_HEADER_KEY", "RSP_VAL");
         verifyNoMoreInteractions(im, si);
         assertEquals("## Interaction 0: FOO /a/b/c\n" +
                 "\n" +
@@ -425,8 +425,8 @@ public class MarkdownRecorderTest {
         final ServiceInteroperation si = mock(ServiceInteroperation.class);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-        when(im.headerReplacement("Mary", "had a little lamb")).thenReturn("had a little lamb");
-        when(im.headerReplacement("A", "tiny piglet had Mary")).thenReturn("tiny piglet had Mary");
+        when(im.headerValueManipulation("Mary", "had a little lamb")).thenReturn("had a little lamb");
+        when(im.headerValueManipulation("A", "tiny piglet had Mary")).thenReturn("tiny piglet had Mary");
 
 
         MarkdownRecorder mr = new MarkdownRecorder(si, im).withReplacementsInRecording("little", "tiny", "lamb", "piglet");
@@ -442,8 +442,8 @@ public class MarkdownRecorderTest {
         verify(im).changeAnyHeadersForRequestToRealService(any(List.class));
         verify(im).changeSingleHeaderForRequestToRealService(eq("mary: had a little lamb"), any(List.class));
 
-        verify(im).headerReplacement("Mary", "had a little lamb");
-        verify(im).headerReplacement("A", "tiny piglet had Mary");
+        verify(im).headerValueManipulation("Mary", "had a little lamb");
+        verify(im).headerValueManipulation("A", "tiny piglet had Mary");
         verify(im).changeBodyForRequestToRealService("");
         verifyNoMoreInteractions(im, si);
         assertEquals("## Interaction 0: FOO /a/b/c\n" +
@@ -478,11 +478,11 @@ public class MarkdownRecorderTest {
         final InteractionManipulations im = mock(InteractionManipulations.class);
         final ServiceInteroperation si = mock(ServiceInteroperation.class);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        when(im.headerReplacement("A", "a")).thenReturn("a");
-        when(im.headerReplacement("B", "b")).thenReturn("b");
-        when(im.headerReplacement("C", "c")).thenReturn("c");
-        when(im.headerReplacement("D", "d")).thenReturn("d");
-        when(im.headerReplacement("XX", "xx")).thenReturn("xx");
+        when(im.headerValueManipulation("A", "a")).thenReturn("a");
+        when(im.headerValueManipulation("B", "b")).thenReturn("b");
+        when(im.headerValueManipulation("C", "c")).thenReturn("c");
+        when(im.headerValueManipulation("D", "d")).thenReturn("d");
+        when(im.headerValueManipulation("XX", "xx")).thenReturn("xx");
 
         MarkdownRecorder mr = new MarkdownRecorder(si, im).withExtraDebugOutput();
         mr.setOutputStream("foo", out);

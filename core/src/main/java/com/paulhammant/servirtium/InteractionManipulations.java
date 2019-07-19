@@ -38,7 +38,7 @@ public interface InteractionManipulations {
     default void changeSingleHeaderForRequestToRealService(String currentHeader, List<String> clientRequestHeaders) {
     }
 
-    default String headerReplacement(String hdrKey, String hdrVal) {
+    default String headerValueManipulation(String hdrKey, String hdrVal) {
         return hdrVal;
     }
 

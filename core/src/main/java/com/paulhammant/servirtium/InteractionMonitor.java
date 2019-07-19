@@ -82,7 +82,7 @@ public interface InteractionMonitor {
             for (String s : clientRequestHeaders) {
                 String hdrName = s.split(": ")[0];
                 String hdrVal = s.split(": ")[1];
-                hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
+                hdrVal = interactionManipulations.headerValueManipulation(hdrName, hdrVal);
                 final String fullHeader = (lowerCaseHeaders ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
                 clientRequestHeaders2.add(fullHeader);
                 interactionManipulations.changeSingleHeaderForRequestToRealService(fullHeader, clientRequestHeaders2);

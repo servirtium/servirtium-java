@@ -242,7 +242,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
         exchange.getRequestHeaders().forEach(header -> {
             String hdrName = header.getHeaderName().toString();
             header.forEach(hdrVal -> {
-                hdrVal = interactionManipulations.headerReplacement(hdrName, hdrVal);
+                hdrVal = interactionManipulations.headerValueManipulation(hdrName, hdrVal);
                 final String newHeader = (useLowerCaseHeaders() ? hdrName.toLowerCase() : hdrName) + ": " + hdrVal;
                 clientRequestHeaders.add(newHeader);
                 interactionManipulations.changeSingleHeaderForRequestToRealService(newHeader, clientRequestHeaders);

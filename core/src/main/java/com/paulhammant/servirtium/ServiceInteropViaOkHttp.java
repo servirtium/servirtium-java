@@ -168,7 +168,7 @@ public class ServiceInteropViaOkHttp implements ServiceInteroperation {
                 String hdrName = hdrLine.substring(0, ix);
                 String hdrVal = hdrLine.substring(ix + 2);
                 String hdrKey = forceHeadersToLowerCase ? hdrName.toLowerCase() : hdrName; // HTTP 2.0 says lower-case header keys.
-                responseHeaders2.add(hdrKey + ": " + interactionManipulations.headerReplacement(hdrKey, hdrVal));
+                responseHeaders2.add(hdrKey + ": " + interactionManipulations.headerValueManipulation(hdrKey, hdrVal));
             }
             final String[] headers = responseHeaders2.toArray(new String[responseHeaders.length]);
             return new ServiceResponse(responseBody, responseContentType, statusCode, headers);

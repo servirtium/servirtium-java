@@ -62,7 +62,7 @@ public class SubversionInteractionManipulations extends SimpleInteractionManipul
     }
 
     @Override
-    public String headerReplacement(String hdrKey, String serviceResponseHeaders) {
+    public String headerValueManipulation(String hdrKey, String serviceResponseHeaders) {
         return serviceResponseHeaders
                 //.replace(from, to)
                 .replaceAll("SVN-Repository-UUID: ([a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12})", "SVN-Repository-UUID: aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee")
