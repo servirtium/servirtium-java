@@ -17,19 +17,19 @@ source-control co-located with the automated tests themselves.
 2. In playback, Servirtium allows the functionality tested in the service tests to be isolated from potentially flaky 
 and unquestionably slower "down stack" and external remote services.
 3. A diffable format (regular Markdown files) to clearly show the differences between two recordings of the same 
-conversation.
+conversation, that is co-located with test logic (no database of any sort)
 4. Agnostic about other test frameworks: use JUnit 4, JUnit5, TestNG, Cucumber for Java, or JBehave.
-5. Test recordings co-located with tests and not in a central (or remote in any way) database.
-6. No process spawning/killing orchestration.
-
+5. No process spawning/killing orchestration.
+6. One recording per test method, even if that means duplicate sections of markdown over many tests
+7. No conditionals or flow control in the recording - no DSL at all. 
+8. Allowance for modification of recording or playback for simplification/redaction purposes.
+9. For use **in the same process** as the test-runner. It is not designed to be a 
+standalone server, although it can be used that way.
 
 ## Design Limitations
 
-1. just for Java teams presently (needs porting)
-2. for use **in the same process** as the test-runner. It is not designed to be a 
-standalone server, although it can be used that way.
-3. not for playback use in "for humans" environments like QA or UAT
-4. one recording per test method, even if that means duplicate sections of markdown over many tests
+1. Just for Java teams presently (needs porting)
+3. Not for playback use in "for humans" environments like QA or UAT
 
 ## Alternatives
 
@@ -138,7 +138,7 @@ reverse engineer their over-the-wire APIs.
 
 A real case: [Reverse engineering of competitor’s software cost company big](http://blog.internetcases.com/2017/10/24/reverse-engineering-of-competitors-software-cost-company-big/) - and you might say that such clauses are needed to prevent licensees from competing with the original company with arguably "stolen" IP. 
 
-We (test engineers) might morally think that we should be OK for this, as we're just doing it for 
+We (developers and test engineers) might morally think that we should be OK for this, as we're just doing it for 
 test-automation purposes. No matter, the contracts that are signed often make no such distinction, but 
 the case above was where the original maker of an API went after a company that was trying to make 
 something for the same ecosystem without a commercial relation on that specifically.
