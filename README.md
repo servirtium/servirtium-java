@@ -15,21 +15,34 @@ helpful when Service Virtualization is participating in a **Technology Compatibi
 1. By being a "man in the middle" it enables the recording of HTTP conversations and store them in Markdown under 
 source-control co-located with the automated tests themselves. 
 2. In playback, Servirtium allows the functionality tested in the service tests to be isolated from potentially flaky 
-and unquestionably slower "down stack" and remote services.
-3. A diffable format to clearly show the differences between two recordings of the same conversation.
+and unquestionably slower "down stack" and external remote services.
+3. A diffable format (regular Markdown files) to clearly show the differences between two recordings of the same 
+conversation.
+4. Agnostic about other test frameworks: use JUnit 4, JUnit5, TestNG, Cucumber for Java, or JBehave.
+5. Test recordings co-located with tests and not in a central (or remote in any way) database.
+6. No process spawning/killing orchestration.
+
 
 ## Design Limitations
 
-And this is just for Java teams. Non-Markdown alternates are: 
+1. just for Java teams presently (needs porting)
+2. for use **in the same process** as the test-runner. It is not designed to be a 
+standalone server, although it can be used that way.
+3. not for playback use in "for humans" environments like QA or UAT
+4. one recording per test method, even if that means duplicate sections of markdown over many tests
+
+## Alternatives
+
+Open source and commercial non-Markdown alternatives include: 
 
 * [Mountebank](http://mbtest.org) by ThoughtWorker Brandon Byars for a more versatile SV solution (written in NodeJs, but usable 
 from other languages).
-* [WireMock](http://wiremock.org/) (more establised)
+* [WireMock](http://wiremock.org/) (more established)
+* [Pact](https://docs.pact.io/) (since 2013, "contract tests")
 * Netflix's [Polly.js](https://github.com/Netflix/pollyjs/) (new in 2019)
 * Linkedin's [Flashback](https://github.com/linkedin/flashback) (since 2017)
-
-Not only is Servirtium just for Java teams wanting it is **in the same process** as the test-runner. It is not designed to be a 
-standalone server, although it cn be used that way.
+* Specto Lab's [Hoverfly](https://hoverfly.io/) (since 2015)
+* Computer Associate's [Lisa](https://www.ca.com/gb/products/ca-service-virtualization.html) since 2014 - unsure what tool name is now
 
 ## What do recordings look like?
 
@@ -62,13 +75,15 @@ deployments. See [S3](https://github.com/paul-hammant/servirtium/wiki/S3).
  
 # Notable examples of use
 
-## SvnMerkleizer project - emulation of Subversion
+## SvnMerkleizer project - emulation of Subversion in tests
 
 [Read more about two seprate uses of Servirtium for this project](docs/SvnMerkleizer_More_Info.md)
 
 ## Climate API demo
 
-The World Bank's Climate Data service turned into a Java library: https://github.com/paul-hammant/climate-data-tck
+The World Bank's Climate Data service turned into a Java library with Servirtium tests: 
+https://github.com/paul-hammant/climate-data-tck. Direct, record and playback modes of 
+operation for the same tests.
 
 ## Todobackend record and playback
 
@@ -90,11 +105,11 @@ payload that changes every time you run the test suite. It gets one third of the
 
 ## Readiness for general industry by lovers of test automation?
 
-Nearly ready, but still being actively worked on.
+A pre 1.0 release is used by a startup Paul is involved with for multiple unrelated external services.
 
 ## Servirtium's default listening port
 
-As per [the default port calculator](https://paul-hammant.github.io/default-port-calculator/#servirtium)  for 'servirtium': 61417 
+As per [the default port calculator](https://paul-hammant.github.io/default-port-calculator/#servirtium) for 'servirtium': 61417 
 
 # Building Servirtium
 
@@ -111,9 +126,11 @@ This builds the binaries, and includes integration tests (that use various servi
 mvn clean install -Ptests
 ```
 
-## License & Legal warning
+## License
 
-BSD 2-Clause license (open source)
+BSD 2-Clause license (open source). Refer to [LICENSE.txt](/paul-hammant/servirtium/blob/master/LICENSE.txt)
+
+## Legal warning
 
 Be careful: your contracts and EULAs with service providers 
 (as well as application/server makers for on-premises) might not allow you to 
