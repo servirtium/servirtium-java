@@ -2,13 +2,15 @@
 
 ![](Servirtium.svg?raw=true&sanitize=true)
 
-Servirtium == Service Virtualized HTTP (for Java) in a record/playback style
+Servirtium == Service Virtualized HTTP (for Java) in a record/playback style, with plain 
+Markdown recordings
 
 Utilization of "Service Virtualization" is best practice towards fast and 
 consistent test automation. This tech should be used in conjunction with 
 JUnit/TestNG, etc.  Versus alternate technologies, Servirtium utilizes Markdown
-for recorded HTTP conversations, which aids readability and diffing. Those are
-helpful when Service Virtualization is participating in a **Technology Compatibility Kit**
+for recorded HTTP conversations, which aids readability allows for diffing 
+to quickly determine if contracts are broken. That last is an important aspect
+when Service Virtualization is part of a **Technology Compatibility Kit**
 
 ## Design goals 
 
@@ -110,6 +112,10 @@ A pre 1.0 release is used by a startup Paul is involved with for multiple unrela
 ## Servirtium's default listening port
 
 As per [the default port calculator](https://paul-hammant.github.io/default-port-calculator/#servirtium) for 'servirtium': 61417 
+
+# Further Wiki Documentation
+
+[Servirtium in Technology Compatibility Kits](/paul-hammant/servirtium/wiki/Servirtium-in-Technology-Compatibility-Kits)
 
 # Building Servirtium
 
