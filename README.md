@@ -25,10 +25,11 @@ And this is just for Java teams. Non-Markdown alternates are:
 * [Mountebank](http://mbtest.org) by ThoughtWorker Brandon Byars for a more versatile SV solution (written in NodeJs, but usable 
 from other languages).
 * [WireMock](http://wiremock.org/) (more establised)
-* Linkedin's [Flashback](https://github.com/linkedin/flashback) (newer)
+* Netflix's [Polly.js](https://github.com/Netflix/pollyjs/) (new in 2019)
+* Linkedin's [Flashback](https://github.com/linkedin/flashback) (since 2017)
 
 Not only is Servirtium just for Java teams wanting it is **in the same process** as the test-runner. It is not designed to be a 
-standalone server. 
+standalone server, although it cn be used that way.
 
 ## What do recordings look like?
 
@@ -89,11 +90,12 @@ Nearly ready, but still being actively worked on.
 
 ## Servirtium's default listening port
 
-As per [the default port calculator for 'servirtium'](https://paul-hammant.github.io/default-port-calculator/#servirtium): 61417 
+As per [the default port calculator](https://paul-hammant.github.io/default-port-calculator/#servirtium)  for 'servirtium': 61417 
 
 # Building Servirtium
 
-This builds the binaries, but skips integration tests
+This builds the binaries, but skips integration tests as they rely on Wikipedia, Reddit 
+and others which are moving targets sometimes.
 
 ```
 mvn clean install
