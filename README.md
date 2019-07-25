@@ -115,7 +115,8 @@ As per [the default port calculator](https://paul-hammant.github.io/default-port
 
 # Further Wiki Documentation
 
-[Servirtium in Technology Compatibility Kits](/paul-hammant/servirtium/wiki/Servirtium-in-Technology-Compatibility-Kits)
+[Servirtium in Technology Compatibility Kits](../../wiki/Servirtium-in-Technology-Compatibility-Kits)
+[Adding-notes-to-a-recording](../../wiki/Adding-notes-to-a-recording)
 
 # Building Servirtium
 
