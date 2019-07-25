@@ -153,7 +153,6 @@ public class MarkdownRecorder implements InteractionMonitor {
 
             guardOut();
 
-
             if (extraDebugOutput) {
 
                 // Debug of original client headers

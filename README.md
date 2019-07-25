@@ -31,6 +31,10 @@ from other languages).
 Not only is Servirtium just for Java teams wanting it is **in the same process** as the test-runner. It is not designed to be a 
 standalone server, although it cn be used that way.
 
+## Example usage and tests
+
+World Bank's Climate Data service turned into a Java library: https://github.com/paul-hammant/climate-data-tck
+
 ## What do recordings look like?
 
 See [ExampleSubversionCheckoutRecording.md](https://github.com/paul-hammant/servirtium/blob/master/src/test/resources/ExampleSubversionCheckoutRecording.md) 
