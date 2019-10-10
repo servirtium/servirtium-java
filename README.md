@@ -33,20 +33,9 @@ standalone server, although it can be used that way.
 1. Just for Java teams presently (needs porting)
 3. Not for playback use in "for humans" environments like QA or UAT
 
-## Alternatives
-
-Open source and commercial non-Markdown alternatives include: 
-
-* [Mountebank](http://mbtest.org) by ThoughtWorker Brandon Byars for a more versatile SV solution (written in NodeJs, but usable 
-from other languages).
-* [WireMock](http://wiremock.org/) (more established)
-* [Pact](https://docs.pact.io/) (since 2013, "contract tests")
-* Netflix's [Polly.js](https://github.com/Netflix/pollyjs/) (new in 2019)
-* Linkedin's [Flashback](https://github.com/linkedin/flashback) (since 2017)
-* Specto Lab's [Hoverfly](https://hoverfly.io/) (since 2015)
-* Computer Associate's [Lisa](https://www.ca.com/gb/products/ca-service-virtualization.html) since 2014 - unsure what tool name is now
-
 ## What do recordings look like?
+
+![2019-10-10_1023](https://user-images.githubusercontent.com/82182/66556432-21473c00-eb48-11e9-8fb3-06259d79ff2b.png)
 
 See [ExampleSubversionCheckoutRecording.md](https://github.com/paul-hammant/servirtium/blob/master/src/test/resources/ExampleSubversionCheckoutRecording.md) 
 which was recorded from a real Subversion 'svn' command line client doing it's thing, but 
@@ -149,6 +138,19 @@ We (developers and test engineers) might morally think that we should be OK for 
 test-automation purposes. No matter, the contracts that are signed often make no such distinction, but 
 the case above was where the original maker of an API went after a company that was trying to make 
 something for the same ecosystem without a commercial relation on that specifically.
+
+## Alternatives
+
+Open source and commercial non-Markdown alternatives include: 
+
+* [Mountebank](http://mbtest.org) by ThoughtWorker Brandon Byars for a more versatile SV solution (written in NodeJs, but usable 
+from other languages).
+* [WireMock](http://wiremock.org/) (more established)
+* [Pact](https://docs.pact.io/) (since 2013, "contract tests")
+* Netflix's [Polly.js](https://github.com/Netflix/pollyjs/) (new in 2019)
+* Linkedin's [Flashback](https://github.com/linkedin/flashback) (since 2017)
+* Specto Lab's [Hoverfly](https://hoverfly.io/) (since 2015)
+* Computer Associate's [Lisa](https://www.ca.com/gb/products/ca-service-virtualization.html) since 2014 - unsure what tool name is now
 
 ## Code of Conduct
 
