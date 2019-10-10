@@ -35,7 +35,19 @@ standalone server, although it can be used that way.
 
 ## What do recordings look like?
 
-![2019-10-10_1023](https://user-images.githubusercontent.com/82182/66556432-21473c00-eb48-11e9-8fb3-06259d79ff2b.png)
+### Raw recording source
+
+Here's a shorted source form for a recorded conversation
+
+![](https://user-images.githubusercontent.com/82182/66556432-21473c00-eb48-11e9-8fb3-06259d79ff2b.png)
+
+### Rendered
+
+Best to see a real one, [in situ on GitHub](https://github.com/paul-hammant/climate-data-tck/blob/master/src/test/mocks/averageRainfallForEgyptFrom1980to1999Exists.md) 
+where you can see the rendering (for human comforts), but also snap-shotted here:
+
+![](https://user-images.githubusercontent.com/82182/66568199-df76bf80-eb60-11e9-83a8-61be277a9fae.png)
+
 
 See [ExampleSubversionCheckoutRecording.md](https://github.com/paul-hammant/servirtium/blob/master/src/test/resources/ExampleSubversionCheckoutRecording.md) 
 which was recorded from a real Subversion 'svn' command line client doing it's thing, but 
