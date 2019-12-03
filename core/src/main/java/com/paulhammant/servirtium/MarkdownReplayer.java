@@ -132,6 +132,15 @@ public class MarkdownReplayer implements InteractionMonitor {
     /**
      * In the recording, some things that will have been recorded differently to
      * what was sent/received to/from the real.
+     *
+     * Use this method will change the request headers,
+     * request body and the request URL to match the prior recording. If any one of those
+     * three is different after replacements then assertion errors are reported in the log
+     * and the test will effectively be halted.
+     *
+     * This method does not
+     * affect the response headers, response body in any way. If you want different ones
+     * of those recorded, then setup the recorder differently, not the replayer.     *
      * @param terms - an even number of 'regex' and 'replacement' pairs.
      * @return this
      */
