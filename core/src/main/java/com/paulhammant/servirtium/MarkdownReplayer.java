@@ -277,7 +277,16 @@ public class MarkdownReplayer implements InteractionMonitor {
         AssertionError error = null;
         try {
             try {
-                assertThat(replay.clientRequestBody, equalTo(bodyReceived));
+                if (replay.clientRequestBody instanceof String) {
+                    String b = (String) replay.clientRequestBody;
+                    for (String redactionRegex : replacements.keySet()) {
+                        b = b.replaceAll(redactionRegex, replacements.get(redactionRegex));
+                    }
+                    assertThat(b, equalTo(bodyReceived));
+                } else {
+                    assertThat(replay.clientRequestBody, equalTo(bodyReceived));
+                }
+
             } catch (AssertionError e) {
                 monitor.unexpectedClientRequestBody(replay.interactionNum, mdMethod, filename, replay.context, e);
             }
