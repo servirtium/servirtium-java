@@ -24,7 +24,7 @@ Content-Type: text/xml
 
 ```
 Date: Sat, 05 Jan 2019 10:11:36 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 DAV: 1,2
 DAV: version-control,checkout,working-resource
 DAV: merge,baseline,activity,version-controlled-collection
@@ -94,7 +94,7 @@ Accept-Encoding: gzip
 
 ```
 Date: Sat, 05 Jan 2019 10:11:36 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 DAV: 1,2
 DAV: version-control,checkout,working-resource
 DAV: merge,baseline,activity,version-controlled-collection
@@ -149,7 +149,7 @@ Content-Type: text/xml
 
 ```
 Date: Sat, 05 Jan 2019 10:11:36 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 DAV: 1,2
 DAV: version-control,checkout,working-resource
 DAV: merge,baseline,activity,version-controlled-collection
@@ -218,7 +218,7 @@ Content-Type: text/xml
 
 ```
 Date: Sat, 05 Jan 2019 10:11:37 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 Vary: Accept-Encoding
 Keep-Alive: timeout=15, max=997
 Connection: Keep-Alive
@@ -266,7 +266,7 @@ Content-Type: text/xml
 
 ```
 Date: Sat, 05 Jan 2019 10:11:37 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 Vary: Accept-Encoding
 Keep-Alive: timeout=15, max=996
 Connection: Keep-Alive
@@ -326,7 +326,7 @@ Content-Type: text/xml
 
 ```
 Date: Sat, 05 Jan 2019 10:11:37 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 Vary: Accept-Encoding
 Keep-Alive: timeout=15, max=995
 Connection: Keep-Alive
@@ -386,7 +386,7 @@ Content-Type: text/xml
 
 ```
 Date: Sat, 05 Jan 2019 10:11:37 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 Vary: Accept-Encoding
 Keep-Alive: timeout=15, max=994
 Connection: Keep-Alive
@@ -456,7 +456,7 @@ Content-Type: text/xml
 
 ```
 Date: Sat, 05 Jan 2019 10:11:37 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 Vary: Accept-Encoding
 Keep-Alive: timeout=15, max=993
 Connection: Keep-Alive
@@ -516,7 +516,7 @@ Content-Type: text/xml
 
 ```
 Date: Sat, 05 Jan 2019 10:11:37 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 Vary: Accept-Encoding
 Keep-Alive: timeout=15, max=992
 Connection: Keep-Alive
@@ -592,7 +592,7 @@ Content-Type: text/xml
 
 ```
 Date: Sat, 05 Jan 2019 10:11:38 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 Vary: Accept-Encoding
 Keep-Alive: timeout=15, max=991
 Connection: Keep-Alive
@@ -652,7 +652,7 @@ Content-Type: text/xml
 
 ```
 Date: Sat, 05 Jan 2019 10:11:38 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 Vary: Accept-Encoding
 Keep-Alive: timeout=15, max=990
 Connection: Keep-Alive
@@ -712,7 +712,7 @@ Content-Type: text/xml
 
 ```
 Date: Sat, 05 Jan 2019 10:11:38 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 Vary: Accept-Encoding
 Keep-Alive: timeout=15, max=989
 Connection: Keep-Alive
@@ -783,7 +783,7 @@ Content-Type: text/xml
 
 ```
 Date: Sat, 05 Jan 2019 10:11:38 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 Vary: Accept-Encoding
 Keep-Alive: timeout=15, max=988
 Connection: Keep-Alive
@@ -859,7 +859,7 @@ Accept-Encoding: gzip
 
 ```
 Date: Sat, 05 Jan 2019 10:11:38 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 Last-Modified: Tue, 13 Dec 2011 09:34:05 GMT
 ETag: "1213628//synapse/tags/3.0.0/modules/distribution/src/main/conf/providers.xml-gzip"
 Cache-Control: max-age=604800
@@ -1032,7 +1032,7 @@ Accept-Encoding: gzip
 
 ```
 Date: Sat, 05 Jan 2019 10:11:39 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 Last-Modified: Sun, 26 Apr 2009 20:31:08 GMT
 ETag: "768767//synapse/tags/3.0.0/modules/distribution/src/main/conf/identity.jks-gzip"
 Cache-Control: max-age=604800
@@ -1069,7 +1069,7 @@ Accept-Encoding: gzip
 
 ```
 Date: Sat, 05 Jan 2019 10:11:39 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 Last-Modified: Sun, 26 Apr 2009 20:31:08 GMT
 ETag: "768767//synapse/tags/3.0.0/modules/distribution/src/main/conf/trust.jks-gzip"
 Cache-Control: max-age=604800
@@ -1106,7 +1106,7 @@ Accept-Encoding: gzip
 
 ```
 Date: Sat, 05 Jan 2019 10:11:39 GMT
-Server: Apache/2.4.7 (Ubuntu)
+Server: Apache
 Last-Modified: Sun, 11 Aug 2013 19:12:06 GMT
 ETag: "1512988//synapse/tags/3.0.0/modules/distribution/src/main/conf/log4j.properties-gzip"
 Cache-Control: max-age=604800

@@ -79,14 +79,14 @@ public abstract class SimpleGetCentricTextTests {
             "Date: Thu, 08 Nov 2018 09:52:36 GMT\n" +
             "ETag: \"594498//synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE-gzip\"\n" +
             "Last-Modified: Tue, 13 Nov 2007 11:58:38 GMT\n" +
-            "Server: Apache/2.4.7 (Ubuntu)\n" +
+            "Server: Apache\n" +
             "Vary: Accept-Encoding\n";
 ;
 
 //    private static final String EXPECTED_2b =
 //            "Accept-Ranges: bytes\n" +
 //            "Keep-Alive: timeout=15, max=1000\n" +
-//            "Server: Apache/2.4.7 (Ubuntu)\n" +
+//            "Server: Apache\n" +
 //            "Cache-Control: max-age=604800\n" +
 //            "ETag: \"594498//synapse/tags/3.0.0/modules/core/src/main/resources/META-INF/NOTICE-gzip\"\n" +
 //            "Connection: Keep-Alive\n" +
@@ -181,7 +181,6 @@ public abstract class SimpleGetCentricTextTests {
             "content-security-policy: default-src 'none'; style-src 'unsafe-inline'; sandbox\n" +
             "content-type: image/svg+xml\n" +
             "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-            "etag: \"ac09d02640c8005b4419456f173de5e3ebaaabe3\"\n" +
             "expires: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
             "strict-transport-security: max-age=31536000\n" +
             "via: 1.1 varnish\n" +
@@ -195,6 +194,7 @@ public abstract class SimpleGetCentricTextTests {
             "\n" +
             "```\n" +
             "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+            "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n" +
             "<svg xmlns:xl=\"http://www.w3.org/1999/xlink\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewBox=\"217 111 164 43\" width=\"164\" height=\"43\">\n" +
             "   <defs>\n" +
             "    \n" +
@@ -219,7 +219,9 @@ public abstract class SimpleGetCentricTextTests {
             "</svg>\n" +
             "```\n" +
             "\n";
+
     public static final String SERVIRTIUM_SVG_SANITIZED = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+            "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n" +
             "<svg xmlns:xl=\"http://www.w3.org/1999/xlink\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewBox=\"217 111 164 43\" width=\"164\" height=\"43\">\n" +
             "   <defs>\n" +
             "    \n" +
@@ -532,7 +534,7 @@ public abstract class SimpleGetCentricTextTests {
                 new SimpleInteractionManipulations("http://localhost:61417", "https://raw.githubusercontent.com")
                         .withHeaderPrefixesToRemoveFromServiceResponse("source-age:",
                                 "x-fastly-request-id:", "x-served-by:", "x-timer:",
-                                "x-github-request-id:", "vary:", "x-cache");
+                                "x-github-request-id:", "vary:", "x-cache", "etag");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),

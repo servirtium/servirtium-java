@@ -75,7 +75,7 @@ public abstract class SimpleGetCentricBinaryTests {
             "Date: Thu, 08 Nov 2018 09:52:36 GMT\n" +
             "ETag: \"584057//synapse/tags/3.0.0/modules/distribution/src/main/bin/libwrapper-linux-x86-32.so-gzip\"\n" +
             "Last-Modified: Fri, 12 Oct 2007 05:56:23 GMT\n" +
-            "Server: Apache/2.4.7 (Ubuntu)\n" +
+            "Server: Apache\n" +
             "Vary: Accept-Encoding\n";
 
 
@@ -187,7 +187,7 @@ public abstract class SimpleGetCentricBinaryTests {
                 "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
                 "etag: 0a8a432cd4d057f31a443b55743e26db\n" +
                 "last-modified: Sat, 09 Jun 2018 17:56:24 GMT\n" +
-                "server: ATS/8.0.3\n" +
+                "server: ATS/8.0.5\n" +
                 "strict-transport-security: max-age=106384710; includeSubDomains; preload\n" +
                 "timing-allow-origin: *\n" +
                 "```\n" +
@@ -203,13 +203,15 @@ public abstract class SimpleGetCentricBinaryTests {
 
     public void canRecordASvgGetFromWikimedia() throws Exception {
 
-        final SimpleInteractionManipulations interactionManipulations = new SimpleInteractionManipulations("localhost:8080", "upload.wikimedia.org");
+        final SimpleInteractionManipulations interactionManipulations =
+                new SimpleInteractionManipulations("localhost:8080", "upload.wikimedia.org").withHeaderPrefixesToRemoveFromClientRequest("ggg");
 
         MarkdownRecorder recorder = new MarkdownRecorder(
                 new ServiceInteropViaOkHttp(),
                 interactionManipulations
                 .withHeaderPrefixesToRemoveFromServiceResponse("age:", "x-", "server-timing:", "server:",
                         "via:", "connection:")
+                .withHeaderPrefixesToRemoveFromClientRequest("accept-encoding")
         ).withAlphaSortingOfHeaders();
 
         servirtiumServer = makeServirtiumServer(interactionManipulations, recorder).withLowerCaseHeaders();
@@ -218,7 +220,7 @@ public abstract class SimpleGetCentricBinaryTests {
         recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
         servirtiumServer.start();
 
-        // https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/103px-Wikipedia-logo-v2.svg.png
+        // https://upload.wikimedia.org/wikipedia/commons/7/72/Smallest_nonmodular_lattice_1.svg
 
         given()
                 .header("User-Agent", "RestAssured")
@@ -240,7 +242,6 @@ public abstract class SimpleGetCentricBinaryTests {
                         "### Request headers recorded for playback:\n" +
                         "\n" +
                         "```\n" +
-                        "accept-encoding: gzip,deflate\n" +
                         "accept: */*\n" +
                         "connection: keep-alive\n" +
                         "host: upload.wikimedia.org\n" +
@@ -259,13 +260,13 @@ public abstract class SimpleGetCentricBinaryTests {
                         "accept-ranges: bytes\n" +
                         "access-control-allow-origin: *\n" +
                         "access-control-expose-headers: Age, Date, Content-Length, Content-Range, X-Content-Duration, X-Cache, X-Varnish\n" +
-                        "content-length: 788\n" +
                         "content-type: image/svg+xml\n" +
                         "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-                        "etag: 5ab7d580ce21b2d63a0ce66aea8e71ce\n" +
-                        "last-modified: Fri, 10 Oct 2014 23:50:45 GMT\n" +
+                        "etag: W/5ab7d580ce21b2d63a0ce66aea8e71ce\n" +
+                        "last-modified: Sat, 05 Oct 2013 15:01:03 GMT\n" +
                         "strict-transport-security: max-age=106384710; includeSubDomains; preload\n" +
                         "timing-allow-origin: *\n" +
+                        "vary: Accept-Encoding\n" +
                         "```\n" +
                         "\n" +
                         "### Response body recorded for playback (200: image/svg+xml):\n" +
