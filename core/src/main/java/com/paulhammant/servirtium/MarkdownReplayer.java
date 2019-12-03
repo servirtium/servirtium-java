@@ -81,7 +81,7 @@ public class MarkdownReplayer implements InteractionMonitor {
     }
 
     public void setPlaybackConversation(String conversation) {
-        this.filename = "n/a";
+        this.filename = "no filename set";
         int charPosn = -1;
         int ctr = 0;
         boolean again = true;
@@ -395,7 +395,7 @@ public class MarkdownReplayer implements InteractionMonitor {
     }
 
     @Override
-    public Interaction newInteraction(String method, String path, int interactionNum, String url, String context) {
+    public ReplayingInteraction newInteraction(String method, String path, int interactionNum, String url, String context) {
         final String interactionText;
         try {
             interactionText = allMarkdownInteractions.get(interactionNum);
@@ -477,7 +477,7 @@ public class MarkdownReplayer implements InteractionMonitor {
             }
 
             private String methodFileAndContextPrefix(int interactionNum, String mdMethod, String filename, String context) {
-                return "Interaction " + interactionNum + " (method: " + mdMethod + ") in " + filename + "(context: " + context + ")";
+                return "Interaction " + interactionNum + " (method: " + mdMethod + ") in file '" + filename + "' (context: " + context + ")";
             }
 
             private AssertionError makeAssertionError(String message, Throwable e) {

@@ -70,7 +70,10 @@ public interface InteractionMonitor {
         public void complete() {}
 
 
-        public abstract List<String> noteClientRequestHeadersAndBody(InteractionManipulations interactionManipulations, List<String> clientRequestHeaders, Object clientRequestBody, String clientRequestContentType, String method, boolean lowerCaseHeaders);
+        public abstract List<String> noteClientRequestHeadersAndBody(InteractionManipulations interactionManipulations,
+                                                                     List<String> clientRequestHeaders,
+                                                                     Object clientRequestBody, String clientRequestContentType,
+                                                                     String method, boolean lowerCaseHeaders);
 
         protected void setClientRequestBodyAndContentType(Object clientRequestBody, String clientRequestContentType) {
             this.clientRequestBody = clientRequestBody;

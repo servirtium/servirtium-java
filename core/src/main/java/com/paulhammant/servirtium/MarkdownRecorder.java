@@ -361,20 +361,22 @@ public class MarkdownRecorder implements InteractionMonitor {
     }
 
     @Override
-    public Interaction newInteraction(String method, String path, int interactionNum, String url, String context) {
+    public RecordingInteraction newInteraction(String method, String path, int interactionNum, String url, String context) {
         guardOut();
 
-        String path2 = path;
+        String pathWithReplacements = path;
 
         for (String replacementRegex : replacements.keySet()) {
-            path2 = path2.replaceAll(replacementRegex, replacements.get(replacementRegex));
+            pathWithReplacements = pathWithReplacements.replaceAll(replacementRegex, replacements.get(replacementRegex));
         }
 
-        RecordingInteraction rc = new RecordingInteraction(interactionNum, context);
+        RecordingInteraction recordingInteraction = new RecordingInteraction(interactionNum, context);
 
-        rc.recording.append("## Interaction ").append(interactionNum).append(": ").append(method)
-                .append(" ").append(path2).append("\n\n");
-        return rc;
+        recordingInteraction.recording.append("## Interaction ")
+                .append(interactionNum).append(": ").append(method)
+                .append(" ").append(pathWithReplacements).append("\n\n");
+
+        return recordingInteraction;
     }
 
     private void guardOut() {

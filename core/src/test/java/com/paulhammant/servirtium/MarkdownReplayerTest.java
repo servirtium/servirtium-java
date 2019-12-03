@@ -54,7 +54,7 @@ public class MarkdownReplayerTest {
                 "}\n" +
                 "```\n" +
                 "\n");
-        final InteractionMonitor.Interaction interaction = m.newInteraction("GET", "aaa/bbb", 0,
+        final MarkdownReplayer.ReplayingInteraction interaction = m.newInteraction("GET", "aaa/bbb", 0,
                 "http://example.com/hello/how/are/you.json", "hello");
         interaction.noteClientRequestHeadersAndBody(new InteractionManipulations.NullObject(), Arrays.asList("foo: aaa", "bar: bbb"), "", "", "GET", false);
         ServiceResponse x = m.getServiceResponseForRequest("GET", "http://example.com/hello/how/are/you.json", Arrays.asList("foo: aaa", "bar: bbb"), interaction, false);
@@ -98,7 +98,7 @@ public class MarkdownReplayerTest {
                 "```\n" +
                 "\n");
         m.withReplacementInPlayback("abc", "foo");
-        final InteractionMonitor.Interaction interaction = m.newInteraction("GET", "aaa/bbb", 0,
+        MarkdownReplayer.ReplayingInteraction interaction = m.newInteraction("GET", "aaa/bbb", 0,
                 "http://example.com/hello/how/are/you.json", "hello");
         interaction.noteClientRequestHeadersAndBody(new InteractionManipulations.NullObject(), Arrays.asList("abc: aaa", "bar: bbb"), "", "", "GET", false);
         ServiceResponse x = m.getServiceResponseForRequest("GET", "http://example.com/hello/how/are/you.json", Arrays.asList("abc: aaa", "bar: bbb"), interaction, false);
@@ -142,10 +142,11 @@ public class MarkdownReplayerTest {
                 "```\n" +
                 "\n");
         m.withReplacementInPlayback("smack", "kapow");
-        final InteractionMonitor.Interaction interaction = m.newInteraction("POST", "aaa/bbb", 0,
+        final MarkdownReplayer.ReplayingInteraction interaction = m.newInteraction("POST", "aaa/bbb", 0,
                 "http://example.com/hello/how/are/you.json", "hello");
-        interaction.noteClientRequestHeadersAndBody(new InteractionManipulations.NullObject(), Arrays.asList("foo: aaa", "bar: bbb"), "smack", "text/plain", "GET", false);
-        ServiceResponse x = m.getServiceResponseForRequest("POST", "http://example.com/hello/how/are/you.json", Arrays.asList("foo: aaa", "bar: bbb"), interaction, false);
+        final List<String> clientRequestHeaders = Arrays.asList("foo: aaa", "bar: bbb");
+        interaction.noteClientRequestHeadersAndBody(new InteractionManipulations.NullObject(), clientRequestHeaders, "smack", "text/plain", "GET", false);
+        ServiceResponse x = m.getServiceResponseForRequest("POST", "http://example.com/hello/how/are/you.json", clientRequestHeaders, interaction, false);
         assertEquals(2, x.headers.length);
         assertEquals("h1: one", x.headers[0]);
         assertEquals("h2: two", x.headers[1]);
