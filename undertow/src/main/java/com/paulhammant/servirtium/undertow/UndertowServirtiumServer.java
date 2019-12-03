@@ -98,7 +98,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
                     interaction, clientRequestContentType, interactionManipulations);
 
             // INTERACTION
-            ServiceResponse serviceResponse = interactionMonitor.getServiceResponseForRequest(method, requestUrl, clientRequestHeaders,
+            ServiceResponse serviceResponse = interactionMonitor.getServiceResponseForRequest(method, requestUrl,
                     interaction, useLowerCaseHeaders());
 
             serviceResponse = processHeadersAndBodyBackFromService(interaction, serviceResponse, interactionManipulations);

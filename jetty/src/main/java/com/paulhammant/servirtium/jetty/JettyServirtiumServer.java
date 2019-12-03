@@ -103,7 +103,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
                     interaction, clientRequestContentType, interactionManipulations);
 
             // INTERACTION
-            ServiceResponse serviceResponse = interactionMonitor.getServiceResponseForRequest(method, urlAndHeaders.url, urlAndHeaders.clientRequestHeaders,
+            ServiceResponse serviceResponse = interactionMonitor.getServiceResponseForRequest(method, urlAndHeaders.url,
                     interaction, useLowerCaseHeaders());
 
             serviceResponse = processHeadersAndBodyBackFromRealService(interaction, serviceResponse);

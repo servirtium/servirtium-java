@@ -46,7 +46,7 @@ public interface InteractionMonitor {
     default void setScriptFilename(String filename) {}
 
     ServiceResponse getServiceResponseForRequest(String method, String url,
-                                                 List<String> clientRequestHeaders, Interaction interaction,
+                                                 Interaction interaction,
                                                  boolean lowerCaseHeaders) throws IOException;
 
     Interaction newInteraction(String method, String path, int interactionNum, String url, String context);
@@ -59,6 +59,7 @@ public interface InteractionMonitor {
 
         final int interactionNum;
         public final String context;
+        List<String> clientRequestHeaders;
         Object clientRequestBody;
         String clientRequestContentType;
 
@@ -118,7 +119,7 @@ public interface InteractionMonitor {
         }
 
         @Override
-        public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRequestHeaders, Interaction interaction, boolean lowerCaseHeaders) throws IOException {
+        public ServiceResponse getServiceResponseForRequest(String method, String url, Interaction interaction, boolean lowerCaseHeaders) throws IOException {
             return null;
         }
 

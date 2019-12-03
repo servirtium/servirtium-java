@@ -57,7 +57,7 @@ public class MarkdownReplayerTest {
         final MarkdownReplayer.ReplayingInteraction interaction = m.newInteraction("GET", "aaa/bbb", 0,
                 "http://example.com/hello/how/are/you.json", "hello");
         interaction.noteClientRequestHeadersAndBody(new InteractionManipulations.NullObject(), Arrays.asList("foo: aaa", "bar: bbb"), "", "", "GET", false);
-        ServiceResponse x = m.getServiceResponseForRequest("GET", "http://example.com/hello/how/are/you.json", Arrays.asList("foo: aaa", "bar: bbb"), interaction, false);
+        ServiceResponse x = m.getServiceResponseForRequest("GET", "http://example.com/hello/how/are/you.json", interaction, false);
         assertEquals(2, x.headers.length);
         assertEquals("h1: one", x.headers[0]);
         assertEquals("h2: two", x.headers[1]);
@@ -101,7 +101,7 @@ public class MarkdownReplayerTest {
         MarkdownReplayer.ReplayingInteraction interaction = m.newInteraction("GET", "aaa/bbb", 0,
                 "http://example.com/hello/how/are/you.json", "hello");
         interaction.noteClientRequestHeadersAndBody(new InteractionManipulations.NullObject(), Arrays.asList("abc: aaa", "bar: bbb"), "", "", "GET", false);
-        ServiceResponse x = m.getServiceResponseForRequest("GET", "http://example.com/hello/how/are/you.json", Arrays.asList("abc: aaa", "bar: bbb"), interaction, false);
+        ServiceResponse x = m.getServiceResponseForRequest("GET", "http://example.com/hello/how/are/you.json", interaction, false);
         assertEquals(2, x.headers.length);
         assertEquals("h1: one", x.headers[0]);
         assertEquals("h2: two", x.headers[1]);
@@ -146,7 +146,7 @@ public class MarkdownReplayerTest {
                 "http://example.com/hello/how/are/you.json", "hello");
         final List<String> clientRequestHeaders = Arrays.asList("foo: aaa", "bar: bbb");
         interaction.noteClientRequestHeadersAndBody(new InteractionManipulations.NullObject(), clientRequestHeaders, "smack", "text/plain", "GET", false);
-        ServiceResponse x = m.getServiceResponseForRequest("POST", "http://example.com/hello/how/are/you.json", clientRequestHeaders, interaction, false);
+        ServiceResponse x = m.getServiceResponseForRequest("POST", "http://example.com/hello/how/are/you.json", interaction, false);
         assertEquals(2, x.headers.length);
         assertEquals("h1: one", x.headers[0]);
         assertEquals("h2: two", x.headers[1]);

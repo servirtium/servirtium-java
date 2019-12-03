@@ -50,12 +50,12 @@ public class NonRecordingPassThrough implements InteractionMonitor {
         return this;
     }
 
-    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRequestHeaders,
+    public ServiceResponse getServiceResponseForRequest(String method, String url,
                                                         Interaction interaction, boolean lowerCaseHeaders) {
         return serviceInteroperation.invokeServiceEndpoint(method,
                 interaction.clientRequestBody,
                 interaction.clientRequestContentType,
-                url, clientRequestHeaders,
+                url, interaction.clientRequestHeaders,
                 interactionManipulations, lowerCaseHeaders);
     }
 
@@ -78,6 +78,8 @@ public class NonRecordingPassThrough implements InteractionMonitor {
             List<String> clientRequestHeaders2 = changeRequestHeadersIfNeeded(interactionManipulations, clientRequestHeaders, method, lowerCaseHeaders);
 
             interactionManipulations.changeAnyHeadersForRequestToRealService(clientRequestHeaders2);
+
+            this.clientRequestHeaders = clientRequestHeaders2;
 
             final String[] headersToRecord = clientRequestHeaders2.toArray(new String[0]);
 

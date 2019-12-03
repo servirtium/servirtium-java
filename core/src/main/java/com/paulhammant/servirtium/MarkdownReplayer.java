@@ -148,7 +148,6 @@ public class MarkdownReplayer implements InteractionMonitor {
     public class ReplayingInteraction extends Interaction {
         private final String interactionText;
         int ix;
-        private String clientRequestHeaders;
 
         ReplayingInteraction(String interactionText, int interactionNum, String context) {
             super(interactionNum, context);
@@ -163,11 +162,7 @@ public class MarkdownReplayer implements InteractionMonitor {
 
             interactionManipulations.changeAnyHeadersForRequestToRealService(clientRequestHeaders2);
 
-            StringBuilder sb = new StringBuilder();
-            for (String h : clientRequestHeaders2) {
-                sb.append(h).append("\n");
-            }
-            this.clientRequestHeaders = sb.toString();
+            this.clientRequestHeaders = clientRequestHeaders2;
 
             // Body
 
@@ -221,7 +216,7 @@ public class MarkdownReplayer implements InteractionMonitor {
     }
 
     @Override
-    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRequestHeaders,
+    public ServiceResponse getServiceResponseForRequest(String method, String url,
                                                         Interaction interaction, boolean lowerCaseHeaders) {
 
         ReplayingInteraction replay = (ReplayingInteraction) interaction;
@@ -269,7 +264,11 @@ public class MarkdownReplayer implements InteractionMonitor {
 
         // TODO remove trim()
         final String[] prevRecorded = reorderMaybe(headersReceived).split("\n");
-        final String trim = replay.clientRequestHeaders.trim();
+        StringBuilder sb = new StringBuilder();
+        for (String h : replay.clientRequestHeaders) {
+            sb.append(h).append("\n");
+        }
+        final String trim = sb.toString().trim();
         final String[] currentHeaders = reorderMaybe(trim).split("\n");
 
         String bodyReceived = getCodeBlock(replay);

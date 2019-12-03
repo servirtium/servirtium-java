@@ -79,10 +79,11 @@ public class MarkdownRecorder implements InteractionMonitor {
         return this;
     }
 
-    public ServiceResponse getServiceResponseForRequest(String method, String url, List<String> clientRequestHeaders,
+    public ServiceResponse getServiceResponseForRequest(String method, String url,
                                                         Interaction interaction, boolean lowerCaseHeaders) {
+
         return serviceInteroperation.invokeServiceEndpoint(method, interaction.clientRequestBody,
-                interaction.clientRequestContentType, url, clientRequestHeaders,
+                interaction.clientRequestContentType, url, ((RecordingInteraction) interaction).clientRequestHeaders,
                 interactionManipulations, lowerCaseHeaders);
     }
 
@@ -191,6 +192,8 @@ public class MarkdownRecorder implements InteractionMonitor {
                 }
                 headersToRecord2.add(h);
             }
+
+            this.clientRequestHeaders = headersToRecord2;
 
             blockStart("Request headers recorded for playback");
             for (String s : headersToRecord2) {
