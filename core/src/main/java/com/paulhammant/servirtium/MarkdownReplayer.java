@@ -413,7 +413,10 @@ public class MarkdownReplayer implements InteractionMonitor {
     }
 
     @Override
-    public ReplayingInteraction newInteraction(String method, String path, int interactionNum, String url, String context) {
+    public ReplayingInteraction newInteraction(int interactionNum, String context, String method, String path, String url) {
+        // 'method' is tested for correctness in getServiceResponseForRequest()
+        // param is actually used in MarkdownRecorder, so cant be removed.
+        // Same is true for 'path' and 'url'
         final String interactionText;
         try {
             interactionText = allMarkdownInteractions.get(interactionNum);

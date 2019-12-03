@@ -49,7 +49,7 @@ public interface InteractionMonitor {
                                                  Interaction interaction,
                                                  boolean lowerCaseHeaders) throws IOException;
 
-    Interaction newInteraction(String method, String path, int interactionNum, String url, String context);
+    Interaction newInteraction(int interactionNum, String context, String method, String path, String url);
 
     default void codeNoteForNextInteraction(String title, String multiline) {}
 
@@ -124,7 +124,7 @@ public interface InteractionMonitor {
         }
 
         @Override
-        public Interaction newInteraction(String method, String path, int interactionNum, String url, String context) {
+        public Interaction newInteraction(int interactionNum, String context, String method, String path, String url) {
             return null;
         }
     }

@@ -99,7 +99,7 @@ public class NonRecordingPassThrough implements InteractionMonitor {
     }
 
     @Override
-    public Interaction newInteraction(String method, String path, int interactionNum, String url, String context) {
+    public Interaction newInteraction(int interactionNum, String context, String method, String path, String url) {
         return new NonRecordingInteraction(interactionNum, context);
     }
 

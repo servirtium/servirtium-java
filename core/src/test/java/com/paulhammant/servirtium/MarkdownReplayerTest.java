@@ -1,17 +1,14 @@
 package com.paulhammant.servirtium;
 
 import org.junit.Test;
-import org.mockito.Matchers;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-import static org.mockito.Matchers.eq;
 
 public class MarkdownReplayerTest {
 
@@ -61,8 +58,8 @@ public class MarkdownReplayerTest {
                 "}\n" +
                 "```\n" +
                 "\n");
-        final MarkdownReplayer.ReplayingInteraction interaction = m.newInteraction("GET", "aaa/bbb", 0,
-                "http://example.com/hello/how/are/you.json", "hello");
+        final MarkdownReplayer.ReplayingInteraction interaction = m.newInteraction(0, "hello", "not used in playback",
+                "not used in playback", "not used in playback");
         interaction.noteClientRequestHeadersAndBody(NO_MANIPULATIONS, Arrays.asList("foo: aaa", "bar: bbb"), "", "", "GET", false);
         ServiceResponse x = m.getServiceResponseForRequest("GET", "http://example.com/hello/how/are/you.json", interaction, false);
         assertEquals(2, x.headers.length);
@@ -104,8 +101,8 @@ public class MarkdownReplayerTest {
                 "}\n" +
                 "```\n" +
                 "\n");
-        final MarkdownReplayer.ReplayingInteraction interaction = m.newInteraction("GET", "aaa/bbb", 0,
-                "http://example.com/hello/how/are/you.json", "hello");
+        final MarkdownReplayer.ReplayingInteraction interaction = m.newInteraction(0, "hello", "not used in playback",
+                "not used in playback", "not used in playback");
         interaction.noteClientRequestHeadersAndBody(NO_MANIPULATIONS, Arrays.asList("foo: aaaaaaaa", "bar: bbbbbbbbb"), "", "", "GET", false);
 
         try {
@@ -154,8 +151,8 @@ public class MarkdownReplayerTest {
                 "}\n" +
                 "```\n" +
                 "\n");
-        final MarkdownReplayer.ReplayingInteraction interaction = m.newInteraction("GET", "aaa/bbb", 0,
-                "http://example.com/hello/how/are/you.json", "hello");
+        final MarkdownReplayer.ReplayingInteraction interaction = m.newInteraction(0, "hello", "not used in playback",
+                "not used in playback", "not used in playback");
         interaction.noteClientRequestHeadersAndBody(NO_MANIPULATIONS, Arrays.asList("foo: aaaaaaaa", "bar: bbbbbbbbb"), "", "", "GET", false);
 
         try {
@@ -206,8 +203,8 @@ public class MarkdownReplayerTest {
                 "```\n" +
                 "\n");
         m.withReplacementInPlayback("abc", "foo");
-        MarkdownReplayer.ReplayingInteraction interaction = m.newInteraction("GET", "aaa/bbb", 0,
-                "http://example.com/hello/how/are/you.json", "hello");
+        MarkdownReplayer.ReplayingInteraction interaction = m.newInteraction(0, "hello", "not used in playback",
+                "not used in playback", "not used in playback");
         interaction.noteClientRequestHeadersAndBody(NO_MANIPULATIONS, Arrays.asList("abc: aaa", "bar: bbb"), "", "", "GET", false);
         ServiceResponse x = m.getServiceResponseForRequest("GET", "http://example.com/hello/how/are/you.json", interaction, false);
         assertEquals(2, x.headers.length);
@@ -250,8 +247,8 @@ public class MarkdownReplayerTest {
                 "```\n" +
                 "\n");
         m.withReplacementInPlayback("smack", "kapow");
-        final MarkdownReplayer.ReplayingInteraction interaction = m.newInteraction("POST", "aaa/bbb", 0,
-                "http://example.com/hello/how/are/you.json", "hello");
+        final MarkdownReplayer.ReplayingInteraction interaction = m.newInteraction(0, "hello", "not used in playback",
+                "not used in playback", "not used in playback");
         final List<String> clientRequestHeaders = Arrays.asList("foo: aaa", "bar: bbb");
         interaction.noteClientRequestHeadersAndBody(NO_MANIPULATIONS, clientRequestHeaders, "smack", "text/plain", "GET", false);
         ServiceResponse x = m.getServiceResponseForRequest("POST", "http://example.com/hello/how/are/you.json", interaction, false);

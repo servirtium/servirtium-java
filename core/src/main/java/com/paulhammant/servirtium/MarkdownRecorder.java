@@ -364,7 +364,7 @@ public class MarkdownRecorder implements InteractionMonitor {
     }
 
     @Override
-    public RecordingInteraction newInteraction(String method, String path, int interactionNum, String url, String context) {
+    public RecordingInteraction newInteraction(int interactionNum, String context, String method, String path, String url) {
         guardOut();
 
         String pathWithReplacements = path;

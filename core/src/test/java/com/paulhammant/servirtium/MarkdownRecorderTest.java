@@ -29,7 +29,7 @@ public class MarkdownRecorderTest {
 
         MarkdownRecorder mr = new MarkdownRecorder(si, im);
         mr.setOutputStream("foo", out);
-        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
+        InteractionMonitor.Interaction i = mr.newInteraction(0, "ctx", "FOO", "/a/b/c", "http://foo.com/bar");
         i.noteClientRequestHeadersAndBody(im, asList("ZZZZ: ZZ", "REQ_HEADER_KEY: VAL"),
                 "REQ_BODY", "text/plain", "FOO", true);
         i.noteServiceResponseHeaders("RSP_HEADER_KEY: RSP_VAL");
@@ -84,7 +84,7 @@ public class MarkdownRecorderTest {
 
         MarkdownRecorder mr = new MarkdownRecorder(si, im);
         mr.setOutputStream("foo", out);
-        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c?password=hardyHarHar", 0, "http://foo.com/bar?password=hardyHarHar", "ctx");
+        InteractionMonitor.Interaction i = mr.newInteraction(0, "ctx", "FOO", "/a/b/c?password=hardyHarHar", "http://foo.com/bar?password=hardyHarHar");
         i.noteClientRequestHeadersAndBody(im, asList(),
                 "REQ_BODY", "text/plain", "FOO", true);
         i.noteServiceResponseHeaders();
@@ -130,7 +130,7 @@ public class MarkdownRecorderTest {
         MarkdownRecorder mr = new MarkdownRecorder(si, im)
                 .withReplacementsInRecording("hardyHarHar", "pAsSwOrD-rEdAcTeD");
         mr.setOutputStream("foo", out);
-        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c?password=hardyHarHar", 0, "http://foo.com/bar?password=hardyHarHar", "ctx");
+        InteractionMonitor.Interaction i = mr.newInteraction(0, "ctx", "FOO", "/a/b/c?password=hardyHarHar", "http://foo.com/bar?password=hardyHarHar");
         i.noteClientRequestHeadersAndBody(im, asList(),
                 "REQ_BODY", "text/plain", "FOO", true);
         i.noteServiceResponseHeaders();
@@ -179,7 +179,7 @@ public class MarkdownRecorderTest {
         MarkdownRecorder mr = new MarkdownRecorder(si, im)
                 .withExtraDebugOutput();
         mr.setOutputStream("foo", out);
-        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
+        InteractionMonitor.Interaction i = mr.newInteraction(0, "ctx", "FOO", "/a/b/c", "http://foo.com/bar");
         i.noteClientRequestHeadersAndBody(im, asList("ZZZZ: ZZ", "REQ_HEADER_KEY: VAL"),
                 "REQ_BODY", "text/plain", "FOO", true);
         i.noteServiceResponseHeaders("RSP_HEADER_KEY: RSP_VAL");
@@ -250,7 +250,7 @@ public class MarkdownRecorderTest {
         MarkdownRecorder mr = new MarkdownRecorder(si, im)
                 .withAlphaSortingOfHeaders();
         mr.setOutputStream("foo", out);
-        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
+        InteractionMonitor.Interaction i = mr.newInteraction(0, "ctx", "FOO", "/a/b/c", "http://foo.com/bar");
         i.noteClientRequestHeadersAndBody(im, asList("ZZZZ: ZZ", "REQ_HEADER_KEY: VAL"),
                 "REQ_BODY", "text/plain", "FOO", true);
         i.noteServiceResponseHeaders("RSP_HEADER_KEY: RSP_VAL");
@@ -304,7 +304,7 @@ public class MarkdownRecorderTest {
 
         MarkdownRecorder mr = new MarkdownRecorder(si, im);
         mr.setOutputStream("foo", out);
-        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
+        InteractionMonitor.Interaction i = mr.newInteraction(0, "ctx", "FOO", "/a/b/c", "http://foo.com/bar");
         mr.noteForNextInteraction("Mary", "... Had a Little Lamb");
         i.noteClientRequestHeadersAndBody(im, asList(),
                 "REQ_BODY", "text/plain", "FOO", true);
@@ -342,7 +342,7 @@ public class MarkdownRecorderTest {
 
         MarkdownRecorder mr = new MarkdownRecorder(si, im);
         mr.setOutputStream("foo", out);
-        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
+        InteractionMonitor.Interaction i = mr.newInteraction(0, "ctx", "FOO", "/a/b/c", "http://foo.com/bar");
         mr.codeNoteForNextInteraction("CodeNotes", "111\n222");
         i.noteClientRequestHeadersAndBody(im, asList(),
                 "REQ_BODY", "text/plain", "FOO", true);
@@ -383,7 +383,7 @@ public class MarkdownRecorderTest {
 
         MarkdownRecorder mr = new MarkdownRecorder(si, im).withReplacementsInRecording("little", "tiny", "lamb", "piglet");
         mr.setOutputStream("foo", out);
-        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
+        InteractionMonitor.Interaction i = mr.newInteraction(0, "ctx", "FOO", "/a/b/c", "http://foo.com/bar");
         i.noteClientRequestHeadersAndBody(im, asList(),
                 "Mary had a little lamb", "text/plain", "FOO", true);
         i.noteServiceResponseHeaders();
@@ -431,7 +431,7 @@ public class MarkdownRecorderTest {
 
         MarkdownRecorder mr = new MarkdownRecorder(si, im).withReplacementsInRecording("little", "tiny", "lamb", "piglet");
         mr.setOutputStream("foo", out);
-        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
+        InteractionMonitor.Interaction i = mr.newInteraction(0, "ctx", "FOO", "/a/b/c", "http://foo.com/bar");
         i.noteClientRequestHeadersAndBody(im, asList("Mary: had a little lamb"),
                 "", "text/plain", "FOO", true);
         i.noteServiceResponseHeaders("A: little lamb had Mary");
@@ -486,7 +486,7 @@ public class MarkdownRecorderTest {
 
         MarkdownRecorder mr = new MarkdownRecorder(si, im).withExtraDebugOutput();
         mr.setOutputStream("foo", out);
-        InteractionMonitor.Interaction i = mr.newInteraction("FOO", "/a/b/c", 0, "http://foo.com/bar", "ctx");
+        InteractionMonitor.Interaction i = mr.newInteraction(0, "ctx", "FOO", "/a/b/c", "http://foo.com/bar");
 
         i.noteServiceResponseHeaders("XX: xx");
         i.noteServiceResponseBody("", 200, "text/plain");

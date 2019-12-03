@@ -80,7 +80,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
                 return;
             }
 
-            InteractionMonitor.Interaction interaction = interactionMonitor.newInteraction(method, uri, getInteractionNum(), url, getContext());
+            InteractionMonitor.Interaction interaction = interactionMonitor.newInteraction(getInteractionNum(), getContext(), method, uri, url);
 
             monitor.interactionStarted(getInteractionNum(), interaction);
 
