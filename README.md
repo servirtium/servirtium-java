@@ -1,6 +1,6 @@
 # Servirtium
 
-![](Servirtium.svg?raw=true&sanitize=true)
+![](Servirtium-Square.png?raw=true)
 
 Servirtium == Service Virtualized HTTP (for Java) in a record/playback style, with plain 
 Markdown recordings
