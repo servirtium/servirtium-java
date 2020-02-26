@@ -153,19 +153,6 @@ test-automation purposes. No matter, the contracts that are signed often make no
 the case above was where the original maker of an API went after a company that was trying to make 
 something for the same ecosystem without a commercial relation on that specifically.
 
-## Alternatives
-
-Open source and commercial non-Markdown alternatives include: 
-
-* [Mountebank](http://mbtest.org) by ThoughtWorker Brandon Byars for a more versatile SV solution (written in NodeJs, but usable 
-from other languages).
-* [WireMock](http://wiremock.org/) (more established)
-* [Pact](https://docs.pact.io/) (since 2013, "contract tests")
-* Netflix's [Polly.js](https://github.com/Netflix/pollyjs/) (new in 2019)
-* Linkedin's [Flashback](https://github.com/linkedin/flashback) (since 2017)
-* Specto Lab's [Hoverfly](https://hoverfly.io/) (since 2015)
-* Computer Associate's [Lisa](https://www.ca.com/gb/products/ca-service-virtualization.html) since 2014 - unsure what tool name is now
-
 ## Code of Conduct
 
 Be Nice
