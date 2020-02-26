@@ -155,4 +155,4 @@ something for the same ecosystem without a commercial relation on that specifica
 
 ## Code of Conduct
 
-Be Nice
+Be Nice (in lieu of something longer)
