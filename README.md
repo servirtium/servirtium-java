@@ -165,6 +165,7 @@ from other languages).
 * Linkedin's [Flashback](https://github.com/linkedin/flashback) (since 2017)
 * Specto Lab's [Hoverfly](https://hoverfly.io/) (since 2015)
 * Computer Associate's [Lisa](https://www.ca.com/gb/products/ca-service-virtualization.html) since 2014 - unsure what tool name is now
+* [Karate](https://github.com/intuit/karate/tree/master/karate-netty) (since 2017)
 
 ## Code of Conduct
 
