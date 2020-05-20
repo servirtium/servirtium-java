@@ -95,6 +95,46 @@ public abstract class SimplePostCentricTests {
             "```\n" +
             "\n";
 
+    public static final String EXPECTED_B64 =
+            "## Interaction 0: POST /post\n" +
+            "\n" +
+            "### Request headers recorded for playback:\n" +
+            "\n" +
+            "```\n" +
+            "Accept: */*\n" +
+            "Connection: keep-alive\n" +
+            "Content-Length: 19\n" +
+            "Content-Type: text/plain; charset=ISO-8859-1\n" +
+            "Host: postman-echo.com\n" +
+            "User-Agent: RestAssured\n" +
+            "```\n" +
+            "\n" +
+            "### Request body recorded for playback (text/plain; charset=ISO-8859-1):\n" +
+            "\n" +
+            "```\n" +
+            "TODO TODO" +
+            "```\n" +
+            "\n" +
+            "### Response headers recorded for playback:\n" +
+            "\n" +
+            "```\n" +
+            "Connection: keep-alive\n" +
+            "Content-Type: application/json; charset=utf-8\n" +
+            "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
+            "ETag: W/\"153-InEEm1mVJgfG705oGbxXxiguOuU\"\n" +
+            "Server: nginx\n" +
+            "Vary: Accept-Encoding\n" +
+            "set-cookie: sails.sid=s%3AQpYXn4PNOGmzId3jttU03ZketH2aY6Zz.dj6l8lpXUtFJTCoRxWRPPx4fISmmCKzgOAlIxT2DSxM; Path=/; HttpOnly\n" +
+//            "transfer-encoding: chunked\n" +
+            "```\n" +
+            "\n" +
+            "### Response body recorded for playback (200: application/json; charset=utf-8):\n" +
+            "\n" +
+            "```\n" +
+            "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"postman-echo.com\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://postman-echo.com/post\"}\n" +
+            "```\n" +
+            "\n";
+
     private ServirtiumServer servirtiumServer;
 
     public void tearDown() {
@@ -125,6 +165,30 @@ public abstract class SimplePostCentricTests {
 
     }
 
+    public void canRecordABase64PostToPostmanEchoViaOkHttp() throws Exception {
+
+        final SimpleInteractionManipulations interactionManipulations =
+                new SimpleInteractionManipulations("http://localhost:8080", "https://postman-echo.com")
+                        .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding");
+
+        MarkdownRecorder recorder = new MarkdownRecorder(new ServiceInteropViaOkHttp(), interactionManipulations)
+                .withAlphaSortingOfHeaders();
+
+        servirtiumServer = makeServirtiumServer(interactionManipulations, recorder);
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        recorder.setOutputStream("changeRequestHeadersIfNeeded", out);
+        servirtiumServer.start();
+
+        checkBase64PostToPostmanEchoViaRestAssured();
+
+        servirtiumServer.finishedScript();
+
+        // Order of headers is as originally sent
+        assertEquals(sanitizeDate(EXPECTED_B64), sanitizeDate(out.toString()));
+
+    }
+
     public abstract ServirtiumServer makeServirtiumServer(SimpleInteractionManipulations interactionManipulations, InteractionMonitor interactionMonitor);
 
     public void canReplayASimplePostToPostmanEcho() throws Exception {
@@ -140,6 +204,23 @@ public abstract class SimplePostCentricTests {
         servirtiumServer.start();
 
         checkPostToPostmanEchoViaRestAssured();
+
+        servirtiumServer.finishedScript();
+    }
+
+    public void canReplayABase64PostToPostmanEcho() throws Exception {
+
+        MarkdownReplayer replayer = new MarkdownReplayer();
+        replayer.setPlaybackConversation(EXPECTED_B64);
+
+        servirtiumServer = makeServirtiumServer(
+                new SimpleInteractionManipulations("http://localhost:8080", "https://postman-echo.com")
+                        .withHeaderPrefixesToRemoveFromClientRequest("Accept-Encoding"),
+                replayer);
+
+        servirtiumServer.start();
+
+        checkBase64PostToPostmanEchoViaRestAssured();
 
         servirtiumServer.finishedScript();
     }
@@ -353,6 +434,20 @@ public abstract class SimplePostCentricTests {
                 .header("User-Agent", "RestAssured")
                 .header("Connection", "keep-alive")
                 .body("I'm a little teapot").
+        when()
+                .post("/post")
+        .then()
+                .assertThat()
+                .statusCode(200)
+                .body(equalTo("{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"postman-echo.com\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://postman-echo.com/post\"}"))
+                .contentType("application/json;charset=utf-8");
+    }
+
+    private void checkBase64PostToPostmanEchoViaRestAssured() {
+        given()
+                .header("User-Agent", "RestAssured")
+                .header("Connection", "keep-alive")
+                .body("1234".getBytes()).  // TODO payload here
         when()
                 .post("/post")
         .then()

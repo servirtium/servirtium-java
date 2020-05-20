@@ -26,8 +26,18 @@ public class SimplePostCentricWithUndertowTests extends SimplePostCentricTests {
     }
 
     @Override @Test
+    public void canRecordABase64PostToPostmanEchoViaOkHttp() throws Exception {
+        super.canRecordABase64PostToPostmanEchoViaOkHttp();
+    }
+
+    @Override @Test
     public void canReplayASimplePostToPostmanEcho() throws Exception {
         super.canReplayASimplePostToPostmanEcho();
+    }
+
+    @Override @Test
+    public void canReplayABase64PostToPostmanEcho() throws Exception {
+        super.canReplayABase64PostToPostmanEcho();
     }
 
     @Override @Test
