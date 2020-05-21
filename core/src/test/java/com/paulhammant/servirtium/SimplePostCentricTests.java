@@ -39,6 +39,12 @@ import okio.Okio;
 import okio.Source;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Factory;
+import org.hamcrest.Matcher;
+import org.hamcrest.core.IsEqual;
+import org.json.JSONObject;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -79,10 +85,10 @@ public abstract class SimplePostCentricTests {
             "\n" +
             "```\n" +
             "Connection: keep-alive\n" +
+            "Content-Length: 400\n" +
             "Content-Type: application/json; charset=utf-8\n" +
             "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
-            "ETag: W/\"153-InEEm1mVJgfG705oGbxXxiguOuU\"\n" +
-            "Server: nginx\n" +
+            "ETag: W/\"190-JfR8ii77cjlhdB7x6EDaGSHpUNw\"\n" +
             "Vary: Accept-Encoding\n" +
             "set-cookie: sails.sid=s%3AQpYXn4PNOGmzId3jttU03ZketH2aY6Zz.dj6l8lpXUtFJTCoRxWRPPx4fISmmCKzgOAlIxT2DSxM; Path=/; HttpOnly\n" +
 //            "transfer-encoding: chunked\n" +
@@ -91,7 +97,7 @@ public abstract class SimplePostCentricTests {
             "### Response body recorded for playback (200: application/json; charset=utf-8):\n" +
             "\n" +
             "```\n" +
-            "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"postman-echo.com\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://postman-echo.com/post\"}\n" +
+            "{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"x-forwarded-port\":\"443\",\"host\":\"postman-echo.com\",\"x-amzn-trace-id\":\"Root=1-5ec664ab-cd7447508fcd8920dcd34700\",\"content-length\":\"19\",\"accept\":\"*/*\",\"user-agent\":\"RestAssured\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"accept-encoding\":\"gzip\"},\"json\":null,\"url\":\"https://postman-echo.com/post\"}\n" +
             "```\n" +
             "\n";
 
@@ -439,8 +445,42 @@ public abstract class SimplePostCentricTests {
         .then()
                 .assertThat()
                 .statusCode(200)
-                .body(equalTo("{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"host\":\"postman-echo.com\",\"content-length\":\"19\",\"accept\":\"*/*\",\"accept-encoding\":\"gzip\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"user-agent\":\"RestAssured\",\"x-forwarded-port\":\"443\"},\"json\":null,\"url\":\"https://postman-echo.com/post\"}"))
+                .body(equalToIgnoringAmazonTransients("{\"args\":{},\"data\":\"I'm a little teapot\",\"files\":{},\"form\":{},\"headers\":{\"x-forwarded-proto\":\"https\",\"x-forwarded-port\":\"443\",\"host\":\"postman-echo.com\",\"accept\":\"*/*\",\"user-agent\":\"RestAssured\",\"content-type\":\"text/plain; charset=ISO-8859-1\",\"accept-encoding\":\"gzip\"},\"json\":null,\"url\":\"https://postman-echo.com/post\"}"))
                 .contentType("application/json;charset=utf-8");
+    }
+
+    @Factory
+    public static Matcher<String> equalToIgnoringAmazonTransients(String operand) {
+        return new IgnoreingAmazonAdded(operand);
+    }
+
+    public static class IgnoreingAmazonAdded extends BaseMatcher<String> {
+
+        private final String operand;
+
+        public IgnoreingAmazonAdded(String operand) {
+            System.out.println("@@@@" + JSONObject.class.getName());
+            this.operand = new JSONObject(operand).toString(2);
+        }
+
+        @Override
+        public boolean matches(Object o) {
+            String val = (String) o;
+            int traceIdIx = val.indexOf(",\"x-amzn-trace-id");
+            String reduced;
+            if (traceIdIx > -1) {
+                int twoCommasLater = val.indexOf(",", val.indexOf(",", traceIdIx+1) + 1);
+                reduced = val.substring(0, traceIdIx) + val.substring(twoCommasLater);
+            } else {
+                reduced = val;
+            }
+            return new IsEqual(operand).matches(new JSONObject(reduced).toString(2));
+        }
+
+        @Override
+        public void describeTo(Description description) {
+            description.appendValue("A string not containing 'x-amzn-trace-id' k/v, equalTo: " + operand);
+        }
     }
 
     private void checkBase64PostToPostmanEchoViaRestAssured() {

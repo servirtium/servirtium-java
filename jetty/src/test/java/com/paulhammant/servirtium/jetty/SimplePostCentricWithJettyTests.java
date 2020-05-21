@@ -1,11 +1,8 @@
 package com.paulhammant.servirtium.jetty;
 
-import com.paulhammant.servirtium.InteractionMonitor;
-import com.paulhammant.servirtium.ServiceMonitor;
-import com.paulhammant.servirtium.ServirtiumServer;
-import com.paulhammant.servirtium.SimpleInteractionManipulations;
-import com.paulhammant.servirtium.SimplePostCentricTests;
+import com.paulhammant.servirtium.*;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SimplePostCentricWithJettyTests extends SimplePostCentricTests {
@@ -25,7 +22,7 @@ public class SimplePostCentricWithJettyTests extends SimplePostCentricTests {
         super.canRecordASimplePostToPostmanEchoViaOkHttp();
     }
 
-    @Override @Test
+    @Override @Test @Ignore
     public void canRecordABase64PostToPostmanEchoViaOkHttp() throws Exception {
         super.canRecordABase64PostToPostmanEchoViaOkHttp();
     }
@@ -35,7 +32,7 @@ public class SimplePostCentricWithJettyTests extends SimplePostCentricTests {
         super.canReplayASimplePostToPostmanEcho();
     }
 
-    @Override @Test
+    @Override @Test @Ignore
     public void canReplayABase64PostToPostmanEcho() throws Exception {
         super.canReplayABase64PostToPostmanEcho();
     }
