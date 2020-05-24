@@ -259,7 +259,7 @@ public abstract class SimpleGetCentricBinaryTests {
                         "```\n" +
                         "accept-ranges: bytes\n" +
                         "access-control-allow-origin: *\n" +
-                        "access-control-expose-headers: Age, Date, Content-Length, Content-Range, X-Content-Duration, X-Cache, X-Varnish\n" +
+                        "access-control-expose-headers: Age, Date, Content-Length, Content-Range, X-Content-Duration, X-Cache\n" +
                         "content-type: image/svg+xml\n" +
                         "date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
                         "etag: W/5ab7d580ce21b2d63a0ce66aea8e71ce\n" +
