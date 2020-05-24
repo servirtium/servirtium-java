@@ -40,7 +40,6 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.config.DecoderConfig.ContentDecoder.DEFLATE;
 import static io.restassured.config.DecoderConfig.decoderConfig;
 import static io.restassured.config.RestAssuredConfig.newConfig;
-import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -595,12 +594,14 @@ public abstract class SimpleGetCentricTextTests {
                 header("User-Agent", "Java").
                 port(61417).
         when()
-                .get("/paul-hammant/servirtium/master/Servirtium.svg?sanitize=true")
+                .get("/servirtium/servirtium-java/master/LICENSE.txt")
         .then()
                 .assertThat()
                 .statusCode(200)
-                .body(equalTo(SERVIRTIUM_SVG_SANITIZED))
-                .contentType("image/svg+xml");
+                .body(equalTo("Two clause BSD license - see top of each source file.\n" +
+                        "\n" +
+                        "https://opensource.org/licenses/BSD-2-Clause"))
+                .contentType("text/plain");
 
         servirtiumServer.finishedScript();
 
@@ -930,6 +931,7 @@ public abstract class SimpleGetCentricTextTests {
                 "Date: Aaa, Nn Aaa Nnnn Nn:Nn:Nn GMT\n" +
                 "Strict-Transport-Security: max-age=31536000\n" +
                 "Via: 1.1 varnish\n" +
+                "Via: 1.1 varnish (Varnish/6.0)\n" +
                 "```\n" +
                 "\n" +
                 "### Response body recorded for playback (200: text/plain; charset=utf-8):\n" +
