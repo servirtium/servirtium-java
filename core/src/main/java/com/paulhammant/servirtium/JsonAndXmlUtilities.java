@@ -1,6 +1,6 @@
 package com.paulhammant.servirtium;
 
-import com.github.underscore.lodash.U;
+import com.github.underscore.U;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
