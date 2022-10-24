@@ -25,6 +25,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
     private Undertow undertowServer;
     private boolean failed = false;
+    private Throwable lastFailure;
 
     public UndertowServirtiumServer(ServiceMonitor monitor, int port,
                                     InteractionManipulations interactionManipulations, InteractionMonitor interactionMonitor) {
@@ -127,17 +128,14 @@ public class UndertowServirtiumServer extends ServirtiumServer {
             monitor.interactionFinished(getInteractionNum(), method, url, getContext());
         } catch (AssertionError assertionError) {
             failed = true;
+            lastFailure = assertionError;
             exchange.setStatusCode(500);
-            exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "text/plain");
-            exchange.getResponseSender().send("UndertowServirtiumServer AssertionError: " + assertionError.getMessage());
             monitor.interactionFailed(getInteractionNum(), method, url, assertionError, getContext());
         } catch (Throwable throwable) {
             failed = true;
+            lastFailure = throwable;
             exchange.setStatusCode(500);
-            exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "text/plain");
-            exchange.getResponseSender().send("UndertowServirtiumServer unexpected Throwable: " + throwable.getMessage());
             monitor.unexpectedRequestError(throwable, getContext());
-            throw throwable; // stick your debugger here
         } finally {
         }
     }
@@ -264,6 +262,7 @@ public class UndertowServirtiumServer extends ServirtiumServer {
     }
 
     public ServirtiumServer start() throws Exception {
+        lastFailure = null;
         undertowServer.start();
         return this;
     }
@@ -278,6 +277,11 @@ public class UndertowServirtiumServer extends ServirtiumServer {
 
     public void finishedScript() {
         interactionMonitor.finishedScript(getInteractionNum(), failed);
+    }
+
+    @Override
+    public Throwable getLastException() {
+        return lastFailure;
     }
 
 

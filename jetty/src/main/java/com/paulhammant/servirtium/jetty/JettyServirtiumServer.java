@@ -26,6 +26,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
     private Server jettyServer;
     boolean failed = false;
+    Throwable lastFailure;
 
     public JettyServirtiumServer(ServiceMonitor monitor, int port,
                                  InteractionManipulations interactionManipulations,
@@ -46,8 +47,8 @@ public class JettyServirtiumServer extends ServirtiumServer {
         });
     }
 
-    private void handleExchange(Request baseRequest, HttpServletRequest request, HttpServletResponse response,
-                                ServiceMonitor monitor) throws IOException {
+    private void handleExchange(Request baseRequest, HttpServletRequest request,
+                                HttpServletResponse response, ServiceMonitor monitor) throws IOException {
 
         bumpInteractionNum();
 
@@ -134,17 +135,14 @@ public class JettyServirtiumServer extends ServirtiumServer {
             monitor.interactionFinished(getInteractionNum(), method, url, getContext());
         } catch (AssertionError assertionError) {
             failed = true;
-            response.setStatus(500);
-            response.setContentType("text/plain");
-            response.getWriter().write("JettyServirtiumServer AssertionError: " + assertionError.getMessage());
+            lastFailure = assertionError;
             monitor.interactionFailed(getInteractionNum(), method, url, assertionError, getContext());
+            return;
         } catch (Throwable throwable) {
             failed = true;
-            response.setStatus(500);
-            response.setContentType("text/plain");
-            response.getWriter().write("JettyServirtiumServer unexpected Throwable: " + throwable.getMessage());
+            lastFailure = throwable;
             monitor.unexpectedRequestError(throwable, getContext());
-            throw throwable; // stick your debugger here
+            return;
         } finally {
             // Inform jetty that this request has now been handled
             baseRequest.setHandled(true);
@@ -279,6 +277,7 @@ public class JettyServirtiumServer extends ServirtiumServer {
     }
 
     public ServirtiumServer start() throws Exception {
+        lastFailure = null;
         jettyServer.start();
         return this;
     }
@@ -298,6 +297,11 @@ public class JettyServirtiumServer extends ServirtiumServer {
 
     public void finishedScript() {
         interactionMonitor.finishedScript(getInteractionNum(), failed);
+    }
+
+    @Override
+    public Throwable getLastException() {
+        return lastFailure;
     }
 
     public static void disableJettyLogging() {

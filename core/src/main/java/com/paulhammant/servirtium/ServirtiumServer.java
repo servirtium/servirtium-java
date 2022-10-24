@@ -23,6 +23,8 @@ public abstract class ServirtiumServer {
     public abstract void stop();
     public abstract void finishedScript();
 
+    public abstract Throwable getLastException();
+
     public static boolean isText(String contentType) {
         return contentType.startsWith("text/") ||
                 contentType.startsWith("image/svg") ||
@@ -121,6 +123,11 @@ public abstract class ServirtiumServer {
 
         @Override
         public void finishedScript() {
+        }
+
+        @Override
+        public Throwable getLastException() {
+            return null;
         }
     }
 
